@@ -1,5 +1,5 @@
 @extends('include.navbar')
-@section('title','Dashboard')
+@section('title','applicant account')
 @section('content')
   <style type="text/css">
       table tbody tr td input{
@@ -79,8 +79,20 @@
                                 </tr>
                               </thead>
                               <tbody id="user_data">
-                            
-                                  
+                                @foreach($data as $data)
+                               <tr>
+                                  <th>#</th>
+                                  <th>{{$data['Fname']}}</th>
+                                  <th>{{$data['Lname']}}</th>
+                                  <th>{{$data['contact_num']}}</th>
+                                    <th>{{$data['password']}}</th>
+                                    <th width="200px" id="action"><button type="button" name="delete" class="btn btn-defualt btn-xs delete" i><i class='fa fa-trash'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' ><i class='fa fa-edit'></i></button>||
+<input type='hidden' name='account_id2' value=".$row['account_id'].">
+
+ <button type='submit' name='view' class='btn btn-defualt btn-xs '  ><i class='fa fa-eye'></i></button>
+</th>
+                                </tr>
+                                 @endforeach 
                                     
                                   </tbody>
                  
@@ -104,10 +116,12 @@
                           <div class="modal-body">
                             <div class=" form-group">
                                 <form method="post" id="formAdd">
+                                  @csrf
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label><b>First Name</b></label>
                                             <input type="text" name="" class="form-control" placeholder="First Name" id="Fname">
+                                            <span id="errorFname"></span><br>
                                             <label><b>Username</b></label>
                                             <input type="" name="" class="form-control" placeholder="Username"  id="username">
                                         </div>
@@ -116,6 +130,7 @@
                                         <div class="form-group">
                                             <label><b>Last Name</b></label>
                                             <input type="" name="" class="form-control" placeholder="Last Name"  id="Lname" >
+                                            <span id="errorLname"></span><br>
                                             <label><b>Password</b></label>
                                             <input type="" name="" class="form-control" placeholder="Password"  id="password">
                                         </div>
@@ -147,7 +162,7 @@
                                 </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" id="add">Add</button>
+                                    <button type="click" class="btn btn-primary" id="add">Add</button>
                                 </div>
                                 </div>
                                 </div>
@@ -291,6 +306,65 @@
         <button id="send" class="btn btn-sm btn-success" type="button">Send</button>
       </div>
     </div>
+    <script type="text/javascript">
+      $(document).ready(function(){
+      $('#add').on('click', function(e){
+                        e.preventDefault();
+
+                        var Fname=$('#Fname').val();
+                        var username=$('#username').val();
+                        var Lname=$('#Lname').val();
+                        var password=$('#password').val();
+                        var purok=$('#purok').val();
+                        var city=$('#city').val();
+                        var barangay=$('#barangay').val();
+                        var contact_num=$('#contact_num').val();
+                        var date_register=$('#date_register').val();
+                        console.log(username);
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+                        $.ajax({
+                            url: "addApplicant",
+                            type: "post",
+                            data:{
+                                Fname:Fname,
+                                username:username,
+                                Lname:Lname,
+                                password:password,
+                                purok:purok,
+                                city:city,
+                                barangay:barangay,
+                                date_register:date_register,
+                                contact_num:contact_num
+                            },
+                            dataType:'json',
+                            success: function(response){
+                                // $('#show2').html(data);
+                                // $('#Modal').modal('hide');
+                                // $('#formAdd')[0].reset();
+                                // load_data();
+                                if(response.status==400)
+                                {
+                              $.each(response.errors,function(key , message){
+                                $('#errorFname').html(response.errors.Fname);
+                                 $('#errorLname').html(response.errors.Lname);
+                          
+                              });
+                              
+                                }
+                             
+                                
+                            }
+                         
+                        });
+                        
+
+                    });
+      });
+    </script>
     <!-- /compose -->
 
 

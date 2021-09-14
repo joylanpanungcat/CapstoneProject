@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +8,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{-- csrf  --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title')</title>
 {{-- jquery --}}
   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
@@ -78,7 +83,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>{{$data->username}}</h2>
+                <h2>{{Session::get('adminID')['username']}}</h2>
               </div>
             </div>
 
@@ -164,7 +169,7 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{url('images/profile.jpg')}}" alt="">{{$data->username}}
+                    <img src="{{url('images/profile.jpg')}}" alt="">{{Session::get('adminID')['username']}}
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"  href="javascript:;"> Profile</a>

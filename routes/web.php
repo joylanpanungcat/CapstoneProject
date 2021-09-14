@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\verifyController;
+use App\Http\Controllers\applicant_account;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +24,13 @@ Route::get('/welcome', function () {
 
 Route::get("logout",[verifyController::class,"logout"]);
 
-
+Route::post('addApplicant',[applicant_account::class,"add"]);
 
 
 //Group middleware page auth
 Route::group(['middleware'=>['accessPage']],function(){
-Route::get("dashboard",[verifyController::class,"dashboard"]);
+// Route::get("dashboard",[verifyController::class,"dashboard"]);
+    Route::view('dashboard','Dashboard');
 Route::get("account",[verifyController::class,"account"]);
 
 });
