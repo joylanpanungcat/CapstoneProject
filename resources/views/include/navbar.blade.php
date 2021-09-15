@@ -12,6 +12,7 @@
     {{-- csrf  --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title')</title>
+  
 {{-- jquery --}}
   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
@@ -32,6 +33,9 @@
     <!-- Morris js -->
     <script type="text/javascript" src="{{url('js/morrisChart/morris.min.js')}}"></script>
     <script type="text/javascript" src="{{url('js/morrisChart/raphael-min.js')}}"></script>
+
+    {{-- toastr --}}
+    <link rel="stylesheet" type="text/css" href="{{url('toastr/toastr.min.css')}}">
    
 </head>
 <body class="nav-md" id="main" >
@@ -285,3 +289,6 @@
 <script type="text/javascript" src="{{url('js/custom.min.js')}}"></script>
 {{-- scrollbar --}}
    <script src="{{url('js/scrollbar/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+
+   {{-- toastr --}}
+   <script type="text/javascript" src="{{url('toastr/toastr.min.js')}}"></script>

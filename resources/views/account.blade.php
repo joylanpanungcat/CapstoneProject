@@ -115,24 +115,26 @@
                           </div>
                           <div class="modal-body">
                             <div class=" form-group">
-                                <form method="post" id="formAdd">
+                                <form method="post" id="formAdd" >
                                   @csrf
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label><b>First Name</b></label>
                                             <input type="text" name="" class="form-control" placeholder="First Name" id="Fname">
-                                            <span id="errorFname"></span><br>
+                                            <span class="text-danger error-text Fname_error"></span><br>
                                             <label><b>Username</b></label>
                                             <input type="" name="" class="form-control" placeholder="Username"  id="username">
+                                             <span class="text-danger error-text username_error"></span>
                                         </div>
                                     </div>
                                  <div class="col-md-6">
                                         <div class="form-group">
                                             <label><b>Last Name</b></label>
                                             <input type="" name="" class="form-control" placeholder="Last Name"  id="Lname" >
-                                            <span id="errorLname"></span><br>
+                                             <span class="text-danger error-text Lname_error"></span><br>
                                             <label><b>Password</b></label>
                                             <input type="" name="" class="form-control" placeholder="Password"  id="password">
+                                             <span class="text-danger error-text password_error"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -141,8 +143,10 @@
                                         <div class="form-group">
                                             <label><b>Purok</b></label>
                                             <input type="" name="" class="form-control" placeholder="Purok"  id="purok">
+                                             <span class="text-danger error-text purok_error"></span><br>
                                             <label><b>City</b></label>
                                             <input type="" name="" class="form-control" placeholder="Purok" readonly="" value="Panabo City"  id="city">
+                                             <span class="text-danger error-text city_error"></span>
                                             
                                         </div>
                                     </div>
@@ -150,8 +154,10 @@
                                         <div class="form-group">
                                             <label><b>Barangay</b></label>
                                             <input type="" name="" class="form-control" placeholder="Barangay"  id="barangay">
+                                             <span class="text-danger error-text barangay_error"></span><br>
                                             <label><b>Contact Number</b></label>
                                             <input type="" name="" class="form-control" placeholder="Contact Number" id="contact_num">
+                                             <span class="text-danger error-text contact_num_error"></span>
                                               <input type="hidden" name="" class="form-control" placeholder="Contact Number" id="date_register" value="<?php echo date("Y/M/D  h:i:s")?>">
                                             
                                             
@@ -162,7 +168,7 @@
                                 </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="click" class="btn btn-primary" id="add">Add</button>
+                                    <button type="submit" class="btn btn-primary" id="add">Add</button>
                                 </div>
                                 </div>
                                 </div>
@@ -308,7 +314,7 @@
     </div>
     <script type="text/javascript">
       $(document).ready(function(){
-      $('#add').on('click', function(e){
+      $('#formAdd').on('submit', function(e){
                         e.preventDefault();
 
                         var Fname=$('#Fname').val();
@@ -321,11 +327,11 @@
                         var contact_num=$('#contact_num').val();
                         var date_register=$('#date_register').val();
                         console.log(username);
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-          });
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
                         $.ajax({
                             url: "addApplicant",
                             type: "post",
@@ -341,19 +347,28 @@
                                 contact_num:contact_num
                             },
                             dataType:'json',
+                            beforeSend:function(data){
+                              $(document).find('span.error-text').text('');
+                            },
                             success: function(response){
-                                // $('#show2').html(data);
+                               
                                 // $('#Modal').modal('hide');
                                 // $('#formAdd')[0].reset();
                                 // load_data();
+                                // text-danger error-text Fname_error
                                 if(response.status==400)
                                 {
                               $.each(response.errors,function(key , message){
-                                $('#errorFname').html(response.errors.Fname);
-                                 $('#errorLname').html(response.errors.Lname);
+                              $('span.'+key+'_error').text(message[0]);
                           
                               });
                               
+                                }
+                                else{
+                                   // $('#show2').html(response.message);
+                                   toastr.success(response.message);
+                                     $('#Modal').modal('hide');
+                                     $('#formAdd')[0].reset();
                                 }
                              
                                 
