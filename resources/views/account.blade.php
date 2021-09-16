@@ -67,7 +67,7 @@
                                 <div class="x_content">
                                     <br />
                                      
-                                     <table class="table table-striped table-bordered" id="data" style="width:100%;">
+                                     <table class="table table-striped table-bordered table-hover" id="accountData" style="width:100%;">
                               <thead>
                                 <tr>
                                   <th>#</th>
@@ -78,22 +78,14 @@
                                     <th width="200px" id="action">Action</th>
                                 </tr>
                               </thead>
-                              <tbody id="user_data">
-                                @foreach($data as $data)
-                               <tr>
-                                  <th>#</th>
-                                  <th>{{$data['Fname']}}</th>
-                                  <th>{{$data['Lname']}}</th>
-                                  <th>{{$data['contact_num']}}</th>
-                                    <th>{{$data['password']}}</th>
-                                    <th width="200px" id="action"><button type="button" name="delete" class="btn btn-defualt btn-xs delete" i><i class='fa fa-trash'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' ><i class='fa fa-edit'></i></button>||
+                              <tbody >
+                             
+                                {{--     <th width="200px" id="action"><button type="button" name="delete" class="btn btn-defualt btn-xs delete" i><i class='fa fa-trash'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' ><i class='fa fa-edit'></i></button>||
 <input type='hidden' name='account_id2' value=".$row['account_id'].">
 
  <button type='submit' name='view' class='btn btn-defualt btn-xs '  ><i class='fa fa-eye'></i></button>
-</th>
-                                </tr>
-                                 @endforeach 
-                                    
+</th> --}}
+                            
                                   </tbody>
                  
                                   </table>
@@ -115,13 +107,13 @@
                           </div>
                           <div class="modal-body">
                             <div class=" form-group">
-                                <form method="post" id="formAdd" >
+                                <form action="{{ route('add.applicant') }}" method="post" id="formAdd" >
                                   @csrf
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label><b>First Name</b></label>
-                                            <input type="text" name="" class="form-control" placeholder="First Name" id="Fname">
-                                            <span class="text-danger error-text Fname_error"></span><br>
+                                            <input type="text" name="" class="form-control" placeholder="First Name" id="First_Name">
+                                            <span class="text-danger error-text First_Name_error"></span><br>
                                             <label><b>Username</b></label>
                                             <input type="" name="" class="form-control" placeholder="Username"  id="username">
                                              <span class="text-danger error-text username_error"></span>
@@ -130,8 +122,8 @@
                                  <div class="col-md-6">
                                         <div class="form-group">
                                             <label><b>Last Name</b></label>
-                                            <input type="" name="" class="form-control" placeholder="Last Name"  id="Lname" >
-                                             <span class="text-danger error-text Lname_error"></span><br>
+                                            <input type="" name="" class="form-control" placeholder="Last Name"  id="Last_Name" >
+                                             <span class="text-danger error-text Last_Name_error"></span><br>
                                             <label><b>Password</b></label>
                                             <input type="" name="" class="form-control" placeholder="Password"  id="password">
                                              <span class="text-danger error-text password_error"></span>
@@ -156,8 +148,8 @@
                                             <input type="" name="" class="form-control" placeholder="Barangay"  id="barangay">
                                              <span class="text-danger error-text barangay_error"></span><br>
                                             <label><b>Contact Number</b></label>
-                                            <input type="" name="" class="form-control" placeholder="Contact Number" id="contact_num">
-                                             <span class="text-danger error-text contact_num_error"></span>
+                                            <input type="" name="" class="form-control" placeholder="Contact Number" id="Contact_Number">
+                                             <span class="text-danger error-text Contact_Number_error"></span>
                                               <input type="hidden" name="" class="form-control" placeholder="Contact Number" id="date_register" value="<?php echo date("Y/M/D  h:i:s")?>">
                                             
                                             
@@ -316,39 +308,42 @@
       $(document).ready(function(){
       $('#formAdd').on('submit', function(e){
                         e.preventDefault();
-
-                        var Fname=$('#Fname').val();
+                        var First_Name=$('#First_Name').val();
                         var username=$('#username').val();
-                        var Lname=$('#Lname').val();
+                        var Last_Name=$('#Last_Name').val();
                         var password=$('#password').val();
                         var purok=$('#purok').val();
                         var city=$('#city').val();
                         var barangay=$('#barangay').val();
-                        var contact_num=$('#contact_num').val();
+                        var Contact_Number=$('#Contact_Number').val();
                         var date_register=$('#date_register').val();
-                        console.log(username);
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                        $.ajax({
-                            url: "addApplicant",
-                            type: "post",
+                        var form=this;
+                       $.ajaxSetup({
+                      headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                      }
+                  });
+                   $.ajax({
+                            url: $(form).attr('action'),
+                            method:$(form).attr('method'),
                             data:{
-                                Fname:Fname,
+                                First_Name:First_Name,
                                 username:username,
-                                Lname:Lname,
+                                Last_Name:Last_Name,
                                 password:password,
                                 purok:purok,
                                 city:city,
                                 barangay:barangay,
                                 date_register:date_register,
-                                contact_num:contact_num
+                                Contact_Number:Contact_Number
                             },
+                            // data: new FormData(form),
+                            // processData:false,
+                            // contentType: false,
+
                             dataType:'json',
                             beforeSend:function(data){
-                              $(document).find('span.error-text').text('');
+                              $(form).find('span.error-text').text('');
                             },
                             success: function(response){
                                
@@ -360,15 +355,17 @@
                                 {
                               $.each(response.errors,function(key , message){
                               $('span.'+key+'_error').text(message[0]);
-                          
+                              // $(this).find('span'+key+'_error').text(message[0]);
                               });
                               
                                 }
                                 else{
                                    // $('#show2').html(response.message);
-                                   toastr.success(response.message);
+                                   toastr.success(response.msg);
                                      $('#Modal').modal('hide');
                                      $('#formAdd')[0].reset();
+                                      dataTable.ajax.reload();
+
                                 }
                              
                                 
@@ -378,6 +375,31 @@
                         
 
                     });
+
+      //fetch applicant account
+     var dataTable= $('#accountData').DataTable({
+        processing:true,
+        info:true,
+        'pageLength': 5,
+        'aLengthMenu':[[5,10,25,50,-1],[5,10,25,50,"All"]],
+          "columnDefs":[
+         {
+          "targets":[0, 3, 4,5],
+          "orderable":false,
+         },
+        ],
+
+        ajax: "{{ route('accountFetch') }}",
+        columns:[
+        // {data:'account_id',name:'account_id'},
+        {data:'DT_RowIndex',name:'DT_RowIndex'},
+        {data:'Fname',name:'Fname'},
+        {data:'Lname',name:'Lname'},
+        {data:'contact_num',name:'contact_num'},
+        {data:'password',name:'password'},
+        {data:'actions',name:'actions'}
+        ]
+     });
       });
     </script>
     <!-- /compose -->

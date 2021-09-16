@@ -9,4 +9,7 @@ class applicant_account extends Model
 {
     use HasFactory;
     public $table ='applicant_account';
+    public $timestamps=false;
+   
+
 }

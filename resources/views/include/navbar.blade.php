@@ -36,7 +36,13 @@
 
     {{-- toastr --}}
     <link rel="stylesheet" type="text/css" href="{{url('toastr/toastr.min.css')}}">
-   
+
+    {{-- dataTables --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('datatable/css/dataTables.bootstrap.min.css') }}">
+
+    {{-- sweet alert --}}
+   <link rel="stylesheet" type="text/css" href="{{ asset('sweetalert2/sweetalert2.min.css') }}">
+
 </head>
 <body class="nav-md" id="main" >
     <style type="text/css">
@@ -282,8 +288,24 @@
 
 {{-- jquery --}}
   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
+
+  {{-- jquery 3.6.0 --}}
+  <script type="text/javascript" src="{{ asset('js/jquery/jquery-3.6.0.min.js') }}"></script>
 {{-- bootstrap --}}
+
     <script type="text/javascript" src="{{url('js/bootstrap/bootstrap.bundle.min.js')}}"></script>
+    {{-- datatable --}}
+    <script type="text/javascript" src="{{ asset('datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('datatable/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    {{-- sweetaler 2 --}}
+    <script type="text/javascript" src="{{ asset('sweetalert2/sweetalert2.min.js') }}"></script>
+    <script type="text/javascript">
+      toastr.options.preventDuplicates=true;
+
+   
+                        
+    </script>
 
     {{-- custom --}}
 <script type="text/javascript" src="{{url('js/custom.min.js')}}"></script>

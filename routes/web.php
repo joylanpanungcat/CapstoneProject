@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\verifyController;
-use App\Http\Controllers\applicant_account;
+use App\Http\Controllers\applicantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +23,15 @@ Route::get('/welcome', function () {
 
 
 Route::get("logout",[verifyController::class,"logout"]);
-
-Route::post('addApplicant',[applicant_account::class,"add"]);
+Route::post('addApplicant',[applicantController::class,"add"])->name('add.applicant');
 
 
 //Group middleware page auth
 Route::group(['middleware'=>['accessPage']],function(){
 // Route::get("dashboard",[verifyController::class,"dashboard"]);
     Route::view('dashboard','Dashboard');
-Route::get("account",[verifyController::class,"account"]);
+    Route::get("account",[applicantController::class,"account"]);
+    Route::get("accountFetch",[applicantController::class,"accountFetch"])->name('accountFetch');
 
 });
 Route::group(['middleware'=>['alreadyLog']],function(){

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\admin;
-use App\Models\applicant_account;
+
 use Session;
 
 class verifyController extends Controller
@@ -36,11 +36,7 @@ class verifyController extends Controller
     //     }
     //     return view('Dashboard',compact('data'));
     // }
-     public function account(){
-       $data = applicant_account::all();
-        return view('account',['data'=>$data]);
-    }
-    
+   
     public function logout(){
         if(Session::has('adminID')){
             Session::pull('adminID');

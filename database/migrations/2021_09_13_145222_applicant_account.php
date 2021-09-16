@@ -21,7 +21,7 @@ class ApplicantAccount extends Migration
             $table->string('contact_num');
             $table->string('date_register');
             $table->string('image');
-        // $table->timestamps();
+             $table->timestamps();
         });
     }
 
