@@ -19,9 +19,9 @@ class ApplicantAccount extends Migration
             $table->string('Lname');
             $table->string('password');
             $table->string('contact_num');
-            $table->string('date_register');
-            $table->string('image');
-             $table->timestamps();
+            $table->string('date_register')->nullable();
+            $table->string('image')->nullable();
+             // $table->timestamps();
         });
     }
 

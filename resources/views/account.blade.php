@@ -10,8 +10,6 @@
       }
       table tbody tr td input:hover{
         border: 3px solid #0687d6;
-       
-
       }
       .title_right button{
         float: right;
@@ -183,23 +181,28 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <form method="post" id="editForm">
+                            <form action="{{ route('update.appplicant') }}" method="post" id="editForm">
+                              @csrf
                                 <div class="form-group">
                                     <label>First Name</label>
                                     <input type="text" name="" class="form-control" id="editFname">
+                                    <span class="text-danger error-text First_Name_error2"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Last Name</label>
                                     <input type="text" name="" class="form-control" id="editLname">
+                                    <span class="text-danger error-text Last_Name_error2"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Username</label>
                                     <input type="text" name="" class="form-control" id="editUsername">
+                                    <span class="text-danger error-text username_error2"></span>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input type="text" name="" class="form-control" id="editPassword">
+                                    <span class="text-danger error-text password_error2"></span>
                                 </div>
                                     <input type="hidden" name="" class="form-control" id="editAccount_id">
 
@@ -216,96 +219,14 @@
                            </form>
                                
                                 </div>
-                <!-- compose -->
-    <div class="compose col-md-6  " >
-      <div class="compose-header">
-        Send Message
-        <button type="button" class="close compose-close">
-          <span>×</span>
-        </button>
-      </div>
 
-      <div class="compose-body">
-        <div id="alerts"></div>
-
-        <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor">
-          <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-            </ul>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li>
-                <a data-edit="fontSize 5">
-                  <p style="font-size:17px">Huge</p>
-                </a>
-              </li>
-              <li>
-                <a data-edit="fontSize 3">
-                  <p style="font-size:14px">Normal</p>
-                </a>
-              </li>
-              <li>
-                <a data-edit="fontSize 1">
-                  <p style="font-size:11px">Small</p>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
-            <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
-            <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
-            <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
-            <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
-            <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
-            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
-            <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
-            <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
-            <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
-            <div class="dropdown-menu input-append">
-              <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
-              <button class="btn" type="button">Add</button>
-            </div>
-            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
-            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
-            <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
-          </div>
-        </div>
-
-        <div id="editor" class="editor-wrapper"></div>
-      </div>
-
-      <div class="compose-footer">
-        <button id="send" class="btn btn-sm btn-success" type="button">Send</button>
-      </div>
-    </div>
     <script type="text/javascript">
       $(document).ready(function(){
+           $.ajaxSetup({
+                      headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                      }
+                  });
       $('#formAdd').on('submit', function(e){
                         e.preventDefault();
                         var First_Name=$('#First_Name').val();
@@ -318,11 +239,7 @@
                         var Contact_Number=$('#Contact_Number').val();
                         var date_register=$('#date_register').val();
                         var form=this;
-                       $.ajaxSetup({
-                      headers: {
-                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                      }
-                  });
+                    
                    $.ajax({
                             url: $(form).attr('action'),
                             method:$(form).attr('method'),
@@ -388,6 +305,7 @@
           "orderable":false,
          },
         ],
+          scrollX:true,
 
         ajax: "{{ route('accountFetch') }}",
         columns:[
@@ -400,6 +318,84 @@
         {data:'actions',name:'actions'}
         ]
      });
+
+     // get details
+
+     $(document).on('click','.update',function(){
+                    var account_id=$(this).attr('id');
+                    // alert(update);
+                    // $('.update').find('form')[0].reset();
+                    $('.update').find('span.error-text').text('');
+              $.post('<?= route('get.appplicant.details')  ?>', {account_id:account_id},function(data){
+                
+                                $('#editFname').val(data.details.Fname);
+                                $('#editLname').val(data.details.Lname);
+                                $('#editUsername').val(data.details.username);
+                                $('#editPassword').val(data.details.password);
+                                $('#editAccount_id').val(data.details.account_id);
+
+                               $('#ModalEdit').modal('show');
+              },'json');
+
+
+                });
+      $(document).on('submit','#editForm',function(e){
+          e.preventDefault();
+
+          var EditAccount_id =$('#editAccount_id').val();
+          var First_Name =$('#editFname').val();
+          var username =$('#editUsername').val();
+          var password =$('#editPassword').val();
+          var Last_Name =$('#editLname').val();
+
+            $.ajax({
+                        url: $(this).attr('action'),
+                        type: $(this).attr('method'),
+                        data: {
+                            EditAccount_id:EditAccount_id,
+                            First_Name:First_Name,
+                            username:username,
+                            password:password,
+                            Last_Name:Last_Name
+                        },
+                         beforeSend:function(data){
+                              $(this).find('span.error-text').text('');
+                            },
+                        // success: function(data){
+                        //         // $('#show2').html(data);
+                        //         $('#ModalEdit').modal('hide');
+
+                        //              // load_data();
+                        //         dataTable.ajax.reload();
+                        // }
+                        success: function(response){
+                               
+                             
+                                if(response.status==400)
+                                {
+                              $.each(response.errors,function(key , message){
+                              $('span.'+key+'_error2').text(message[0]);
+                              // $(this).find('span'+key+'_error').text(message[0]);
+                              });
+                              
+                                }
+                                else{
+                                   // $('#show2').html(response.message);
+                                    $('#ModalEdit').modal('hide');
+                                   toastr.success(response.msg);
+                                    
+                                     // $('#formAdd')[0].reset();
+                                      dataTable.ajax.reload();
+
+                                }
+                             
+                                
+                            }
+                    });
+      });
+
+      
+
       });
     </script>
     <!-- /compose -->

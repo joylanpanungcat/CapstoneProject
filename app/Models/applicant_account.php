@@ -9,6 +9,7 @@ class applicant_account extends Model
 {
     use HasFactory;
     public $table ='applicant_account';
+    protected $primaryKey = 'account_id';
     public $timestamps=false;
    
 

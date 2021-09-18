@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,5 +16,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+
+        $faker=Faker::create();
+        foreach(range(1,20) as $index){
+            DB::table('applicant_account')->insert([
+            'Fname'=>$faker->name,
+            'Lname'=>$faker->lastName,
+            'password'=>$faker->password,
+            'contact_num'=>$faker->phoneNumber,
+            'date_register'=>'september 14,2021',
+            'image'=>'nullas',
+
+            ]);
+        }
     }
 }
