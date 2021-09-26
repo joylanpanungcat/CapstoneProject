@@ -27,7 +27,7 @@ class applicantController extends Controller
                                   return "
                                   
 
-                                  <button type='button'  class='btn btn-defualt btn-xs sendArchive' id='".$row['accountId']."'><i class='fa fa-trash'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' id='".$row['accountId']."' ><i class='fa fa-edit'></i></button>||
+                                  <button type='button'  class='btn btn-defualt btn-xs sendArchive' id='".$row['accountId']."'><i class='fa fa-archive'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' id='".$row['accountId']."' ><i class='fa fa-edit'></i></button>||
                             
                 <input type='hidden' id='account_id'  val='".$row['accountId']."'>
 
@@ -155,7 +155,40 @@ public function viewApplicant(Request $request){
       return view('applicant_profile')->with('account_details',$account_details);
  
 }
+public function swalert(Request $request){
+  $accountId=$request->accountId;
+ $query= applicant_account::find($accountId)->delete();
 
+   if($query){
+          return response()->json([
+             'status'=>1,
+             'msg'=>'data archived' 
+          ]);
+        }else
+        {
+          return response()->json([
+             'status'=>0,
+             'msg'=>'something went wrong!' 
+          ]);
+        }
+}
+public function restore(Request $request){
+  $accountId=$request->accountId;
+  $query=applicant_account::withTrashed()->find($accountId)->restore();
+ if($query){
+          return response()->json([
+             'status'=>1,
+             'msg'=>'data undone' 
+          ]);
+        }else
+        {
+          return response()->json([
+             'status'=>0,
+             'msg'=>'something went wrong!' 
+          ]);
+        }
+ 
+}
 // public function applicationRecord(Request $request){
 //     $account_id= $request->account_id;
 //       $accound_details=applicant_account::find($account_id);

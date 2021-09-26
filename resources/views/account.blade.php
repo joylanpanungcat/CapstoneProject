@@ -45,6 +45,9 @@
  .swal2-title {
   color: #FFF;
 }
+.my-validation-message{
+    background-color: transparent;
+}
   </style>
  <div class="right_col" role="main" >
     <div class="">
@@ -232,6 +235,12 @@
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                       }
                   });
+           toastr.options =
+                  {
+                    "closeButton" : true
+                   
+                  }
+    var adminPass='{{Session::get('adminID')['password']}}';
       $('#formAdd').on('submit', function(e){
                         e.preventDefault();
                         var First_Name=$('#First_Name').val();
@@ -400,10 +409,18 @@
 
       $(document).on('click','.sendArchive', function(e){
         e.preventDefault();
-       Swal.fire({
-          title: 'Send to archive? ',
+        var accountId=$(this).attr('id');
+        swalDelete(accountId);
+          });
+
+      function swalDelete(accountId){
+       
+        console.log(adminPass);
+
+         Swal.fire({
+          title:"Send to archive?",
             titleFontColor:'red',
-          icon: 'warning',
+          iconHtml: '<i class="fa fa-archive"></i>',
           iconColor: '#d82a3a',
               showCancelButton: true,
               focusConfirm: false,
@@ -411,27 +428,117 @@
               customClass : {
               title: 'swal2-title'
             },
-              backdrop: `
-              url("/images/logo2.png")
-                    rgb(9 9 26 / 73%)
-                   
-                    center
-                    no-repeat
-                  `,
+            allowOutsideClick: false,
+             
               confirmButtonColor: '#3085d6',
               confirmButtonText:
                 '<i class="fa fa-check"></i> Yes',
               confirmButtonAriaLabel: 'Thumbs up, great!',
               cancelButtonText:
                 '<i class="fa fa-arrow-left"></i>Close',
-              cancelButtonAriaLabel: 'Thumbs down'
-        
-                })  
-          })
+              cancelButtonAriaLabel: 'Thumbs down',
+              preConfirm: function(){
+               Swal.fire({
+                 input: 'password',
+                 
+                  inputPlaceholder: 'Enter your password',
+                 titleFontColor:'red',
+                  iconHtml: '<i class="fa fa-lock"></i>',
+                  iconColor: '#FFF',
+                      showCancelButton: true,
+                      focusConfirm: false,
+                      background: 'rgb(0,0,0,.9)',
+                      customClass : {
+                      title: 'swal2-title'
+                    },
+                    allowOutsideClick: false,
+                     
+                      confirmButtonColor: '#3085d6',
+                      confirmButtonText:
+                        '<i class="fa fa-check"></i> Confirm',
+                    
+                      cancelButtonText:
+                        '<i class="fa fa-arrow-left"></i>Cancel',
+                        customClass: {
+                            validationMessage: 'my-validation-message'
+                          },
+                    preConfirm: (value) => {
+                        
+                        
+                        if (value !== adminPass) {
+                          Swal.showValidationMessage(
+                            'incorrect password'
+                          )
+                        }
+                        if (value === adminPass) {
+                            return new Promise(function (resolve){
+                          $.ajax({
+                            type: "POST",
+                            data:{accountId:accountId} ,
+                            url: '{{ route('swalert') }}',
+                            dataType:'json'
+                           
+                          })
+                          // in case of successfully understood ajax response
+                            .done(function (data) {
+                                swal.close();
+                                 
+                               toastr.success(data.msg+'  <a type="button" style="color:#000" class="restore" id='+accountId+' ><strong>   UNDO.</strong></a>');
+                                dataTable.ajax.reload();
+                            })
+                            .fail(function (erordata) {
+                             
+                            })
 
-      
+                            })
+                        }
+                      },
+                       backdrop: `
+              url("/images/logo2.png")
+                    rgb(9 9 26 / 73%)
+                    center
+                    no-repeat
+                  `
+              });
+
+              },
+               backdrop: `
+              url("/images/logo2.png")
+                    rgb(9 9 26 / 73%)
+                    center
+                    no-repeat
+                  `
+        
+                }) 
+      }
+      $(document).on('click','.restore',function(e){
+        e.preventDefault();
+        var accountId=$(this).attr('id');
+       $.ajax({
+        url:'{{ route('restore') }}',
+        type:'post',
+        data:{
+            accountId:accountId
+        },
+        dataType:'json',
+        success:function(data){
+            toastr.success(data.msg);
+             dataTable.ajax.reload();
+        }
+       })
+      })
 
       });
+    </script>
+    <script type="text/javascript">
+          @if(Session::has('success'))
+            toastr.options =
+              {
+                "closeButton" : true
+               
+              }
+               toastr.success("{{ session('message') }}");
+            @endif
     </script>
     <!-- /compose -->
 

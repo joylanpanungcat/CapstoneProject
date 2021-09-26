@@ -40,6 +40,12 @@ Route::group(['middleware'=>['accessPage']],function(){
     // Application Profile
    Route::post('applicant_profile',[applicantController::class,'applicationRecord'])->name('application.record');
  
+ //archive
+
+ Route::post('swalert',[applicantController::class,'swalert'])->name('swalert');
+ Route::view('account','account')->name('account');
+
+ Route::post('account/restore/',[applicantController::class,'restore'])->name('restore');
 
 
 });
