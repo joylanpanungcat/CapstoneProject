@@ -39,7 +39,12 @@
     background-color:  #2A3F54;
 
 }
- 
+ table tr td{
+    height: 20px;
+ }
+ .swal2-title {
+  color: #FFF;
+}
   </style>
  <div class="right_col" role="main" >
     <div class="">
@@ -69,9 +74,9 @@
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>First Name</th>
-                                  <th>Last Name</th>
+                                  <th>Name</th>
                                   <th>Contact Number</th>
+                                    <th>Username</th>
                                     <th>Password</th>
                                     <th width="200px" id="action">Action</th>
                                 </tr>
@@ -309,10 +314,9 @@
 
         ajax: "{{ route('accountFetch') }}",
         columns:[
-        // {data:'account_id',name:'account_id'},
         {data:'DT_RowIndex',name:'DT_RowIndex'},
         {data:'Fname',name:'Fname'},
-        {data:'Lname',name:'Lname'},
+        {data:'username',name:'username'},
         {data:'contact_num',name:'contact_num'},
         {data:'password',name:'password'},
         {data:'actions',name:'actions'}
@@ -332,7 +336,7 @@
                                 $('#editLname').val(data.details.Lname);
                                 $('#editUsername').val(data.details.username);
                                 $('#editPassword').val(data.details.password);
-                                $('#editAccount_id').val(data.details.account_id);
+                                $('#editAccount_id').val(data.details.accountId);
 
                                $('#ModalEdit').modal('show');
               },'json');
@@ -393,6 +397,37 @@
                             }
                     });
       });
+
+      $(document).on('click','.sendArchive', function(e){
+        e.preventDefault();
+       Swal.fire({
+          title: 'Send to archive? ',
+            titleFontColor:'red',
+          icon: 'warning',
+          iconColor: '#d82a3a',
+              showCancelButton: true,
+              focusConfirm: false,
+              background: 'rgb(0,0,0,.9)',
+              customClass : {
+              title: 'swal2-title'
+            },
+              backdrop: `
+              url("/images/logo2.png")
+                    rgb(9 9 26 / 73%)
+                   
+                    center
+                    no-repeat
+                  `,
+              confirmButtonColor: '#3085d6',
+              confirmButtonText:
+                '<i class="fa fa-check"></i> Yes',
+              confirmButtonAriaLabel: 'Thumbs up, great!',
+              cancelButtonText:
+                '<i class="fa fa-arrow-left"></i>Close',
+              cancelButtonAriaLabel: 'Thumbs down'
+        
+                })  
+          })
 
       
 

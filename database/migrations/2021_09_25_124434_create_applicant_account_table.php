@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ApplicantAccount extends Migration
+class CreateApplicantAccountTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,16 @@ class ApplicantAccount extends Migration
     public function up()
     {
         Schema::create('applicant_account', function (Blueprint $table) {
-            $table->id('account_id');
+            $table->id('accountId');
             $table->string('Fname');
             $table->string('Lname');
+            $table->string('username');
             $table->string('password');
             $table->string('contact_num');
-            $table->string('date_register')->nullable();
-            $table->string('image')->nullable();
-             // $table->timestamps();
+            $table->string('date_register');
+            $table->string('image');
+        
+            $table->timestamps();
         });
     }
 
@@ -32,6 +34,7 @@ class ApplicantAccount extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('applicant_account');
+       
     }
 }

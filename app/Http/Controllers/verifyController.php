@@ -18,7 +18,7 @@ class verifyController extends Controller
        $admin=admin::where(['username'=>$req->username])->first();
 
        if($admin){
-            if($req->password==$admin['password']){
+            if($req->password===$admin['password']){
                 $req->session()->put('adminID',$admin);
                 return redirect("dashboard");
             }else{

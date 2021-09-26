@@ -1,3 +1,4 @@
+
 @extends('include.navbar')
 @section('title','applicant account')
 @section('content')
@@ -21,6 +22,7 @@
                                 <div class="x_title">
                                     <h2>Account Profile  <small></small></h2>
 
+
                                    
                                     <div class="clearfix"></div>
                                 </div>
@@ -38,7 +40,7 @@
                                          
 
                                 <img src="../assets/images/" class="profile2">
-                                <h5 class="Applicant">{{$data->Fname}} {{$data->Lname}}</h5>
+                                <h5 class="Applicant">{{$account_details['Fname']}} {{$account_details['Lname']}}</h5>
 
                             </div>
 
@@ -57,7 +59,7 @@
                                     
                                 <div class="form-group">
                                     <label>Contact Number</label>
-                                    <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$data->contact_num}}">
+                                    <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['contact_num']}}">
                                 </div>
                                  <div class="form-group">
                                     <label>Password</label>
@@ -146,7 +148,23 @@
 
                                     </tr>
                                   </thead>
-                                  <input type="" name="" id="account_id" value="<?=$data['account_id'] ?>" >
+                                  <tbody>
+                                  @forelse($account_details->application as $application)
+
+                                      <tr>
+                                             <td>{{$application['type_application']}}</td>
+                                      </tr>
+                                @empty
+                                 <tr>
+                                        <td align='center' colspan='6' style="color: red;"><i class='fa fa-warning'></i>No Application</td>
+                                       
+                                        <tr>"
+                                         
+                                  @endforelse
+
+                              
+                                  </tbody>
+                                 {{--  <input type="" name="" id="account_id" value="<?=$data['account_id'] ?>" > --}}
                                  
 
                             </table>
@@ -833,7 +851,7 @@
         <button id="send" class="btn btn-sm btn-success" type="button">Send</button>
       </div>
     </div>
-  <script type="text/javascript">
+ {{--  <script type="text/javascript">
       $(document).ready(function(){
            $.ajaxSetup({
                       headers: {
@@ -858,5 +876,5 @@
         }
         application();
       })
-  </script>
+  </script> --}}
   @endsection 

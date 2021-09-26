@@ -18,6 +18,7 @@ class applicant_account extends Seeder
         DB::table('applicant_account')->insert([
             'Fname'=>'joylan',
             'Lname'=>'Panungcat',
+            'username'=>'joylan123',
             'password'=>'123',
             'contact_num'=>'12345',
             'date_register'=>'september 14,2021',

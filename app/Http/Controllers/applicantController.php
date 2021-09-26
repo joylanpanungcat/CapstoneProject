@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\validator;
 // use Illuminate\Support\Facades\DB;
 use App\Models\applicant_account;
+use App\Models\application;
 use DataTables;
 
 class applicantController extends Controller
@@ -18,7 +19,7 @@ class applicantController extends Controller
   }
     public function accountFetch(){
        $data = applicant_account::
-             orderBy('account_id','desc')
+             orderBy('accountId','desc')
              ->get();
         return DataTables::of($data)
                           ->addIndexColumn()
@@ -26,11 +27,11 @@ class applicantController extends Controller
                                   return "
                                   
 
-                                  <button type='button' name='delete' class='btn btn-defualt btn-xs delete' i><i class='fa fa-trash'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' id='".$row['account_id']."' ><i class='fa fa-edit'></i></button>||
+                                  <button type='button'  class='btn btn-defualt btn-xs sendArchive' id='".$row['accountId']."'><i class='fa fa-trash'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' id='".$row['accountId']."' ><i class='fa fa-edit'></i></button>||
                             
-                <input type='hidden' id='account_id'  val='".$row['account_id']."'>
+                <input type='hidden' id='account_id'  val='".$row['accountId']."'>
 
-                 <a type='button' name='viewApplicant' class='btn btn-defualt btn-xs ' href='applicant_profile/".$row['account_id']."' target='_blank'><i class='fa fa-eye'></i></a>
+                 <a type='button' name='viewApplicant' class='btn btn-defualt btn-xs ' href='applicant_profile/".$row['accountId']."' target='_blank'><i class='fa fa-eye'></i></a>
                 ";
                               })
                              ->rawColumns(['actions'])
@@ -61,6 +62,7 @@ class applicantController extends Controller
         $account = new applicant_account;
         $account->Fname=$request->First_Name;
         $account->Lname=$request->Last_Name;
+        $account->username=$request->username;
         $account->password=$request->password;
         $account->contact_num=$request->Contact_Number;
         $account->date_register=$request->date_register;
@@ -148,17 +150,17 @@ class applicantController extends Controller
     }
 public function viewApplicant(Request $request){
     $account_id= $request->id;
-      $accound_details=applicant_account::find($account_id);
-      // return response()->json(['details'=>$accound_details]);
-      return view('applicant_profile',['data'=>$accound_details]);
+      $account_details=applicant_account::find($account_id);
+
+      return view('applicant_profile')->with('account_details',$account_details);
  
 }
 
-public function applicationRecord(Request $request){
-    $account_id= $request->account_id;
-      $accound_details=applicant_account::find($account_id);
-        return response()->json(['details'=>$accound_details]);
-}
+// public function applicationRecord(Request $request){
+//     $account_id= $request->account_id;
+//       $accound_details=applicant_account::find($account_id);
+//         return response()->json(['details'=>$accound_details]);
+// }
 
 
 

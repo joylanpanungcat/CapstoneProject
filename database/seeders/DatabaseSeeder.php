@@ -18,10 +18,11 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $faker=Faker::create();
-        foreach(range(1,20) as $index){
+        foreach(range(1,6000) as $index){
             DB::table('applicant_account')->insert([
             'Fname'=>$faker->name,
             'Lname'=>$faker->lastName,
+            'username'=>$faker->lastName,
             'password'=>$faker->password,
             'contact_num'=>$faker->phoneNumber,
             'date_register'=>'september 14,2021',
