@@ -15,9 +15,10 @@ class CreateApplicationTable extends Migration
     {
         Schema::create('application', function (Blueprint $table) {
             $table->id('applicationId');
-            $table->unsignedBigInteger('accountId');
+            $table->unsignedBigInteger('accountId')->nullable();
             $table->string('type_application');
             $table->foreign('accountId')->references('accountId')->on('applicant_account');
+            $table->string('filenames')->nullable();
             $table->timestamps();
         });
     }

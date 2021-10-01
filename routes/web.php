@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\verifyController;
 use App\Http\Controllers\applicantController;
+use App\Http\Controllers\archivedController;
+use App\Http\Controllers\applicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,10 @@ Route::group(['middleware'=>['accessPage']],function(){
 
     // Application Profile
    Route::post('applicant_profile',[applicantController::class,'applicationRecord'])->name('application.record');
+
+   //application
+   Route::view('application','application');
+   Route::post('/multi-uploads',[applicationController::class,'filesUpload'])->name('filesUpload');
  
  //archive
 
@@ -46,6 +52,8 @@ Route::group(['middleware'=>['accessPage']],function(){
  Route::view('account','account')->name('account');
 
  Route::post('account/restore/',[applicantController::class,'restore'])->name('restore');
+ Route::view('archive','archive');
+Route::get("archivedFetch",[archivedController::class,"archivedFetch"])->name('archivedFetch');
 
 
 });

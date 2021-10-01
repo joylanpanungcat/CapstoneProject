@@ -58,7 +58,7 @@ class applicantController extends Controller
             'errors'=>$validator->messages()
         ]);
       }else{
-
+//User::create($data)
         $account = new applicant_account;
         $account->Fname=$request->First_Name;
         $account->Lname=$request->Last_Name;

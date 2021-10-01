@@ -42,7 +42,8 @@
 
     {{-- sweet alert --}}
    <link rel="stylesheet" type="text/css" href="{{ asset('sweetalert2/sweetalert2.min.css') }}">
-
+{{-- dropzone --}}
+<link rel="stylesheet" type="text/css" href="{{ asset('dropzone/min/dropzone.min.css') }}">
 </head>
 <body class="nav-md" id="main" >
     <style type="text/css">
@@ -106,7 +107,7 @@
                
                   <li><a href="map.php"><i class="fa fa-map"></i> Susceptibility Map </a>
                   </li>
-                  <li><a href="application.php" class="noti_app"><i class="fa fa-list-ol"></i> Application <span class="badge bg-danger" id="count_application"></span> </a>
+                  <li><a href="application" class="noti_app"><i class="fa fa-list-ol"></i> Application <span class="badge bg-danger" id="count_application"></span> </a>
                      <li><a href="schedule.php"><i class="fa fa-calendar"></i>Schedule List</a>
                     
                   </li>
@@ -135,6 +136,10 @@
                   </li>
                     <li><a href="emergency.php" class="noti_em"><i class="fa fa-fire"></i>
                    Emergency<span class="badge bg-danger" id="count"></span> </a>
+                    
+                  </li>
+                  <li><a href="archive" class="noti_em"><i class="fa fa-archive"></i>
+                   Archived<span class="badge bg-danger" id="count"></span> </a>
                     
                   </li>
                    <li><a><i class="fa fa-file"></i> Reports <span class="fa fa-chevron-down"></span></a>
@@ -306,6 +311,8 @@
    
                         
     </script>
+
+    <script type="text/javascript" src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
 
     {{-- custom --}}
 <script type="text/javascript" src="{{url('js/custom.min.js')}}"></script>

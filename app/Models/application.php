@@ -11,8 +11,12 @@ class application extends Model
      public $table='application';
     protected $primaryKey='applicationId';
   public $timestamps=false;
+  protected $fillable=['filenames'];
 
     public function applicant_account(){
         return $this->belongsTo(applicant_account::class,'applicationId');
+    }
+    public function setFilenamesAttribute($value){
+        $this->attributes['filenames']=json_encode($value);
     }
 }
