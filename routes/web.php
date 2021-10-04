@@ -45,7 +45,10 @@ Route::group(['middleware'=>['accessPage']],function(){
    //application
    Route::view('application','application');
    Route::post('/multi-uploads',[applicationController::class,'filesUpload'])->name('filesUpload');
+
+    Route::post('/storeData',[applicationController::class,'storeData'])->name('storeData');
  
+    Route::post('/storeimgae',[applicationController::class,'storeImage'])->name('storeimgae');
  //archive
 
  Route::post('swalert',[applicantController::class,'swalert'])->name('swalert');

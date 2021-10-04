@@ -1,7 +1,7 @@
 @extends('include.navbar')
 @section('title','applicant account')
 @section('content')
-<link rel="stylesheet" type="text/css" href="{{ asset('css/appcss/wizardForm.css') }}">
+
   <style type="text/css">
       table tbody tr td input{
         border: none;
@@ -82,6 +82,41 @@ button.close-modal:hover{
 }
 .panel-requirements{
     border: 2px solid #000;
+         height: 200px;
+}
+.addFiles{
+        padding: 5px;
+    background-color: #E9ECEF;
+    border: none;
+    font-size: 20px;
+    border-radius: 20%;
+    height: 30px;
+    /* text-align: center; */
+    object-fit: cover;
+    line-height: 1px;
+}
+.dropzoneDragArea {
+            background-color: #fbfdff;
+            border: 1px dashed #c0ccda;
+            border-radius: 6px;
+            cursor: pointer;
+            
+        }
+
+       
+        .dz-progress{
+            display: none;
+        }
+.icon i{
+        font-size: 3em;
+    background-color: black;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #696767;
+    color: #fff;
+    padding: 25px 20px;
 }
   </style>
  <div class="right_col" role="main" >
@@ -280,20 +315,25 @@ button.close-modal:hover{
                               <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" class="">
                               <span >&times;</span>
                             </button>
+                            <div class="panel panel-default addApplicationPanel">
+                                    <div class="panel-body">
+                                        
+                                 
                             <div id="showModalUpdate"></div>
                             <!-- MultiStep Form -->
 <div class="container-fluid" id="grad1">
     <div class="row justify-content-center mt-0">
        {{--  <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2"> --}}
-        <div class="col-md-8 text-center p-0 mt-3 mb-2">
-            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+        <div class="col-md-8 text-center ">
+            <div class="card">
                 <h2><strong>Add Application</strong></h2>
                 <p>Fill all the inputs correctly </p>
                 <div class="row">
                     <div class="col-md-12 mx-0">
-                        <form id="msform" action="{{ route('filesUpload') }}" method="post" enctype="multipart/form-data">
+                        <form id="msform" action="{{ route('storeData') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <!-- progressbar -->
+                          
                             <ul id="progressbar">
                                 <li class="active" id="account"><strong>Personal</strong></li>
                                 <li id="personal"><strong>Business</strong></li>
@@ -303,32 +343,32 @@ button.close-modal:hover{
                             <fieldset >
                                 <div class="form-card col-md-12">
                                     <h2 class="fs-title">Personal Information</h2> 
-                                    <div class="form-group col-md-6 col-sm-6"> 
-                                   <input type="text" name="" id="FnameAdd" class="form-control input_fieldset1" placeholder="First Name">
+                                    <div class="form-group col-md-4"> 
+                                   <input type="text" name="FnameAdd" id="FnameAdd" class="form-control input_fieldset1" placeholder="First Name">
                                       </div>
-                                      <div class="form-group col-md-6 col-sm-6"> 
+                                      <div class="form-group col-md-4"> 
                                    <input type="text" name="" id="LnameAdd" class="form-control input_fieldset1" placeholder="Last Name" >
                                      </div>
-                                   <div class="form-group col-md-6 col-sm-6"> 
+                                   <div class="form-group col-md-4"> 
                                    <input type="text" name="" id="middleAdd" class="form-control" placeholder="Middle Name (Optional)" >
                                </div>
-                               <div class="form-group col-md-6 col-sm-6"> 
+                               <div class="form-group col-md-4"> 
                                    <input type="text" name="" id="contactAdd" class="form-control input_fieldset1" placeholder="Contact No." >
                                </div>
-                                 <div class="form-group col-md-6 col-sm-6"> 
+                                 <div class="form-group col-md-5"> 
                                     <input type="text" name="" id="alcontactAdd" class="form-control input_fieldset1" placeholder="Alternative Contact No.">
                                     </div>
                                     <br>    
                                     <div class="form-group col-md-12 "> <h5>Address</h5>
                                     </div>
 
-                                     <div class="form-group col-md-6 col-sm-6"> 
+                                     <div class="form-group col-md-4"> 
                                    <input type="text" name="" id="purokAdd" class="form-control input_fieldset1" placeholder="Purok">
                                     </div>
-                                    <div class="form-group col-md-6 col-sm-6"> 
+                                    <div class="form-group col-md-4"> 
                                    <input type="text" name="" id="barangayAdd" class="form-control input_fieldset1" placeholder="Barangay">
                                     </div>
-                                    <div class="form-group col-md-6 col-sm-6">
+                                    <div class="form-group col-md-4">
                                    <input type="text" name="" id="cityAdd" class="form-control input_fieldset1"   placeholder="City"></div>
                                 </div>
                                 <button type="button" name="next" class="btn next action-button"  value="Next" />Next <i class="fa fa-arrow-right"></i></button>
@@ -355,17 +395,17 @@ button.close-modal:hover{
                                <div class="form-group col-md-6 col-sm-6"> 
                                   <input type="text" name="" id="business_nameAdd" class="form-control" placeholder="Business Name">
                                </div>
-                               <div class="form-group col-md-6 col-sm-6"> 
+                               <div class="form-group col-md-4"> 
                                    <input type="text" name="" id="BinAdd" class="form-control"  placeholder="Bin">
                                     </div>
                                     <br>    
-                                     <div class="form-group col-md-6 col-sm-6"> 
+                                     <div class="form-group col-md-4"> 
                                    <input type="text" name="" id="BP_numAdd" class="form-control" placeholder="BP Number">
                                     </div>
-                                    <div class="form-group col-md-6 col-sm-6"> 
+                                    <div class="form-group col-md-4"> 
                                    <input type="text" name="" class="form-control" id="OR_numAdd" placeholder="OR Number"></div>
                                     <div class="form-group col-md-6 col-sm-6">
-                                   <input type="text" name="" class="form-control" id="statusAdd" value="pending..." readonly=""></div>
+                                   <input type="hidden" name="" class="form-control" id="statusAdd" value="pending" readonly=""></div>
                                 </div><button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button><button type="button" name="next" class="btn next action-button" value="Next Step" />Next <i class="fa fa-arrow-right"></i></button>
                             </fieldset>
                            
@@ -378,21 +418,39 @@ button.close-modal:hover{
                       <div class="panel-body">
                              <div class="input-group xpress control-group lst increment">
                              <div class=" input-group xpress control-group lst  col-md-8" >
-                                    <input type="file" name="filenames[]" class="myfrm form-control" multiple="">
+                                <button type="button" class="btn btn-default addFiles"  data-toggle="dropzone">
+                                  <label for="file">
+                                   <i class="fa fa-file"></i>
+                                  </label>
+                                  {{--   <input type="file" name="filenames[]" class="myfrm form-control" id="file" multiple="" style="display:none;"> --}}
+                                </button>
                                 </div>
-                                <div class="input-group-btn col-md-4">
-                                    <button type="button" class="btn btn-success addfile">Add</button>
-                                </div>
+                                
                         </div>
                      
                       </div>
                     </div>
-                    <div class="panel panel-default panel-requirements">
-                      
-                      <div class="panel-body">
+                    
+                        
+      
+                         <div class="dropzone dropzoneDragArea " id="dropzoneDragArea" >
+
+                            <div  class="dz-message">
+                                <div class="icon">
+                                    <i class="fa fa-upload"></i>
+                                   
+                                </div>
+                                 <h2>You can drag and drop files to add</h2>
+                            </div>
                          
-                      </div>
-                    </div>
+                            
+                           
+                        </div>
+
+                            <p>Only JPG, PNG, PDF, DOC (Word) and  XLS (Excel) files types are supported. Maximum file size is 25MB, maximun attachments:3.</p>
+                          
+                     
+                  
                     
                   </div>
                      
@@ -415,133 +473,138 @@ button.close-modal:hover{
                                         </div>
                                     </div>
                                 </div>
-
+<input type="hidden" class="userid" name="userid" id="userid" value="">
+<input type="hidden" class="userid" name="FnameFiles" id="FnameFiles" value="">
                          <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button>
                                 <button type="submit" class="btn btn-success" >Submit</button>
                             </fieldset>
                                   
                         </form>
                     </div>
-                    <form action="form_upload.html" class="dropzone"></form>
+                   
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
                            
                             </div>
                                   
                               
                           </div>
-   <script type="text/javascript">
-       $(document).ready(function(){
-            $.ajaxSetup({
-                      headers: {
-                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                      }
-                  });
-         $(document).on("click","#addApplication_form", function(e){
-        e.preventDefault();
-                        var control_number=  $('#control_numberAdd').val();
-                        var type_occupancy2=  $('#type_occupancy2Add').val();
-                        var nature_business=  $('#nature_businessAdd').val();
-                        var Fname=  $('#FnameAdd').val();
-                        var Lname=  $('#LnameAdd').val();
-                        var business_name=  $('#business_nameAdd').val();
-                        var purok=  $('#purokAdd').val();
-                        var barangay=  $('#barangayAdd').val();
-                        var city=  $('#cityAdd').val();
-                        var inpector_id=  $('#inpector_idAdd').val();
-                        var Bin=  $('#BinAdd').val();
-                        var BP_num=  $('#BP_numAdd').val();
-                        var status=  $('#statusAdd').val();
-                        var OR_num=  $('#OR_numAdd').val();
-                        var type_application2=  $('#type_application2').val();
-                        var addApplication_form=$('#addApplication_form').val();
-                        var contact_num=$('#contactAdd').val();
-
-                        console.log(type_application2);
-
-
-            // $.ajax({
-            //     url: "application_action.php",
-            //     type:"post",
-            //     data:{
-            //         type_application2:type_application2,
-            //         control_number:control_number,
-            //         nature_business:nature_business,
-            //         type_occupancy2:type_occupancy2,
-            //         Fname:Fname,
-            //         Lname:Lname,
-            //         business_name:business_name,
-            //         purok:purok,
-            //         barangay:barangay,
-            //         city:city,
-            //         inpector_id:inpector_id,
-            //         Bin:Bin,
-            //         BP_num:BP_num,
-            //         status:status,
-            //         OR_num:OR_num,
-            //         contact_num:contact_num,
-            //         addApplication_form:addApplication_form
-            //     },
-            //     success:function(data){
-            //         $('#show2').html(data);
-            //         $("#addApplication").modal('hide');
-            //         $("#applicationAdd")[0].reset();
-                   
-
-            //     }
-            // })
 
 
 
-     });
-         $(document).on('submit','#msform',function(e){
-            e.preventDefault();
-          var filenames=$('input[name="filenames[]"]').val();
-    var filenames = [];
-     $('input[name="filenames[]"]').map(function () {
-                 filenames.push(this.value);  // $(this).val()
-            }).get();
+    <script type="text/javascript">
 
+
+    
+        Dropzone.autoDiscover = false;
+// Dropzone.options.demoform = false;   
+let token = $('meta[name="csrf-token"]').attr('content');
+
+
+var myDropzone = new Dropzone("div#dropzoneDragArea", { 
+    paramName: "file",
+    url: "{{ url('/storeimgae') }}",
+    addRemoveLinks: true,
+    autoProcessQueue: false,
+    uploadMultiple: true,
+ 
+    parallelUploads: 10,
+    maxFiles: 10,
+    params: {
+        _token: token
+    },
+     // The setting up of the dropzone
+    init: function() {
+        var myDropzone = this;
+        //form submission code goes here
+        $(document).on('submit','#msform',function(event) {
+
+          
+
+            //Make sure that the form isn't actully being sent.
+            event.preventDefault();
+            var Fname=$('#FnameAdd').val();
+
+            URL = $("#msform").attr('action');
             $.ajax({
-                url:'{{route('filesUpload') }}',
-                type: "POST",
-                data:new FormData(this),
-                dataType:"json",
-                processData:false,
-                contentType:false,
-                success:function(data){
-                   console.log(data.data);
+                type: 'POST',
+                url: URL,
+                data: {Fname:Fname,
+                        _token:"{{csrf_token()}}"},
+                dataType:'json',
+                success: function(result){
+                    if(result.status == "success"){
+                        // fetch the useid 
+                        var userid = result.user_id;
+                        $("#userid").val(userid); // inseting userid into hidden input field
+                        $("#FnameFiles").val(result.Fname);
+                        
+                        //process the queue
+                  
+                        myDropzone.processQueue();
+                    }else{
+                        console.log("error");
+                    }
                 }
-            })
+            });
+        });
 
-            
-         })
-      $('#addApplication_form').on('click',function(e){
-            e.preventDefault();
-            // var filenames=$('input[name="filenames[]"]').val();
-    // var filenames = [];
-    //  $('input[name="filenames[]"]').map(function () {
-    //              filenames.push(this.value);  // $(this).val()
-    //         }).get();
+        //Gets triggered when we submit the image.
+        this.on('sending', function(file, xhr, formData){
+        //fetch the user id from hidden input field and send that userid with our image
+          let userid = document.getElementById('userid').value;
+          let Fname = document.getElementById('FnameFiles').value;
+           formData.append('userid', userid);
+           formData.append('Fname', Fname);
+        });
+        
+        this.on("success", function (file, response) {
+            //reset the form
+            $('#msform')[0].reset();
+            //reset dropzone
+            $('.dropzone-previews').empty();
 
+            alert('upload ng image');
+        });
 
-            // $.ajax({
-            //     url:'route('filesUpload') }}',
-            //     type: "POST",
-            //     data:({filenames:filenames}),
-            //     // dataType:"json",
-            //     success:function(data){
-            //        console.log(data);
-            //     }
-            // })
+        this.on("queuecomplete", function () {
+        
+        });
+        
+        // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+        // of the sending event because uploadMultiple is set to true.
+        this.on("sendingmultiple", function() {
+          // Gets triggered when the form is actually being sent.
+          // Hide the success button or the complete form.
+        });
+        
+        this.on("successmultiple", function(files, response) {
+          // Gets triggered when the files have successfully been sent.
+          // Redirect user or notify of success.
+        });
+        
+        this.on("errormultiple", function(files, response) {
+          // Gets triggered when there was an error sending the files.
+          // Maybe show form again, and notify user of error
+        });
+    }
+    });
+  $('.addFiles').on('click',function(e){
+        e.preventDefault();
+        myDropzone.processQueue();
+      });
+    </script>
+    
+   
+    
+ <script type="text/javascript" src="{{ asset('js/appscript/wizardForm.js') }}"></script>
 
-            
-         });
-       
-       })
-   </script>
-   <script type="text/javascript" src="{{ asset('js/appscript/wizardForm.js') }}"></script>
+    
+
+  
   @endsection 

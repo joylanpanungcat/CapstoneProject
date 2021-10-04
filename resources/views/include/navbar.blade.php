@@ -42,8 +42,13 @@
 
     {{-- sweet alert --}}
    <link rel="stylesheet" type="text/css" href="{{ asset('sweetalert2/sweetalert2.min.css') }}">
-{{-- dropzone --}}
-<link rel="stylesheet" type="text/css" href="{{ asset('dropzone/min/dropzone.min.css') }}">
+   
+    {{-- dropzone --}}
+<link rel="stylesheet" type="text/css" href="{{ asset('dropzone/min/dropzone.min.css') }}"> 
+ <script type="text/javascript" src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
+
+{{-- wizard --}}
+<link rel="stylesheet" type="text/css" href="{{ asset('css/appcss/wizardForm.css') }}">
 </head>
 <body class="nav-md" id="main" >
     <style type="text/css">
@@ -312,8 +317,6 @@
                         
     </script>
 
-    <script type="text/javascript" src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
-
     {{-- custom --}}
 <script type="text/javascript" src="{{url('js/custom.min.js')}}"></script>
 {{-- scrollbar --}}
@@ -321,3 +324,5 @@
 
    {{-- toastr --}}
    <script type="text/javascript" src="{{url('toastr/toastr.min.js')}}"></script>
+
+      

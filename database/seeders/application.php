@@ -15,7 +15,9 @@ class application extends Seeder
     {
             DB::table('application')->insert([
             'accountId'=>1,
-            'type_application'=>'FSIC',
+            
+            'type_application'=>'FSIC'
+
            
 
         ]);

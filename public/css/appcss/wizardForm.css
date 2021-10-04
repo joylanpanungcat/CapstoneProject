@@ -81,7 +81,7 @@
 
 #msform .action-button {
     
-    background: skyblue;
+    background:  #2A3F54;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -100,7 +100,7 @@
 
 #msform .action-button-previous {
     width: 100px;
-    background: #2A3F54;
+    background:skyblue;
     font-weight: bold;
     color: white;
     border: 0 none;
