@@ -39,12 +39,15 @@ Route::group(['middleware'=>['accessPage']],function(){
   
     Route::get('applicant_profile/{id}',[applicantController::class,'viewApplicant'])->name('applicant_profile');
 
-    // Application Profile
+    // Applicant Profile
    Route::post('applicant_profile',[applicantController::class,'applicationRecord'])->name('application.record');
 
    //application
    Route::view('application','application');
    Route::post('/multi-uploads',[applicationController::class,'filesUpload'])->name('filesUpload');
+   Route::get('/applicationFetch',[applicationController::class,'applicationFetch'])->name('applicationFetch');
+Route::get('/application_profile/{id}',[applicationController::class,'viewApplication'])->name('application_profile');
+   
 
     Route::post('/storeData',[applicationController::class,'storeData'])->name('storeData');
  

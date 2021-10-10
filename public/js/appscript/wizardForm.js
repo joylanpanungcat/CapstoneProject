@@ -3,7 +3,7 @@ $(document).ready(function(){
 var current_fs, next_fs, previous_fs; //fieldsets
 var opacity;
 
-$(document).on('click','.next',function(){
+$(document).on('click','.next2',function(){
 
 current_fs = $(this).parent();
 next_fs = $(this).parent().next();

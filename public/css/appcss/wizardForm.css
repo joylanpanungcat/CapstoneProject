@@ -11,6 +11,7 @@
     box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
     padding: 20px 40px 30px 40px;
     box-sizing: border-box;
+    display: block;
     
     /*position: relative*/
 
@@ -38,11 +39,11 @@
 
 #msform input,
 #msform textarea {
-    padding: 0px 8px 4px 8px;
-    border: none;
+    /*padding: 0px 8px 4px 8px;*/
+    /*border: none;
     border-bottom: 1px solid #ccc;
-    border-radius: 0px;
-    margin-bottom: 25px;
+    border-radius: 0px;*/
+    margin-bottom: 15px;
     margin-top: 2px;
     width: 100%;
     box-sizing: border-box;
@@ -85,7 +86,7 @@
     font-weight: bold;
     color: white;
     border: 0 none;
-    border-radius: 0px;
+    border-radius: 25px;
     cursor: pointer;
     padding: 2px 2px;
     margin-top: 10px;
@@ -97,14 +98,28 @@
 #msform .action-button:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
 }
-
+#msform #submit:hover{
+    box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
+}
 #msform .action-button-previous {
     width: 100px;
     background:skyblue;
     font-weight: bold;
     color: white;
     border: 0 none;
-    border-radius: 0px;
+    border-radius: 25px;
+    cursor: pointer;
+   padding: 2px 2px;
+    margin-top: 10px;
+
+}
+#msform #submit {
+    width: 100px;
+    background:#42ba96;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 25px;
     cursor: pointer;
    padding: 2px 2px;
     margin-top: 10px;

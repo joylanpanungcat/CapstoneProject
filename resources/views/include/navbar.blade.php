@@ -12,11 +12,11 @@
     {{-- csrf  --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title')</title>
-  
+     <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}">
 {{-- jquery --}}
   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
-   <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}">
+
 
 
    <link rel="stylesheet" type="text/css" href="{{url('css/css/font-awesome.min.css')}}">
@@ -49,6 +49,9 @@
 
 {{-- wizard --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('css/appcss/wizardForm.css') }}">
+{{-- jquery-ui --}}
+<link rel="stylesheet" type="text/css" href="{{ asset('js/jquery-ui/jquery-ui.min.css') }}">
+
 </head>
 <body class="nav-md" id="main" >
     <style type="text/css">
@@ -297,7 +300,7 @@
 </html>
 
 {{-- jquery --}}
-  <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
+{{--   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script> --}}
 
   {{-- jquery 3.6.0 --}}
   <script type="text/javascript" src="{{ asset('js/jquery/jquery-3.6.0.min.js') }}"></script>
@@ -310,12 +313,6 @@
 
     {{-- sweetaler 2 --}}
     <script type="text/javascript" src="{{ asset('sweetalert2/sweetalert2.min.js') }}"></script>
-    <script type="text/javascript">
-      toastr.options.preventDuplicates=true;
-
-   
-                        
-    </script>
 
     {{-- custom --}}
 <script type="text/javascript" src="{{url('js/custom.min.js')}}"></script>
@@ -325,4 +322,5 @@
    {{-- toastr --}}
    <script type="text/javascript" src="{{url('toastr/toastr.min.js')}}"></script>
 
-      
+{{-- jquery-ui --}}
+<script type="text/javascript" src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
