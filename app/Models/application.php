@@ -17,12 +17,16 @@ class application extends Model
         return $this->belongsTo(applicant_account::class,'applicationId');
     }
         public function applicant(){
-        return $this->belongsTo(applicant::class,'applicantId');
+        return $this->belongsTo(applicant::class,'applicantId','applicantId');
     }
 
     public function fileUpload(){
-        return $this->hasMany(fileUpload::class,'applicationId');
+        return $this->hasMany(fileUpload::class,'applicationId','applicationId');
     }
+    public function folderUpload(){
+        return $this->hasMany(folderUpload::class,'applicationId','applicationId');
+    }
+   
    
   
     public function setFilenamesAttribute($value){

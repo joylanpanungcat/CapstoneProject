@@ -11,13 +11,16 @@ class applicant extends Model
     public $table='applicant';
     protected $primaryKey='applicantId';
     public $timestamps=false;
+     protected $fillable=['applicantId','Fname','Lname','Mname','contact_num','alcontact'];
 
+
+  
 public function application(){
-    return $this->hasMany(application::class,'applicantId');
+    return $this->hasMany(application::class,'applicantId','applicantId');
 }
 
 public function address(){
-    return $this->hasOne(address::class,'applicantId');
+    return $this->hasOne(address::class,'applicantId','applicantId');
 }
 
 

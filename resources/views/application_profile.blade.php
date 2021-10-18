@@ -22,8 +22,19 @@
     letter-spacing: 5px;
         margin-top: -10px;
     }
-  </style>
+.view{
 
+    outline: none !important;
+    box-shadow: none !important;
+  
+}
+.folder a{
+    font-size: 14px;
+}
+.folder a:hover{
+    color: blue;
+}
+</style>
 <div class="right_col" role="main" >
     <div class="">
         <div class="page-title">
@@ -61,7 +72,13 @@
                                          
 
                                 <img src="{{ asset('images/profile/')."/".rand(1,5).".jpg" }}" class="profile2">
-                                <h5 class="Applicant">{{$account_details['Fname']}} {{$account_details['Lname']}}</h5>
+                                <h5 class="Applicant">
+                                  
+                              {{ $account_details->Fname }}  {{ $account_details->Lname }}
+                                    
+                               
+               
+                                   </h5>
 
                             </div>
 
@@ -80,49 +97,49 @@
                                 <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['Fname']}}">
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->Fname }}">
                                     </div>
                                   </div>
                                   <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Middle Name</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['Mname']}}" >
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->Mname }}" >
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['Lname']}}" >
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->Lname }}" >
                                     </div><br>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Contact No</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['contact_num']}}">
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->contact_num }}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Alternative Contact</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['alcontact']}}">
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->alcontact }}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Purok</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['purok']}}" >
-                                    </div>
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$applicantAdd->purok}}" >
+                                    </div><br>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Barangay</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['barangay']}}">
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$applicantAdd->barangay}}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>City</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['city']}}" >
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$applicantAdd->city}}" >
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
@@ -192,14 +209,30 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                     @foreach ($account_details as $user)
-                        
+                                     @foreach ($account_details->application as $application)
+                                    @php 
+                                        $i=1;
+                                    @endphp
 
 
                                     <tr>
-                                        <td>
-                                            
+                                        <td>{{$i++}}
                                         </td>
+                                        <td>
+                                            {{$application->type_application}}
+                                        </td>
+                                        <td>{{$application->business_name}}
+                                        </td>
+                                        <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                        </td>
+                                        <td>{{$application->date_apply}}
+                                        </td>
+                                        <td>{{$application->status}}
+                                        </td>
+                             <td><button type='' name='view' class='btn btn-defualt view'
+                     ><i class='fa fa-eye'></i></button>
+                            </td>
+
                                     </tr>
                                     @endforeach
 
@@ -233,7 +266,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Type of application</th>
+                                        <th>Type of application </th>
                                         <th>Business Name</th>
                                         <th>Address</th>
                                         <th>Date Applied</th>
@@ -243,18 +276,35 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                               {{--    @forelse($account_details->application as $application)
+                              <tbody>
+                                     @foreach ($account_details->application as $application)
+                                    @php 
+                                        $i=1;
+                                    @endphp
 
-                                      <tr>
-                                             <td>{{$application['type_application']}}</td>
-                                      </tr>
-                                @empty --}}
-                                {{--  <tr>
-                                        <td align='center' colspan='6' style="color: red;"><i class='fa fa-warning'></i>No Application</td>
-                                       
-                                        <tr>"
-                                         
-                                  @endforelse --}}
+
+                                    <tr>
+                                        <td>{{$i++}}
+                                        </td>
+                                        <td>
+                                            {{$application->type_application}}
+                                        </td>
+                                        <td>{{$application->business_name}}
+                                        </td>
+                                        <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                        </td>
+                                        <td>{{$application->date_apply}}
+                                        </td>
+                                        <td>{{$application->status}}
+                                        </td>
+                                         <td>    <button  class="btn viewDocuments view" data-toggle="modal"><i class="fa fa-eye"></i></button>
+                                        </td>
+
+                                    </tr>
+                                    @endforeach
+
+                              
+                                  </tbody>
 
                               
                                   </tbody>
@@ -283,25 +333,7 @@
 
 
 
-                       <!--     <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                         <div class="x_panel">
-                          <div class="x_title">
-                            <h2>Invoice  <small></small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                              </li>
-                          
-                            
-                            </ul>
-                            <div class="clearfix"></div>
-                          </div>
-                        </div>
-                       </div> -->
-
-                             <!--  <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                            <p>On process... </p>
-
-                            </div> -->
+                       
                             </div>
 
                         </div>
@@ -310,619 +342,216 @@
                 </div>
             </div>
 
-<div class="modal fade " id="view_evaluation" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content modal-lg">
-        <div class="modal-header">
-          <h4 class="modal-title" id="ModalTitle">Evaluation Reports</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-        </div>
-        <div class="modal-body">
-        <div class="x_panel">
+
+
+ 
+    <!-- Modal HTML -->
+    <div id="viewDocuments" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Uploaded Documents</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                <div class="row">
+                    <button class="btn btn-primary btn-sm" id="new_folder" data-toggle="modal" data-target="#addFolder"><i class="fa fa-plus" ></i> New Folder</button>
+                    <button class="btn btn-primary btn-sm ml-4" id="new_file"><i class="fa fa-upload"></i> Upload File</button>
+                </div>
+                <div >
+                <div class="d-inline-block">
+                     <h7><a  href='javascript:;' type="button" id="fileParent">
+                        <span><i class="fa fa-folder"></i></span>
+                            <b class="to_folder">Files </b>
+                            </a>
+                    </h7>
+                </div>
+                <div id="path" class="d-inline-block">
                    
-                    <div class="x_content">
-                        <form class="form-horizontal form-label-left">
-                            <h6><b>Business Details</b></h6>
-                        <div class="form-group row ">
-                            <label class="control-label col-md-3 col-sm-3 ">Type of Application</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="Fire Safety Evaluation Clearance" readonly="">
-                            </div>
-                        </div>
-                         <div class="form-group row ">
-                            <label class="control-label col-md-3 col-sm-3 ">Control Number</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="070321-0003" readonly="">
-                            </div>
-                        </div>
-                         <div class="form-group row ">
-                            <label class="control-label col-md-3 col-sm-3 ">Business Name</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="joylan's store" readonly="">
-                            </div>
-                        </div>
-                         <div class="form-group row ">
-                            <label class="control-label col-md-3 col-sm-3 ">Owner's Name</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="Joylan Panungcat" readonly="">
-                            </div>
-                        </div>
-                         <div class="form-group row ">
-                            <label class="control-label col-md-3 col-sm-3 ">Location</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="Prk2, San francisco Panabo City" readonly="">
-                            </div>
-                        </div><br>
-                        <h6><b>Inspection Information</b></h6>
-                        <div class="form-group row ">
-                            <label class="control-label col-md-3 col-sm-3 ">Inspector Name</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="Joylan Panungcat" readonly="">
-                            </div>
-                             <label class="control-label col-md-3 col-sm-3 ">Emergency Light</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="Yes" readonly="">
-                            </div>
-                               <label class="control-label col-md-3 col-sm-3 ">No Fire extinguisher</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="1" readonly="">
-                            </div>
-
-                               <label class="control-label col-md-3 col-sm-3 ">Building Equipped with fire alarms</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="Yes" readonly="">
-                            </div>
-                               <label class="control-label col-md-3 col-sm-3 ">Vulnerable to hazzard marterials</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="Yes" readonly="">
-                            </div>
-                               <label class="control-label col-md-3 col-sm-3 ">Number of flamables materials</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="1" readonly="">
-                            </div>
-                             <label class="control-label col-md-3 col-sm-3 ">Defects</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="N/A" readonly="">
-                            </div>
-                              <label class="control-label col-md-3 col-sm-3 ">Recommendation</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="N/A" readonly="">
-                            </div>
-                              <label class="control-label col-md-3 col-sm-3 ">Inspection Status</label>
-                            <div class="col-md-9 col-sm-9 ">
-                                <input type="text" class="form-control" value="approved" readonly="">
-                            </div>
-
-
-                        </div>
                     
-
-
-                    </form>
-                    </div>
-                            </div>
-                           
-                                <center>
-          <button class="btn btn-primary" data-dismiss="modal" ><i class="fa fa-arrow-left"></i> Back</button></center>
-   
-        </div>
-    
-       
-     
-         
-          
-       
-      </div>
-    </div>
-  </div>
-  
-
-  <div class="modal fade" id="payment_success" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-             <h4 class="modal-title">Payment Send Successfully</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
-        </div>
-        <form method="post">
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
-        
-        </div>
-    </form>
-      </div>
-    </div>
-  </div>
-  <!-- View Payment -->
-  
-   <div class="modal fade" id="view_payment" role="dialog">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-             <h5 class="modal-title">Payment Information</small></h5>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
-        </div>
-        <form method="post">
-        <div class="modal-body">
-          <div class="form-group">
-              <div class="form-group">
-                  <label>Type of Application</label>
-                  <input type="text" name="" readonly="" id="" class="form-control" value="Fire Safety Evaluation Clearance">
-              </div>
-              <div class="form-group">
-                  <label>Type of Occupancy</label>
-                  <input type="text" name="" readonly="" id="" class="form-control" value="Mercantile">
-              </div>
-              <div class="form-group">
-                  <label>Total Payment</label>
-                  <input type="text" name="" readonly="" id="" class="form-control" value="500">
-
-
-
-              </div>
-              <div class="form-group">
-                  <label>Amount</label>
-                  <input type="text" name=""  id="" class="form-control" readonly="" value="500">
-              </div>
-             <div class="form-group">
-                  <label>Date Paid</label>
-                  <input type="text" name=""  id="" class="form-control" value="07/04/2021 13:04:45 PM" >
-              </div>
-              <input type="hidden" name="" id="application_id_payment">
-              
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-      
-        </div>
-    </form>
-      </div>
-    </div>
-  </div>
-<!-- Modal Payment -->
-  <div class="modal fade" id="addPayment" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-             <h5 class="modal-title">Add payment to>><br><small id="owners_payment"></small></h5>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
-        </div>
-        <form method="post">
-        <div class="modal-body">
-          <div class="form-group">
-              <div class="form-group">
-                  <label>Type of Application</label>
-                  <input type="text" name="" readonly="" id="type_application_payment" class="form-control">
-              </div>
-              <div class="form-group">
-                  <label>Type of Occupancy</label>
-                  <input type="text" name="" readonly="" id="type_occupancy_payment" class="form-control">
-              </div>
-              <div class="form-group">
-                  <label>Total Payment</label>
-                  <input type="text" name="" readonly="" id="total_payment" class="form-control" value="500">
-
-
-
-              </div>
-              <div class="form-group">
-                  <label>Amount</label>
-                  <input type="text" name=""  id="amount_payment" class="form-control" >
-              </div>
-            
-              <input type="hidden" name="" id="application_id_payment">
-              
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning " id="payment_send" ><i class="fa fa-paper-plane-o"></i>Send</button>
-        </div>
-    </form>
-      </div>
-    </div>
-  </div>
-  <!-- viewCetificate -->
-
-<div class="modal fade" id="viewCertificate_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-xl" >
-                        
-                        <div class="modal-content">
-                         
-                           <div class="col-md-12 col-sm-12  ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Fire inpspection doccuments</h2>
-                 <!--    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                          </div>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul> -->
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                     <center>
-                                <img src="../assets/images/form1.jpg" class="image1">
-                            </center>
-                                 
-                                  </div>
-                                  <div class="button-group">
-                                      <button type="button" class="btn btn-secondary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button>
-                                      <button type="button" class="btn btn-primary" onclick="download()"><i class="fa fa-download"></i> Download</button>
-                                  </div>
-                  </div>
                 </div>
-              </div>
-                        </div>
-                      </div>
-                  </div>
-  <!-- viewFile -->
-   <div class="modal fade" id="viewFiles_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-xl" >
-                        
-                        <div class="modal-content">
-                         
-                           <div class="col-md-12 col-sm-12  ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Fire inpspection doccuments</h2>
-                 <!--    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                          </div>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul> -->
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <p>Upload files here..</p>
-                    <form action="application.profile.php" class="dropzone"></form>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <button class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                  </div>
                 </div>
-              </div>
-                        </div>
-                      </div>
-                  </div>
-<!-- view_modal -->
-  <div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-xl" >
-                        
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <center>
-                            <h2  id="exampleModalLabel " > APPLICATION INFORMATION</h2>
-                            </center>
-                         
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                              <div id=showEdit></div>
-                            <form method="post" id="applicationAdd">
-                                <h6>Personal Information</h6>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Firstname</th>
-                                            <th>Last Name</th>
-                                            <th>Contact Number</th>
-                                            <th>Purok</th>
-                                            <th>Barangay</th>
-                                            <th>City</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                         
-                             <td><input type="text" name="" id="Fname" class="form-control" ></td>
-                              <td><input type="text" name="" id="Lname" class="form-control" ></td>
-                              <td><input type="text" name="" id="contact_num" class="form-control" ></td>
-                              <td><input type="text" name="" id="purok" class="form-control" ></td>
-                                             <td><input type="text" name="" id="barangay" class="form-control"></td>
-                                             <td><input type="text" name="" id="city" class="form-control" ></td>
 
-                                            
-                                        </tr>
-                                    </tbody>
-                                </table><br>
-                                <h6>Business Information</h6>
-
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Type Of Application</th>
-                                            <th>Control Number</th>
-                                            <th>Type of Occupancy</th>
-                                            <th>Nature of Business</th>
-                                             <th>Business Name</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                           <!-- <td><select class="form-control" id="type_application2">
-                                        <option value="Fire Safety Evaluation Clearance " id="type_application2">Fire Safety Evaluation Clearance </option>
-                                        <option value="FSIC for Occupancy " id="status">FSIC for Occupancy </option>
-                                        <option  value="FSIC for Business">FSIC for Business </option>
-                                        <option  value="FSIC for Business Renewal">FSIC for Business Renewal</option>
-                                                </select></td> -->
-                            <td><input type="text" name="" id="type_application" class="form-control" ></td>
-                             <td><input type="text" name="" id="control_number" class="form-control"  readonly=""></td>
-                      
-                        <td><input type="text" name="" id="type_occupancy" class="form-control" ></td>
-                         <td><input type="text" name="" id="nature_business" class="form-control"  ></td>
-                          <td><input type="text" name="" id="business_name" class="form-control" ></td>
-                                        
-
-                                            
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                  
-                                  <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Bin</th>
-                                            <th>BP number</th>
-                                            <th>Inspector Name</th>
-                                             <th>OR_num</th>
-                                           <th style="width:20%;">Status</th>
-
-                                        </tr>
-                                    </thead>
-                                     <tbody>
-                                        <tr>
-                                           
-                                             <td><input type="text" name="" id="Bin" class="form-control"  ></td>
-                                             <td><input type="text" name="" id="BP_num" class="form-control" ></td>
-                                              <td><select class="form-control" id="inpector_id">
-                                                  
-                                              </select></td>
-                                              <td><input type="text" name="" class="form-control" id="OR_num"></td>
-                                     <td><input type="text" name="" class="form-control" id="status" readonly=""></td>
-                                          <!--   <td><select class="form-control" id="statusAdd">
-                                                    <option value="Pending" id="status"></option>
-                                                    <option  value="Process">Process</option>
-                                                    <option  value="Approved">Approved</option>
-                                                </select></td> -->
-                                            
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                 <input type="hidden" name="" id="application_id">
-                                  <!-- <input type="hidden" name="" id="inpector_id"> -->
-
-                                      <div class="button-group view_button">
-                                </div>
-                               </form>
-                            </div>
-                                  
-                              
-                          </div>
-                        </div>
-                      </div>
-
-    <!-- Schedule_modal -->
-    <div class="modal fade" id="schedule_modal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-
-             <h5 class="modal-title">Add Schedule<br><small id="Fname"></small><small id="Lname"></small></h5>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
-        </div>
-        <form method="post">
-        <div class="modal-body">
-          <div class="form-group">
-              <div class="form-group">
-                  <label>Type of Application</label>
-                  <input type="text" name="" readonly=""  class="form-control" value="Fire Safety Evaluation Clearance">
-              </div>
-              <div class="form-group">
-                  <label>Location</label>
-                  <input type="text" name="" readonly=""  class="form-control" value="Prk2, San Francisco, Panabo City">
-              </div>
-              <div class="form-group">
-                  <label>Business Name</label>
-                  <input type="text" name="" readonly="" class="form-control" value="joylan store">
-              </div>
-              <div class="form-group">
-                  <label>Inpector name</label>
-                  <input type="text" name="" readonly="" class="form-control" id="inspector_name2">
-              </div>
-                 <div class="form-group">
-                  <label>Date of inspection</label>
-                  <input type="date" name="" class="form-control" id="date_inspection">
-              </div>
-              <input type="hidden" name="" id="modalId">
-              
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning " id="add_schedule2" ><i class="fa fa-calendar"></i> Add Schedule</button>
-        </div>
-    </form>
-      </div>
-    </div>
-  </div>
-  <!-- success schedule -->
-    <div class="modal fade" id="schedule_success" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header payment_success">
-    
-      <h4 class="modal-title" id="ModalTitle">Schedule Addedd Successfully!</h4>
-
-        
-      </div>
-      <!-- <div class="modal-body">
-    
-      </div> -->
-      <center>
-
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-</center>
-  </div>
-</div>
-</div>
-
-                
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-             <h5 class="modal-title">Send Invoice to>><br><small id="owners"></small></h5>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
-        </div>
-        <form method="post">
-        <div class="modal-body">
-          <div class="form-group">
-              <div class="form-group">
-                  <label>type of Application</label>
-                  <input type="text" name="" readonly="" id="modalType" class="form-control">
-              </div>
-              <div class="form-group">
-                  <label>Total Amount</label>
-                  <input type="text" name="" readonly="" id="modalTotal" class="form-control">
-              </div>
-              <div class="form-group">
-                  <label>Payment Due</label>
-                  <input type="text" name="" readonly="" id="modatlPayment" class="form-control">
-              </div>
-              <input type="hidden" name="" id="modalId">
-              
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning " id="invoiceSend" ><i class="fa fa-paper-plane-o"></i>Send</button>
-        </div>
-    </form>
-      </div>
-    </div>
-  </div>
-</div>  
-
-
-
-    <!-- compose -->
-    <div class="compose col-md-6  ">
-      <div class="compose-header">
-        Send Message
-        <button type="button" class="close compose-close">
-          <span>×</span>
-        </button>
-      </div>
-
-      <div class="compose-body">
-        <div id="alerts"></div>
-
-        <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor">
-          <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-            </ul>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li>
-                <a data-edit="fontSize 5">
-                  <p style="font-size:17px">Huge</p>
-                </a>
-              </li>
-              <li>
-                <a data-edit="fontSize 3">
-                  <p style="font-size:14px">Normal</p>
-                </a>
-              </li>
-              <li>
-                <a data-edit="fontSize 1">
-                  <p style="font-size:11px">Small</p>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
-            <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
-            <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
-            <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
-            <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
-            <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
-            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
-            <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
-            <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
-            <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
-            <div class="dropdown-menu input-append">
-              <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
-              <button class="btn" type="button">Add</button>
+                    <div id="folder_table" class="table-responsive"></div>
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
-            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
-            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-          </div>
-
-          <div class="btn-group">
-            <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
-            <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
-          </div>
         </div>
-
-        <div id="editor" class="editor-wrapper"></div>
-      </div>
-
-      <div class="compose-footer">
-        <button id="send" class="btn btn-sm btn-success" type="button">Send</button>
-      </div>
     </div>
+       
+
+       {{-- Add folder --}}
+       <div id="addFolder" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Uploaded Documents</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="addFolderForm">
+                         <input type="text" name="" id="parentFolderId">
+                        <div class="form-group">
+                           
+                            <label>Folder Name</label> 
+                            <input type="text" name="" id="folderName" placeholder="Enter Folder Name" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                         
+                    </form>
+                  
+              
+             
+                    
+                   
+                </div>
+              
+            </div>
+        </div>
+    </div>
+        
+       
+    
+  <script type="text/javascript">
+
+      $(document).ready(function(){
+
+
+
+
+         $.ajaxSetup({
+                      headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                      }
+                  });
+     
+
+        $('.viewDocuments').on('click',function(e){
+            e.preventDefault();
+
+            $('#viewDocuments').modal('show');
+          
+        $('.modal-dialog').draggable({
+      handle: ".modal-header"
+
+    });
+        });
+
+        $('#fileParent').click(function(e){
+            e.preventDefault();
+            $('#path div:last').remove();
+            
+        load_folder_list();
+        })
+
+ load_folder_list();
+   
+        function load_folder_list(){
+        var Fname = '<?php   echo $account_details->Fname ?>';
+        var Lname= '<?php   echo $account_details->Lname ?>';
+        var applicationId= '<?php   echo $applicationId->applicationId ?>';
+         
+            $.ajax({
+                url: '{{ route('fetch_file') }}',
+                type: "post",
+                data:{
+                    Fname:Fname,
+                    Lname:Lname,
+                    applicationId:applicationId
+                },
+                dataType:'json',
+                success:function(data){
+                    $('#folder_table').html(data.data);
+
+                     $('#parentFolderId').val(data.parentId);
+                }
+            })
+        }
+        $(document).on('click','.viewFolder',function(e){
+            e.preventDefault();
+
+        var folderId=$(this).attr('id');
+        var parentId=$('#parentId').val();
+      
+
+            $.ajax({
+                url: '{{ route('viewFolder') }}',
+                type:'post',
+                data:{
+                   
+                    folderId:folderId,
+                    parentId:parentId
+                },
+                dataType: 'json',
+                success:function(data){
+                     $('#folder_table').html(data.data);
+                     $('#path').append('<div>nice ka one</div>');
+                      $('#parentFolderId').val(folderId);
+
+                }
+            });
+
+        });
+
+    $(document).on('submit','#addFolderForm',function(e){
+        e.preventDefault();
+        var parentFolderId=$('#parentFolderId').val();
+        var folderName=$('#folderName').val();
+          var Fname = '<?php   echo $account_details->Fname ?>';
+        var Lname= '<?php   echo $account_details->Lname ?>';
+          var applicationId= '<?php   echo $applicationId->applicationId ?>';
+        $.ajax({
+            url: '{{ route('addFolder') }}',
+            type:'post',
+            data: {
+                 Fname:Fname,
+                Lname:Lname,
+                applicationId:applicationId,
+                parentFolderId:parentFolderId,
+                folderName:folderName,
+            },
+            dataType: 'json',
+            success:function(data){
+                $('#addFolder').modal('hide');
+                fetch_data(data.parentId);
+              
+            }
+        })
+
+    });
+
+    function fetch_data(parentId){
+         var parentId = parentId;
+         var folderId = parentId;
+
+              $.ajax({
+                url: '{{ route('viewFolder') }}',
+                type:'post',
+                data:{
+                   
+                    folderId:folderId,
+                    parentId:parentId
+                },
+                dataType: 'json',
+                success:function(data){
+                     $('#folder_table').html(data.data);
+
+                }
+            });
+    }
+
+
+
+      })
+
+
+  </script>
+
+
 
   @endsection 

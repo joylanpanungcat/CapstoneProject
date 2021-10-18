@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\application;
 use App\Models\applicant;
 use App\Models\address;
 use App\Models\fileUpload;
-use Storage;
+use App\Models\folderUpload;
+// use Storage;
 use DataTables;
 
 use Illuminate\Support\Facades\validator;
@@ -21,6 +23,7 @@ class applicationController extends Controller
         return DataTables::of($data)
                           ->addIndexColumn()
                           ->addColumn('actions', function($row){
+
                                   return '
                                   <button type="button"  class="btn   btn-sm  sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive"><i class="fa fa-archive"></i>
                                 </button>   || 
@@ -38,10 +41,22 @@ class applicationController extends Controller
     }
     public function viewApplication(Request $request){
     $account_id= $request->id;
-      $account_details=application::find($account_id);
+      // $account_details=application::join('applicant','applicant.applicantId','=','application.applicantId')
+      //   ->where('application.applicationId','=',$account_id)
+      //   ->get();
 
-      return view('application_profile')->with('account_details',$account_details);
- 
+      // return view('application_profile',compact('account_details'));
+
+
+        $account_details = applicant::find($account_id);
+        $applicantAdd=address::where('applicantId','=',$account_id)->first();
+         $applicationId=address::where('applicationId','=',$account_id)->first();
+
+    
+       return view('application_profile',compact('account_details','applicantAdd','applicationId'));
+        
+  
+
 }
     public function storeData(Request $request) {
         $Fname=$request->Fname;
@@ -106,13 +121,14 @@ class applicationController extends Controller
             $address->purok = $purok;
             $address->barangay = $barangay;
             $address->city = $city;
+            $address->save();
 
             $address2 = new address;
             $address2->applicationId = $user_id;
             $address2->purok = $purokAddBus;
             $address2->barangay = $barangayBus;
             $address2->city = $cityBus;
-
+             $address2->save();
         }
         catch (\Exception $e) {
             return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
@@ -125,6 +141,10 @@ class applicationController extends Controller
         $Fname =$request->Fname;
         $Lname =$request->Lname;
         $Mname =$request->Mname;
+        $applicationId =$request->userid;
+        $applicationId2 =$request->userid;
+
+
         $type_application =$request->type_application;
 
 
@@ -139,31 +159,51 @@ class applicationController extends Controller
 
             $files=[];
             $path = public_path().'/files/';
-       // $path= mkdir(public_path().'/files/'.$Fname.'-'.$Lname.'/'.$type_application);
+          // $path= mkdir(public_path().'/files/'.$Fname.'-'.$Lname.'/'.$type_application);
 
  
  
         foreach($img as $file){
-                    $name=time().rand(1,100).'.'.$file->extension();
+                $name=time().rand(1,100).'.'.$file->extension();
                // $imageName = strtotime(now()).rand(11111,99999).'.'.$img->getClientOriginalExtension();
-                   $file->move($path.$Fname.' '.$Mname.' '.$Lname.'/'.$type_application,$name);
-                    $files[]=$name;     
-$filesUpload= new  fileUpload;
-        $filesUpload->applicationId=$userid;
-       $filesUpload->filename=$name;
-       $filesUpload->save();
+                $file->move($path.$Fname.$Lname.'/'.$type_application,$name);
+                $files[]=$name;     
+              
                 }
-    $path2=$Fname.' '.$Mname.' '.$Lname.'/'.$type_application;
+    $path2=$Fname.$Lname.'/'.$type_application;
 
      $application = new application;
-       $application->where('applicationId', $userid)->update(['filenames'=>$path2]);   
+       $application->where('applicationId', $userid)->update(['filenames'=>$path2]);
 
-      
+     $folder= new folderUpload;
+      $folder->applicationId= $applicationId;
+      $folder->folderName= $Fname.$Lname;
+      $folder->parentId= $applicationId2;
+      $folder->save();
+      $folderParent = $folder->folderId;
+
+
+      $folder2= new folderUpload;
+      $folder2->applicationId= $applicationId;
+      $folder2->folderName= $type_application;
+      $folder2->parentId= $folderParent;
+      $folder2->save();
+      $folderParent2 = $folder2->folderId;
+
+      foreach($files as $name){
+                 $filesUpload= new  fileUpload;
+                $filesUpload->applicationId=$userid;
+               $filesUpload->filename=$name;
+               $filesUpload->folderId=$folderParent2;
+                 $filesUpload->save();
+      }
 
 
         return response()->json(['status'=>"success",'imgdata'=>$files,'userid'=>$userid]);
         }
     }
+   
+
 
     public function filesUpload(Request $request){
         // $files=$request->file('filenames');
@@ -175,8 +215,174 @@ $files=[];
                 $file->move(public_path('files'),$name);
                 $files[]=$name;
             }
-
+ 
       
 
+    }
+
+    // file system 
+
+    public function fetch_file(Request $request){
+        $Fname = $request->Fname;
+        $Lname = $request->Lname;
+        $applicationId = $request->applicationId;
+        $path=$Fname.$Lname;
+    
+    $folderGet= folderUpload::where('applicationId','=',$applicationId)
+        ->whereRaw('folderId  = parentId')
+        ->get();
+    if($folderGet->count()>0){
+        foreach($folderGet as $folder)
+        $folderId=$folder['folderId'];
+    }
+     
+
+    $folderFetch= folderUpload::where('applicationId','=',$applicationId)
+        ->where('parentId','=',$folderId)
+        ->get();
+     
+     $fileUpload= application::find($applicationId)->fileUpload;
+       
+       // $folder =array_filter(glob('files/'.$path.'/*'),'is_dir');
+
+       $output="<table class='table table-bordered table-striped'> 
+        <tr>
+            <th> Application
+            </th>
+            <th>  Folder Id
+            </th>
+            <th>  Parent Folder
+            </th>
+            <th>  Date Modified
+            </th>
+        </tr>
+             ";
+     if($folderFetch->count()>0){
+        foreach($folderFetch as $name){
+
+          if($name['folderName']!=$path){
+            $output .='
+            <tr>
+               
+                <td>
+            
+                            <div class="folder"> 
+                            <a type="button" class="btn viewFolder" id="'.$name["folderId"].'">
+                           
+                            <span><i class="fa fa-folder"></i></span>
+                            '.$name["folderName"].'
+                             </a>
+                             </div>
+                      
+                  
+                </td>
+                 <td>'.$name["folderId"].'
+                </td>
+                 <td>'.$name["parentId"].'
+                </td>
+                <td>'.$name['folderId'] .'
+                </td>
+               
+            </tr>
+            ';
+               $parentId =$name["parentId"];
+         }
+       
+        }
+
+     }
+     else{
+        $output.='<tr>   
+                <td >No Folder Found
+                </td>
+        </tr>';
+     }
+     
+        
+       return response()->json(['status'=>200,'data'=>$output,'folderFetch'=>$folderFetch, 'parentId'=>$parentId,'folderId'=>$folderId]);
+     
+    }
+
+    public function viewFolder(Request $request){
+        $folderId = $request->folderId;
+        $parentId = $request->parentId;
+        $folderParentId= 0;
+
+         $fileFetch= folderUpload::find($folderId)->fileUpload;
+         $folderFetch=folderUpload::where('parentId','=',$folderId)->get();
+     
+       
+
+         $output="<table class='table table-bordered table-striped'> 
+        <tr>
+            <th>Files/Folder
+            </th>
+            <th>  Folder Id
+            </th>
+            <th>  Parent Folder
+            </th>
+            <th>  Date Modified
+            </th>
+        </tr>
+             ";
+             if($fileFetch->count()>0){
+                 foreach($fileFetch as $file){
+                 $output.='<tr>   
+                        <td >'.$file["filename"].'
+                        </td>
+                </tr>';
+                
+
+              }
+             }
+                if($folderFetch->count()>0){
+                 foreach($folderFetch as $file){
+                 $output.='<tr>   
+                        <td > <div class="folder"> 
+                            <a type="button" class="btn viewFolder" id="'.$file["folderId"].'">
+                            <input type="hidden" value="'.$file["parentId"].'" id="parentId"> 
+                            <span><i class="fa fa-folder"></i></span>
+                            '.$file["folderName"].'
+                             </a>
+                             </div>
+                        </td>
+                </tr>';
+                
+                $folderParentId =$file['folderId'];
+              }
+             }
+
+             
+             
+
+            return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId]);
+     
+    }
+    public function addFolder(Request $request){
+    $parentId= $request->parentFolderId;
+    $folderName= $request->folderName;
+    $Fname= $request->Fname;
+    $Lname= $request->Lname;
+    $applicationId= $request->applicationId;
+    $path= public_path().'/files/'.$Fname.$Lname;
+
+    $folder=folderUpload::where('folderId','=',$parentId)->get();
+
+    if($folder->count() > 0){
+        $folderUpload = new folderUpload;
+        $folderUpload->applicationId=$applicationId;
+        $folderUpload->folderName=$folderName;
+        $folderUpload->parentId=$parentId;
+        $folderUpload->save();
+        $folderId= $folderUpload->folderId;
+
+        mkdir($path.'/'.$folderName);
+
+     
+    }
+  return response()->json(['status'=>200,'parentId'=> $parentId ,'folderId'=>$folderId]);
+
+
+       
     }
 }

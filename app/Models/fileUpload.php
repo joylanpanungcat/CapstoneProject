@@ -14,6 +14,10 @@ class fileUpload extends Model
    
 
     public function application(){
-        return $this->belongsTo(application::class,'applicationId');
+        return $this->belongsTo(application::class,'applicationId','applicationId');
     }
+     public function folderUpload(){
+        return $this->belongsTo(folderUpload::class,'folderId','folderId');
+    }
+
 }

@@ -18,6 +18,7 @@ class CreateFileUploadTable extends Migration
             $table->unsignedBigInteger('applicationId')->nullable();
             $table->foreign('applicationId')->references('applicationId')->on('application') ->onUpdate('cascade')
              ->onDelete('cascade');;
+            $table->unsignedBigInteger('folderId')->nullable();
             $table->string('filename')->nullable();
             $table->timestamps();
         });

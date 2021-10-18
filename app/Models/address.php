@@ -19,6 +19,6 @@ class address extends Model
         return $this->belongsTo(application::class,'applicationId');
     }
       public function applicant(){
-        return $this->belongsTo(applicant::class,'applicantId');
+        return $this->belongsTo(applicant::class,'applicantId','applicantId');
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\verifyController;
 use App\Http\Controllers\applicantController;
 use App\Http\Controllers\archivedController;
 use App\Http\Controllers\applicationController;
+use App\Http\Controllers\fileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,11 @@ Route::get('/application_profile/{id}',[applicationController::class,'viewApplic
  Route::view('archive','archive');
 Route::get("archivedFetch",[archivedController::class,"archivedFetch"])->name('archivedFetch');
 
+
+// file system
+Route::post('fetch_file',[applicationController::class,"fetch_file"])->name('fetch_file');
+Route::post('viewFolder',[applicationController::class,"viewFolder"])->name('viewFolder');
+Route::post('addFolder',[applicationController::class,"addFolder"])->name('addFolder');
 
 });
 Route::group(['middleware'=>['alreadyLog']],function(){
