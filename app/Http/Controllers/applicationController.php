@@ -144,11 +144,7 @@ class applicationController extends Controller
         $Mname =$request->Mname;
         $applicationId =$request->userid;
 
-
-
         $type_application =$request->type_application;
-
-
 
 
         if($request->file('file')){
@@ -445,12 +441,44 @@ public function addFolder(Request $request ){
                 $error="Folder Already Exist";
                  return response()->json(['error'=>$error]);
         };
-
-     
- 
-  
-
-
        
+    }
+
+public function addFile(Request $request){
+   
+
+        $parentFolderId2 =$request->parentFolderId2;
+        $applicationId =$request->applicationId;
+
+        if($request->file('file')){
+            $img = $request->file('file');
+            $userid = $request->applicationId;
+            $files=[];
+            $path = public_path().'/files/';
+
+            $rootFolder=folderUpload::tree($parentFolderId2,$applicationId);
+             $path=$path.$rootFolder;
+         
+ 
+ 
+        foreach($img as $file){
+                $name=$file->getClientOriginalName();
+                $file->move($path,$name);
+                $files[]=$name;     
+                }
+   
+      foreach($files as $name){
+                 $filesUpload= new  fileUpload;
+                $filesUpload->applicationId=$userid;
+               $filesUpload->filename=$name;
+               $filesUpload->folderId=$parentFolderId2;
+             $filesUpload->lastModified=date('m/d/y h:i:s A');
+
+                 $filesUpload->save();
+      }
+
+        return response()->json(['status'=>"success",'imgdata'=>$files,'userid'=>$userid]);
+        }
+
     }
 }

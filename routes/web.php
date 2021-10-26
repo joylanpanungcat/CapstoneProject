@@ -68,6 +68,8 @@ Route::post('fetch_file',[applicationController::class,"fetch_file"])->name('fet
 Route::post('viewFolder',[applicationController::class,"viewFolder"])->name('viewFolder');
 Route::post('addFolder',[applicationController::class,"addFolder"])->name('addFolder');
 
+Route::post('addFile',[applicationController::class,"addFile"])->name('addFile');
+
 });
 Route::group(['middleware'=>['alreadyLog']],function(){
     Route::get('/', function () {

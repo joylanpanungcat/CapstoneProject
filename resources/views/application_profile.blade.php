@@ -60,9 +60,50 @@ display: block;
 #fileParent,#path{
     font-size: 14px;
 }
+.addFiles{
+        padding: 5px;
+    background-color: #E9ECEF;
+    border: none;
+    font-size: 20px;
+    border-radius: 20%;
+    height: 30px;
+    /* text-align: center; */
+    object-fit: cover;
+    line-height: 1px;
+}
+.dropzoneDragArea {
+            background-color: #fbfdff;
+            border: 1px dashed #c0ccda;
+            border-radius: 6px;
+            cursor: pointer;
+            
+        }
 
-
-
+.dz-message{
+     flex-wrap: wrap;
+  align-content: center;
+}
+ .dz-progress{
+            display: none;
+        }
+.dropzoneDragArea {
+    background-color: #fbfdff;
+    border: 1px dashed #c0ccda;
+    border-radius: 6px;
+    cursor: pointer;
+    
+}
+.icon i{
+        font-size: 3em;
+    background-color: black;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #696767;
+    color: #fff;
+    padding: 25px 20px;
+}
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -386,7 +427,7 @@ display: block;
                 <div class="modal-body">
                 <div class="row">
                     <button class="btn btn-primary btn-sm" id="new_folder" data-toggle="modal" data-target="#addFolder"><i class="fa fa-plus" ></i> New Folder</button>
-                    <button class="btn btn-primary btn-sm ml-4" id="new_file"><i class="fa fa-upload"></i> Upload File</button>
+                    <button class="btn btn-primary btn-sm ml-4" id="addFileButton" data-toggle="modal" data-target="#addFile" style="display:none"><i class="fa fa-upload"></i> Upload File</button>
                 </div>
                 <br>
                 <div class="folder2">
@@ -427,7 +468,7 @@ display: block;
                         <div class="form-group">
                            
                             <label>Folder Name</label> 
-                            <input type="text" name="" id="folderName" placeholder="Enter Folder Name" class="form-control">
+                      <input type="text" name="" class="form-control" id="folderName" placeholder="Enter folder name">
                              <div id="errorFolder" style="color:red"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -444,21 +485,129 @@ display: block;
             </div>
         </div>
     </div>
+
+
+
+    {{-- Add file --}}
+       <div id="addFile" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add File</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="addFileForm" enctype="multipart/form-data" >
+                         <input type="text" name="" id="parentFolderId2">
+                         <input type="text" value="<?php   echo $applicationId->applicationId ?>" id='applicationId' >
+                          <button type="button" class="btn btn-default addFiles"  data-toggle="dropzone">
+                                  <label for="file">
+                                   <i class="fa fa-file"></i>
+                                  </label>
+                                
+                                </button>
+                        <div class="form-group ">
+                           
+                         
+                         <div class="dropzone dropzoneDragArea my-custom-scrollbar " id="dropzoneDragArea" >
+
+                            <div  class="dz-message">
+                                <div class="icon">
+                                    <i class="fa fa-upload"></i>
+                                   
+                                </div>
+                                 <h2>You can drag and drop files to add</h2>
+                            </div>
+                         
+                            
+                           
+                        </div>
+
+                            <p>Only JPG, PNG, PDF, DOC (Word) and  XLS (Excel) files types are supported. Maximum file size is 25MB, maximun attachments:3.</p>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                      <div class="user-image mb-3 text-center">
+                        <div id="showImageHere">
+                          <div class="card-group">
+                            <div class="row">
+                              <!-- Image preview -->
+                            </div>
+                          </div>    
+                        </div>
+                        </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
         
        
     
   <script type="text/javascript">
+
 
       $(document).ready(function(){
 
 
 
 
-         $.ajaxSetup({
+    $.ajaxSetup({
                       headers: {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                       }
                   });
+
+    let token = $('meta[name="csrf-token"]').attr('content');
+       Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone("div#dropzoneDragArea", { 
+        paramName: "file",
+        url: "{{ url('/addFile') }}",
+        addRemoveLinks: true,
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        clickable :['.addFiles','#dropzoneDragArea'],
+        parallelUploads: 10,
+        maxFiles: 10,
+        params: {
+            _token: token
+        },
+        init:function(){
+            var myDropzone = this;
+           $(document).on('submit','#addFileForm',function(event){
+            event.preventDefault();
+            var parentFolderId2=  $('#parentFolderId2').val();
+             URL = $("#addFileForm").attr('action');
+                    myDropzone.processQueue();
+                      fetch_data(parentFolderId2);
+           
+           });
+        this.on('sending', function(file, xhr, formData){
+             let parentFolderId2 = $('#parentFolderId2').val();
+              var applicationId= $('#applicationId').val();
+        formData.append('parentFolderId2', parentFolderId2);
+            formData.append('applicationId', applicationId);
+
+        });
+
+        this.on("success", function (file, response) {
+           
+               this.removeAllFiles(); 
+             $('#addFile').modal('hide');
+
+       
+        });
+         this.on("queuecomplete", function () {
+        toastr.success('file Added Successfully');
+   
+
+        });
+
+            
+        }
+           
+
+});
      
 
         $('.viewDocuments').on('click',function(e){
@@ -501,6 +650,8 @@ $(' #errorFolder').html('');
                     $('#folder_table').html(data.data);
 
                      $('#parentFolderId').val(data.parentId);
+                     $('#parentFolderId2').val(data.parentId);
+                     $('#addFileButton').attr('disable','disable');
                 }
             })
         }
@@ -531,6 +682,7 @@ $(' #errorFolder').html('');
                           
 
                       $('#parentFolderId').val(folderId);
+                      $('#parentFolderId2').val(folderId);
 
                 }
             });
@@ -587,6 +739,8 @@ $(' #errorFolder').html('');
         })
 
     });
+    
+
 
     function fetch_data(parentId){
          var parentId = parentId;
