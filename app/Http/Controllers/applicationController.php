@@ -15,6 +15,7 @@ use DataTables;
 use Illuminate\Support\Facades\validator;
 class applicationController extends Controller
 {
+      private $count = 0;
     //
   public function applicationFetch(){
        $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
@@ -142,7 +143,7 @@ class applicationController extends Controller
         $Lname =$request->Lname;
         $Mname =$request->Mname;
         $applicationId =$request->userid;
-        $applicationId2 =$request->userid;
+
 
 
         $type_application =$request->type_application;
@@ -164,7 +165,7 @@ class applicationController extends Controller
  
  
         foreach($img as $file){
-                $name=time().rand(1,100).'.'.$file->extension();
+                $name=$file->getClientOriginalName();
                // $imageName = strtotime(now()).rand(11111,99999).'.'.$img->getClientOriginalExtension();
                 $file->move($path.$Fname.$Lname.'/'.$type_application,$name);
                 $files[]=$name;     
@@ -178,7 +179,8 @@ class applicationController extends Controller
      $folder= new folderUpload;
       $folder->applicationId= $applicationId;
       $folder->folderName= $Fname.$Lname;
-      $folder->parentId= $applicationId2;
+      $folder->parentId= null;
+      $folder->lastModified=date('m/d/y h:i:s A');
       $folder->save();
       $folderParent = $folder->folderId;
 
@@ -187,6 +189,7 @@ class applicationController extends Controller
       $folder2->applicationId= $applicationId;
       $folder2->folderName= $type_application;
       $folder2->parentId= $folderParent;
+      $folder2->lastModified=date('m/d/y h:i:s A');
       $folder2->save();
       $folderParent2 = $folder2->folderId;
 
@@ -195,6 +198,8 @@ class applicationController extends Controller
                 $filesUpload->applicationId=$userid;
                $filesUpload->filename=$name;
                $filesUpload->folderId=$folderParent2;
+             $filesUpload->lastModified=date('m/d/y h:i:s A');
+
                  $filesUpload->save();
       }
 
@@ -229,7 +234,8 @@ $files=[];
         $path=$Fname.$Lname;
     
     $folderGet= folderUpload::where('applicationId','=',$applicationId)
-        ->whereRaw('folderId  = parentId')
+        ->whereNull('parentId')
+        // ->whereRaw('folderId  = parentId')
         ->get();
     if($folderGet->count()>0){
         foreach($folderGet as $folder)
@@ -239,6 +245,7 @@ $files=[];
 
     $folderFetch= folderUpload::where('applicationId','=',$applicationId)
         ->where('parentId','=',$folderId)
+        ->orderBy('folderId','desc')
         ->get();
      
      $fileUpload= application::find($applicationId)->fileUpload;
@@ -253,9 +260,10 @@ $files=[];
             </th>
             <th>  Parent Folder
             </th>
-            <th>  Date Modified
+            <th>  Last Modified
             </th>
         </tr>
+        <tbody>
              ";
      if($folderFetch->count()>0){
         foreach($folderFetch as $name){
@@ -280,7 +288,7 @@ $files=[];
                 </td>
                  <td>'.$name["parentId"].'
                 </td>
-                <td>'.$name['folderId'] .'
+                <td>'.$name['lastModified'] .'
                 </td>
                
             </tr>
@@ -304,83 +312,143 @@ $files=[];
     }
 
     public function viewFolder(Request $request){
+        $Fname = $request->Fname;
+        $Lname = $request->Lname;
         $folderId = $request->folderId;
         $parentId = $request->parentId;
         $folderParentId= 0;
-
+        $path=$Fname.$Lname;
          $fileFetch= folderUpload::find($folderId)->fileUpload;
+         $parentFolder=folderUpload::where('folderId','=',$folderId)->get();
          $folderFetch=folderUpload::where('parentId','=',$folderId)->get();
      
        
 
-         $output="<table class='table table-bordered table-striped'> 
+         $output="<table class='table table-bordered table-striped' > 
         <tr>
             <th>Files/Folder
             </th>
-            <th>  Folder Id
+            <th> File Size
             </th>
-            <th>  Parent Folder
+            <th> File Type
             </th>
-            <th>  Date Modified
+            <th>  Last Modified
             </th>
         </tr>
              ";
-             if($fileFetch->count()>0){
-                 foreach($fileFetch as $file){
-                 $output.='<tr>   
-                        <td >'.$file["filename"].'
-                        </td>
-                </tr>';
-                
-
-              }
-             }
+         
                 if($folderFetch->count()>0){
                  foreach($folderFetch as $file){
+                     if($file['folderName']!=$path){
                  $output.='<tr>   
                         <td > <div class="folder"> 
-                            <a type="button" class="btn viewFolder" id="'.$file["folderId"].'">
-                            <input type="hidden" value="'.$file["parentId"].'" id="parentId"> 
+                            <a type="button" class="btn viewFolder actionButton" id="'.$file["folderId"].'">
+                            
                             <span><i class="fa fa-folder"></i></span>
                             '.$file["folderName"].'
                              </a>
                              </div>
                         </td>
+                        <td> --
+                        </td>
+                        <td>Folder
+                        </td>
+                           <td>'.$file['lastModified'] .'
+                </td>
+                </tr>';
+                }
+               
+              }
+             }
+             if($parentFolder->count()>0){
+                foreach($parentFolder as $folder){
+                 $folderParentId =$folder['folderId'];
+               
+                $folderName =$folder['folderName'];
+                 }
+             }
+                 if($fileFetch->count()>0){
+                 foreach($fileFetch as $file){
+                 $output.='<tr>   
+                        <td >'.pathinfo($file["filename"], PATHINFO_FILENAME).'
+                        </td>
+                     
+                        <td>
+                        </td>
+                        <td>'.pathinfo($file["filename"], PATHINFO_EXTENSION).'
+                        </td>
+                        <td>'.$file['lastModified'].'
+                        </td>
                 </tr>';
                 
-                $folderParentId =$file['folderId'];
+
               }
              }
 
              
              
 
-            return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId]);
+            return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId,'folderName'=>$folderName]);
      
     }
-    public function addFolder(Request $request){
+ 
+
+
+public function formatTree($rootFolder){
+$path=array();
+    $path[]=$rootFolder->pluck('folderName');
+   
+    // foreach($rootFolder as $folder){
+    //         $path=array();
+
+    //         $path[]=$folder->folderName;
+    if($folder->parent->isNotEmpty()){
+        
+          self::formatTree($folder->parent);
+ 
+     }
+
+    // }
+return $path;
+}
+
+
+
+
+public function addFolder(Request $request ){
     $parentId= $request->parentFolderId;
     $folderName= $request->folderName;
     $Fname= $request->Fname;
     $Lname= $request->Lname;
+    $name=$Fname.$Lname;
     $applicationId= $request->applicationId;
-    $path= public_path().'/files/'.$Fname.$Lname;
+    $path= public_path().'/files/';
 
-    $folder=folderUpload::where('folderId','=',$parentId)->get();
+    $rootFolder=folderUpload::tree($parentId,$applicationId);
+    $path=$path.$rootFolder.$folderName;
 
-    if($folder->count() > 0){
+
+        if(!is_dir( $path))
+            {
+
         $folderUpload = new folderUpload;
         $folderUpload->applicationId=$applicationId;
         $folderUpload->folderName=$folderName;
         $folderUpload->parentId=$parentId;
+        $folderUpload->lastModified=date('m/d/y h:i:s A');
         $folderUpload->save();
         $folderId= $folderUpload->folderId;
-
-        mkdir($path.'/'.$folderName);
+         mkdir($path);
+         return response()->json(['status'=>200,'parentId'=> $parentId ,'folderId'=>$folderId]);
+           
+        }else{
+                $error="Folder Already Exist";
+                 return response()->json(['error'=>$error]);
+        };
 
      
-    }
-  return response()->json(['status'=>200,'parentId'=> $parentId ,'folderId'=>$folderId]);
+ 
+  
 
 
        

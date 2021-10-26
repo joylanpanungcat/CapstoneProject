@@ -17,6 +17,7 @@ class CreateFolderUploadTable extends Migration
             $table->id('folderId');
             $table->unsignedBigInteger('applicationId')->nullable();
             $table->string('folderName')->nullable();
+            $table->string('lastModified')->nullable();
             $table->unsignedBigInteger('parentId')->nullable();
             $table->timestamps();
         });

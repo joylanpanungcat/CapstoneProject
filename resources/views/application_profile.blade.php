@@ -28,12 +28,41 @@
     box-shadow: none !important;
   
 }
+.folder tr td{
+    height: 10px;
+
+}
 .folder a{
     font-size: 14px;
+        margin-top: -15px;
+        height: 10px;
+        horizontal-align: middle;
 }
 .folder a:hover{
     color: blue;
 }
+.my-custom-scrollbar {
+position: relative;
+height: 300px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+.actionButton i {
+  margin-top: -5px;
+  margin-left: -5px;
+  height: 10px;
+   text-align: center;
+
+}
+#fileParent,#path{
+    font-size: 14px;
+}
+
+
+
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -359,7 +388,8 @@
                     <button class="btn btn-primary btn-sm" id="new_folder" data-toggle="modal" data-target="#addFolder"><i class="fa fa-plus" ></i> New Folder</button>
                     <button class="btn btn-primary btn-sm ml-4" id="new_file"><i class="fa fa-upload"></i> Upload File</button>
                 </div>
-                <div >
+                <br>
+                <div class="folder2">
                 <div class="d-inline-block">
                      <h7><a  href='javascript:;' type="button" id="fileParent">
                         <span><i class="fa fa-folder"></i></span>
@@ -373,13 +403,11 @@
                 </div>
                 </div>
 
-                    <div id="folder_table" class="table-responsive"></div>
+                    <div id="folder_table" class="table-responsive table-wrapper-scroll-y my-custom-scrollbar"></div>
+
                    
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -390,7 +418,7 @@
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content ">
                 <div class="modal-header">
-                    <h5 class="modal-title">Uploaded Documents</h5>
+                    <h5 class="modal-title">Add Folder</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -400,10 +428,12 @@
                            
                             <label>Folder Name</label> 
                             <input type="text" name="" id="folderName" placeholder="Enter Folder Name" class="form-control">
+                             <div id="errorFolder" style="color:red"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                          
                     </form>
+                   
                   
               
              
@@ -444,8 +474,10 @@
 
         $('#fileParent').click(function(e){
             e.preventDefault();
-            $('#path div:last').remove();
-            
+
+            $('#path').children().remove();
+            $(' #folderName').val('');
+$(' #errorFolder').html('');
         load_folder_list();
         })
 
@@ -490,13 +522,35 @@
                 dataType: 'json',
                 success:function(data){
                      $('#folder_table').html(data.data);
-                     $('#path').append('<div>nice ka one</div>');
+
+               
+
+                    
+                     $('#path').append('<div id='+data.folderParentId+' class="d-inline-block"><a type="button" class="btn  pathView" id="'+data.folderParentId+'"><span><i class="fa fa-folder">'+data.folderName+'</i></span></a></div>');
+                     
+                          
+
                       $('#parentFolderId').val(folderId);
 
                 }
             });
 
         });
+$(document).on('click','.pathView',function(e){
+    e.preventDefault();
+    
+    var folderId= $(this).attr('id');
+   
+    $('#path div#'+folderId).nextAll('div').remove();
+
+$(' #folderName').val('');
+$(' #errorFolder').html('');
+
+  fetch_data(folderId);
+ 
+ 
+   
+})
 
     $(document).on('submit','#addFolderForm',function(e){
         e.preventDefault();
@@ -515,10 +569,19 @@
                 parentFolderId:parentFolderId,
                 folderName:folderName,
             },
-            dataType: 'json',
+            // dataType: 'json',
             success:function(data){
+                if(data.status==200){
                 $('#addFolder').modal('hide');
+                $(' #folderName').val('');
+                $(' #errorFolder').html('');
                 fetch_data(data.parentId);
+                }else{
+                      $('#errorFolder').html(data.error);
+                }
+               
+              
+                
               
             }
         })
@@ -528,12 +591,16 @@
     function fetch_data(parentId){
          var parentId = parentId;
          var folderId = parentId;
-
+         var Fname = '<?php   echo $account_details->Fname ?>';
+        var Lname= '<?php   echo $account_details->Lname ?>';
+          var applicationId= '<?php   echo $applicationId->applicationId ?>';
               $.ajax({
                 url: '{{ route('viewFolder') }}',
                 type:'post',
                 data:{
                    
+                    Fname:Fname,
+                    Lname:Lname,
                     folderId:folderId,
                     parentId:parentId
                 },
