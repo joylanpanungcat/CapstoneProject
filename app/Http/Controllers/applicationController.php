@@ -248,7 +248,7 @@ $files=[];
        
        // $folder =array_filter(glob('files/'.$path.'/*'),'is_dir');
 
-       $output="<table class='table table-bordered table-striped'> 
+       $output="<table class='table folderItem'> 
         <tr>
             <th> Application
             </th>
@@ -266,7 +266,7 @@ $files=[];
 
           if($name['folderName']!=$path){
             $output .='
-            <tr>
+            <tr class="file-folder">
                
                 <td>
             
@@ -306,27 +306,42 @@ $files=[];
        return response()->json(['status'=>200,'data'=>$output,'folderFetch'=>$folderFetch, 'parentId'=>$parentId,'folderId'=>$folderId]);
      
     }
+  public  function formatFileSize($bytes) {
+        $s = ['bytes', 'KB','MB','GB','TB','PB','EB'];
 
+        for($pos = 0;$bytes >= 1000; $pos++,$bytes /= 1024);
+        $d = round($bytes*10);
+        return $d.$s[$pos];
+    }
     public function viewFolder(Request $request){
         $Fname = $request->Fname;
         $Lname = $request->Lname;
         $folderId = $request->folderId;
+        $applicationId = $request->applicationId;
         $parentId = $request->parentId;
         $folderParentId= 0;
-        $path=$Fname.$Lname;
+         $path= public_path().'/files/';
+
+    $rootFolder=folderUpload::tree($folderId,$applicationId);
+
+     $path=$path.$rootFolder;
+
+
          $fileFetch= folderUpload::find($folderId)->fileUpload;
          $parentFolder=folderUpload::where('folderId','=',$folderId)->get();
          $folderFetch=folderUpload::where('parentId','=',$folderId)->get();
      
        
 
-         $output="<table class='table table-bordered table-striped' > 
+         $output="<table class='table folderItem' > 
         <tr>
             <th>Files/Folder
             </th>
             <th> File Size
             </th>
             <th> File Type
+            </th>
+              <th> Remarks
             </th>
             <th>  Last Modified
             </th>
@@ -336,7 +351,7 @@ $files=[];
                 if($folderFetch->count()>0){
                  foreach($folderFetch as $file){
                      if($file['folderName']!=$path){
-                 $output.='<tr>   
+                 $output.='<tr  class="file-folder">   
                         <td > <div class="folder"> 
                             <a type="button" class="btn viewFolder actionButton" id="'.$file["folderId"].'">
                             
@@ -348,6 +363,8 @@ $files=[];
                         <td> --
                         </td>
                         <td>Folder
+                        </td>
+                        <td>--
                         </td>
                            <td>'.$file['lastModified'] .'
                 </td>
@@ -365,13 +382,18 @@ $files=[];
              }
                  if($fileFetch->count()>0){
                  foreach($fileFetch as $file){
-                 $output.='<tr>   
+                    // $i=$path.$file['filename'];
+                    // $formatSize = filesize($i);
+              
+                 $output.='<tr class="file-item">   
                         <td >'.pathinfo($file["filename"], PATHINFO_FILENAME).'
                         </td>
                      
                         <td>
                         </td>
                         <td>'.pathinfo($file["filename"], PATHINFO_EXTENSION).'
+                        </td>
+                        <td>verified
                         </td>
                         <td>'.$file['lastModified'].'
                         </td>
@@ -387,6 +409,8 @@ $files=[];
             return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId,'folderName'=>$folderName]);
      
     }
+
+
  
 
 

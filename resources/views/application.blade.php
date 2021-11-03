@@ -126,6 +126,11 @@ button.close-modal:hover{
     outline: none !important;
     box-shadow: none !important;
 }
+.my-custom-scrollbar {
+position: relative;
+height: 300px;
+overflow: auto;
+}
 
   </style>
  <div class="right_col" role="main" >
@@ -311,14 +316,14 @@ button.close-modal:hover{
                                
 
     <!-- Add Application MOdal -->
-                              <div class="modal fade" id="addApplication" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-xl addApplication" > 
-                        <div class="modal-content">
+                  <div class="modal fade" id="addApplication" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl addApplication" > 
+            <div class="modal-content">
                          
                           <div class="modal-body">
-                              <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" class="">
+                              {{-- <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" class="">
                               <span >&times;</span>
-                            </button>
+                            </button> --}}
                             <div class="panel panel-default addApplicationPanel">
                                     <div class="panel-body">
                                         
@@ -398,7 +403,10 @@ button.close-modal:hover{
 
                                </div>
                                 </div>
-                                <button type="button" name="next" class="btn next2 action-button"  value="Next" />Next <i class="fa fa-arrow-right"></i></button>
+
+                                 <button type="button" name="next" class="btn next2 action-button"  value="Next" />Next <i class="fa fa-arrow-right"></i></button>
+                                <button type="button" class="btn btn-default  action-button-cancel "    />Cancel </button>
+                              
                             </fieldset>
                         
                             <fieldset class="fieldset">
@@ -499,7 +507,12 @@ button.close-modal:hover{
                                    <input type="hidden" name="" class="form-control" id="statusAdd" value="pending" readonly="" onchange="myFunction()"> 
 
                                </div>
-                                </div><button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button><button type="button" name="next" class="btn next2 action-button" value="Next Step" />Next <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                               
+                             <button type="button" name="next" class="btn next2 action-button" value="Next Step" />Next <i class="fa fa-arrow-right"></i></button>
+                                <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button>
+                          <button type="button" class="btn btn-default  action-button-cancel "    />Cancel </button>
+                                
                             </fieldset>
                            
             <fieldset class="fieldset">
@@ -527,7 +540,7 @@ button.close-modal:hover{
                     
                         
       
-                         <div class="dropzone dropzoneDragArea " id="dropzoneDragArea" >
+                         <div class="dropzone dropzoneDragArea my-custom-scrollbar " id="dropzoneDragArea" >
 
                             <div  class="dz-message">
                                 <div class="icon">
@@ -553,135 +566,138 @@ button.close-modal:hover{
                         
                   
                     
-                </div> <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button><button type="button" name="next" class="btn next2 action-button" value="Next Step" />Next <i class="fa fa-arrow-right"></i></button>
+                </div><button type="button" name="next" class="btn next2 action-button" value="Next Step" />Next <i class="fa fa-arrow-right"></i></button>
+                 <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button>
+                 <button type="button" class="btn btn-default  action-button-cancel "    />Cancel </button>
+             
             </fieldset>
                             <fieldset class="fieldset">
-                                <div class="form-card">
-                                   <div class="scroll">
-                                         <h2><strong>Applicant Information</strong></h2>
-                                         <div class="row">
-                                             <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>First Name:</label>
-                                                 </div>
-                                                 <strong><Label id="FnamePrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Last Name:</label>
-                                             </div>
-                                                 <strong><Label id="LnameAddPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                              <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Middle Name:</label>
-                                                </div>
-                                                 <strong><Label id="middleAddPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                              <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Contact Number:</label>
-                                             </div>
-                                                  <strong><Label id="contactPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                              <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Alternative Contact:</label>
-                                             </div>
-                                                  <strong><Label id="alcontactAddPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                              <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Purok:</label>
-                                             </div>
-                                                  <strong><Label id="purokPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                              <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Barangay:</label></div>
-                                                  <strong><Label id="barangayPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                              <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>City:</label>
-                                             </div>
-                                                  <strong><Label id="cityPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                         </div>
-                                            
-                                                  <h2><strong>Business Information</strong></h2>
-                                             
-                                              <div class="row">
-                                                  <div class="col-md-6"><div class="col-md-6">
-                                         <label>Type Of Application:</label></div>
-                                         <strong><Label id="type_application2Prev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+    <div class="form-card">
+       <div class="scroll">
+             <h2><strong>Applicant Information</strong></h2>
+             <div class="row">
+                 <div class="col-md-6">
+                    <div class="col-md-6">
+                     <label>First Name:</label>
+                     </div>
+                     <strong><Label id="FnamePrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                 </div>
+                 <div class="col-md-6">
+                    <div class="col-md-6">
+                     <label>Last Name:</label>
+                 </div>
+                     <strong><Label id="LnameAddPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                 </div>
+                  <div class="col-md-6">
+                    <div class="col-md-6">
+                     <label>Middle Name:</label>
+                    </div>
+                     <strong><Label id="middleAddPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                 </div>
+                  <div class="col-md-6">
+                    <div class="col-md-6">
+                     <label>Contact Number:</label>
+                 </div>
+                      <strong><Label id="contactPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                 </div>
+                  <div class="col-md-6">
+                    <div class="col-md-6">
+                     <label>Alternative Contact:</label>
+                 </div>
+                      <strong><Label id="alcontactAddPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                 </div>
+                  <div class="col-md-6">
+                    <div class="col-md-6">
+                     <label>Purok:</label>
+                 </div>
+                      <strong><Label id="purokPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                 </div>
+                  <div class="col-md-6">
+                    <div class="col-md-6">
+                     <label>Barangay:</label></div>
+                      <strong><Label id="barangayPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                 </div>
+                  <div class="col-md-6">
+                    <div class="col-md-6">
+                     <label>City:</label>
+                 </div>
+                      <strong><Label id="cityPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                 </div>
+             </div>
+                
+                      <h2><strong>Business Information</strong></h2>
+                 
+                  <div class="row">
+                      <div class="col-md-6"><div class="col-md-6">
+                 <label>Type Of Application:</label></div>
+                 <strong><Label id="type_application2Prev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
 
-                                             </div>
-                                             <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Remarks:</label></div>
-                                                <strong><Label id="remarksPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Control Number:</label>
-                                             </div>
-                                                  <strong><Label id="control_numberPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Type of Occupancy:</label>
-                                             </div>
-                                                 <strong><Label id="type_occupancy2AddPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                            <div class="col-md-6">
-                                                 <label>Nature of Business:</label>
-                                             </div>
-                                                  <strong><Label id="nature_businessPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Business Name:</label></div>
-                                                 <strong><Label id="business_namePrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>Bin:</label>
-                                             </div>
-                                                  <strong><Label id="BinPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                <div class="col-md-6">
-                                                 <label>BP Number:</label>
-                                             </div>
-                                                  <strong><Label id="BP_numPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                <div class="col-md-6"> <label>OR Number:</label></div>
-                                                 <strong><Label id="OR_numPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                               <div class="col-md-6">
-                                                 <div class="col-md-6"><label>Date Applied</label></div>
-                                                 <strong><Label id="date_applyPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                 <div class="col-md-6"><label>Purok</label></div>
-                                                 <strong><Label id="purokAddBusPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                 <div class="col-md-6"><label>Barangay</label></div>
-                                                 <strong><Label id="barangayBusPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
-                                             <div class="col-md-6">
-                                                 <div class="col-md-6"><label>City</label></div>
-                                                 <strong><Label id="cityBusPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                                             </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="col-md-6">
+                         <label>Remarks:</label></div>
+                        <strong><Label id="remarksPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="col-md-6">
+                         <label>Control Number:</label>
+                     </div>
+                          <strong><Label id="control_numberPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="col-md-6">
+                         <label>Type of Occupancy:</label>
+                     </div>
+                         <strong><Label id="type_occupancy2AddPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                    <div class="col-md-6">
+                         <label>Nature of Business:</label>
+                     </div>
+                          <strong><Label id="nature_businessPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="col-md-6">
+                         <label>Business Name:</label></div>
+                         <strong><Label id="business_namePrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="col-md-6">
+                         <label>Bin:</label>
+                     </div>
+                          <strong><Label id="BinPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="col-md-6">
+                         <label>BP Number:</label>
+                     </div>
+                          <strong><Label id="BP_numPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="col-md-6"> <label>OR Number:</label></div>
+                         <strong><Label id="OR_numPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                       <div class="col-md-6">
+                         <div class="col-md-6"><label>Date Applied</label></div>
+                         <strong><Label id="date_applyPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                         <div class="col-md-6"><label>Purok</label></div>
+                         <strong><Label id="purokAddBusPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                     <div class="col-md-6">
+                         <div class="col-md-6"><label>Barangay</label></div>
+                         <strong><Label id="barangayBusPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                     </div>
+                         <div class="col-md-6">
+                             <div class="col-md-6"><label>City</label></div>
+                             <strong><Label id="cityBusPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
+                         </div>
 
                                              
                                         </div>
                                          <h2><strong>Requirements</strong></h2>
-                                         <div class="row">
+                                         <div class="row " >
                                              
                                          </div>
 
@@ -690,8 +706,10 @@ button.close-modal:hover{
                                 </div>
 <input type="hidden" class="userid" name="userid" id="userid" value="">
 <input type="hidden" class="userid" name="FnameFiles" id="FnameFiles" value="">
-                         <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button>
+                        
                                 <button type="submit" class="btn btn-success  " id="submit">Submit</button>
+                                 <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button>
+                                 <button type="button" class="btn btn-default  action-button-cancel "    />Cancel </button>
                             </fieldset>
                                   
                         </form>
@@ -798,6 +816,70 @@ function myFunction() {
         {data:'actions',name:'actions', class : 'buttons' }
         ]
      });
+
+$('.action-button-cancel').on('click',function(e){
+    e.preventDefault();
+ Swal.fire({
+          title:"Cancel Application?",
+            // titleFontColor:'red',
+          iconHtml: '<i class="fa fa-warning"></i>',
+          iconColor: '#d9534f',
+              showCancelButton: true,
+              showConfirmButton:true,
+              focusConfirm: false,
+              background: 'rgb(0,0,0,.9)',
+              customClass : {
+              title: 'swal2-title'
+            },
+            allowOutsideClick: false,
+              cancelButtonAriaLabel: 'Thumbs down',
+              cancelButtonText:
+                '<i class="fa fa-arrow-left"></i>Close',
+                  confirmButtonColor: '#3085d6',
+              confirmButtonText:
+                '<i class="fa fa-check"></i> Yes',
+              confirmButtonAriaLabel: 'Thumbs up, great!',
+              
+              
+              preConfirm: function(){
+                $('#msform')[0].reset();
+               myDropzone.removeAllFiles();
+                   
+             $('#addApplication').modal('hide');
+
+
+             $('#personal').removeClass('active');
+            $('#payment').removeClass('active');
+            $('#confirm').removeClass('active');
+            $('.modal-content fieldset').css({'opacity': '0','display':'none'});
+         $('.modal-content fieldset').first().css({'opacity': '1'});
+            $('.modal-content fieldset').first().show();
+
+             $('#FnamePrev').html('');
+            $('#control_numberPrev').html('');
+            $('#type_occupancy2AddPrev').html('');
+            $('#remarksPrev').html('');
+            $('#nature_businessPrev').html('');
+            $('#LnameAddPrev').html('');
+            $('#middleAddPrev').html('');
+            $('#business_namePrev').html('');
+            $('#purokPrev').html('');
+            $('#barangayPrev').html('');
+            $('#cityPrev').html('');
+            $('#BinPrev').html('');
+            $('#BP_numPrev').html('');
+            $('#OR_numPrev').html('');
+            $('#date_applyPrev').html('');
+            $('#purokAddBusPrev').html('');
+            $('#barangayBusPrev').html('');
+            $('#cityBusPrev').html('');
+            $('#contactPrev').html('');
+            $('#type_application2Prev').html('');
+            $('#alcontactAddPrev').html('');
+            $('#middleAddPrev').html('');
+              }
+          });
+});
 
   
         Dropzone.autoDiscover = false;

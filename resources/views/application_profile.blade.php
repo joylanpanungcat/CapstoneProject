@@ -104,6 +104,17 @@ display: block;
     color: #fff;
     padding: 25px 20px;
 }
+.folderItem .file-item,.file-folder {
+        cursor: pointer;
+}
+
+.folderItem .file-item:hover,.folderItem .file-folder:hover{
+        background: #eaeaea;
+        color: black;
+        box-shadow: 3px 3px #0000000f;
+    }
+
+
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -418,7 +429,7 @@ display: block;
  
     <!-- Modal HTML -->
     <div id="viewDocuments" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content ">
                 <div class="modal-header">
                     <h5 class="modal-title">Uploaded Documents</h5>
@@ -430,7 +441,7 @@ display: block;
                     <button class="btn btn-primary btn-sm ml-4" id="addFileButton" data-toggle="modal" data-target="#addFile" style="display:none"><i class="fa fa-upload"></i> Upload File</button>
                 </div>
                 <br>
-                <div class="folder2">
+                <div class="folder2 scrollDiv">
                 <div class="d-inline-block">
                      <h7><a  href='javascript:;' type="button" id="fileParent">
                         <span><i class="fa fa-folder"></i></span>
@@ -438,13 +449,14 @@ display: block;
                             </a>
                     </h7>
                 </div>
-                <div id="path" class="d-inline-block">
+                <div id="path" class="d-inline-block scrollmenu">
                    
                     
                 </div>
                 </div>
 
-                    <div id="folder_table" class="table-responsive table-wrapper-scroll-y my-custom-scrollbar"></div>
+                    <div id="folder_table" class="table-responsive table-wrapper-scroll-y my-custom-scrollbar "  cellspacing="0"
+  width="100%"></div>
 
                    
                 </div>
@@ -579,7 +591,7 @@ display: block;
             var parentFolderId2=  $('#parentFolderId2').val();
              URL = $("#addFileForm").attr('action');
                     myDropzone.processQueue();
-                      fetch_data(parentFolderId2);
+                   
            
            });
         this.on('sending', function(file, xhr, formData){
@@ -591,9 +603,10 @@ display: block;
         });
 
         this.on("success", function (file, response) {
-           
+             let parentFolderId2 = $('#parentFolderId2').val();
                this.removeAllFiles(); 
              $('#addFile').modal('hide');
+                fetch_data(parentFolderId2);
 
        
         });
@@ -633,6 +646,7 @@ $(' #errorFolder').html('');
  load_folder_list();
    
         function load_folder_list(){
+             $('#addFileButton').hide();
         var Fname = '<?php   echo $account_details->Fname ?>';
         var Lname= '<?php   echo $account_details->Lname ?>';
         var applicationId= '<?php   echo $applicationId->applicationId ?>';
@@ -651,7 +665,7 @@ $(' #errorFolder').html('');
 
                      $('#parentFolderId').val(data.parentId);
                      $('#parentFolderId2').val(data.parentId);
-                     $('#addFileButton').attr('disable','disable');
+                         
                 }
             })
         }
@@ -660,13 +674,14 @@ $(' #errorFolder').html('');
 
         var folderId=$(this).attr('id');
         var parentId=$('#parentId').val();
-      
+        var applicationId= '<?php   echo $applicationId->applicationId ?>';
 
             $.ajax({
                 url: '{{ route('viewFolder') }}',
                 type:'post',
                 data:{
                    
+                    applicationId:applicationId,
                     folderId:folderId,
                     parentId:parentId
                 },
@@ -683,6 +698,7 @@ $(' #errorFolder').html('');
 
                       $('#parentFolderId').val(folderId);
                       $('#parentFolderId2').val(folderId);
+                      $('#addFileButton').show();
 
                 }
             });

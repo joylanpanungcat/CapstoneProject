@@ -79,6 +79,25 @@
     border-bottom: 2px solid skyblue;
     outline-width: 0
 }
+#msform .action-button-cancel {
+    width: 100px;
+   
+    font-weight: bold;
+    color: #292b2c;
+    border: 0 none;
+    border-radius: 25px;
+    cursor: pointer;
+   padding: 2px 2px;
+    margin-top: 10px;
+    float: right;
+
+}
+#msform .action-button-cancel:hover,
+#msform .action-button-cancel:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #2A3F54
+}
+
+
 
 #msform .action-button {
     
@@ -91,6 +110,8 @@
     padding: 2px 2px;
     margin-top: 10px;
    width: 100px;
+    float: right;
+
  
 }
 
@@ -111,6 +132,8 @@
     cursor: pointer;
    padding: 2px 2px;
     margin-top: 10px;
+    float: right;
+    
 
 }
 #msform #submit {
@@ -123,6 +146,8 @@
     cursor: pointer;
    padding: 2px 2px;
     margin-top: 10px;
+    float: right;
+
 
 }
 
@@ -130,6 +155,7 @@
 #msform .action-button-previous:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 3px #2A3F54
 }
+
 
 select.list-dt {
     border: none;
