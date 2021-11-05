@@ -266,16 +266,13 @@ $files=[];
 
           if($name['folderName']!=$path){
             $output .='
-            <tr class="file-folder">
+            <tr class="file-folder" id='.$name['folderId'].'>
                
                 <td>
-            
                             <div class="folder"> 
-                            <a type="button" class="btn viewFolder" id="'.$name["folderId"].'">
-                           
                             <span><i class="fa fa-folder"></i></span>
                             '.$name["folderName"].'
-                             </a>
+                      
                              </div>
                       
                   
@@ -306,13 +303,44 @@ $files=[];
        return response()->json(['status'=>200,'data'=>$output,'folderFetch'=>$folderFetch, 'parentId'=>$parentId,'folderId'=>$folderId]);
      
     }
-  public  function formatFileSize($bytes) {
-        $s = ['bytes', 'KB','MB','GB','TB','PB','EB'];
+    function FileSizeConvert($bytes)
+{
+    $bytes = floatval($bytes);
+        $arBytes = array(
+            0 => array(
+                "UNIT" => "TB",
+                "VALUE" => pow(1024, 4)
+            ),
+            1 => array(
+                "UNIT" => "GB",
+                "VALUE" => pow(1024, 3)
+            ),
+            2 => array(
+                "UNIT" => "MB",
+                "VALUE" => pow(1024, 2)
+            ),
+            3 => array(
+                "UNIT" => "KB",
+                "VALUE" => 1024
+            ),
+            4 => array(
+                "UNIT" => "B",
+                "VALUE" => 1
+            ),
+        );
 
-        for($pos = 0;$bytes >= 1000; $pos++,$bytes /= 1024);
-        $d = round($bytes*10);
-        return $d.$s[$pos];
+    foreach($arBytes as $arItem)
+    {
+        if($bytes >= $arItem["VALUE"])
+        {
+            $result = $bytes / $arItem["VALUE"];
+            $result = str_replace(".", "," , strval(round($result, 2)))." ".$arItem["UNIT"];
+            break;
+        }
     }
+    return $result;
+}
+
     public function viewFolder(Request $request){
         $Fname = $request->Fname;
         $Lname = $request->Lname;
@@ -326,7 +354,7 @@ $files=[];
 
      $path=$path.$rootFolder;
 
-
+     
          $fileFetch= folderUpload::find($folderId)->fileUpload;
          $parentFolder=folderUpload::where('folderId','=',$folderId)->get();
          $folderFetch=folderUpload::where('parentId','=',$folderId)->get();
@@ -351,13 +379,12 @@ $files=[];
                 if($folderFetch->count()>0){
                  foreach($folderFetch as $file){
                      if($file['folderName']!=$path){
-                 $output.='<tr  class="file-folder">   
+
+                 $output.='<tr  class="file-folder" id='.$file['folderId'].'>   
                         <td > <div class="folder"> 
-                            <a type="button" class="btn viewFolder actionButton" id="'.$file["folderId"].'">
-                            
                             <span><i class="fa fa-folder"></i></span>
                             '.$file["folderName"].'
-                             </a>
+                         
                              </div>
                         </td>
                         <td> --
@@ -382,14 +409,13 @@ $files=[];
              }
                  if($fileFetch->count()>0){
                  foreach($fileFetch as $file){
-                    // $i=$path.$file['filename'];
-                    // $formatSize = filesize($i);
-              
+                    $i=$path.$file['filename'];
+                 $fileSize = filesize($i);
                  $output.='<tr class="file-item">   
                         <td >'.pathinfo($file["filename"], PATHINFO_FILENAME).'
                         </td>
                      
-                        <td>
+                        <td>'.self::FileSizeConvert($fileSize).'
                         </td>
                         <td>'.pathinfo($file["filename"], PATHINFO_EXTENSION).'
                         </td>
@@ -406,31 +432,10 @@ $files=[];
              
              
 
-            return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId,'folderName'=>$folderName]);
+            return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId,'folderName'=>$folderName,'folderId'=>$folderId]);
      
     }
-
-
  
-
-
-public function formatTree($rootFolder){
-$path=array();
-    $path[]=$rootFolder->pluck('folderName');
-   
-    // foreach($rootFolder as $folder){
-    //         $path=array();
-
-    //         $path[]=$folder->folderName;
-    if($folder->parent->isNotEmpty()){
-        
-          self::formatTree($folder->parent);
- 
-     }
-
-    // }
-return $path;
-}
 
 
 

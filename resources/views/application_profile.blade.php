@@ -109,11 +109,41 @@ display: block;
 }
 
 .folderItem .file-item:hover,.folderItem .file-folder:hover{
-        background: #eaeaea;
+        background: #E8F0FE;
         color: black;
         box-shadow: 3px 3px #0000000f;
     }
+.active2{
+    background-color: #E8F0FE;
+}
+    .custom-menu {
+        z-index: 1000;
+        position: absolute;
+        background-color: #ffffff;
+        border: 1px solid #0000001c;
+        border-radius: 5px;
+        padding: 8px;
+        min-width: 13vw;
+}
 
+a.custom-menu-list {
+    display: flex;
+    color: #4c4b4b;
+    font-weight: 600;
+    font-size: 1em;
+    padding: 10px;
+    width: 200px;
+}
+a.custom-menu-list i {
+ font-size: 20px;
+ margin-right: 10px;
+}
+a.custom-menu-list:hover {
+    background: #80808024;
+}
+hr.solid {
+  border-top: 1px solid #bbb;
+}
 
 </style>
 <div class="right_col" role="main" >
@@ -554,8 +584,19 @@ display: block;
         </div>
     </div>
         
-       
-    
+<div id="menu-folder-clone" style="display: none;">
+    <a href="javascript:void(0)" class="custom-menu-list file-option openFolder"><span><i class="fa fa-folder-open"></i></span> Open</a>
+    <hr class="solid">
+    <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i  class="fa fa-arrows-alt" aria-hidden="true"></i></span>Move to</a>
+     <a href="javascript:void(0)" class="custom-menu-list file-option edit"><span><i class="fa fa-pencil"></i></span>Rename</a>
+     <hr class="solid">
+    <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-eye"></i></span>View details</a>
+
+     <a href="javascript:void(0)" class="custom-menu-list file-option edit"><span><i class="fa fa-arrow-circle-down "></i></span>Download</a>
+     <hr class="solid">
+    <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-archive"></i></span>Send to Archive</a>
+     <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-file-archive-o"></i></span>Compressed(zipped)</a>
+</div>
   <script type="text/javascript">
 
 
@@ -626,7 +667,10 @@ display: block;
         $('.viewDocuments').on('click',function(e){
             e.preventDefault();
 
+
+
             $('#viewDocuments').modal('show');
+       
           
         $('.modal-dialog').draggable({
       handle: ".modal-header"
@@ -669,12 +713,19 @@ $(' #errorFolder').html('');
                 }
             })
         }
-        $(document).on('click','.viewFolder',function(e){
+    $(document).on('click','.file-folder',function(e){
+        e.preventDefault();
+
+        $(this).addClass('active2');
+    })
+  $(document).on('dblclick','.file-folder',function(e){
             e.preventDefault();
 
         var folderId=$(this).attr('id');
         var parentId=$('#parentId').val();
         var applicationId= '<?php   echo $applicationId->applicationId ?>';
+
+
 
             $.ajax({
                 url: '{{ route('viewFolder') }}',
@@ -688,11 +739,8 @@ $(' #errorFolder').html('');
                 dataType: 'json',
                 success:function(data){
                      $('#folder_table').html(data.data);
-
                
-
-                    
-                     $('#path').append('<div id='+data.folderParentId+' class="d-inline-block"><a type="button" class="btn  pathView" id="'+data.folderParentId+'"><span><i class="fa fa-folder">'+data.folderName+'</i></span></a></div>');
+                     $('#path').append('<div id='+data.folderParentId+' class="d-inline-block"><a type="button" class="btn  pathView" id="'+data.folderId+'"><span><input type="hidden" value="'+data.folderParentId+'" id="folderIdPath"><i class="fa fa-folder">'+data.folderName+'</i></span></a></div>');
                      
                           
 
@@ -706,16 +754,30 @@ $(' #errorFolder').html('');
         });
 $(document).on('click','.pathView',function(e){
     e.preventDefault();
-    
     var folderId= $(this).attr('id');
-   
-    $('#path div#'+folderId).nextAll('div').remove();
+    var parentId= $('#folderIdPath').val();
+      var applicationId= '<?php   echo $applicationId->applicationId ?>';
+
 
 $(' #folderName').val('');
 $(' #errorFolder').html('');
 
-  fetch_data(folderId);
- 
+$.ajax({
+    url:'{{ route('viewFolder') }}',
+    type:'post',
+    data:{
+        folderId:folderId,
+        parentId:parentId,
+        applicationId:applicationId
+    },
+    success:function(data){
+$('#path div#'+folderId).nextAll('div').remove();
+    $('#folder_table').html(data.data);
+    }
+})
+
+
+   
  
    
 })
@@ -723,6 +785,7 @@ $(' #errorFolder').html('');
     $(document).on('submit','#addFolderForm',function(e){
         e.preventDefault();
         var parentFolderId=$('#parentFolderId').val();
+     
         var folderName=$('#folderName').val();
           var Fname = '<?php   echo $account_details->Fname ?>';
         var Lname= '<?php   echo $account_details->Lname ?>';
@@ -744,6 +807,7 @@ $(' #errorFolder').html('');
                 $(' #folderName').val('');
                 $(' #errorFolder').html('');
                 fetch_data(data.parentId);
+         
                 }else{
                       $('#errorFolder').html(data.error);
                 }
@@ -758,21 +822,22 @@ $(' #errorFolder').html('');
     
 
 
-    function fetch_data(parentId){
-         var parentId = parentId;
-         var folderId = parentId;
+    function fetch_data(parentId2){
+         var parentId = parentId2;
+         var folderId = parentId2;
          var Fname = '<?php   echo $account_details->Fname ?>';
         var Lname= '<?php   echo $account_details->Lname ?>';
           var applicationId= '<?php   echo $applicationId->applicationId ?>';
               $.ajax({
                 url: '{{ route('viewFolder') }}',
-                type:'post',
+                method:'post',
                 data:{
                    
                     Fname:Fname,
                     Lname:Lname,
                     folderId:folderId,
-                    parentId:parentId
+                    applicationId:applicationId,
+                    parentId:parentId,
                 },
                 dataType: 'json',
                 success:function(data){
@@ -781,6 +846,65 @@ $(' #errorFolder').html('');
                 }
             });
     }
+
+    $(document).on("contextmenu",'.file-folder', function(event) { 
+    event.preventDefault();
+    $("div.custom-menu").hide();
+    var folderId = $(this).attr('id');
+   $(this).addClass('active2');
+    var custom =$("<div class='custom-menu'></div>")
+        custom.append($('#menu-folder-clone').html())
+  
+    custom.css({top: '200px', left: event.pageX + "px"});
+      custom.appendTo("#viewDocuments")
+$('.openFolder').on('click',function(e){
+    e.preventDefault();
+
+     
+        var parentId=$('#parentId').val();
+        var applicationId= '<?php   echo $applicationId->applicationId ?>';
+
+            $.ajax({
+                url: '{{ route('viewFolder') }}',
+                type:'post',
+                data:{
+                   
+                    applicationId:applicationId,
+                    folderId:folderId,
+                    parentId:parentId
+                },
+                dataType: 'json',
+                success:function(data){
+                     $('#folder_table').html(data.data);
+               
+                     $('#path').append('<div id='+data.folderParentId+' class="d-inline-block"><a type="button" class="btn  pathView" id="'+data.folderId+'"><span><input type="hidden" value="'+data.folderParentId+'" id="folderIdPath"><i class="fa fa-folder">'+data.folderName+'</i></span></a></div>');
+                     
+                          
+
+                      $('#parentFolderId').val(folderId);
+                      $('#parentFolderId2').val(folderId);
+                      $('#addFileButton').show();
+
+                }
+            });
+
+
+})
+
+     $('html').click(function() {
+         $('.custom-menu').hide();
+            $('.file-folder').removeClass('active2');
+    });
+      $('html').contextmenu(function() {
+         $('.custom-menu').hide();
+            $('.file-folder').removeClass('active2');
+
+    });
+})
+
+   
+
+
 
 
 
