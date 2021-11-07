@@ -885,7 +885,7 @@ $('.action-button-cancel').on('click',function(e){
         Dropzone.autoDiscover = false;
 // Dropzone.options.demoform = false;   
 let token = $('meta[name="csrf-token"]').attr('content');
-
+ var admin ='{{Session::get('adminID')['username']}}';
 
 var myDropzone = new Dropzone("div#dropzoneDragArea", { 
     paramName: "file",
@@ -1038,7 +1038,9 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
            formData.append('Fname', Fname);
            formData.append('Lname', Lname);
            formData.append('Mname', Mname);
+           formData.append('admin', admin);
            formData.append('type_application', type_application);
+           
         });
         
         this.on("success", function (file, response) {

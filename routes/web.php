@@ -69,8 +69,16 @@ Route::post('viewFolder',[applicationController::class,"viewFolder"])->name('vie
 Route::post('addFolder',[applicationController::class,"addFolder"])->name('addFolder');
 
 Route::post('addFile',[applicationController::class,"addFile"])->name('addFile');
+Route::post('folderRename',[applicationController::class,"folderRename"])->name('folderRename');
+
+Route::post('viewFolderDetails',[applicationController::class,"viewFolderDetails"])->name('viewFolderDetails');
 
 });
+
+
+
+
+
 Route::group(['middleware'=>['alreadyLog']],function(){
     Route::get('/', function () {
     return view('login');

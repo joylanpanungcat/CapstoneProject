@@ -124,6 +124,7 @@ display: block;
         border-radius: 5px;
         padding: 8px;
         min-width: 13vw;
+         box-shadow: 5px 5px 5px  #888888;
 }
 
 a.custom-menu-list {
@@ -133,6 +134,7 @@ a.custom-menu-list {
     font-size: 1em;
     padding: 10px;
     width: 200px;
+
 }
 a.custom-menu-list i {
  font-size: 20px;
@@ -145,6 +147,77 @@ hr.solid {
   border-top: 1px solid #bbb;
 }
 
+.sidebar {
+    height: 100%;
+  width: 0; /* 0 width - change this with JavaScript */
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  right: 0;
+  background-color: #FFFFFF; 
+  border-left: 1px solid;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px; /* Place content 60px from the top */
+  transition: 0.1s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+
+#main {
+  transition: margin-right .5s; 
+}
+
+.sidebar .closebtn {
+
+  font-size: 18.72px;
+  border: none;
+  background-color: #fff;
+}
+
+.separate{
+  border-top: 1px solid ;
+position: relative;
+margin-top: 49px;
+}
+
+
+
+.tabs-nav {
+    list-style: none;
+    margin-top: 20px;
+    padding: 0;
+}
+
+.tabs-nav .tab-active a {
+    border-bottom: 2px solid #ff6e40;
+    color:  #ff6e40;
+    cursor: default;
+}
+.tabs-nav a {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid ;
+    width: 110px;
+    margin-left: 20px;
+}
+.tabs-nav li {
+    float: left;
+    margin-bottom: 30px;
+}
+.tabs-stage {
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    -ms-border-radius: 0 0 6px 6px;
+    -o-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+    border-top: 0;
+    clear: both;
+    margin-bottom: 20px;
+    position: relative;
+    top: -1px;
+}
+
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -155,8 +228,7 @@ hr.solid {
 
         </div>
 
-                    
-                    
+ 
         <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
@@ -443,9 +515,9 @@ hr.solid {
 </div>
 
 
-
                        
                             </div>
+
 
                         </div>
                         </div>
@@ -465,7 +537,8 @@ hr.solid {
                     <h5 class="modal-title">Uploaded Documents</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="modalViewDocuments">
+                    <div  id="viewFolderModal">
                 <div class="row">
                     <button class="btn btn-primary btn-sm" id="new_folder" data-toggle="modal" data-target="#addFolder"><i class="fa fa-plus" ></i> New Folder</button>
                     <button class="btn btn-primary btn-sm ml-4" id="addFileButton" data-toggle="modal" data-target="#addFile" style="display:none"><i class="fa fa-upload"></i> Upload File</button>
@@ -485,12 +558,62 @@ hr.solid {
                 </div>
                 </div>
 
-                    <div id="folder_table" class="table-responsive table-wrapper-scroll-y my-custom-scrollbar "  cellspacing="0"
+    <div id="folder_table" class="table-responsive table-wrapper-scroll-y my-custom-scrollbar "  cellspacing="0"
   width="100%"></div>
+   
+                </div> 
 
-                   
+ <div id="mySidebar" class="sidebar">
+        <div class="col-md-9">
+            <div class="col-md-3">
+                 <h4 style="color: #3C4043;display:inline"><span style="margin-right: 20px;color: #3C4043;"><i class="fa fa-folder"></i></span> </h4>
+            </div>
+            <div class="col-md-9">
+                  <h5 style="color: #3C4043;display:inline; text-align: center;" id="folderNameView">     </h5>
+            </div>
+     
+        </div>
+        <div class="col-md-3">
+             <button type="reset" class="bnt btn-default closebtn" id="closeFolderDetails"><i class='fa fa-times' style="color:#7e8082;" data-toggle="tooltip" data-placement="bottom" title="Hide Details" ></i></button>
+        </div>
+        <div class="col-md-12">
+            <ul class="tabs-nav">
+                <li class=""><a href="#tab-1" >Features</a>
+                </li>
+                <li class="tab-active"><a href="#tab-2">Details</a>
+                </li>
+            </ul>
+        
+              <hr class="separate">   
+        </div>
+        <div class="tabs-stage">
+            <div class="col-md-12 " id="tab-1"  >
+                <h6 style="margin-bottom: 10px;color: #3C4043;"><b> System Properties</b></h6 >
+                <div class="form-group">
+                    <div class="col-md-4" style="color: #3C4043;"><h7>Type</h7></div>
+                    <div class="col-md-8"  style="margin-bottom: 18px;color: #3C4043;"><h7>Folder</h7></div >
                 </div>
-                
+                 <div class="form-group">
+                    <div class="col-md-4" style="color: #3C4043;"><h7>Uploader</h7></div>
+                    <div class="col-md-8"  style="margin-bottom: 18px;color: #3C4043;"><h7 id="uploader"></h7></div >
+                </div>
+                 <div class="form-group">
+                    <div class="col-md-4" style="color: #3C4043;"><h7>Modified</h7></div>
+                    <div class="col-md-8"  style="margin-bottom: 18px;color: #3C4043;"><h7 id="modifiedFolder"></h7></div >
+                </div>
+                 <div class="form-group">
+                    <div class="col-md-4" style="color: #3C4043;"><h7>Created</h7></div>
+                    <div class="col-md-8"  style="margin-bottom: 18px;color: #3C4043;"><h7 id="createdFolder"></h7></div >
+                </div>
+            </div>
+            <div id="tab-2" >
+                <p>Phasellus pharetra aliquet viverra. Donec scelerisque tincidunt diam, eu fringilla urna auctor at.</p>
+            </div>
+        </div>
+     
+
+</div>
+                </div>
             </div>
         </div>
     </div>
@@ -588,21 +711,37 @@ hr.solid {
     <a href="javascript:void(0)" class="custom-menu-list file-option openFolder"><span><i class="fa fa-folder-open"></i></span> Open</a>
     <hr class="solid">
     <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i  class="fa fa-arrows-alt" aria-hidden="true"></i></span>Move to</a>
-     <a href="javascript:void(0)" class="custom-menu-list file-option edit"><span><i class="fa fa-pencil"></i></span>Rename</a>
+     <a href="javascript:void(0)" class="custom-menu-list file-option renameFolder"><span><i class="fa fa-pencil"></i></span>Rename</a>
      <hr class="solid">
-    <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-eye"></i></span>View details</a>
+    <a href="javascript:void(0)" class="custom-menu-list file-option viewFolderDetails"><span><i class="fa fa-eye"></i></span>View details</a>
 
      <a href="javascript:void(0)" class="custom-menu-list file-option edit"><span><i class="fa fa-arrow-circle-down "></i></span>Download</a>
      <hr class="solid">
     <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-archive"></i></span>Send to Archive</a>
      <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-file-archive-o"></i></span>Compressed(zipped)</a>
 </div>
+<script type="text/javascript">
+    // From http://learn.shayhowe.com/advanced-html-css/jquery
+
+// Change tab class and display content
+$('.tabs-nav a').on('click', function (event) {
+    event.preventDefault();
+    var id =$(this).attr('href');
+    $('.tab-active').removeClass('tab-active');
+    $(this).parent().addClass('tab-active');
+    $(id).siblings().hide();
+    $(id).show();
+});
+
+$('.tabs-nav a:first').trigger('click'); // Default
+</script>
   <script type="text/javascript">
 
 
       $(document).ready(function(){
 
-
+  $('[data-toggle="tooltip"]').tooltip(); 
+  var elementClicked=false;
 
 
     $.ajaxSetup({
@@ -694,13 +833,14 @@ $(' #errorFolder').html('');
         var Fname = '<?php   echo $account_details->Fname ?>';
         var Lname= '<?php   echo $account_details->Lname ?>';
         var applicationId= '<?php   echo $applicationId->applicationId ?>';
-         
+         var admin ='{{Session::get('adminID')['username']}}';
             $.ajax({
                 url: '{{ route('fetch_file') }}',
                 type: "post",
                 data:{
                     Fname:Fname,
                     Lname:Lname,
+                    admin:admin,
                     applicationId:applicationId
                 },
                 dataType:'json',
@@ -713,11 +853,7 @@ $(' #errorFolder').html('');
                 }
             })
         }
-    $(document).on('click','.file-folder',function(e){
-        e.preventDefault();
-
-        $(this).addClass('active2');
-    })
+  
   $(document).on('dblclick','.file-folder',function(e){
             e.preventDefault();
 
@@ -773,6 +909,7 @@ $.ajax({
     success:function(data){
 $('#path div#'+folderId).nextAll('div').remove();
     $('#folder_table').html(data.data);
+    $('#parentFolderId').val(folderId);
     }
 })
 
@@ -790,12 +927,14 @@ $('#path div#'+folderId).nextAll('div').remove();
           var Fname = '<?php   echo $account_details->Fname ?>';
         var Lname= '<?php   echo $account_details->Lname ?>';
           var applicationId= '<?php   echo $applicationId->applicationId ?>';
+          var admin ='{{Session::get('adminID')['username']}}';
         $.ajax({
             url: '{{ route('addFolder') }}',
             type:'post',
             data: {
                  Fname:Fname,
                 Lname:Lname,
+                admin:admin,
                 applicationId:applicationId,
                 parentFolderId:parentFolderId,
                 folderName:folderName,
@@ -846,14 +985,72 @@ $('#path div#'+folderId).nextAll('div').remove();
                 }
             });
     }
+    $(document).on('click','.viewFolderDetails', function(e){
+          $('.viewFolderDetails').hide();
+         var folderId2 = $(this).attr('id');
+         viewFolderDetails(folderId2);
+        $('.file-folder[id='+folderId2+']').addClass('active2');
+          $(document).on('click','.file-folder',function(e){
+                $(this).addClass('active2');
+                var folderId2 = $(this).attr('id');
+               viewFolderDetails(folderId2);
+            })
+          elementClicked=true;
+     });
+    
+ function viewFolderDetails(folderId2){
+   
+   var folderId2=folderId2;
+   $.ajax({
+        url:'{{ route('viewFolderDetails') }}',
+        type:'post',
+        data:{
+            folderId2:folderId2,
+        },
+        dataType:'json',
+        success:function(data){
+            if(data.status==200){
+        $.each(data.folderDetails, function( index, value ) {
+            $('#uploader').html(value['uploader']);
+            $('#folderNameView').html(value['folderName']);
+            $('#modifiedFolder').html(value['lastModified']);
+            $('#createdFolder').html(value['created']);
+         
+
+            });
+
+        document.getElementById("mySidebar").style.width = "250px";
+          document.getElementById("viewFolderModal").style.marginRight = "250px";
+            }
+       
+        }
+
+   });
+
+ };
+ $('#closeFolderDetails').on('click',function(e){
+    $(document).off("click", ".file-folder");
+      document.getElementById("mySidebar").style.width = "0px";
+    document.getElementById("viewFolderModal").style.marginRight = "0px";
+            $('.viewFolderDetails').show();
+        if(elementClicked===true){
+            elementClicked=false;
+        };
+
+ });
 
     $(document).on("contextmenu",'.file-folder', function(event) { 
     event.preventDefault();
+
     $("div.custom-menu").hide();
     var folderId = $(this).attr('id');
-   $(this).addClass('active2');
+    var folderNameOld = $('#folderNameOld').val();
+var applicationId= '<?php   echo $applicationId->applicationId ?>';
+
+   $(this).addClass('active2[id='+folderId+']');
     var custom =$("<div class='custom-menu'></div>")
         custom.append($('#menu-folder-clone').html())
+         custom.find('.viewFolderDetails').attr('id',$(this).attr('id'))
   
     custom.css({top: '200px', left: event.pageX + "px"});
       custom.appendTo("#viewDocuments")
@@ -862,7 +1059,7 @@ $('.openFolder').on('click',function(e){
 
      
         var parentId=$('#parentId').val();
-        var applicationId= '<?php   echo $applicationId->applicationId ?>';
+        
 
             $.ajax({
                 url: '{{ route('viewFolder') }}',
@@ -889,17 +1086,77 @@ $('.openFolder').on('click',function(e){
             });
 
 
+});
+$('.renameFolder').on('click',function(e){
+    e.preventDefault();
+   
+      
+    $('.renameFolder2[id="'+folderId+'"]').siblings('div').hide();
+        $('.renameFolder2[id="'+folderId+'"]').show();
+
+      $(".renameFolder2").select().focus();
+    $('.renameFolder2[id="'+folderId+'"]').focusout(function() {
+        var folderName =$(this).val();
+        $(this).hide();
+        $(this).siblings('div').show();
+        folderRename(folderName);
+        });
+
 })
 
-     $('html').click(function() {
-         $('.custom-menu').hide();
-            $('.file-folder').removeClass('active2');
+    $('.renameFolder2').keyup(function(event){
+        var folderName =$(this).val();
+        if ( event.keyCode == 13 ) {
+             event.preventDefault();
+            folderRename(folderName);
+       
+          }
+       
     });
-      $('html').contextmenu(function() {
-         $('.custom-menu').hide();
-            $('.file-folder').removeClass('active2');
+    function folderRename(folderName){
+        var folderName=folderName;
+        var folderId2=folderId;
+        var parentFolderId=$('#parentFolderId').val();
+ 
+        if (folderName == '' || folderName==folderNameOld) {
+            $('.renameFolder2').val(folderNameOld);
+            $('.renameFolder2').hide();
+            $('.renameFolder2').siblings('div').show();
+         }else{
+            $.ajax({
+                url:'{{ route('folderRename') }}',
+                type:'post',
+                data:{
+                    folderName:folderName,
+                    folderId2:folderId2,
+                    applicationId:applicationId
+                },
+                dataType:'json',
+                success:function(data){
+                    if(elementClicked==true){
+                    viewFolderDetails(folderId2);
 
+                    }
+            
+            fetch_data(parentFolderId);
+
+                }
+            });
+         }
+    }
+    
+
+
+     $('html').click(function() {
+        
+         $('.custom-menu').hide();
+         $('.file-folder').removeClass('active2');
     });
+    //   $('html').contextmenu(function() {
+    //      $('.custom-menu').hide();
+    //         $('.file-folder').removeClass('active2');
+
+    // });
 })
 
    
@@ -916,3 +1173,4 @@ $('.openFolder').on('click',function(e){
 
 
   @endsection 
+

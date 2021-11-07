@@ -142,6 +142,7 @@ class applicationController extends Controller
         $Fname =$request->Fname;
         $Lname =$request->Lname;
         $Mname =$request->Mname;
+        $admin =$request->admin;
         $applicationId =$request->userid;
 
         $type_application =$request->type_application;
@@ -175,7 +176,9 @@ class applicationController extends Controller
      $folder= new folderUpload;
       $folder->applicationId= $applicationId;
       $folder->folderName= $Fname.$Lname;
+      $folder->uploader= $admin;
       $folder->parentId= null;
+      $folder->created=date('m/d/y h:i:s A');
       $folder->lastModified=date('m/d/y h:i:s A');
       $folder->save();
       $folderParent = $folder->folderId;
@@ -185,7 +188,9 @@ class applicationController extends Controller
       $folder2->applicationId= $applicationId;
       $folder2->folderName= $type_application;
       $folder2->parentId= $folderParent;
+      $folder2->uploader= $admin;
       $folder2->lastModified=date('m/d/y h:i:s A');
+      $folder2->created=date('m/d/y h:i:s A');
       $folder2->save();
       $folderParent2 = $folder2->folderId;
 
@@ -226,6 +231,7 @@ $files=[];
     public function fetch_file(Request $request){
         $Fname = $request->Fname;
         $Lname = $request->Lname;
+        $admin = $request->admin;
         $applicationId = $request->applicationId;
         $path=$Fname.$Lname;
     
@@ -252,9 +258,9 @@ $files=[];
         <tr>
             <th> Application
             </th>
-            <th>  Folder Id
+            <th> File Size
             </th>
-            <th>  Parent Folder
+            <th> Uploader
             </th>
             <th>  Last Modified
             </th>
@@ -266,7 +272,7 @@ $files=[];
 
           if($name['folderName']!=$path){
             $output .='
-            <tr class="file-folder" id='.$name['folderId'].'>
+            <tr class="file-folder " id='.$name['folderId'].' >
                
                 <td>
                             <div class="folder"> 
@@ -274,12 +280,16 @@ $files=[];
                             '.$name["folderName"].'
                       
                              </div>
+                             <input type="text" 
+                               value="'.$name["folderName"].'"   id="folderNameOld" style="display:none">
+                               <input type="text"  class="renameFolder2" 
+                               value="'.$name["folderName"].'"  id='.$name['folderId'].' style="display:none">
                       
                   
                 </td>
-                 <td>'.$name["folderId"].'
+                 <td>--
                 </td>
-                 <td>'.$name["parentId"].'
+                 <td>'.$admin.'
                 </td>
                 <td>'.$name['lastModified'] .'
                 </td>
@@ -293,8 +303,8 @@ $files=[];
 
      }
      else{
-        $output.='<tr>   
-                <td >No Folder Found
+        $output .='<tr>   
+                <td >This folder is empty.
                 </td>
         </tr>';
      }
@@ -386,6 +396,11 @@ $files=[];
                             '.$file["folderName"].'
                          
                              </div>
+                              <input type="text" 
+                               value="'.$file["folderName"].'"   id="folderNameOld" style="display:none">
+                                <input type="text" 
+                                class="renameFolder2" 
+                               value="'.$file["folderName"].'"  id='.$file['folderId'].' style="display:none">
                         </td>
                         <td> --
                         </td>
@@ -428,6 +443,14 @@ $files=[];
 
               }
              }
+             if($fileFetch->count()==0 && $folderFetch->count()==0 ){
+
+        $output .='<tr >   
+                <td colspan="5" style="  text-align: center;">This folder is empty.
+                </td>
+        </tr>';
+    
+             }
 
              
              
@@ -435,6 +458,32 @@ $files=[];
             return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId,'folderName'=>$folderName,'folderId'=>$folderId]);
      
     }
+    public function folderRename(Request $request){
+        $folderName=$request->folderName;
+        $folderId=$request->folderId2;
+        $applicationId=$request->applicationId;
+        $path= public_path().'/files/';
+
+     
+
+    $rootFolder=folderUpload::tree($folderId,$applicationId);
+    $path=$path.$rootFolder;
+    $oldpath=basename($path);
+
+     if(is_dir( $path)){
+        rename(dirname($path).'/'.$oldpath,dirname($path).'/'.$folderName );
+     }
+        
+   $renameFolder=folderUpload::where('folderId',$folderId)->update(['folderName'=>$folderName]);
+
+         return response()->json(['status'=>200]);
+    }
+public function viewFolderDetails(Request $request){
+    $folderId =$request->folderId2;
+
+    $folderDetails=folderUpload::where('folderId',$folderId)->get();
+    return response()->json(['status'=>200,'folderDetails'=>$folderDetails]);
+}
  
 
 
@@ -445,6 +494,7 @@ public function addFolder(Request $request ){
     $folderName= $request->folderName;
     $Fname= $request->Fname;
     $Lname= $request->Lname;
+    $admin= $request->admin;
     $name=$Fname.$Lname;
     $applicationId= $request->applicationId;
     $path= public_path().'/files/';
@@ -460,7 +510,10 @@ public function addFolder(Request $request ){
         $folderUpload->applicationId=$applicationId;
         $folderUpload->folderName=$folderName;
         $folderUpload->parentId=$parentId;
+        $folderUpload->uploader=$admin;
+        
         $folderUpload->lastModified=date('m/d/y h:i:s A');
+        $folderUpload->created=date('m/d/y h:i:s A');
         $folderUpload->save();
         $folderId= $folderUpload->folderId;
          mkdir($path);

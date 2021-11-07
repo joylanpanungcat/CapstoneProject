@@ -280,6 +280,7 @@
         </div>
       
          @yield('content')       
+         @yield('content2')       
   
       
   </div>
