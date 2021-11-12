@@ -218,6 +218,8 @@ margin-top: 49px;
     height: 24vmax;
     overflow: auto;
     overflow-x: hidden;
+    
+
 }
 .view-header{
     height: 10vmax;
@@ -240,10 +242,25 @@ margin-top: 49px;
     padding: 5px;
     color: #000;
     }
+.description{
+    height: 5vmax;
+    display: none;
+    overflow: hidden;
+   
+
+}
+.description::-webkit-scrollbar {
+   display: none;
+ }
+ .description-view{
+    background-color: white;
+    border: none;
+ }
  .view-modal-dialog{
             height:90vh;
             width:90vw;
         }
+
 
 .view-modal-content{
     height:89vh;
@@ -645,11 +662,13 @@ margin-top: 49px;
                     <div class="col-md-8"  style="margin-bottom: 18px;color: #3C4043;"><h7 id="createdFolder"></h7></div >
                 </div>
                   <div class="form-group">
-                    <div class="col-md-4" style="color: #3C4043;"><h7>Discription</h7></div>
-                    <div class="col-md-8"  style="margin-bottom: 18px;color: #3C4043;"><h7><i class="fa fa-pencil pencil" ></i></h7></div >
+                    <div class="col-md-4" style="color: #3C4043;"><h7>Description</h7></div>
+                    <div class="col-md-8"  style="color: #3C4043;"><h7><i class="fa fa-pencil pencil" data-toggle="tooltip" data-placement="bottom" title="Edit description"></i></h7></div >
                 </div>
                 <div class="form-group">
-                    
+                    <textarea class="description" disabled="true" >
+                        
+                    </textarea>
                 </div>
                
                
@@ -1040,6 +1059,7 @@ $('#path div#'+folderId).nextAll('div').remove();
          viewFolderDetails(folderId2);
         $('.file-folder[id='+folderId2+']').addClass('active2');
           $(document).on('click','.file-folder',function(e){
+        $('.file-folder').removeClass('active2');
                 $(this).addClass('active2');
                 var folderId2 = $(this).attr('id');
                viewFolderDetails(folderId2);
@@ -1080,7 +1100,7 @@ $('#path div#'+folderId).nextAll('div').remove();
             if(data.output!=''){
                 $('#tab-2').html(data.output);
             }else{
-                 $('#tab-2').html('');
+                 $('#tab-2').html('<div class="container" style="margin-left:20px"><h6>No modification</h6></div>');
             }
 
           
@@ -1096,9 +1116,15 @@ $('#path div#'+folderId).nextAll('div').remove();
  };
  $('.pencil').on('click',function(e){
     e.preventDefault();
+    $('.description').removeAttr('disabled');
+    $('.pencil').hide();
+    $('.description').show();
+    $('.description').focus();
 
-    alert('nice ka one');
- })
+
+ });
+
+
  $('#closeFolderDetails').on('click',function(e){
     $(document).off("click", ".file-folder");
       document.getElementById("mySidebar").style.width = "0px";
@@ -1159,6 +1185,55 @@ $('.openFolder').on('click',function(e){
 
 
 });
+  $('.description').keyup(function(event){
+    textAreaAdjust(this);
+     if ( event.keyCode == 13 ) {
+             event.preventDefault();
+             addDescription(folderId);
+       
+          }
+  });
+ function textAreaAdjust(element) {
+ element.style.height = "1px";
+  element.style.height = (10+element.scrollHeight)+"px";
+   $container = $('.tabs-stage');
+    $container.animate({ scrollTop: $container[0].scrollHeight });
+ 
+  }
+
+
+ $('.description').on('focusout',function(e){
+    e.preventDefault();
+    $('.pencil').show();
+    $('.description').attr('disabled',true);
+    $('.description').addClass('description-view');
+    addDescription(folderId);
+
+   
+ })
+ function addDescription(folderId){
+     var description = $('.description').val();
+     var folderId=folderId;
+    if(description.trim()!=''){
+        description=description.trim().replace(/\s+/g, " ");
+        $.ajax({
+            url:'{{ route('addDescription') }}',
+            type:'post',
+            data:{
+                folderId:folderId,
+                description:description,
+            },
+            dataType:'json',
+            success:function(data){
+                 $('.description').val(description);
+            }
+        })
+          
+    }else{
+        $('.description').hide();
+    }
+
+ }
 $('.renameFolder').on('click',function(e){
     e.preventDefault();
    
@@ -1224,7 +1299,10 @@ $('.renameFolder').on('click',function(e){
      $('html').click(function() {
         
          $('.custom-menu').hide();
+         if(elementClicked!=true){
          $('.file-folder').removeClass('active2');
+
+         }
     });
     //   $('html').contextmenu(function() {
     //      $('.custom-menu').hide();

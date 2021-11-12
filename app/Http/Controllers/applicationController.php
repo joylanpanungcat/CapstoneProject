@@ -460,6 +460,21 @@ $files=[];
             return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId,'folderName'=>$folderName,'folderId'=>$folderId]);
      
     }
+    public function addDescription(Request $request){
+        $admin=$request->admin;
+        $folderId=$request->folderId;
+        $description2=$request->description;
+
+        $description= folderUpload::find($folderId);
+        $description->description=$description2;
+        $description->lastModified=date("F j, Y, g:i a");
+        $description->save();
+
+
+
+    return response()->json(['status'=>200]);
+
+    }
     public function folderRename(Request $request){
         $folderName=$request->folderName;
         $folderId=$request->folderId2;
@@ -500,6 +515,7 @@ public function viewFolderDetails(Request $request){
              $output.='<div class="container" style="margin-left:20px; ">
                 <div class="col-md-10">
              <ul style="list-style-type: none;">';
+
                if($activity->count()>0){
                 foreach($folderDetails as $folder){
                       $output .="<li><span><i class='fa fa-info-circle '></i></span>   <strong>".$activity['modifiedBy']."</strong> renamed this folder on ".$folder['lastModified']."</li>";
