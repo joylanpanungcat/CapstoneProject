@@ -9,6 +9,8 @@ use App\Models\applicant;
 use App\Models\address;
 use App\Models\fileUpload;
 use App\Models\folderUpload;
+use App\Models\activity;
+
 // use Storage;
 use DataTables;
 
@@ -178,8 +180,8 @@ class applicationController extends Controller
       $folder->folderName= $Fname.$Lname;
       $folder->uploader= $admin;
       $folder->parentId= null;
-      $folder->created=date('m/d/y h:i:s A');
-      $folder->lastModified=date('m/d/y h:i:s A');
+      $folder->created=date("F j, Y, g:i a");
+      $folder->lastModified=date("F j, Y, g:i a");
       $folder->save();
       $folderParent = $folder->folderId;
 
@@ -189,8 +191,8 @@ class applicationController extends Controller
       $folder2->folderName= $type_application;
       $folder2->parentId= $folderParent;
       $folder2->uploader= $admin;
-      $folder2->lastModified=date('m/d/y h:i:s A');
-      $folder2->created=date('m/d/y h:i:s A');
+      $folder2->lastModified=date("F j, Y, g:i a");
+      $folder2->created=date("F j, Y, g:i a");
       $folder2->save();
       $folderParent2 = $folder2->folderId;
 
@@ -199,7 +201,7 @@ class applicationController extends Controller
                 $filesUpload->applicationId=$userid;
                $filesUpload->filename=$name;
                $filesUpload->folderId=$folderParent2;
-             $filesUpload->lastModified=date('m/d/y h:i:s A');
+             $filesUpload->lastModified=date("F j, Y, g:i a");
 
                  $filesUpload->save();
       }
@@ -461,6 +463,7 @@ $files=[];
     public function folderRename(Request $request){
         $folderName=$request->folderName;
         $folderId=$request->folderId2;
+        $admin=$request->admin;
         $applicationId=$request->applicationId;
         $path= public_path().'/files/';
 
@@ -474,15 +477,41 @@ $files=[];
         rename(dirname($path).'/'.$oldpath,dirname($path).'/'.$folderName );
      }
         
-   $renameFolder=folderUpload::where('folderId',$folderId)->update(['folderName'=>$folderName]);
+   $renameFolder= folderUpload::find($folderId);
+   $renameFolder->folderName=$folderName;
+   $renameFolder->lastModified=date("F j, Y, g:i a"); 
+   $renameFolder->save();
+
+   $activity =new activity();
+   $activity->folderId=$folderId;
+   $activity->modifiedBy=$admin;
+   $activity->save();
 
          return response()->json(['status'=>200]);
     }
 public function viewFolderDetails(Request $request){
     $folderId =$request->folderId2;
-
+    $output="";
     $folderDetails=folderUpload::where('folderId',$folderId)->get();
-    return response()->json(['status'=>200,'folderDetails'=>$folderDetails]);
+
+    $activityDetails=folderUpload::find($folderId);
+
+    foreach($activityDetails->activity as $activity){
+             $output.='<div class="container" style="margin-left:20px; ">
+                <div class="col-md-10">
+             <ul style="list-style-type: none;">';
+               if($activity->count()>0){
+                foreach($folderDetails as $folder){
+                      $output .="<li><span><i class='fa fa-info-circle '></i></span>   <strong>".$activity['modifiedBy']."</strong> renamed this folder on ".$folder['lastModified']."</li>";
+                }
+      
+
+        }
+             $output.='</ul></div></div>';
+    }
+
+
+    return response()->json(['status'=>200,'folderDetails'=>$folderDetails,'output'=>$output]);
 }
  
 
@@ -512,8 +541,8 @@ public function addFolder(Request $request ){
         $folderUpload->parentId=$parentId;
         $folderUpload->uploader=$admin;
         
-        $folderUpload->lastModified=date('m/d/y h:i:s A');
-        $folderUpload->created=date('m/d/y h:i:s A');
+        $folderUpload->lastModified=date("F j, Y, g:i a");
+        $folderUpload->created=date("F j, Y, g:i a");
         $folderUpload->save();
         $folderId= $folderUpload->folderId;
          mkdir($path);
@@ -554,8 +583,7 @@ public function addFile(Request $request){
                 $filesUpload->applicationId=$userid;
                $filesUpload->filename=$name;
                $filesUpload->folderId=$parentFolderId2;
-             $filesUpload->lastModified=date('m/d/y h:i:s A');
-
+             $filesUpload->lastModified=date("F j, Y, g:i a");
                  $filesUpload->save();
       }
 

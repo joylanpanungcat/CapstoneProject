@@ -20,8 +20,6 @@ class CreateFolderUploadTable extends Migration
             $table->string('uploader')->nullable();
             $table->string('created')->nullable();
             $table->string('lastModified')->nullable();
-            $table->string('modifiedBy')->nullable();
-            $table->string('activity')->default(0);
             $table->unsignedBigInteger('parentId')->nullable();
             $table->timestamps();
         });

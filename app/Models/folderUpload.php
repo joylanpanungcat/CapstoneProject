@@ -18,6 +18,9 @@ class folderUpload extends Model
     public function fileUpload(){
         return $this->hasMany(fileUpload::class,'folderId','folderId');
     }
+     public function activity(){
+        return $this->hasMany(activity::class,'folderId','folderId');
+    }
 
 
     public function parent(){
@@ -94,25 +97,25 @@ $path= self::parseTree($rootFolder);
 
   }
 
-  public static function text(){
-    $array=[
-        'firstname'=>'joylan',
-        'lastname'=>'Panungcat',
-        'parent'=>[
-            'firstname'=>'josephine',
-            'lastname'=>'Panungcat',
-            'parent'=>[
-            'firstname'=>'Pudol',
-            'lastname'=>'jumilla',
+  // public static function text(){
+  //   $array=[
+  //       'firstname'=>'joylan',
+  //       'lastname'=>'Panungcat',
+  //       'parent'=>[
+  //           'firstname'=>'josephine',
+  //           'lastname'=>'Panungcat',
+  //           'parent'=>[
+  //           'firstname'=>'Pudol',
+  //           'lastname'=>'jumilla',
 
-             ]
+  //            ]
 
-        ]
+  //       ]
 
-    ];
+  //   ];
 
-    return collect($array)->toArray();
-  }
+  //   return collect($array)->toArray();
+  // }
 
 
 

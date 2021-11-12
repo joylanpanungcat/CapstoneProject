@@ -43,7 +43,7 @@
 }
 .my-custom-scrollbar {
 position: relative;
-height: 300px;
+height:90vh;
 overflow: auto;
 }
 .table-wrapper-scroll-y {
@@ -161,7 +161,6 @@ hr.solid {
   transition: 0.1s; /* 0.5 second transition effect to slide in the sidebar */
 }
 
-
 #main {
   transition: margin-right .5s; 
 }
@@ -184,26 +183,26 @@ margin-top: 49px;
 .tabs-nav {
     list-style: none;
     margin-top: 20px;
+    margin-left: 20px;
     padding: 0;
 }
 
 .tabs-nav .tab-active a {
-    border-bottom: 2px solid #ff6e40;
-    color:  #ff6e40;
+    border-bottom: 3px solid #007BFF;
+    color: #007BFF;
     cursor: default;
 }
 .tabs-nav a {
     padding: 10px;
     font-size: 14px;
-    font-weight: bold;
     text-align: center;
-    border-bottom: 2px solid ;
     width: 110px;
-    margin-left: 20px;
+    padding-left: 20px;
 }
 .tabs-nav li {
     float: left;
     margin-bottom: 30px;
+
 }
 .tabs-stage {
     -webkit-border-radius: 0 0 6px 6px;
@@ -216,6 +215,42 @@ margin-top: 49px;
     margin-bottom: 20px;
     position: relative;
     top: -1px;
+    height: 24vmax;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.view-header{
+    height: 10vmax;
+
+}
+.view-header-content{
+    height: 5vmax;
+}
+#folder_table{
+    height: 55vh;
+}
+.pencil{
+    float: right;
+    padding: 5px;
+}
+.pencil:hover{
+    float: right;
+    background-color: #E8F0FE;
+    border-radius: 50%;
+    padding: 5px;
+    color: #000;
+    }
+ .view-modal-dialog{
+            height:90vh;
+            width:90vw;
+        }
+
+.view-modal-content{
+    height:89vh;
+}
+.view-modal-body{
+    height:100vh;
+    overflow:auto
 }
 
 </style>
@@ -531,13 +566,13 @@ margin-top: 49px;
  
     <!-- Modal HTML -->
     <div id="viewDocuments" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content ">
+        <div class="modal-dialog modal-dialog-centered modal-xl view-modal-dialog">
+            <div class="modal-content view-modal-content ">
                 <div class="modal-header">
                     <h5 class="modal-title">Uploaded Documents</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="modal-body" id="modalViewDocuments">
+                <div class="modal-body view-modal-body" id="modalViewDocuments">
                     <div  id="viewFolderModal">
                 <div class="row">
                     <button class="btn btn-primary btn-sm" id="new_folder" data-toggle="modal" data-target="#addFolder"><i class="fa fa-plus" ></i> New Folder</button>
@@ -564,28 +599,32 @@ margin-top: 49px;
                 </div> 
 
  <div id="mySidebar" class="sidebar">
-        <div class="col-md-9">
-            <div class="col-md-3">
+        <div class="view-header">
+        <div class="col-md-10 view-header-content">
+            <div class="col-md-3 folderHeader">
                  <h4 style="color: #3C4043;display:inline"><span style="margin-right: 20px;color: #3C4043;"><i class="fa fa-folder"></i></span> </h4>
             </div>
-            <div class="col-md-9">
-                  <h5 style="color: #3C4043;display:inline; text-align: center;" id="folderNameView">     </h5>
+            <div class="col-md-9 ">
+                  <h4 style="color: #3C4043;display:inline; text-align: center;" id="folderNameView">     </h4>
             </div>
      
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
              <button type="reset" class="bnt btn-default closebtn" id="closeFolderDetails"><i class='fa fa-times' style="color:#7e8082;" data-toggle="tooltip" data-placement="bottom" title="Hide Details" ></i></button>
         </div>
+       
+       
         <div class="col-md-12">
             <ul class="tabs-nav">
-                <li class=""><a href="#tab-1" >Features</a>
+                <li class=""><a href="#tab-1" >Detials</a>
                 </li>
-                <li class="tab-active"><a href="#tab-2">Details</a>
+                <li class="tab-active"><a href="#tab-2">Activity</a>
                 </li>
             </ul>
         
               <hr class="separate">   
         </div>
+         </div>
         <div class="tabs-stage">
             <div class="col-md-12 " id="tab-1"  >
                 <h6 style="margin-bottom: 10px;color: #3C4043;"><b> System Properties</b></h6 >
@@ -605,9 +644,19 @@ margin-top: 49px;
                     <div class="col-md-4" style="color: #3C4043;"><h7>Created</h7></div>
                     <div class="col-md-8"  style="margin-bottom: 18px;color: #3C4043;"><h7 id="createdFolder"></h7></div >
                 </div>
+                  <div class="form-group">
+                    <div class="col-md-4" style="color: #3C4043;"><h7>Discription</h7></div>
+                    <div class="col-md-8"  style="margin-bottom: 18px;color: #3C4043;"><h7><i class="fa fa-pencil pencil" ></i></h7></div >
+                </div>
+                <div class="form-group">
+                    
+                </div>
+               
+               
             </div>
             <div id="tab-2" >
-                <p>Phasellus pharetra aliquet viverra. Donec scelerisque tincidunt diam, eu fringilla urna auctor at.</p>
+               
+
             </div>
         </div>
      
@@ -1009,15 +1058,32 @@ $('#path div#'+folderId).nextAll('div').remove();
         },
         dataType:'json',
         success:function(data){
+            var len=32;
             if(data.status==200){
         $.each(data.folderDetails, function( index, value ) {
+                var foldername=value['folderName'].trim().length;
             $('#uploader').html(value['uploader']);
+            if(foldername<=len){
             $('#folderNameView').html(value['folderName']);
+            }else{
+               foldername= value['folderName'].slice(0, len)+'...';
+            $('#folderNameView').html(foldername);
+
+            }
+
+
             $('#modifiedFolder').html(value['lastModified']);
+            
             $('#createdFolder').html(value['created']);
          
-
             });
+            if(data.output!=''){
+                $('#tab-2').html(data.output);
+            }else{
+                 $('#tab-2').html('');
+            }
+
+          
 
         document.getElementById("mySidebar").style.width = "250px";
           document.getElementById("viewFolderModal").style.marginRight = "250px";
@@ -1028,6 +1094,11 @@ $('#path div#'+folderId).nextAll('div').remove();
    });
 
  };
+ $('.pencil').on('click',function(e){
+    e.preventDefault();
+
+    alert('nice ka one');
+ })
  $('#closeFolderDetails').on('click',function(e){
     $(document).off("click", ".file-folder");
       document.getElementById("mySidebar").style.width = "0px";
@@ -1047,7 +1118,8 @@ $('#path div#'+folderId).nextAll('div').remove();
     var folderNameOld = $('#folderNameOld').val();
 var applicationId= '<?php   echo $applicationId->applicationId ?>';
 
-   $(this).addClass('active2[id='+folderId+']');
+   $('.file-folder').removeClass('active2');
+   $('.file-folder[id='+folderId+']').addClass('active2');
     var custom =$("<div class='custom-menu'></div>")
         custom.append($('#menu-folder-clone').html())
          custom.find('.viewFolderDetails').attr('id',$(this).attr('id'))
@@ -1116,6 +1188,7 @@ $('.renameFolder').on('click',function(e){
     function folderRename(folderName){
         var folderName=folderName;
         var folderId2=folderId;
+        var admin ='{{Session::get('adminID')['username']}}';
         var parentFolderId=$('#parentFolderId').val();
  
         if (folderName == '' || folderName==folderNameOld) {
@@ -1129,6 +1202,7 @@ $('.renameFolder').on('click',function(e){
                 data:{
                     folderName:folderName,
                     folderId2:folderId2,
+                    admin:admin,
                     applicationId:applicationId
                 },
                 dataType:'json',
