@@ -274,7 +274,7 @@ $files=[];
 
           if($name['folderName']!=$path){
             $output .='
-            <tr class="file-folder " id='.$name['folderId'].' >
+            <tr class="file-folder " id='.$name['folderId'].' name="'.$name['folderName'].'" >
                
                 <td>
                             <div class="folder"> 
@@ -392,14 +392,14 @@ $files=[];
                  foreach($folderFetch as $file){
                      if($file['folderName']!=$path){
 
-                 $output.='<tr  class="file-folder" id='.$file['folderId'].'>   
+                 $output.='<tr  class="file-folder" name="'.$file['folderName'].'" id='.$file['folderId'].' ">   
                         <td > <div class="folder"> 
                             <span><i class="fa fa-folder"></i></span>
                             '.$file["folderName"].'
                          
                              </div>
-                              <input type="text" 
-                               value="'.$file["folderName"].'"   id="folderNameOld" style="display:none">
+                              <input type="text" class="folderNameOld"
+                               value="'.$file["folderName"].'"    id='.$file['folderId'].' style="display:none">
                                 <input type="text" 
                                 class="renameFolder2" 
                                value="'.$file["folderName"].'"  id='.$file['folderId'].' style="display:none">
@@ -465,11 +465,15 @@ $files=[];
         $folderId=$request->folderId;
         $description2=$request->description;
 
-        $description= folderUpload::find($folderId);
-        $description->description=$description2;
-        $description->lastModified=date("F j, Y, g:i a");
-        $description->save();
+        $lastModified= folderUpload::find($folderId);
+        $lastModified->lastModified=date("F j, Y, g:i a");
+        $lastModified->save();
 
+        $description = new activity;
+        $description->description=$description2;
+        $description->folderId=$folderId;
+        $description->modifiedBy=$admin;
+        $description->save(); 
 
 
     return response()->json(['status'=>200]);
@@ -496,10 +500,12 @@ $files=[];
    $renameFolder->folderName=$folderName;
    $renameFolder->lastModified=date("F j, Y, g:i a"); 
    $renameFolder->save();
+   $folderNameOld= $renameFolder->folderName;
 
    $activity =new activity();
    $activity->folderId=$folderId;
    $activity->modifiedBy=$admin;
+   $activity->renamed=$folderNameOld;
    $activity->save();
 
          return response()->json(['status'=>200]);
@@ -510,6 +516,7 @@ public function viewFolderDetails(Request $request){
     $folderDetails=folderUpload::where('folderId',$folderId)->get();
 
     $activityDetails=folderUpload::find($folderId);
+    $description='';
 
     foreach($activityDetails->activity as $activity){
              $output.='<div class="container" style="margin-left:20px; ">
@@ -518,7 +525,13 @@ public function viewFolderDetails(Request $request){
 
                if($activity->count()>0){
                 foreach($folderDetails as $folder){
+                      if($activity['renamed']!=null){
                       $output .="<li><span><i class='fa fa-info-circle '></i></span>   <strong>".$activity['modifiedBy']."</strong> renamed this folder on ".$folder['lastModified']."</li>";
+                      }
+                      if($activity['description']!=null){
+                        $output .="<li><span><i class='fa fa-info-circle '></i></span>   <strong>".$activity['modifiedBy']."</strong> edit folder description on ".$folder['lastModified']."</li>";
+                        $description=$activity['description'];
+                      }
                 }
       
 
@@ -527,7 +540,7 @@ public function viewFolderDetails(Request $request){
     }
 
 
-    return response()->json(['status'=>200,'folderDetails'=>$folderDetails,'output'=>$output]);
+    return response()->json(['status'=>200,'folderDetails'=>$folderDetails,'output'=>$output,'description'=>$description]);
 }
  
 

@@ -17,6 +17,8 @@ class CreateFolderActivityTable extends Migration
             $table->id('activityId');
              $table->unsignedBigInteger('folderId')->nullable();
             $table->string('modifiedBy')->nullable();
+            $table->string('description')->nullable();
+            $table->string('renamed')->nullable();
             $table->timestamps();
         });
     }
