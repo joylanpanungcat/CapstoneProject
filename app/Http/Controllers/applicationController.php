@@ -258,7 +258,7 @@ $files=[];
 
        $output="<table class='table folderItem'> 
         <tr>
-            <th> Application
+            <th> Name
             </th>
             <th> File Size
             </th>
@@ -375,7 +375,7 @@ $files=[];
 
          $output="<table class='table folderItem' > 
         <tr>
-            <th>Files/Folder
+            <th>Name
             </th>
             <th> File Size
             </th>
@@ -545,7 +545,6 @@ public function viewFolderDetails(Request $request){
 public function moveFolder(Request $request){
 $ids=$request->ids;
 $slotNumber=$request->slotNumber;
-
     foreach($ids as $id){
         $move =folderUpload::find($id);
         $move->parentId=$slotNumber;
@@ -556,7 +555,92 @@ $slotNumber=$request->slotNumber;
 
 }
  
+public function moveToFolder(Request $request){
+    $folderId=$request->folderId;
+    $applicationId=$request->applicationId;
+    $parentId=$request->parentId;
+    $selected=$request->selected;
 
+
+    $folders= folderUpload::where('applicationId',$applicationId)
+    ->where('parentId',$parentId)
+    ->orderBy('folderName','ASC')
+    ->get();
+    $output='';
+    foreach($folders as $folder){
+       
+        if($folder['folderId']==$selected){
+            $output .= "<div class='col-md-12 moveFolderToClass2 moveFolderDisabled' data-toggle='tooltip' data-placement='bottom' title='Cannot move folder ".$folder['folderName']." on to itself' >
+                <div class='col-md-2'><i class='fa fa-folder'></i> </div>
+                  <div class='col-md-8'> ".$folder['folderName']."  </div>
+                 
+               
+                </div>";
+        }else{
+            $output .= "<div class='col-md-12 moveFolderToClass' id=".$folder['folderId']." >
+                <div class='col-md-2'><i class='fa fa-folder'></i> </div>
+                  <div class='col-md-8'> ".$folder['folderName']."  </div>
+                  <div class='col-md-2 moveFolderView' id=".$folder['folderId']." style='display:none' data-toggle='tooltip' data-placement='bottom' title='Go to  ".$folder['folderName']."'> <i class='fa fa-chevron-right moveFolderViewIcon' id=".$folder['folderId']."></i></div>
+               
+                </div>";
+        }
+    }
+
+
+    return response()->json(['code'=>200,'output'=>$output]);
+}
+public function moveFolderToSelected(Request $request){
+        $folderId = $request->folderIdView;
+        $applicationId = $request->applicationId;
+        $parentId = $request->parentId;
+         $selected=$request->selected;
+        $folderParentId=0;
+         $path= public_path().'/files/';
+         $output="";
+  
+         $folderFetch=folderUpload::where('parentId','=',$folderId)->orderBy('folderName','ASC')->get();
+         $parentId=folderUpload::where('folderId','=',$folderId)->get();
+        
+        if($folderFetch->count()>0){
+                 foreach($folderFetch as $folder){
+
+        if($folder['folderId']==$selected){
+            $output .= "<div class='col-md-12 moveFolderToClass2 moveFolderDisabled' data-toggle='tooltip' data-placement='bottom' title='Cannot move folder ".$folder['folderName']." on to itself' >
+                <div class='col-md-2'><i class='fa fa-folder'></i> </div>
+                  <div class='col-md-8'> ".$folder['folderName']."  </div>
+                 
+               
+                </div>";
+           }else{
+             $output .= "<div class='col-md-12 moveFolderToClass' id=".$folder['folderId']." >
+                <div class='col-md-2'><i class='fa fa-folder'></i> </div>
+                  <div class='col-md-8'> ".$folder['folderName']."  </div>
+                  <div class='col-md-2 moveFolderView' id=".$folder['folderId']." style='display:none' data-toggle='tooltip' data-placement='bottom' title='Go to  ".$folder['folderName']."'> <i class='fa fa-chevron-right moveFolderViewIcon' id=".$folder['folderId']."></i></div>
+               
+                </div>"; 
+             }
+               
+               
+              }
+              foreach($parentId as $parentFolderId){
+                        $folderParentId =$parentFolderId['parentId'];
+                         if($parentFolderId['parentId'] ==null){
+                              $folderParentId =$parentFolderId['folderId'];
+                        }
+              }
+             }else{
+                 $output="<div><center><h6>This folder is empty.</h6></center></div>";
+                   foreach($parentId as $parentFolderId){
+                        $folderParentId =$parentFolderId['parentId'];
+                        if($parentFolderId['parentId'] ==null){
+                              $folderParentId =$parentFolderId['folderId'];
+                        }
+                    }
+             }
+
+
+               return response()->json(['code'=>200,'output'=>$output,'folderParentId'=>$folderParentId]);
+}
 
 
 

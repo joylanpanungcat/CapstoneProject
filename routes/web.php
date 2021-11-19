@@ -74,8 +74,13 @@ Route::post('folderRename',[applicationController::class,"folderRename"])->name(
 Route::post('viewFolderDetails',[applicationController::class,"viewFolderDetails"])->name('viewFolderDetails');
 Route::post('addDescription',[applicationController::class,"addDescription"])->name('addDescription');
 Route::post('moveFolder',[applicationController::class,"moveFolder"])->name('moveFolder');
+Route::post('moveToFolder',[applicationController::class,"moveToFolder"])->name('moveToFolder');
+Route::post('moveFolderToSelected',[applicationController::class,"moveFolderToSelected"])->name('moveFolderToSelected');
+
 
 });
+
+
 
 
 

@@ -342,6 +342,19 @@ margin-top: 49px;
         padding: 15px;
 
       }
+    .custom-menu2 .moveToFolderParentIdBack{
+    float: left;
+    padding: 10px;
+    margin: 0;
+
+    }
+    .custom-menu2 .moveToFolderParentIdBack:hover{
+    float: left;
+        padding: 10px;
+        background-color: #ccc;
+        border-radius: 50%;
+        color: #fff;
+    }
    .custom-menu2 .close-clone2{
     float: right;
     padding: 10px;
@@ -355,7 +368,35 @@ margin-top: 49px;
         border-radius: 50%;
         color: #fff;
     }
-
+    .custom-menu2 div.moveFolderToClass{
+            
+            font-size: 16px;
+            padding: 10px;
+    }
+     .custom-menu2 div.moveFolderToClass2{
+            
+            font-size: 16px;
+            padding: 10px;
+            opacity: 0.6;
+    }
+     .custom-menu2 div.moveFolderToClass .moveFolderViewIcon{
+        padding: 5px;
+    }
+     .custom-menu2 div.moveFolderToClass .moveFolderViewIcon:hover{
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #ccc ;
+    }
+   .activeMove{
+    background-color: #E8F0FE !important;
+    color: #4285F4;
+    }
+    .moveFolderViewIconHover:hover{
+          padding: 5px;
+        border-radius: 5px;
+        background-color: #4D90FE !important; 
+        color: #fff !important;
+    }
 
 </style>
 <div class="right_col" role="main" >
@@ -884,21 +925,18 @@ margin-top: 49px;
      <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-file-archive-o"></i></span>Compressed(zipped)</a>
 </div>
 
-<div id="menu-folder-clone2" style="display: none;">
+<div id="menu-folder-clone2" style="display: none; " class="col-md-12">
      
          <div class="col-md-12 header-clone2">
-            <div class="col-md-8"> <h2>This is Header</h2></div>
-            <div class="col-md-4"><h2 class="close-clone2"><i class="fa fa-times"></i></h2></div>
-           
+            <div class="col-md-2"  data-toggle='tooltip' data-placement='bottom' title='Back'><h2 class="moveToFolderParentIdBack"><i class="fa fa-chevron-left"></i></h2></div>
+            <div class="col-md-8"> <h2 class="moveTo-header"><b> Files</b></h2></div>
+            <div class="col-md-2"><h2 class="close-clone2" data-toggle='tooltip' data-placement='bottom' title='Close'><i class="fa fa-times"></i></h2></div>
+           <input type="" name="" class="moveToFolderParentId">
+           <input type="" name="" class="moveToFolderSelected">
+           <input type="" name="" class="moveToFolderParentId2">
          </div>
          <div class="col-md-12 body-clone2">
-            <h2>This is body</h2>
-            <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h2>
+            
          </div>
          <div class="col-md-12 footer-clone2">
          <div class="button-group">
@@ -1482,19 +1520,129 @@ var ids = $('.active2').map(function () {
         };
 
  });
+
+ // move to folder
+ $(document).on('click','.close-clone2',function(e){
+    $('.custom-menu2').hide();
+ })
  $(document).on('click','.moveFolderTo',function(e){
     e.preventDefault();
     var folderId = $(this).attr('id');
+    var applicationId= '<?php   echo $applicationId->applicationId ?>';
+    var parentId=$('#parentFolderId').val();
+  
+
         $('.file-folder[id='+folderId+']').addClass('active2 ');
-
-     
           elementClicked=true;
+           $("div.custom-menu2").hide();
 
-     var custom =$("<div class='custom-menu2'></div>")
+     var custom =$("<div class=' custom-menu2'></div>")
         custom.append($('#menu-folder-clone2').html());
     custom.css({top: '200px', left: event.pageX + "px"});
+      custom.find('.moveToFolderSelected').val( $(this).attr('id'));
       custom.appendTo("#viewDocuments");
+  var selected =  $('.moveToFolderSelected').val();
+
+      $.ajax({
+        url:'{{ route('moveToFolder') }}',
+        type:'post',
+        data:{
+            folderId:folderId,
+            applicationId:applicationId,
+            parentId:parentId,
+            selected:selected,
+        },
+        dataType:'json',
+       
+        success:function(data){
+            $('.body-clone2').html(data.output);   
+        $('.moveToFolderParentId').val(parentId);
+        $('.moveToFolderParentId2').val(parentId); 
+
+            // body-clone2
+        }
+      })
+
+     $(document).on('mouseover','.moveFolderToClass',function(e){
+        e.preventDefault();
+          var  folderId2 = $(this).attr('id');
+          $(this).css({
+            backgroundColor: '#F1F1F1',
+            opacity: '0.8',
+            cursor:'pointer'
+          });
+        $('.moveFolderView[id='+folderId2+']').show();
+       
+        // moveTo-header
+    });
+      $(document).on('mouseout','.moveFolderToClass',function(e){
+        e.preventDefault();
+          $(this).css({
+            backgroundColor: '#fff',
+             opacity: '1',
+            cursor:'default'
+
+          });
+        $('.moveFolderView').hide();
+        // moveTo-header
+    });
+       $(document).on('click','.moveFolderView',function(e){
+         var folderIdView = $(this).attr('id');
+           var parentId=$('#parentFolderId').val();
+          var selected = $('.moveToFolderSelected').val();
+         moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
+     
+        })
+        $(document).on('click','.moveToFolderParentIdBack',function(e){
+
+           var folderIdView =$('.moveToFolderParentId2').val();
+           var parentId =$('.moveToFolderParentId2').val();
+             var selected = $('.moveToFolderSelected').val();
+         moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
+        })
+       $(document).on('click','.moveFolderToClass',function(){
+          var moveFolderViewId = $(this).attr('id');
+            $('.moveFolderToClass').removeClass('activeMove');
+          $('.moveFolderToClass[id='+moveFolderViewId+']').addClass('activeMove ');
+
+              $('.moveFolderViewIcon').removeClass('moveFolderViewIconHover');
+           $('.moveFolderViewIcon[id='+moveFolderViewId+']').addClass(' moveFolderViewIconHover');
+              $('.moveToFolderParentId').val(moveFolderViewId);
+       })
+
+         $(document).on('dblclick','.moveFolderToClass',function(){
+                    var folderIdView = $(this).attr('id');
+                    var parentId=$('#parentFolderId').val();
+                  var selected = $('.moveToFolderSelected').val();
+         moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
+         });
  })
+ function moveFolderViewFetch(folderIdView,parentId,applicationId,selected){
+    var folderIdView = folderIdView;
+    var parentId = parentId;
+    var applicationId = applicationId;
+      var selected =  selected
+
+     $.ajax({
+                        url:'{{ route('moveFolderToSelected') }}',
+                        type:'post',
+                        data: {
+                            folderIdView:folderIdView,
+                            applicationId:applicationId,
+                            parentId:parentId,
+                            selected:selected,
+
+                        },
+                        dataType:'json',
+                        success:function(data){
+                             $('.body-clone2').html(data.output);         
+                             $('.moveToFolderParentId').val(folderIdView);
+                             $('.moveToFolderParentId2').val(data.folderParentId);
+                          
+                        }
+                    })
+ }
+
 
 
  $(document).on('click','.renameFolder',function(e){
@@ -1514,8 +1662,9 @@ var ids = $('.active2').map(function () {
             var folderName =$(this).val();
             $(this).hide();
             $(this).siblings('div').show();
+             $(this).addClass('keyupfired');
             folderRename(folderName,folderNameOld,folderId);
-              $(this).addClass('keyupfired');
+             
              }
         });
 
@@ -1527,8 +1676,9 @@ var ids = $('.active2').map(function () {
                    var folderName =$(this).val();
                  $(this).hide();
                  $(this).siblings('div').show();
+                $(this).addClass('keyupfired');
                 folderRename(folderName,folderNameOld,folderId);
-                  $(this).addClass('keyupfired');
+           
 
               }
 
@@ -1551,6 +1701,7 @@ var ids = $('.active2').map(function () {
             $('.renameFolder2').val(folderNameOld);
             $('.renameFolder2').hide();
             $('.renameFolder2').siblings('div').show();
+            $('.renameFolder2').removeClass('keyupfired');
          }else{
             $.ajax({
                 url:'{{ route('folderRename') }}',
@@ -1563,6 +1714,7 @@ var ids = $('.active2').map(function () {
                 },
                 dataType:'json',
                 success:function(data){
+                      $('.renameFolder2').removeClass('keyupfired');
                     if(elementClicked==true){
                     viewFolderDetails(folderId2);
 
@@ -1582,7 +1734,7 @@ $(document).on("contextmenu",'.file-folder', function(event) {
     var folderId = $(this).attr('id');
     var folderNameOld = $('#folderNameOld').val();
 var applicationId= '<?php   echo $applicationId->applicationId ?>';
-
+    $('.custom-menu2').hide();
    $('.file-folder').removeClass('active2');
    $('.file-folder[id='+folderId+']').addClass('active2');
     var custom =$("<div class='custom-menu'></div>")
@@ -1624,14 +1776,17 @@ $('.openFolder').on('click',function(e){
 
 });
  
-     $('html').click(function() {
+     $('html').click(function(e) {
         
          $('.custom-menu').hide();
          // $('.custom-menu2').hide();
          if(elementClicked!=true){
          $('.file-folder').removeClass('active2');
-
          }
+
+        if( !$('.custom-menu2').find('*').is(e.target)){
+                $('.custom-menu2').hide();
+        }
     });
     //   $('html').contextmenu(function() {
     //      $('.custom-menu').hide();
