@@ -73,7 +73,7 @@ Route::post('folderRename',[applicationController::class,"folderRename"])->name(
 
 Route::post('viewFolderDetails',[applicationController::class,"viewFolderDetails"])->name('viewFolderDetails');
 Route::post('addDescription',[applicationController::class,"addDescription"])->name('addDescription');
-
+Route::post('moveFolder',[applicationController::class,"moveFolder"])->name('moveFolder');
 
 });
 

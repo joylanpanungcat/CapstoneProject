@@ -296,6 +296,66 @@ margin-top: 49px;
 .dragStart{
     opacity: 0.2;
 }
+   /*   .custom-menu {
+        z-index: 1000;
+        position: absolute;
+        background-color: #ffffff;
+        border: 1px solid #0000001c;
+        border-radius: 5px;
+        padding: 8px;
+        min-width: 13vw;
+         box-shadow: 5px 5px 5px  #888888;
+}
+*/
+
+    .custom-menu2 {
+         z-index: 1000;
+       position: absolute;
+        background-color: #ffffff;
+         box-shadow: 0 3px 10px rgb(0 0 0 / 0.6);;
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+      width: 30vmax;
+    }
+    .custom-menu2 .header-clone2{
+        background-color: #F1F1F1;
+        opacity: 0.8;
+        margin: 0;
+        padding: 10px;
+        color: #777777;
+        max-height: 70px;
+    }
+     .custom-menu2 .body-clone2{
+        background-color: #fff;
+        margin: 0;
+        padding: 10px;
+        color: #777777;
+        height: 15vmax;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+    }
+    .custom-menu2 .footer-clone2{
+        margin: 0;
+        border-top: 1px solid rgba(0, 0, 0, .5);
+        padding: 15px;
+
+      }
+   .custom-menu2 .close-clone2{
+    float: right;
+    padding: 10px;
+    margin: 0;
+
+    }
+    .custom-menu2 .close-clone2:hover{
+        float: right;
+        padding: 10px;
+        background-color: #ccc;
+        border-radius: 50%;
+        color: #fff;
+    }
+
 
 </style>
 <div class="right_col" role="main" >
@@ -700,7 +760,7 @@ margin-top: 49px;
                     <textarea class="descriptionOld" style="display:none" >
                         
                     </textarea>
-                    <input type="hidden" name="" id="descriptionId" >
+                    {{-- <input type="hidden" name="" id="descriptionId" > --}}
                
 
                     
@@ -813,7 +873,7 @@ margin-top: 49px;
 <div id="menu-folder-clone" style="display: none;">
     <a href="javascript:void(0)" class="custom-menu-list file-option openFolder"><span><i class="fa fa-folder-open"></i></span> Open</a>
     <hr class="solid">
-    <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i  class="fa fa-arrows-alt" aria-hidden="true"></i></span>Move to</a>
+    <a href="javascript:void(0)" class="custom-menu-list file-option moveFolderTo"><span><i  class="fa fa-arrows-alt" aria-hidden="true"></i></span>Move to</a>
      <a href="javascript:void(0)" class="custom-menu-list file-option renameFolder"><span><i class="fa fa-pencil"></i></span>Rename</a>
      <hr class="solid">
     <a href="javascript:void(0)" class="custom-menu-list file-option viewFolderDetails"><span><i class="fa fa-eye"></i></span>View details</a>
@@ -822,6 +882,32 @@ margin-top: 49px;
      <hr class="solid">
     <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-archive"></i></span>Send to Archive</a>
      <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-file-archive-o"></i></span>Compressed(zipped)</a>
+</div>
+
+<div id="menu-folder-clone2" style="display: none;">
+     
+         <div class="col-md-12 header-clone2">
+            <div class="col-md-8"> <h2>This is Header</h2></div>
+            <div class="col-md-4"><h2 class="close-clone2"><i class="fa fa-times"></i></h2></div>
+           
+         </div>
+         <div class="col-md-12 body-clone2">
+            <h2>This is body</h2>
+            <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h2>
+         </div>
+         <div class="col-md-12 footer-clone2">
+         <div class="button-group">
+             <button class="btn btn-primary"><i class="fa fa-plus"></i> Add folder</button>
+         </div>
+         </div>
+
+  
+  
 </div>
 <script type="text/javascript">
 
@@ -1019,11 +1105,9 @@ $('#path div#'+folderId).nextAll('div').remove();
     }
 })
 
-
-   
  
-   
 })
+
 
     $(document).on('submit','#addFolderForm',function(e){
         e.preventDefault();
@@ -1105,15 +1189,19 @@ $('#path div#'+folderId).nextAll('div').remove();
                 var folderId2 = $(this).attr('id');
                viewFolderDetails(folderId2);
           elementClicked=true;
+         
+       
+
 
             })
           elementClicked=true;
+
+ 
      });
-    
- function viewFolderDetails(folderId2){
+     function viewFolderDetails(folderId2){
    
    var folderId2=folderId2;
-   $('#descriptionId').val(folderId2);
+     $('.description').attr('id',folderId2);
    $.ajax({
         url:'{{ route('viewFolderDetails') }}',
         type:'post',
@@ -1156,9 +1244,6 @@ $('#path div#'+folderId).nextAll('div').remove();
          
             });
          
-         
-          
-
         document.getElementById("mySidebar").style.width = "250px";
           document.getElementById("viewFolderModal").style.marginRight = "250px";
             }
@@ -1168,58 +1253,84 @@ $('#path div#'+folderId).nextAll('div').remove();
    });
 
  };
- $('.pencil').on('click',function(e){
-    e.preventDefault();
-    $('.description').removeAttr('disabled');
-    $('.pencil').hide();
-    $('.description').show();
-    $('.description').focus();
 
+     $('.pencil').on('click',function(e){
+            e.preventDefault();
+            $('.description').removeAttr('disabled');
+            $('.pencil').hide();
+            $('.description').show();
+            $('.description').focus();
 
- });
-  $('.description').keyup(function(event){
-       textAreaAdjust(this);
-       var descriptionId =$('#descriptionId').val();
-        if ( event.keyCode == 13 ) {
-             event.preventDefault();
-              $('.pencil').show();
-            $('.description').attr('disabled',true);
-            $('.description').addClass('description-view');
-             addDescription(descriptionId);
-       
-          }
-       
-    });
- function textAreaAdjust(element) {
- element.style.height = "1px";
-  element.style.height = (10+element.scrollHeight)+"px";
-   $container = $('.tabs-stage');
-    $container.animate({ scrollTop: $container[0].scrollHeight });
+         });
  
-  }
+     $('.description').focusout(function(e){
+            e.preventDefault();
+        var folderId = $(this).attr('id');
+         $('.pencil').show();
+        $('.description').attr('disabled',true);
+        $('.description').addClass('description-view');
+         if (!$(this).hasClass('descriptionFired')) {
+                 $('.description').addClass('descriptionFired');
+                addDescription(folderId);
+            }
 
+     })
+    $('.description').keyup(function(event){
+        var folderId = $(this).attr('id');
+        var key = false;
 
- $('.description').on('focusout',function(e){
-    e.preventDefault();
-    var descriptionId=$('#descriptionId').val();
-    $('.pencil').show();
-    $('.description').attr('disabled',true);
-    $('.description').addClass('description-view');
-    addDescription(descriptionId);
+        if(key=false){
+            if(event.ctrlKey && event.keyCode == 13){
+                event.preventDefault();
+                event.keyCode != 13;
+          textAreaAdjust(this);
 
-   
- })
- function addDescription(descriptionId){
-     var description = $('.description').val();
-     var descriptionOld = $('.descriptionOld').val();
-     var folderId=descriptionId;
-        var admin ='{{Session::get('adminID')['username']}}';
+            }
+          textAreaAdjust(this);
+
+        }
+
+     if (!$(this).hasClass('descriptionFired')) {
+        if ( event.keyCode == 13 ) {
+            key = true;
+             event.preventDefault();
+               $(this).addClass('descriptionFired');
+             addDescription(folderId);
+         $('.pencil').show();
+        $('.description').attr('disabled',true);
+        $('.description').addClass('description-view');
+          }
+         }
+
+    });
+     function textAreaAdjust(element) {
+             element.style.height = "1px";
+              element.style.height = (10+element.scrollHeight)+"px";
+               $container = $('.tabs-stage');
+                $container.animate({ scrollTop: $container[0].scrollHeight });
+ 
+            }
+     function addDescription(descriptionId){
+         var description = $('.description').val();
+         var descriptionOld = $('.descriptionOld').val();
+         var folderId=descriptionId;
+            var admin ='{{Session::get('adminID')['username']}}';
     if(description.trim()=='' || description.trim()===descriptionOld.trim()){
+
         if(descriptionOld.trim()==''){
          $('.description').hide();
+          $('.pencil').show();
+        $('.description').attr('disabled',true);
+        $('.description').addClass('description-view');
+          $('.description').removeClass('descriptionFired');
+
         }else{
          $('.description').show();
          $('.description').val(descriptionOld);
+          $('.pencil').show();
+          $('.description').removeClass('descriptionFired');
+        $('.description').attr('disabled',true);
+        $('.description').addClass('description-view');
         }
           
     }else{
@@ -1235,11 +1346,17 @@ $('#path div#'+folderId).nextAll('div').remove();
             dataType:'json',
             success:function(data){
                  viewFolderDetails(folderId);
+                 $('.description').removeClass('descriptionFired');
+                  $('.pencil').show();
+                $('.description').attr('disabled',true);
+                $('.description').addClass('description-view');
             }
         })
     }
 
  }
+
+ 
 
 
 
@@ -1279,13 +1396,14 @@ $(document).on('click','.file-folder',function(e){
                stop: handleDragStop
              });
 
-              $('.file-folder').droppable( {
-                 drop: handleDropEvent,
-                  classes: {
-                "ui-droppable-hover": "ui-state-hover"
-                     },
+          $('.file-folder').droppable( {
+            accept:'.active2',
+             drop: handleDropEvent,
+              classes: {
+            "ui-droppable-hover": "ui-state-hover"
+                 },
 
-                } );
+            } );
  })
  
 function myHelper( event,ui ) {
@@ -1320,17 +1438,35 @@ function handleDragStop( event, ui ) {
   // alert( "Drag stopped!nnOffset: (" + offsetXPos + ", " + offsetYPos + ")n");
 }
 function handleDropEvent( event, ui ) {
-  // var draggable = ui.draggable;
+  var draggable = ui.draggable;
   // var ids=draggable.attr('id');
+  var parentFolderId =$('#parentFolderId').val();
+  var slotNumber = $(this).attr( 'id' );
 var ids = $('.active2').map(function () {
             return this.id;
         }).get();
- for(var i=0;i<ids.length;i++){
-            count +=1;
-          var helper ='<div class="helper">'+folderName+' '+ids[i]+'</div>';
-        }
-  var slotNumber = $(this).attr( 'id' );
-  alert( 'table id "' + ids + '" was dropped onto table id '+slotNumber+'' );
+
+          if($(this).hasClass('active2')){
+            event.revert= true;
+          }else{
+             event.revert= false;
+            $.ajax({
+                url: '{{ route('moveFolder') }}',
+                type:'post',
+                data:{
+                    ids:ids,
+                    slotNumber:slotNumber
+                },
+                dataType:'json',
+                success:function(data){
+                   fetch_data(parentFolderId);
+                }
+            });
+
+               // alert( 'table id ' + parseInt(ids[i]) + ' was dropped onto table id '+slotNumber+'' );
+          }
+
+
 }
 
 
@@ -1346,6 +1482,20 @@ var ids = $('.active2').map(function () {
         };
 
  });
+ $(document).on('click','.moveFolderTo',function(e){
+    e.preventDefault();
+    var folderId = $(this).attr('id');
+        $('.file-folder[id='+folderId+']').addClass('active2 ');
+
+     
+          elementClicked=true;
+
+     var custom =$("<div class='custom-menu2'></div>")
+        custom.append($('#menu-folder-clone2').html());
+    custom.css({top: '200px', left: event.pageX + "px"});
+      custom.appendTo("#viewDocuments");
+ })
+
 
  $(document).on('click','.renameFolder',function(e){
     e.preventDefault();
@@ -1439,6 +1589,7 @@ var applicationId= '<?php   echo $applicationId->applicationId ?>';
         custom.append($('#menu-folder-clone').html());
          custom.find('.viewFolderDetails').attr('id',$(this).attr('id'));
          custom.find('.renameFolder').attr('id',$(this).attr('id'));
+         custom.find('.moveFolderTo').attr('id',$(this).attr('id'));
   
     custom.css({top: '200px', left: event.pageX + "px"});
       custom.appendTo("#viewDocuments");
@@ -1473,14 +1624,10 @@ $('.openFolder').on('click',function(e){
 
 });
  
-   
-
-    
-
-
      $('html').click(function() {
         
          $('.custom-menu').hide();
+         // $('.custom-menu2').hide();
          if(elementClicked!=true){
          $('.file-folder').removeClass('active2');
 

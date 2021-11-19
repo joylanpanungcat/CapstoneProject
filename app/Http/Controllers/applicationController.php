@@ -542,6 +542,19 @@ public function viewFolderDetails(Request $request){
 
     return response()->json(['status'=>200,'folderDetails'=>$folderDetails,'output'=>$output,'description'=>$description]);
 }
+public function moveFolder(Request $request){
+$ids=$request->ids;
+$slotNumber=$request->slotNumber;
+
+    foreach($ids as $id){
+        $move =folderUpload::find($id);
+        $move->parentId=$slotNumber;
+        $move->save();
+    }
+
+      return response()->json(['code'=>200]);
+
+}
  
 
 
