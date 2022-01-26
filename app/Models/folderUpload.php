@@ -93,7 +93,36 @@ $path= self::parseTree($rootFolder);
         
     }
 
+  }
 
+ public static function treeChildren($folderId,$applicationId){
+    $allFolder=folderUpload::all();
+    $rootFolder=$allFolder
+    ->where('applicationId',$applicationId)
+    ->where('folderId',$folderId)->values();
+    $path2='';
+   self::formatTreeChildren($rootFolder,$allFolder);
+$rootFolder->toArray();
+
+   
+    return $rootFolder;
+
+ }
+ 
+
+    private static function formatTreeChildren($folders, $allFolder ){
+
+
+    foreach($folders as $folder){
+
+        $folder->children= $allFolder->where('parentId',$folder['folderId'])->values();
+       
+        if($folder->children->isNotEmpty()){
+        self::formatTreeChildren($folder['children'], $allFolder);
+     
+        }
+        
+    }
 
   }
 

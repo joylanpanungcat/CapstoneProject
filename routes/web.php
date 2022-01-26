@@ -77,6 +77,8 @@ Route::post('moveFolder',[applicationController::class,"moveFolder"])->name('mov
 Route::post('moveToFolder',[applicationController::class,"moveToFolder"])->name('moveToFolder');
 Route::post('moveFolderToSelected',[applicationController::class,"moveFolderToSelected"])->name('moveFolderToSelected');
 
+Route::post('moveViewParentFolderId',[applicationController::class,"moveViewParentFolderId"])->name('moveViewParentFolderId');
+
 
 });
 

@@ -542,16 +542,62 @@ public function viewFolderDetails(Request $request){
 
     return response()->json(['status'=>200,'folderDetails'=>$folderDetails,'output'=>$output,'description'=>$description]);
 }
+
+function custom_copy($src, $dst) { 
+  
+    // open the source directory
+    $dir = opendir($src); 
+  
+    // Make the destination directory if not exist
+    @mkdir($dst); 
+  
+    // Loop through the files in source directory
+    while( $file = readdir($dir) ) { 
+  
+        if (( $file != '.' ) && ( $file != '..' )) { 
+            if ( is_dir($src . '/' . $file) ) 
+            { 
+  
+                // Recursively calling custom copy function
+                // for sub directory 
+                self::custom_copy($src . '/' . $file, $dst . '/' . $file); 
+  
+            } 
+            else { 
+                copy($src . '/' . $file, $dst . '/' . $file); 
+            } 
+        } 
+    } 
+  
+    closedir($dir);
+} 
 public function moveFolder(Request $request){
 $ids=$request->ids;
 $slotNumber=$request->slotNumber;
-    foreach($ids as $id){
-        $move =folderUpload::find($id);
+  $applicationId=$request->applicationId;
+
+  $path= public_path().'/files/';
+  $path2= public_path().'/files/';
+
+  for($i=0 ; $i<count($ids) ; $i++){
+
+        $rootFolder=folderUpload::tree($ids[$i],$applicationId);
+        $slotFolder=folderUpload::tree($slotNumber,$applicationId);
+        $path=$path.$rootFolder;
+        $basement=basename($path);
+        $path2=$path2.$slotFolder.$basement;
+
+        // self::movetype("jpg,png,gif,pdf,jpeg", $path, $path2);
+        // self::copy_directory($path,$path2);
+        custom_copy($path,$path2);
+
+          $move =folderUpload::find($ids[$i]);
         $move->parentId=$slotNumber;
         $move->save();
-    }
 
-      return response()->json(['code'=>200]);
+  }
+
+      return response()->json(['code'=>200,'path'=>$path2]);
 
 }
  
@@ -559,44 +605,84 @@ public function moveToFolder(Request $request){
     $folderId=$request->folderId;
     $applicationId=$request->applicationId;
     $parentId=$request->parentId;
-    $selected=$request->selected;
-
+      $selected=$request->selected;
+      $Lname=$request->Lname;
+      $Fname=$request->Fname;
+      $name=$Lname.$Fname;
 
     $folders= folderUpload::where('applicationId',$applicationId)
     ->where('parentId',$parentId)
     ->orderBy('folderName','ASC')
     ->get();
+    $getParent=folderUpload::where('folderId',$folderId)->get();
+    $getAncestor=folderUpload::where('folderId',$parentId)->get();
     $output='';
-    foreach($folders as $folder){
-       
-        if($folder['folderId']==$selected){
+    $folderName="";
+    $button=''; 
+
+ 
+     foreach($folders as $folder){
+      
+        if($folder['folderId']==$folderId ||$folder['folderId']==$selected){
             $output .= "<div class='col-md-12 moveFolderToClass2 moveFolderDisabled' data-toggle='tooltip' data-placement='bottom' title='Cannot move folder ".$folder['folderName']." on to itself' >
                 <div class='col-md-2'><i class='fa fa-folder'></i> </div>
                   <div class='col-md-8'> ".$folder['folderName']."  </div>
                  
                
                 </div>";
+            $selectedParentId=$folder['parentId'];
+            $button .="<button class='btn btn-default moveButton' style='float:right;' disabled='' data-toggle='tooltip' data-placement='bottom' title='Item is already in this folder' id=".$folder['parentId'].">Move</button>";
         }else{
-            $output .= "<div class='col-md-12 moveFolderToClass' id=".$folder['folderId']." >
+            $output .= "<div class='col-md-12 moveFolderToClass ' id=".$folder['folderId']." >
                 <div class='col-md-2'><i class='fa fa-folder'></i> </div>
-                  <div class='col-md-8'> ".$folder['folderName']."  </div>
-                  <div class='col-md-2 moveFolderView' id=".$folder['folderId']." style='display:none' data-toggle='tooltip' data-placement='bottom' title='Go to  ".$folder['folderName']."'> <i class='fa fa-chevron-right moveFolderViewIcon' id=".$folder['folderId']."></i></div>
+                  <div class='col-md-8 '> ".$folder['folderName']."  </div>
+                 <div class='col-md-2 moveFolderView' id=".$folder['folderId']." style='display:none' data-toggle='tooltip' data-placement='bottom' title='Go to  ".$folder['folderName']."'> <i class='fa fa-chevron-right moveFolderViewIcon' id=".$folder['folderId']."></i></div>
                
                 </div>";
+
         }
     }
 
 
-    return response()->json(['code'=>200,'output'=>$output]);
+   if($getParent->count()>0){
+    foreach($getParent as $parent){
+        foreach($getAncestor as $ancestor){
+        $constantParentId =$ancestor['parentId'];
+        $folderName=$ancestor['folderName'];
+
+        }
+    }
+   }
+
+    return response()->json(['code'=>200,'output'=>$output,'folderName'=>$folderName,'constantParentId'=>$constantParentId ,'button'=>$button,'selectedParentId'=>$selectedParentId]);
+}
+public function moveViewParentFolderId(Request $request){
+      $folderId = $request->moveFolderViewId;
+      $applicationId = $request->applicationId;
+      $selected = $request->selected;
+      $parentFolder=folderUpload::where('folderId',$folderId)
+      ->where('applicationId',$applicationId)->get();
+
+      foreach($parentFolder as $parent){
+        $parentId=$parent['parentId'];
+
+      }
+
+       return response()->json(['code'=>200,'parentId'=>$parentId]);
 }
 public function moveFolderToSelected(Request $request){
         $folderId = $request->folderIdView;
         $applicationId = $request->applicationId;
         $parentId = $request->parentId;
          $selected=$request->selected;
+         $Fname=$request->Fname;
+         $Lname=$request->Lname;
+         $name= $Fname.$Lname;
+
         $folderParentId=0;
          $path= public_path().'/files/';
          $output="";
+         $folderName="";
   
          $folderFetch=folderUpload::where('parentId','=',$folderId)->orderBy('folderName','ASC')->get();
          $parentId=folderUpload::where('folderId','=',$folderId)->get();
@@ -604,42 +690,58 @@ public function moveFolderToSelected(Request $request){
         if($folderFetch->count()>0){
                  foreach($folderFetch as $folder){
 
-        if($folder['folderId']==$selected){
+        if($folder['folderId']==$folderId || $folder['folderId']==$selected){
             $output .= "<div class='col-md-12 moveFolderToClass2 moveFolderDisabled' data-toggle='tooltip' data-placement='bottom' title='Cannot move folder ".$folder['folderName']." on to itself' >
                 <div class='col-md-2'><i class='fa fa-folder'></i> </div>
                   <div class='col-md-8'> ".$folder['folderName']."  </div>
-                 
+                   <input type='text' value='".$folder['parentId']."' class='selectedParentId2'>
+                  </div>
                
                 </div>";
+                
            }else{
              $output .= "<div class='col-md-12 moveFolderToClass' id=".$folder['folderId']." >
                 <div class='col-md-2'><i class='fa fa-folder'></i> </div>
                   <div class='col-md-8'> ".$folder['folderName']."  </div>
-                  <div class='col-md-2 moveFolderView' id=".$folder['folderId']." style='display:none' data-toggle='tooltip' data-placement='bottom' title='Go to  ".$folder['folderName']."'> <i class='fa fa-chevron-right moveFolderViewIcon' id=".$folder['folderId']."></i></div>
+                  <div class='col-md-2 moveFolderView' id=".$folder['folderId']." style='display:none' data-toggle='tooltip' data-placement='bottom' title='Go to  ".$folder['folderName']."'> <i class='fa fa-chevron-right moveFolderViewIcon' id=".$folder['folderId']."></i>
+                  <input type='text' value='".$folder['parentId']."' class='selectedParentId2'>
+                  </div>
                
                 </div>"; 
+               
              }
                
                
               }
               foreach($parentId as $parentFolderId){
+
                         $folderParentId =$parentFolderId['parentId'];
-                         if($parentFolderId['parentId'] ==null){
+                        if($parentFolderId['folderName']==$name){
+                                     $folderName = 'Files';
+                             }else{
+                               $folderName = $parentFolderId['folderName'];
+                            } 
+                       if($parentFolderId['parentId'] ==null){
                               $folderParentId =$parentFolderId['folderId'];
+
                         }
+                       
+                     
               }
              }else{
                  $output="<div><center><h6>This folder is empty.</h6></center></div>";
                    foreach($parentId as $parentFolderId){
                         $folderParentId =$parentFolderId['parentId'];
+                            $folderName .= $parentFolderId['folderName'];
                         if($parentFolderId['parentId'] ==null){
                               $folderParentId =$parentFolderId['folderId'];
+
                         }
                     }
              }
 
 
-               return response()->json(['code'=>200,'output'=>$output,'folderParentId'=>$folderParentId]);
+               return response()->json(['code'=>200,'output'=>$output,'folderParentId'=>$folderParentId,'folderName'=>$folderName]);
 }
 
 

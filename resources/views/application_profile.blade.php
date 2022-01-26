@@ -324,7 +324,7 @@ margin-top: 49px;
         margin: 0;
         padding: 10px;
         color: #777777;
-        max-height: 70px;
+        /*max-height: 70px;*/
     }
      .custom-menu2 .body-clone2{
         background-color: #fff;
@@ -354,6 +354,7 @@ margin-top: 49px;
         background-color: #ccc;
         border-radius: 50%;
         color: #fff;
+         cursor: pointer;
     }
    .custom-menu2 .close-clone2{
     float: right;
@@ -367,6 +368,7 @@ margin-top: 49px;
         background-color: #ccc;
         border-radius: 50%;
         color: #fff;
+         cursor: pointer;
     }
     .custom-menu2 div.moveFolderToClass{
             
@@ -397,6 +399,7 @@ margin-top: 49px;
         background-color: #4D90FE !important; 
         color: #fff !important;
     }
+
 
 </style>
 <div class="right_col" role="main" >
@@ -929,18 +932,23 @@ margin-top: 49px;
      
          <div class="col-md-12 header-clone2">
             <div class="col-md-2"  data-toggle='tooltip' data-placement='bottom' title='Back'><h2 class="moveToFolderParentIdBack"><i class="fa fa-chevron-left"></i></h2></div>
-            <div class="col-md-8"> <h2 class="moveTo-header"><b> Files</b></h2></div>
+            <div class="col-md-8"> <h2 class="moveTo-header"><b> </b></h2></div>
             <div class="col-md-2"><h2 class="close-clone2" data-toggle='tooltip' data-placement='bottom' title='Close'><i class="fa fa-times"></i></h2></div>
            <input type="" name="" class="moveToFolderParentId">
            <input type="" name="" class="moveToFolderSelected">
            <input type="" name="" class="moveToFolderParentId2">
+           <input type="" name="" class="constantParentId">
+           <input type="" name="" class="selectedParentId">
+
          </div>
          <div class="col-md-12 body-clone2">
             
          </div>
          <div class="col-md-12 footer-clone2">
-         <div class="button-group">
+         <div class="button-group button-move">
              <button class="btn btn-primary"><i class="fa fa-plus"></i> Add folder</button>
+
+             
          </div>
          </div>
 
@@ -1480,7 +1488,8 @@ function handleDropEvent( event, ui ) {
   // var ids=draggable.attr('id');
   var parentFolderId =$('#parentFolderId').val();
   var slotNumber = $(this).attr( 'id' );
-var ids = $('.active2').map(function () {
+    var applicationId= '<?php   echo $applicationId->applicationId ?>';
+    var ids = $('.active2').map(function () {
             return this.id;
         }).get();
 
@@ -1493,11 +1502,13 @@ var ids = $('.active2').map(function () {
                 type:'post',
                 data:{
                     ids:ids,
-                    slotNumber:slotNumber
+                    slotNumber:slotNumber,
+                    applicationId:applicationId,
                 },
                 dataType:'json',
                 success:function(data){
                    fetch_data(parentFolderId);
+                   alert(data.path);
                 }
             });
 
@@ -1529,7 +1540,11 @@ var ids = $('.active2').map(function () {
     e.preventDefault();
     var folderId = $(this).attr('id');
     var applicationId= '<?php   echo $applicationId->applicationId ?>';
+    var Fname = '<?php   echo $account_details->Fname ?>';
+    var Lname= '<?php   echo $account_details->Lname ?>';
+    $('.moveButton').last().remove();
     var parentId=$('#parentFolderId').val();
+   $('.moveToFolderSelected').val(folderId);
   
 
         $('.file-folder[id='+folderId+']').addClass('active2 ');
@@ -1541,8 +1556,9 @@ var ids = $('.active2').map(function () {
     custom.css({top: '200px', left: event.pageX + "px"});
       custom.find('.moveToFolderSelected').val( $(this).attr('id'));
       custom.appendTo("#viewDocuments");
-  var selected =  $('.moveToFolderSelected').val();
 
+
+  var selected =  $('.moveToFolderSelected').val();
       $.ajax({
         url:'{{ route('moveToFolder') }}',
         type:'post',
@@ -1551,15 +1567,25 @@ var ids = $('.active2').map(function () {
             applicationId:applicationId,
             parentId:parentId,
             selected:selected,
+            Fname:Fname,
+            Lname:Lname
         },
         dataType:'json',
        
         success:function(data){
             $('.body-clone2').html(data.output);   
         $('.moveToFolderParentId').val(parentId);
-        $('.moveToFolderParentId2').val(parentId); 
+        $('.moveToFolderParentId2').val(parentId);
+        $('.constantParentId').val(data.constantParentId);
 
+        if(data.constantParentId ==null){
+             $('.moveTo-header').html('Files');
             // body-clone2
+        }else{
+             $('.moveTo-header').html(data.folderName);
+        }
+        $('.button-move').append(data.button);
+        $('.selectedParentId').val(data.selectedParentId);
         }
       })
 
@@ -1590,6 +1616,8 @@ var ids = $('.active2').map(function () {
          var folderIdView = $(this).attr('id');
            var parentId=$('#parentFolderId').val();
           var selected = $('.moveToFolderSelected').val();
+          moveFolderView =true;
+          e.stopPropagation();
          moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
      
         })
@@ -1600,16 +1628,7 @@ var ids = $('.active2').map(function () {
              var selected = $('.moveToFolderSelected').val();
          moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
         })
-       $(document).on('click','.moveFolderToClass',function(){
-          var moveFolderViewId = $(this).attr('id');
-            $('.moveFolderToClass').removeClass('activeMove');
-          $('.moveFolderToClass[id='+moveFolderViewId+']').addClass('activeMove ');
-
-              $('.moveFolderViewIcon').removeClass('moveFolderViewIconHover');
-           $('.moveFolderViewIcon[id='+moveFolderViewId+']').addClass(' moveFolderViewIconHover');
-              $('.moveToFolderParentId').val(moveFolderViewId);
-       })
-
+      
          $(document).on('dblclick','.moveFolderToClass',function(){
                     var folderIdView = $(this).attr('id');
                     var parentId=$('#parentFolderId').val();
@@ -1617,11 +1636,19 @@ var ids = $('.active2').map(function () {
          moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
          });
  })
+ 
+var moveFolderView =false;
  function moveFolderViewFetch(folderIdView,parentId,applicationId,selected){
+            $('.moveFolderToClass').removeClass('activeMove');
+
     var folderIdView = folderIdView;
     var parentId = parentId;
+    var constantParentId=  $('.constantParentId').val();
     var applicationId = applicationId;
       var selected =  selected
+      var Fname = '<?php   echo $account_details->Fname ?>';
+        var Lname= '<?php   echo $account_details->Lname ?>';
+
 
      $.ajax({
                         url:'{{ route('moveFolderToSelected') }}',
@@ -1631,6 +1658,8 @@ var ids = $('.active2').map(function () {
                             applicationId:applicationId,
                             parentId:parentId,
                             selected:selected,
+                            Fname:Fname,
+                            Lname:Lname,
 
                         },
                         dataType:'json',
@@ -1638,10 +1667,93 @@ var ids = $('.active2').map(function () {
                              $('.body-clone2').html(data.output);         
                              $('.moveToFolderParentId').val(folderIdView);
                              $('.moveToFolderParentId2').val(data.folderParentId);
-                          
+                          $('.moveToFolderSelected').val(selected);
+                          $('.moveTo-header').html(data.folderName);
+                          var selectedParentId = $('.selectedParentId').val();
+                          var selectedParentId2 = $('.selectedParentId2').val();
+
+
+                           if(selectedParentId ==selectedParentId2){
+
+                             $('.moveButton').attr('disabled',true);
+                            $('.moveButton').attr('title','Item is already in this folder');
+                             $('.moveButton').removeClass('btn-primary').addClass('btn-default');
+                               $('.moveButton').html('Move');
+                          }else{
+                             $('.moveButton').removeAttr('disabled title');
+                          $('.moveButton').removeClass('btn-default').addClass('btn-primary');
+                          $('.moveButton').html('Move here');
+         
+
+                          }
                         }
                     })
  }
+
+  $(document).on('click','.moveFolderToClass',function(){
+          var moveFolderViewId = $(this).attr('id');
+           var applicationId= '<?php   echo $applicationId->applicationId ?>';
+           $.ajax({
+            url:'{{ route('moveViewParentFolderId') }}',
+            type:'post',
+            data:{
+                moveFolderViewId:moveFolderViewId,
+                applicationId:applicationId,
+            },
+            dataType:'json',
+            success:function(data){
+
+               if(  $('.moveFolderToClass[id='+moveFolderViewId+']').hasClass('activeMove')){
+                  $('.moveFolderToClass[id='+moveFolderViewId+']').toggleClass('activeMove');
+                  $('.moveToFolderParentId').val(data.parentId);
+                  // var folderParentId= $('.moveToFolderParentId2').val();
+                   var selectedParentId = $('.selectedParentId').val();
+                
+                   if(selectedParentId == data.parentId){
+                             $('.moveButton').attr('disabled',true);
+                            $('.moveButton').attr('title','Item is already in this folder');
+                             $('.moveButton').removeClass('btn-primary').addClass('btn-default');
+                          
+                        }else{
+                            $('.moveButton').removeAttr('disabled title');
+                          $('.moveButton').removeClass('btn-default').addClass('btn-primary');
+                          $('.moveButton').html('Move here');
+                        }
+
+                 
+                  }else{
+                     $('.moveFolderToClass').removeClass('activeMove');
+                      $('.moveFolderToClass[id='+moveFolderViewId+']').addClass('activeMove');
+                        $('.moveToFolderParentId').val(moveFolderViewId);
+                     // var folderParentId= $('.moveToFolderParentId2').val();
+                     // var folderParentId2= $('.moveButton').attr('id');
+                       
+                     $('.moveButton').removeAttr('disabled title');
+                     $('.moveButton').removeClass('btn-default').addClass('btn-primary');
+                    $('.moveButton').html('Move ');
+
+
+                          
+                  }
+            }
+           });
+        
+
+              $('.moveFolderViewIcon').removeClass('moveFolderViewIconHover');
+           $('.moveFolderViewIcon[id='+moveFolderViewId+']').addClass(' moveFolderViewIconHover');
+            
+       })
+
+
+
+  $(document).on('click','.moveButton',function(e){
+    e.preventDefault();
+    var folderId= $('.moveToFolderParentId').val();
+//       moveToFolderParentId
+// moveToFolderSelected
+    alert(folderId);
+  })
+
 
 
 
@@ -1734,6 +1846,9 @@ $(document).on("contextmenu",'.file-folder', function(event) {
     var folderId = $(this).attr('id');
     var folderNameOld = $('#folderNameOld').val();
 var applicationId= '<?php   echo $applicationId->applicationId ?>';
+
+
+$('.moveFolderToClass').removeClass('moveFolderToClass activeMove');
     $('.custom-menu2').hide();
    $('.file-folder').removeClass('active2');
    $('.file-folder[id='+folderId+']').addClass('active2');
