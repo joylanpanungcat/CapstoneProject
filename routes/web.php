@@ -47,14 +47,21 @@ Route::group(['middleware'=>['accessPage']],function(){
    Route::view('application','application');
    Route::post('/multi-uploads',[applicationController::class,'filesUpload'])->name('filesUpload');
    Route::get('/applicationFetch',[applicationController::class,'applicationFetch'])->name('applicationFetch');
-Route::get('/application_profile/{id}',[applicationController::class,'viewApplication'])->name('application_profile');
-   
-
+    Route::get('/application_profile/{id}',[applicationController::class,'viewApplication'])->name('application_profile');
     Route::post('/storeData',[applicationController::class,'storeData'])->name('storeData');
  
     Route::post('/storeimgae',[applicationController::class,'storeImage'])->name('storeimgae');
- //archive
+    Route::post('/archieve_application',[applicationController::class,'archieve_application'])->name('archieve_application');
+    Route::post('restore_application',[applicationController::class,'restore_application'])->name('restore_application');
+    //Map 
+    Route::view('map','map');
+    //
+    Route::view('schedule','schedule');
 
+    //payment
+    Route::view('payment','payment');
+
+ //archive
  Route::post('swalert',[applicantController::class,'swalert'])->name('swalert');
  Route::view('account','account')->name('account');
 

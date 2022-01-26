@@ -52,6 +52,7 @@
 {{-- jquery-ui --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('js/jquery-ui/jquery-ui.min.css') }}">
 
+
 </head>
 <body class="nav-md" id="main" >
     <style type="text/css">
@@ -81,19 +82,88 @@
   #emergency_modal{
     margin-top: 10%;
   }
+  .bfp_panabo{
+      color: #446587;
+      }
+      .logo{
+      height: 80px;
+      margin-left: 20%;
+      margin-right: auto;
+    }
+   #noti_number{
+     background-color: #111;
+     font-size: 12px;
+    }
+  .warning{
+    color: white;
+    background-color: #d9534f;
+    text-align: center;
+    padding: 20px;
+     animation:blinkingText 1.2s infinite;
 
+  }
+  @keyframes blinkingText{
+    0%{     color: #white;   
+          }
+    49%{    color: #white;
+    }
+    60%{    color: transparent; 
+    }
+
+    100%{   color: #white;   }
+}
+  .warning a{
+    color: #f0ad4e;
+  }
+  .warning h1{
+    font-size: 100px;
+  }
+
+  #emergency_modal{
+    margin-top: 10%;
+  }
+
+
+.site_title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-weight: 400;
+  font-size: 22px;
+  width: 100%;
+  color: #ECF0F1 !important;
+  margin-left: 0 !important;
+  line-height: 59px;
+  display: block;
+  height: 120px;
+  margin: 0;
+  padding-left: 10px; }
+
+.nav-sm .navbar.nav_title2 a span {
+  display: none; }
+  .navbar.nav_title2 a span{
+     margin-left: auto;
+      margin-right: auto;
+      display: block;
+  }
+.separate{
+  border-bottom: 3px solid #1ABB9C;
+  margin-top: -1px;
+  width: 80%;
+  margin-left:5% ;
+}
 
   </style>  
-
+ 
   <div class="container body">
     <div class="main_container">
  
     <div class="col-md-3 left_col menu_fixed">
   <div class="left_col scroll-view">
-             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><img src="{{url('images/logo.png')}}" class="logo"> <span>BFP</span></a>
+             <div class="navbar nav_title2" style="border: 0;">
+              <a href="dashboard" class="site_title"><img src="{{url('images/logo.png')}}" class="logo"><br><span><strong>BFP</strong> <b >  PANABO</b> </span></a>
             </div>
 
+            <hr class="separate">
             <div class="clearfix"></div>
             <!-- menu profile quick info -->
             <div class="profile clearfix">
@@ -113,10 +183,10 @@
                   <li><a href="dashboard"><i class="fa fa-dashboard"></i> Dashboard </a>
                   </li>
                
-                  <li><a href="map.php"><i class="fa fa-map"></i> Susceptibility Map </a>
+                  <li><a href="map"><i class="fa fa-map"></i> Susceptibility Map </a>
                   </li>
                   <li><a href="application" class="noti_app"><i class="fa fa-list-ol"></i> Application <span class="badge bg-danger" id="count_application"></span> </a>
-                     <li><a href="schedule.php"><i class="fa fa-calendar"></i>Schedule List</a>
+                     <li><a href="schedule"><i class="fa fa-calendar"></i>Schedule List</a>
                     
                   </li>
                     
@@ -124,7 +194,7 @@
                   <li><a href="renewal.php"><i class="fa fa-refresh"></i> Renewal </a>
                     
                   </li>
-                   <li><a href="payment.php"><i class="fa fa-money"></i> Payment </a>
+                   <li><a href="payment"><i class="fa fa-money"></i> Payment </a>
                     
                   </li>
                   <li><a href="assessment.php"><i class="fa fa-credit-card"></i> Assessment </a>
@@ -183,101 +253,105 @@
           </div>
           </div>
             </div>
-         <div class="top_nav">
-          <div class="nav_menu">
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
-              <nav class="nav navbar-nav">
-              <ul class=" navbar-right">
-                <li class="nav-item dropdown open" style="padding-left: 15px;">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{url('images/profile.jpg')}}" alt="">{{Session::get('adminID')['username']}}
-                  </a>
-                  <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                      <a class="dropdown-item"  href="javascript:;">
-                        <!-- <span class="badge bg-red pull-right">50%</span> -->
-                        <span>Settings</span>
-                      </a>
-                  <a class="dropdown-item"  href="javascript:;">Help</a>
-                    <a class="dropdown-item"  href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+       
+          
+            <div class="top_nav">
+                    <div class="nav_menu">
+                        <div class="nav toggle">
+                          <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                          <li style="float:left">  <h4 class="bfp_panabo"><strong >BFP PANABO</strong></h4></li>
+                        
+          
+                          <li class="nav-item dropdown open" style="padding-left: 15px;">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                              <img src="{{url('images/profile.jpg')}}" alt="">{{Session::get('adminID')['username']}}
+                            </a>
+                            <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item"  href="javascript:;"> Profile</a>
+                                <a class="dropdown-item"  href="javascript:;">
+                                  <!-- <span class="badge bg-red pull-right">50%</span> -->
+                                  <span>Settings</span>
+                                </a>
+                            <a class="dropdown-item"  href="javascript:;">Help</a>
+                            <a class="dropdown-item"  href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                            </div>
+                          </li>
+          
+                          <li role="presentation" class="nav-item dropdown open">
+                            <!-- <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                              <i class="fa fa-envelope-o"></i>
+                              <span class="badge bg-green">6</span>
+                            </a> -->
+                            <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                              <li class="nav-item">
+                                <a class="dropdown-item">
+                                  <span class="image"><img src="{{url('images/profile.jpg')}}" alt="Profile Image" /></span>
+                                  <span>
+                                    <span>Joylan Panungcat</span>
+                                    <span class="time">3 mins ago</span>
+                                  </span>
+                                  <span class="message">
+                                   Requirements for the Fire Safety Inspection Certificate.
+                                  </span>
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="dropdown-item">
+                                  <span class="image"><img src="../assets/images/profile.jpg" alt="Profile Image" /></span>
+                                  <span>
+                                    <span>Joylan Panungcat</span>
+                                    <span class="time">3 mins ago</span>
+                                  </span>
+                                  <span class="message">
+                                                             Requirements for the Fire Safety Inspection Certificate.
+          
+                                  </span>
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="dropdown-item">
+                                  <span class="image"><img src="../assets/images/profile.jpg" alt="Profile Image" /></span>
+                                  <span>
+                                    <span>Joylan Panungcat</span>
+                                    <span class="time">3 mins ago</span>
+                                  </span>
+                                  <span class="message">
+                                                            Requirements for the Fire Safety Inspection Certificate.
+          
+                                  </span>
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="dropdown-item">
+                                  <span class="image"><img src="../assets/images/profile.jpg" alt="Profile Image" /></span>
+                                  <span>
+                                    <span>Joylan Panungcat</span>
+                                    <span class="time">3 mins ago</span>
+                                  </span>
+                                  <span class="message">
+                                                          Requirements for the Fire Safety Inspection Certificate.
+          
+                                  </span>
+                                </a>
+                              </li>
+                              <li class="nav-item">
+                                <div class="text-center">
+                                  <a class="dropdown-item">
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                  </a>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
                   </div>
-                </li>
-
-                <li role="presentation" class="nav-item dropdown open">
-                  <!-- <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a> -->
-                  <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{url('images/profile.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>Joylan Panungcat</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                         Requirements for the Fire Safety Inspection Certificate.
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{url('images/profile.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>Joylan Panungcat</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                                                   Requirements for the Fire Safety Inspection Certificate.
-
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image">
-                          <img src="{{url('images/profile.jpg')}}" />
-                        </span>
-                        <span>
-                          <span>Joylan Panungcat</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                                                  Requirements for the Fire Safety Inspection Certificate.
-
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{url('images/profile.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>Joylan Panungcat</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                                                Requirements for the Fire Safety Inspection Certificate.
-
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <div class="text-center">
-                        <a class="dropdown-item">
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+        
       
          @yield('content')       
          @yield('content2')       

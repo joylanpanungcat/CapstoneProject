@@ -20,7 +20,9 @@ class applicationController extends Controller
       private $count = 0;
     //
   public function applicationFetch(){
-       $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
+      //  $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
+       // $data = application::
+       $data = application::join('applicant','application.applicantId','=','applicant.applicantId')
              ->orderBy('applicationId','desc')
              ->get();
         return DataTables::of($data)
@@ -28,7 +30,7 @@ class applicationController extends Controller
                           ->addColumn('actions', function($row){
 
                                   return '
-                                  <button type="button"  class="btn   btn-sm  sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive"><i class="fa fa-archive"></i>
+                                  <button type="button"  class="btn   btn-sm  sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
                                 </button>   || 
                             
              
@@ -819,4 +821,39 @@ public function addFile(Request $request){
         }
 
     }
+public function archieve_application(Request $req){
+    $accountId=$req->accountId;
+    $query= application::find($accountId)->delete();
+   
+      if($query){
+             return response()->json([
+                'status'=>1,
+                'msg'=>'data archived' 
+             ]);
+           }else
+           {
+             return response()->json([
+                'status'=>0,
+                'msg'=>'something went wrong!' 
+             ]);
+           }
+}
+
+public function restore_application(Request $request){
+  $applicationId =$request->accountId;
+  $query=application::withTrashed()->find($applicationId )->restore();
+ if($query){
+          return response()->json([
+             'status'=>1,
+             'msg'=>'data undone' 
+          ]);
+        }else
+        {
+          return response()->json([
+             'status'=>0,
+             'msg'=>'something went wrong!' 
+          ]);
+        }
+ 
+}
 }

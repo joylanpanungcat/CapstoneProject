@@ -17,6 +17,7 @@ class CreateSoftDeleteTable extends Migration
 
         $table->softDeletes();
        });
+       
     }
 
     /**
@@ -29,5 +30,6 @@ class CreateSoftDeleteTable extends Migration
       Schema::table('applicant_account',function(Blueprint $table){
         $table->softDeletes();
        });  
+      
     }
 }

@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class application extends Model
 {
     use HasFactory;
+    use SoftDeletes;
      public $table='application';
     protected $primaryKey='applicationId';
     public $timestamps=false;
     protected $fillable=['filenames'];
+    protected $dates=['deleted_at'];
 
     public function applicant_account(){
         return $this->belongsTo(applicant_account::class,'applicationId');

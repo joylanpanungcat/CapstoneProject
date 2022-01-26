@@ -131,13 +131,16 @@ position: relative;
 height: 300px;
 overflow: auto;
 }
-
+.separate2{
+  border-bottom: 3px solid #1ABB9C;
+  margin-top: 60px;
+}
   </style>
  <div class="right_col" role="main" >
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Applicant Account</h3>
+                <h3>Application List</h3>
             </div>
 
             <div class="title_right">
@@ -145,7 +148,7 @@ overflow: auto;
                 <button class="btn btn-default addApplicantionTooltip " data-toggle="modal" data-target="#addApplication" ><i class="fa fa-user-plus fa-lg tags"   data-toggle="tooltip" data-placement="bottom" title="Add Application"></i></button>
             </div>
         </div>
-
+        <hr class="separate2">
                     
                     
         <div class="clearfix"></div>
@@ -790,6 +793,12 @@ function myFunction() {
     <script type="text/javascript">
 
   $(document).ready(function(){
+    var adminPass='{{Session::get('adminID')['password']}}';
+    $.ajaxSetup({
+                      headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                      }
+                  });
     $('[data-toggle="tooltip"]').tooltip();   
      var dataTable= $('#applicationData').DataTable({
         processing:true,
@@ -1115,9 +1124,124 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
     });
 $(document).on('click','.sendArchive',function(e){
     e.preventDefault();
+  var id= $(this).attr('id');
 
-    alert('archive');
+  swalDelete(id);
 })
+function swalDelete(accountId){
+       
+       console.log(adminPass);
+
+        Swal.fire({
+         title:"Send to archive?",
+           titleFontColor:'red',
+         iconHtml: '<i class="fa fa-archive"></i>',
+         iconColor: '#d82a3a',
+             showCancelButton: true,
+             focusConfirm: false,
+             background: 'rgb(0,0,0,.9)',
+             customClass : {
+             title: 'swal2-title'
+           },
+           allowOutsideClick: false,
+            
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+              Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                           return new Promise(function (resolve){
+                         $.ajax({
+                           type: "POST",
+                           data:{accountId:accountId} ,
+                           url: '{{ route('archieve_application') }}',
+                           dataType:'json'
+                          
+                         })
+                         // in case of successfully understood ajax response
+                           .done(function (data) {
+                               swal.close();
+                                
+                              toastr.success(data.msg+'  <a type="button" style="color:#000" class="restore" id='+accountId+' ><strong>   UNDO.</strong></a>');
+                               dataTable.ajax.reload();
+                           })
+                           .fail(function (erordata) {
+                            
+                           })
+
+                           })
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
+
+             },
+              backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+       
+               }) 
+     }
+     $(document).on('click','.restore',function(e){
+        e.preventDefault();
+        var accountId=$(this).attr('id');
+       $.ajax({
+        url:'{{ route('restore_application') }}',
+        type:'post',
+        data:{
+            accountId:accountId
+        },
+        dataType:'json',
+        success:function(data){
+            toastr.success(data.msg);
+             dataTable.ajax.reload();
+        }
+       })
+      })
  
     });
     </script>

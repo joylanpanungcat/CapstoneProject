@@ -771,7 +771,7 @@ margin-top: 49px;
                 </li>
             </ul>
         
-              <hr class="separate">   
+              {{-- <hr class="separate">    --}}
         </div>
          </div>
         <div class="tabs-stage">
