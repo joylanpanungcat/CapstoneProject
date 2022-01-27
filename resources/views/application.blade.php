@@ -1,5 +1,5 @@
 @extends('include.navbar')
-@section('title','applicant account')
+@section('title','Application List')
 @section('content')
 
   <style type="text/css">
@@ -99,20 +99,28 @@ button.close-modal:hover{
     overflow: scroll;
 }
 
-.actionButton {
+/* .actionButton {
 
   width: 10px;
   height: 10px;
-}
-.actionButton i {
+ 
+  
+} */
+/* .actionButton i {
   margin-top: -5px;
   margin-left: -5px;
   width: 10px;
   height: 10px;
   position: absolute;
 
+} */
+.actionButton i {
+  border-radius: 50%;
+  border:1px solid  #696767;
+  padding: 10px;
+  color: #696767;
+  margin-left: -20px;
 }
-
 .actionButton:focus {
  
     outline: none !important;
@@ -120,6 +128,17 @@ button.close-modal:hover{
 }
 .actionButton i:hover{
    color: #1ABB9C;
+  border:1px solid  #1ABB9C;
+
+}
+.dataTable tbody td{
+  padding: 0px;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  word-break: break-word;
+  text-align: center;
+  vertical-align: middle;
 }
 .addApplicantionTooltip:focus {
  
@@ -152,6 +171,41 @@ overflow: auto;
   border: 1px solid #ddd;
   cursor: pointer;
 }
+.dataTables_wrapper  .dataTables_paginate  .paginate_button  {
+  margin: 5px 3px;
+
+}
+
+.dataTables_wrapper  .dataTables_paginate  .paginate_button .page-item{
+  border-radius: 40px !important;
+  color: rgb(255, 255, 255) !important;
+  background-color: #1ABB9C !important;
+
+}
+.dataTables_wrapper  .dataTables_paginate  .paginate_button .page-link{
+  border-radius: 40px !important;
+
+}
+
+.dataTables_wrapper  .dataTables_paginate  .paginate_button.active .page-link{
+ 
+  background-color: #1ABB9C !important;
+
+}
+
+.addApplication .modal-content{
+  height: 90vh;
+  
+}
+
+
+.addApplication .modal-content .input-form{
+  /* background-color: #0687d6; */
+  height: 70vmin;
+  position: absolute;
+}
+
+
 
   </style>
  <div class="right_col" role="main" >
@@ -200,7 +254,7 @@ overflow: auto;
                                             <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
                                         </div>
                                         <div class="">
-                                            <button type="button" name="filter" id="filter" class="btn btn-primary"><i class="fa fa-check"></i></button>
+                                            <button type="button" name="filter" id="filter" class="btn " style="background-color: #1ABB9C;color:#FFF"><i class="fa fa-check"></i></button>
                                             <button type="button" name="refresh" id="refresh" class="btn btn-default"><i class="fa fa-refresh"></i></button>
                                         </div>
                                     </div>
@@ -377,12 +431,12 @@ overflow: auto;
 <div class="container-fluid" id="grad1">
     <div class="row justify-content-center mt-0">
        {{--  <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2"> --}}
-        <div class="col-md-8 text-center ">
+        <div class="col-md-10 text-center ">
             <div class="card">
                 <h2><strong>Add Application</strong></h2>
-                <p>Fill all the inputs correctly </p>
+                {{-- <p>Fill all the inputs correctly </p> --}}
                 <div class="row">
-                    <div class="col-md-12 mx-0">
+                    <div class="col-md-12 mx-0 input-form" >
                         <form id="msform" action="{{ route('storeData') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <!-- progressbar -->
@@ -453,7 +507,7 @@ overflow: auto;
                               
                             </fieldset>
                         
-                            <fieldset class="fieldset">
+                            <fieldset class="fieldset fieldset_input2">
                                 <div class="form-card col-md-12">
                                     <h2 class="fs-title">Business Information</h2> 
                                     <div class="form-group col-md-6 "> 
@@ -617,7 +671,7 @@ overflow: auto;
             </fieldset>
                             <fieldset class="fieldset">
     <div class="form-card">
-       <div class="scroll">
+       <div class="">
              <h2><strong>Applicant Information</strong></h2>
              <div class="row">
                  <div class="col-md-6">
@@ -1147,8 +1201,9 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
           
                    
              $('#addApplication').modal('hide');
-             fetch_data()
-          //  dataTable.ajax.reload();
+            //  dataTable.ajax.reload();
+            $('#applicationData').DataTable().destroy();
+             fetch_data();
        
         });
 
@@ -1285,10 +1340,11 @@ function swalDelete(accountId){
                          // in case of successfully understood ajax response
                            .done(function (data) {
                                swal.close();
-                                
+                               $('#applicationData').DataTable().destroy();
+                              fetch_data();
                               toastr.success(data.msg+'  <a type="button" style="color:#000" class="restore" id='+accountId+' ><strong>   UNDO.</strong></a>');
                               //  dataTable.ajax.reload();
-                              fetch_data()
+                           
                            })
                            .fail(function (erordata) {
                             
@@ -1328,6 +1384,7 @@ function swalDelete(accountId){
         success:function(data){
             toastr.success(data.msg);
             //  dataTable.ajax.reload();
+            $('#applicationData').DataTable().destroy();
             fetch_data()
         }
        })

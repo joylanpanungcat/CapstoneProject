@@ -81,10 +81,9 @@ public function applicationFetch(Request $request){
   ->addColumn('actions', function($row){
 
        return '
-          <button type="button"  class="btn   btn-sm  sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
-        </button>   || 
-    
- <a type="button" name="viewApplicant" class="btn  btn-sm actionButton" href="application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
+          <button type="button"  class="btn    sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
+        </button>  
+ <a type="button" name="viewApplicant" class="btn  actionButton" href="application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
 ';
       })
 ->addColumn('name', function($row){

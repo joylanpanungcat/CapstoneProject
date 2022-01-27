@@ -493,7 +493,12 @@ margin-top: 49px;
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Purok</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$applicantAdd->purok}}" >
+                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="
+                                        @if($applicantAdd->purok !=null)
+                                        
+                                        {{$applicantAdd->purok}}
+                                        
+                                        @endif" >
                                     </div><br>
                                   </div>
                                    <div class="col-md-4">  

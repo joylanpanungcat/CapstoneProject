@@ -12,6 +12,9 @@
     padding: 20px 40px 30px 40px;
     box-sizing: border-box;
     display: block;
+    height: 55vmin;
+    position: relative;
+    overflow-y: auto;
     
     /*position: relative*/
 
@@ -26,6 +29,8 @@
     margin: 0;
     padding-bottom: 20px;
     /*position: relative*/
+ 
+
 }
 
 #msform fieldset:not(:first-of-type) {
@@ -34,7 +39,8 @@
 
 #msform fieldset .form-card {
     text-align: left;
-    color: #9E9E9E
+    color: #9E9E9E;
+  position: relative;
 }
 
 #msform input,
@@ -52,7 +58,7 @@
     font-size: 16px;
     letter-spacing: 1px
 }
-#msform .error,
+#msform .error
  {
     padding: 0px 8px 4px 8px;
     border: none;
@@ -120,11 +126,11 @@
     box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
 }
 #msform #submit:hover{
-    box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #1ABB9C;
 }
 #msform .action-button-previous {
     width: 100px;
-    background:skyblue;
+    background:#1ABB9C;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -138,7 +144,7 @@
 }
 #msform #submit {
     width: 100px;
-    background:#42ba96;
+    background:#42BA96;
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -248,7 +254,7 @@ select.list-dt:focus {
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: skyblue
+    background: #1ABB9C;
 }
 
 .radio-group {

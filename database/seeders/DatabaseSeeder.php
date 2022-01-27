@@ -19,26 +19,24 @@ class DatabaseSeeder extends Seeder
 
         $faker=Faker::create();
         $i=0;
-        foreach(range(1,6000) as $index){
+        foreach(range(1,500) as $index){
             DB::table('application')->insert([
+                
+            'applicantId'=>$i++,
             'type_application'=>'Fire Safety Inspection Certificate',
             'control_number'=>$faker->phoneNumber,
             'type_occupancy'=>'Mercantile',
-            'nature_business'=>'Sari-Sari'.$i++,
-            'Fname'=>$faker->firstName,
-            'status'=>'Approved',
-            'remarks'=>'Old',
-            'Lname'=>$faker->lastName,
-            'Mname'=>'nullas',
-            'contact_num'=>'09454453331',
-            'alcontact'=>'123',
-            'purok'=>'Prk2',
-            'barangay'=>'San Francisco',
-            'city'=>'Panabo ',
+            'nature_business'=>'Sari-Sari',
+            'business_name'=>'Joylan',
+            'inpector_id'=>'',
+            'remarks'=>'peding',
+            'date_apply'=>date("Y-m-d"),
             'filenames'=>''
 
 
             ]);
         }
+ 
+
     }
 }
