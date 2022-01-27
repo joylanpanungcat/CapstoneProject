@@ -163,7 +163,7 @@ overflow: auto;
                                     <br />
                                     
                                            <label><b> Sort:</b></label>
-                                       <select class="select_status">
+                                       <select class="select_status" id="category_filter">
                                            <option>Status</option>
                                            <option>approved</option>
                                            <option>reinspection</option>
@@ -800,6 +800,9 @@ function myFunction() {
                       }
                   });
     $('[data-toggle="tooltip"]').tooltip();   
+    fetch_data();
+    function fetch_data(category = '')
+        {
      var dataTable= $('#applicationData').DataTable({
         processing:true,
         info:true,
@@ -813,8 +816,11 @@ function myFunction() {
         ],
          autoWidth: false,
           scrollX:true,
-
-        ajax: "{{ route('applicationFetch') }}",
+          ajax: {
+            url:"{{ route('applicationFetch') }}",
+            data: {category:category}
+          },
+        // ajax: "{{ route('applicationFetch') }}",
         columns:[
         {data:'DT_RowIndex',name:'DT_RowIndex'},
         {data:'type_application',name:'type_application'},
@@ -825,6 +831,12 @@ function myFunction() {
         {data:'actions',name:'actions', class : 'buttons' }
         ]
      });
+  }
+  $('#category_filter').change(function(){
+      var category_id = $('#category_filter').val();
+      $('#applicationData').DataTable().destroy();
+      fetch_data(category_id);
+ });
 
 $('.action-button-cancel').on('click',function(e){
     e.preventDefault();

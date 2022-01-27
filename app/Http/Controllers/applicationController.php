@@ -19,31 +19,68 @@ class applicationController extends Controller
 {
       private $count = 0;
     //
-  public function applicationFetch(){
-      //  $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
-       // $data = application::
-       $data = application::join('applicant','application.applicantId','=','applicant.applicantId')
-             ->orderBy('applicationId','desc')
-             ->get();
-        return DataTables::of($data)
-                          ->addIndexColumn()
-                          ->addColumn('actions', function($row){
+  // public function applicationFetch(Request $req){
+  //     //  $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
+  //      // $data = application::
+  //     //  $data = application::join('applicant','application.applicantId','=','applicant.applicantId')
+  //         $data = application::with('applicant')
+  //           //  ->where('status','=','approved')
+  //            ->orderBy('applicationId','desc')
+  //            ->get();
+  //       return DataTables::of($data)
+  //                         ->addIndexColumn()
+  //                         ->addColumn('actions', function($row){
 
-                                  return '
-                                  <button type="button"  class="btn   btn-sm  sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
-                                </button>   || 
+  //                                 return '
+  //                                 <button type="button"  class="btn   btn-sm  sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
+  //                               </button>   || 
                             
-             
-                
-                 <a type="button" name="viewApplicant" class="btn  btn-sm actionButton" href="application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
-                ';
-                              })
-              ->addColumn('name', function($row){
-            return $row->Fname.' '.$row->Mname.'.  '.$row->Lname;
-                         })
-                             ->rawColumns(['actions'])
-                          ->make(true);
-    }
+  //                        <a type="button" name="viewApplicant" class="btn  btn-sm actionButton" href="application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
+  //               ';
+  //                             })
+  //             ->addColumn('name', function($row){
+  //           return $row->applicant['Fname'].' '.$row->applicant['Mname'].'.  '.$row->applicant['Lname'];
+  //                        })
+  //                            ->rawColumns(['actions'])
+  //                         ->make(true);
+  //   }
+public function applicationFetch(Request $request){
+  if(request()->ajax())
+  {
+   if($request->category)
+   {
+      $data = application::with('applicant')
+               ->where('status','=',$request->category)
+               ->orderBy('applicationId','desc')
+               ->get();
+          
+   }
+   else
+   {
+    $data = application::with('applicant')
+          ->orderBy('applicationId','desc')
+          ->get();
+   }
+
+  }
+  return DataTables::of($data)
+  ->addIndexColumn()
+  ->addColumn('actions', function($row){
+
+       return '
+          <button type="button"  class="btn   btn-sm  sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
+        </button>   || 
+    
+ <a type="button" name="viewApplicant" class="btn  btn-sm actionButton" href="application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
+';
+      })
+->addColumn('name', function($row){
+  return $row->applicant['Fname'].' '.$row->applicant['Mname'].'.  '.$row->applicant['Lname'];
+ })
+     ->rawColumns(['actions'])
+    ->make(true);
+  
+}
     public function viewApplication(Request $request){
     $account_id= $request->id;
       // $account_details=application::join('applicant','applicant.applicantId','=','application.applicantId')
