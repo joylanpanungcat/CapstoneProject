@@ -47,13 +47,26 @@ class applicationController extends Controller
 public function applicationFetch(Request $request){
   if(request()->ajax())
   {
-   if($request->category)
+   if($request->category != '' && empty($request->from_date) )
    {
       $data = application::with('applicant')
                ->where('status','=',$request->category)
                ->orderBy('applicationId','desc')
                ->get();
           
+   }
+   elseif($request->from_date !='' && $request->category == '')
+   {
+    $data = application::with('applicant')
+      ->whereBetween('date_apply', array($request->from_date, $request->to_date))
+      ->get();
+   }
+   elseif($request->category != '' && !empty($request->from_date))
+   {
+    $data = application::with('applicant')
+    ->where('status','=',$request->category)
+    ->whereBetween('date_apply', array($request->from_date, $request->to_date))
+    ->get();
    }
    else
    {

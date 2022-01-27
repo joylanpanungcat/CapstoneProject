@@ -51,6 +51,10 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/appcss/wizardForm.css') }}">
 {{-- jquery-ui --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('js/jquery-ui/jquery-ui.min.css') }}">
+{{-- datapicker --}}
+<link rel="stylesheet" type="text/css" href="{{ asset('js/datepicker/datetimepicker.css') }}">
+
+
 
 
 </head>
@@ -399,3 +403,8 @@
 
 {{-- jquery-ui --}}
 <script type="text/javascript" src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
+{{-- datepicker --}}
+{{-- <script src="{{ asset('js/datepicker/moment.min.js') }}"></script>
+<script src="{{ asset('js/datepicker/datetimepicker.min.js') }}"></script> --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>

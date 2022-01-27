@@ -135,6 +135,24 @@ overflow: auto;
   border-bottom: 3px solid #1ABB9C;
   margin-top: 60px;
 }
+.input-daterange input{
+ float: right;
+ cursor: pointer;
+}
+.sort_select{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+.sort_select select {
+  vertical-align: middle;
+  margin-left: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
   </style>
  <div class="right_col" role="main" >
     <div class="">
@@ -161,24 +179,47 @@ overflow: auto;
                            
                                 <div class="x_content">
                                     <br />
-                                    
-                                           <label><b> Sort:</b></label>
-                                       <select class="select_status" id="category_filter">
-                                           <option>Status</option>
-                                           <option>approved</option>
-                                           <option>reinspection</option>
-                                           <option>renewal</option>
-                                       </select><br><br>
+                                    <div class="col-md-4 sort_select">
+                                      <label><b> Sort:</b></label>
+                                      <select class="select_status" id="category_filter">
+                                          <option value="">All</option>
+                                          <option value="pending">pending</option>
+                                          
+                                          <option value="approved">approved</option>
+                                          <option value="reinspection">reinspection</option>
+                                          <option value="renewal">renewal</option>
+                                      </select>
+                                    </div>
+                              
+                                    <div class="col-md-8">
+                                      <div class="row input-daterange" style="float: right">
+                                        <div class="">
+                                            <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" readonly  style="margin-right:10px;"/>
+                                        </div>
+                                        <div class="">
+                                            <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
+                                        </div>
+                                        <div class="">
+                                            <button type="button" name="filter" id="filter" class="btn btn-primary"><i class="fa fa-check"></i></button>
+                                            <button type="button" name="refresh" id="refresh" class="btn btn-default"><i class="fa fa-refresh"></i></button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <br><br>   <br><br>
+                                       
                             <table class="table table-striped table-bordered" id="applicationData"  style="width:100%;">
                               <thead>
+                               
+
                                 <tr>
                                   <!-- <th>Select</th> -->
                                   <th>#</th>
                                   <th>Type of Application</th>
-                                  <th>Control #</th>
+                              
                                   <th>Applicant's name</th>
                                     <th>Status</th>
                                   <th>Remarks</th>
+                                  <th>Date Applied</th>
                                     <th style="width:20%;">Action</th>
 
                                 </tr>
@@ -799,9 +840,15 @@ function myFunction() {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                       }
                   });
-    $('[data-toggle="tooltip"]').tooltip();   
+    $('[data-toggle="tooltip"]').tooltip();
+  
+    $('.input-daterange').datepicker({
+      todayBtn:'linked',
+      format:'yyyy-mm-dd',
+      autoclose:true
+    });
     fetch_data();
-    function fetch_data(category = '')
+    function fetch_data(category = '', from_date = '', to_date = '')
         {
      var dataTable= $('#applicationData').DataTable({
         processing:true,
@@ -818,24 +865,52 @@ function myFunction() {
           scrollX:true,
           ajax: {
             url:"{{ route('applicationFetch') }}",
-            data: {category:category}
+            data: {category:category,
+                   from_date:from_date, 
+                  to_date:to_date
+
+            }
           },
         // ajax: "{{ route('applicationFetch') }}",
         columns:[
         {data:'DT_RowIndex',name:'DT_RowIndex'},
         {data:'type_application',name:'type_application'},
-        {data:'control_number',name:'control_number'},
         {data:'name',name:'name'},
         {data:'status',name:'status'},
         {data:'remarks',name:'remarks'},
+        {data:'date_apply',name:'date_apply'},
         {data:'actions',name:'actions', class : 'buttons' }
         ]
      });
   }
   $('#category_filter').change(function(){
       var category_id = $('#category_filter').val();
+      var from_date = $('#from_date').val();
+      var to_date = $('#to_date').val();
       $('#applicationData').DataTable().destroy();
-      fetch_data(category_id);
+      fetch_data(category_id , from_date,to_date);
+ });
+
+ $('#filter').click(function(){
+  var from_date = $('#from_date').val();
+  var to_date = $('#to_date').val();
+  var category_id = $('#category_filter').val();
+  if(from_date != '' &&  to_date != '')
+  {
+   $('#applicationData').DataTable().destroy();
+   fetch_data(category_id,from_date, to_date);
+  }
+  else
+  {
+   alert('Both Date is required');
+  }
+ });
+ 
+ $('#refresh').click(function(){
+  $('#from_date').val('');
+  $('#to_date').val('');
+  $('#applicationData').DataTable().destroy();
+  fetch_data();
  });
 
 $('.action-button-cancel').on('click',function(e){
@@ -1072,7 +1147,8 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
           
                    
              $('#addApplication').modal('hide');
-           dataTable.ajax.reload();
+             fetch_data()
+          //  dataTable.ajax.reload();
        
         });
 
@@ -1211,7 +1287,8 @@ function swalDelete(accountId){
                                swal.close();
                                 
                               toastr.success(data.msg+'  <a type="button" style="color:#000" class="restore" id='+accountId+' ><strong>   UNDO.</strong></a>');
-                               dataTable.ajax.reload();
+                              //  dataTable.ajax.reload();
+                              fetch_data()
                            })
                            .fail(function (erordata) {
                             
@@ -1250,7 +1327,8 @@ function swalDelete(accountId){
         dataType:'json',
         success:function(data){
             toastr.success(data.msg);
-             dataTable.ajax.reload();
+            //  dataTable.ajax.reload();
+            fetch_data()
         }
        })
       })
