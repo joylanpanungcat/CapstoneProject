@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\validator;
 // use Illuminate\Support\Facades\DB;
 use App\Models\applicant_account;
 use App\Models\application;
+use App\Models\applicant;
+use App\Models\address;
 use DataTables;
 
 class applicantController extends Controller
@@ -188,6 +190,51 @@ public function restore(Request $request){
           ]);
         }
  
+}
+public function update_info(Request $req){
+  $id = $req->id;
+  $Fname = $req->Fname;
+  $Lname = $req->Lname;
+  $Mname = $req->Mname;
+  $contact_num = $req->contact_num;
+  $alcontact = $req->alcontact;
+  $purok = $req->purok;
+  $barangay = $req->barangay;
+  $city = $req->city;
+
+
+  $applicant_account = applicant::find($id);
+  
+  $applicant_account->update([
+  "Fname"=>$Fname,
+    "Lname"=>$Lname,
+    "Mname"=>$Mname,
+    "contact_num"=>$contact_num,
+    "alcontact"=>$alcontact,
+  ]);
+
+$address= address::where('applicantId',$id)->first();
+$address->update([
+  'purok'=>$purok,
+  'barangay'=>$barangay,
+  'city'=>$city,
+]);
+
+  if($applicant_account){
+    return response()->json([
+      'status'=>200,
+      'msg'=>'Successfully Updated',
+      'data'=>$address,
+    ]);
+  }else{
+    return response()->json([
+      'status'=>0,
+      'msg'=>'something went wrong'
+    ]);
+  }
+
+
+
 }
 // public function applicationRecord(Request $request){
 //     $account_id= $request->account_id;

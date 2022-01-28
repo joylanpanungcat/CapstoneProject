@@ -453,7 +453,7 @@ margin-top: 49px;
                                   <button class="btn btn-secondary buttons" ><i class="fa fa-phone"></i></button>
                                 </div> -->
                               
-                                 <form method="post">
+                                 <form method="post" id="updateDetails">
                                     <div class="col-md-8 personalInfo ">  
                                          
                                 
@@ -463,54 +463,51 @@ margin-top: 49px;
                                 <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->Fname }}">
+                                        <input type="hidden" name="" id="applicantId_info" class="form-control" value="{{ $account_details->applicantId  }}">
+                                        <input type="text" name="" id="Fname_info" class="form-control" value="{{ $account_details->Fname }}">
                                     </div>
                                   </div>
                                   <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Middle Name</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->Mname }}" >
+                                        <input type="text" name="" id="Mname_info" class="form-control" value="{{ $account_details->Mname }}" >
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->Lname }}" >
+                                        <input type="text" name="" id="Lname_info" class="form-control" value="{{ $account_details->Lname }}" >
                                     </div><br>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Contact No</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->contact_num }}">
+                                        <input type="text" name="" id="contact_num_info" class="form-control" value="{{ $account_details->contact_num }}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Alternative Contact</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{ $account_details->alcontact }}">
+                                        <input type="text" name="" id="alcontact_info" class="form-control" value="{{ $account_details->alcontact }}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Purok</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="
-                                        @if($applicantAdd->purok !=null)
-                                        
-                                        {{$applicantAdd->purok}}
-                                        
-                                        @endif" >
+                                        <input type="text" name="" id="purok_info" class="form-control" value=" {{$applicantAdd->purok}}
+                                      " >
                                     </div><br>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Barangay</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$applicantAdd->barangay}}">
+                                        <input type="text" name="" id="barangay_info" class="form-control" value="{{$applicantAdd->barangay}}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>City</label>
-                                        <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$applicantAdd->city}}" >
+                                        <input type="text" name="" id="city_info" class="form-control" value="{{$applicantAdd->city}}" >
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
@@ -518,7 +515,7 @@ margin-top: 49px;
                              
                                   <div class="form-group">
                                     <label></label>
-                                    <button type="submit" name="" class="btn btn-secondary updateDetails" id="">Update</button>
+                                    <button type="submit" name="" class="btn btn-secondary " id="">Update</button>
                                 </div>
                                      </div>
                                 </div>
@@ -1916,7 +1913,40 @@ $('.openFolder').on('click',function(e){
 })
 
    
+$('#updateDetails').on('submit',function(e){
+    e.preventDefault();
+  var id =$('#applicantId_info').val();
+  var Fname =$('#Fname_info').val();
+  var Lname =$('#Lname_info').val();
+  var Mname =$('#Mname_info').val();
+  var contact_num =$('#contact_num_info').val();
+  var alcontact =$('#alcontact_info').val();
+  var purok =$('#purok_info').val();
+  var barangay	 =$('#barangay_info').val();
+  var city =$('#city_info').val();
 
+ 
+ $.ajax({
+    type:'POST',
+    url: "{{ route('update_info') }}",
+    data:{
+        id:id,
+        Fname:Fname,
+        Lname:Lname,
+        Mname:Mname,
+        contact_num:contact_num,
+        alcontact:alcontact,
+        purok:purok,
+        barangay:barangay,
+        city:city,
+    },
+    dataType: 'json',
+    success:function(data){
+        toastr.success(data.msg);
+    }
+ });
+
+})
 
 
 

@@ -42,7 +42,9 @@ Route::group(['middleware'=>['accessPage']],function(){
 
     // Applicant Profile
    Route::post('applicant_profile',[applicantController::class,'applicationRecord'])->name('application.record');
+   Route::post('update_info',[applicantController::class,'update_info'])->name('update_info');
 
+   
    //application
    Route::view('application','application');
    Route::post('/multi-uploads',[applicationController::class,'filesUpload'])->name('filesUpload');
@@ -60,6 +62,9 @@ Route::group(['middleware'=>['accessPage']],function(){
 
     //payment
     Route::view('payment','payment');
+
+    //assessment
+    Route::view('assessment','assessment');
 
  //archive
  Route::post('swalert',[applicantController::class,'swalert'])->name('swalert');

@@ -201,7 +201,7 @@
                    <li><a href="payment"><i class="fa fa-money"></i> Payment </a>
                     
                   </li>
-                  <li><a href="assessment.php"><i class="fa fa-credit-card"></i> Assessment </a>
+                  <li><a href="assessment"><i class="fa fa-credit-card"></i> Assessment </a>
                     
                   </li>
                   <li><a href="maintenance.php"><i class="fa fa-wrench"></i> Maintenance </a>

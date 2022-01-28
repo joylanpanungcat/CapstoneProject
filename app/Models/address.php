@@ -13,6 +13,7 @@ class address extends Model
       public $table ='address';
     protected $primaryKey ='addressId';
     public $timestamps=false;
+    protected $fillable=['applicantId','purok','barangay','city'];
     protected $dates=['deleted_at'];
 
    public function application(){
