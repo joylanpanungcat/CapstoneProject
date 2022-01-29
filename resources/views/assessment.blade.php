@@ -365,99 +365,14 @@ color: red;
                         </div>
                     </td>
                     </tr>
-                     <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Failure to comply within the period specified in the affidavit of undertaking</b></button>
-                        <div class="content">
-                          <p>•  Fine amounting PhP 37, 500.00 to PhP 50,000.00</p>
-                        </div>
-                    </td>
-                    </tr>
-                    <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Failure to renew FSIC</b></button>
-                        <div class="content">
-                          <p>•  For less than a year.
-                  - Fine; 50% of the total amount to be paid by the applicant
-                  • For a year or more
-                  - Fine; 100% of the total amount to be paid by the applicant for each year of default.
-                  </p>
-                        </div>
-                    </td>
-                    </tr>
-                     <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Fire Code Construction Tax</b></button>
-                        <div class="content">
-                          <p>•  One-tenth of one per centum (0.10%) of the verified estimated value of buildings or structures to be erected, from the owner thereof, but not to exceed fifty (Php 50,000.00)
-                  </p>
-                        </div>
-                    </td>
-                    </tr>
-                       <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Failure to secure FSEC prior to construction of the building</b></button>
-                        <div class="content">
-                          <p>•  Fine amounting Php 37,500 to Php 50,000.00
-                  </p>
-                        </div>
-                    </td>
-                    </tr>
-                    <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Fire Code Realty Tax</b></button>
-                        <div class="content">
-                          <p>•  One-hundredth of one per centum (0.01%) of the assessed value of buildings or structures annually payable upon payment of the real estate tax, except on structures used as single family dwellings.
-                  </p>
-                        </div>
-                    </td>
-                    </tr>
-                     <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Fire Code Sales Tax</b></button>
-                        <div class="content">
-                          <p>•  Two per centium (2%) of gross sales of companies, persons or agents selling firefighting equipment, appliances or devices, including hazard detection and warning systems.
-                  </p>
-                        </div>
-                    </td>
-                    </tr>
-                   <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Storage Clearance Fee</b></button>
-                        <div class="content">
-                          <p>1. For flammable liquids having flashpoint of -6.67 °C or below, such as gasoline, ether, carbon bisolphide, naptha, benzol (benzene), collodion, aflodin, and acetone.
-                  </p>
-               
-                        </div>
-                    </td>
-                    </tr>
-                      <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Storage Clearance Fee</b></button>
-                        <div class="content">
-                          <p>1. For flammable liquids having flashpoint of -6.67 °C or below, such as gasoline, ether, carbon bisolphide, naptha, benzol (benzene), collodion, aflodin, and acetone.
-                  </p>
-                    <p>2. For flammable liquids having flashpoint of above -6.67 °C and below 22.8 °C such as alcohol, amyl, toluol, ethyl, acetate and like. 
-                  </p>
-                   <p>3.  For liquids having flashpoint of 22.8 °C to 93.3 °c, such as kerosene, turpentine, thinner, prepared paints, varnish, diesel oil, fuel oil, kerosene, cleaning solvent, polishing liquids and similar. 
-                  </p>
-                   <p>4.)  For combustible liquids having flash point greater than 93.3 °c that is subject to spontaneous ignition or is artificially healed to a temperature equal to or higher than its flashpoint, such as crude oil, petroleum, oil and others. 
-                  </p>
-                   <p>5.)  Liquefied Petroleum Gas (LPG) in Liter Water Capacity
-                  </p>
-
-               
-                        </div>
-                    </td>
-                    </tr>
+                   
+                    
+                    
+                   
+                   
+                     
+                  
+                      
                        <tr >
                      <td ></td>
                       <td>  
@@ -743,6 +658,29 @@ Building Fire Safety Clearance, and Fire Clearance  -  350.00
                  
 <script type="text/javascript">
     $(document).ready(function(){
+      $.ajaxSetup({
+                      headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                      }
+                  });
+    function load_fees(search = ''){
+      
+      $.ajax({
+        method:'post',
+        url: "{{ route('load_fees') }}",
+        data:{
+          search:search
+        },
+        dataType:'json',
+        success:function(data){
+          alert(data.data);
+          // $.each(data.data, function(key, value){
+          //   alert(key + ':'+ value);
+          // })
+        }
+      })
+    }
+  
     $(document).on('click','.additional_fees',function(e){
       e.preventDefault();
 
@@ -754,6 +692,7 @@ Building Fire Safety Clearance, and Fire Clearance  -  350.00
     })
   $('.add_fees_button').on('click',function(e){
     e.preventDefault();
+    load_fees();
     $('#add_fees').modal('show');
 
   })
@@ -761,10 +700,7 @@ $('.save_payment_button').on('click',function(e){
   e.preventDefault();
 
   $('#save_payment').modal('show');
-//       var amount=$('#amount_total').val();
-//   var change=$('#change_amount').val();
-// $('#amount_payment').val(amount);
-// $('#change_payment').val(change);
+
 
  
 })

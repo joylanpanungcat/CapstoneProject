@@ -6,6 +6,7 @@ use App\Http\Controllers\applicantController;
 use App\Http\Controllers\archivedController;
 use App\Http\Controllers\applicationController;
 use App\Http\Controllers\fileController;
+use App\Http\Controllers\feesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,7 @@ Route::group(['middleware'=>['accessPage']],function(){
 
     //assessment
     Route::view('assessment','assessment');
+    Route::post('load_fees',[feesController::class,'load_fees'])->name('load_fees');
 
  //archive
  Route::post('swalert',[applicantController::class,'swalert'])->name('swalert');
