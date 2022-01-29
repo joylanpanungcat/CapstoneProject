@@ -67,7 +67,10 @@ Route::group(['middleware'=>['accessPage']],function(){
     //assessment
     Route::view('assessment','assessment');
     Route::post('load_fees',[feesController::class,'load_fees'])->name('load_fees');
-
+    Route::post('search_applicant_fetch',[feesController::class,'search_applicant_fetch'])->name('search_applicant_fetch');
+    Route::post('select_applicant_fetch',[feesController::class,'select_applicant_fetch'])->name('select_applicant_fetch');
+    
+    
  //archive
  Route::post('swalert',[applicantController::class,'swalert'])->name('swalert');
  Route::view('account','account')->name('account');

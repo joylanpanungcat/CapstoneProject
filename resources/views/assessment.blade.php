@@ -135,7 +135,7 @@ color: red;
   font-size: 15px;
 }
 
-.content {
+.content2 {
   padding: 0 18px;
   display: none;
   overflow: hidden;
@@ -194,7 +194,7 @@ color: red;
                  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2  " role="group" aria-label="First group">
          
-                               <input type="text" name="" placeholder="Full name">
+                               <input type="text" name="" placeholder="Full name" id="search_applicant">
 
                       <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
                       
@@ -218,8 +218,8 @@ color: red;
                                 <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
                               </center>
                             </div>
-                    <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="owners_name" name=""></span></h5></div>
-                     <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="owners_name" name=""></span></h5></div>
+                    <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
+                     <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                     <div class="panel-body" id="panel-body">
                       
                         <table class="table table-striped table-bordered" id="data"  style="width:100%;">
@@ -335,14 +335,15 @@ color: red;
       <div class="modal-content modal-lg">
         <div class="modal-header">
           <h4 class="modal-title" id="ModalTitle">Fees</h4>
-          <div class="btn-group mr-2  " role="group" aria-label="First group">
          
-                               <input type="text" name="" placeholder="search fee">
-
-                      <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
+          <div class="btn-group mr-2  " role="group" aria-label="First group">
+            
+                               <input type="text" name="" placeholder="search fee" id="search_fee">
+                      <button type="button" class="btn btn-secondary " id="search_fee_form"><i class="fa fa-search"></i></button>
                       
-                   
+      
                     </div>
+                  
 
         </div>
         <div class="modal-body">
@@ -355,175 +356,22 @@ color: red;
                       <td>Nature of Payment</td>
                     </tr>
                      </thead>
-                    <tbody >
-                     <tr >
-                     <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Fire Safety Inspection Fee (For Business and Occupancy)</b></button>
-                        <div class="content">
-                          <p>•  Fee charged for the conduct of Fire Safety Inspection equivalent to fifteen percent (15%) of all fees charged by the Local Government Unity, but in no case shall be lower than Five Hundred Pesos.</p>
-                        </div>
-                    </td>
-                    </tr>
+                    <tbody class="tbody_fees" >
                    
+                   
+                  </tbody>
+                  <tbody>
+                    <tr >
+                      <td ></td>
+                       <td  class="table_other_fees">  
+                        
+                     </td>
+                     </tr>
                     
+                  </tbody>
+                  <tbody class="custom_fees"  >
                     
                    
-                   
-                     
-                  
-                      
-                       <tr >
-                     <td ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Others</b></button>
-                        <div class="content">
-                          <table>
-                            <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                                <p>a. Appeal fee mentioned under Rule 14 of this RIRR - 1,000.00
-                           </p>
-                     
-                          </td>
-                        </tr> 
-                         <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>b. Certified True copy of Fire Safety Inspection Certificate,
-Building Fire Safety Clearance, and Fire Clearance  -  350.00
-
-                           </p>
-                     
-                          </td>
-                        </tr> 
-                         <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>c.  Electrical Installation
-
-                           </p>
-                     
-                          </td>
-                        </tr>
-                         <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>d.  Filing Fee for Fire Safety Evaluation Certificate (FSEC)  - 200.00
-
-                           </p>
-                     
-                          </td>
-                        </tr>  
-                          <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>e.  Fire Drill            - 1,000.00
-
-                           </p>
-                     
-                          </td>
-                        </tr> 
-                       <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>f.  Fire Incident Clearance         - 350.00
-
-                           </p>
-                     
-                          </td>
-                        </tr> 
-                       <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>g.  Fire Prevention and Safety Seminar      -   2,000.00
-
-                           </p>
-                     
-                          </td>
-                        </tr>
-                        <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>h.  Fireworks Display         - 1,049.00
-
-                           </p>
-                     
-                          </td>
-                        </tr>
-                       <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>i.  Fumigation/Fogging          - 350.00
-
-                           </p>
-                     
-                          </td>
-                        </tr>
-                         <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>j.  Open Flame            - 525.00
-
-                           </p>
-                     
-                          </td>
-                        </tr>
-                         <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>k.  Protest Fee mentioned under Rule 14 of this RIRR  - 500.00
-
-                           </p>
-                     
-                          </td>
-                        </tr>
-                           <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>l.  Soundstage and Approved Production Facilities and Locations -   2,000.00
-
-                           </p>
-                     
-                          </td>
-                        </tr> 
-                         <tr >
-                           <td ><input type="checkbox" name="optradio" class="checkbox" ></td>
-                            <td>  
-                      
-                       <p>m.  Welding, Cutting, and other Hotworks
-                           </p>
-                     
-                          </td>
-                        </tr> 
-                          </table>
-                         
-               
-                        </div>
-                    </td>
-                    </tr>
-                      <tr >
-                     <td ></td>
-                      <td>  
-                        <button type="button" class="collapsible"><b>Custom Fee</b></button>
-                        <div class="content">
-                         <input type="text" name="" class="custom_fee" placeholder="Nature of payment">
-               
-                        </div>
-                    </td>
-                    </tr>
                   </tbody>
                    
                      
@@ -544,7 +392,6 @@ Building Fire Safety Clearance, and Fire Clearance  -  350.00
 </div>
  
  <!-- search applicant -->
-
                                
 <div class="modal fade " id="search_modal" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-md">
@@ -555,18 +402,20 @@ Building Fire Safety Clearance, and Fire Clearance  -  350.00
 
         </div>
         <div class="modal-body">
-           
+          
               <div class="row">
                 <table class="table table-bordered">
+                  <tbody class="tbody_search">
+                  </tbody>
                  
                 </table>
               </div>
                <center>
           <button class="btn btn-dager" data-dismiss="modal" id="okModal"><i class="fa fa-arrow-left"> </i> Back</button>
-          <input type="hidden" name="" id="type_applicationDelete">
-          <button type="button" class="btn btn-warning " data-dismiss="modal" id="addPayment_application"><i class="fa fa-credit-card" ></i>Continue</button>
+          <button type="button" class="btn  " id="select_applicant" style="background-color: #1ABB9C;color:#fff;"><i class="fa fa-credit-card" ></i>Continue</button>
           
           </center>
+         
       </div>
     </div>
   </div>
@@ -639,23 +488,22 @@ Building Fire Safety Clearance, and Fire Clearance  -  350.00
       </div>
     </div>
   </div>  
-  <script type="text/javascript">
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-      });
-    }
-  </script>   
-                 
+<script>
+      var coll = document.getElementsByClassName('collapsible');
+      var i;
+      for (i = 0; i < coll.length; i++) {
+        coll[i].document.addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+            content.style.display = "none";
+          } else {
+            content.style.display = "block";
+          }
+        });
+      }
+</script>
+   
 <script type="text/javascript">
     $(document).ready(function(){
       $.ajaxSetup({
@@ -663,6 +511,8 @@ Building Fire Safety Clearance, and Fire Clearance  -  350.00
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                       }
                   });
+    var count=0;
+  load_fees();
     function load_fees(search = ''){
       
       $.ajax({
@@ -673,66 +523,93 @@ Building Fire Safety Clearance, and Fire Clearance  -  350.00
         },
         dataType:'json',
         success:function(data){
-          alert(data.data);
-          // $.each(data.data, function(key, value){
-          //   alert(key + ':'+ value);
-          // })
+         $('.tbody_fees').html(data.data);
+         $('.table_other_fees').html(data.others);
+         $('.custom_fees').html(data.custom);
+         
+         
         }
       })
     }
-  
-    $(document).on('click','.additional_fees',function(e){
-      e.preventDefault();
-
-      $('#additional').html('<h5>Additional Fees</h5><table class="table table-bordered"><tr><th>#</th><th style="width:750px">Discription</th><th style="width:200px;">Amount</th></tr><tr><td>1</td><td>Sample fee number 1</td><td>100</td></tr></table>');
-          $('#total_payment').val('600');
-
-
-    
-    })
-  $('.add_fees_button').on('click',function(e){
+    $('.add_fees_button').on('click',function(e){
     e.preventDefault();
-    load_fees();
     $('#add_fees').modal('show');
 
-  })
-$('.save_payment_button').on('click',function(e){
-  e.preventDefault();
+  });
+  $('#search_fee_form').on('click',function(e){
+    e.preventDefault();
+    var search=$('#search_fee').val();
+    if(search =='' && count ==0){
+      $('#search_fee').focus();
+    }else{
+      count +=1;
+      load_fees(search);
 
-  $('#save_payment').modal('show');
-
-
+    }
+  });
  
-})
-$('.save_payment').on('click',function(e){
+  $(document).on('click','.collapsible',function(e){
+    e.preventDefault();
+    $id = $(this).attr('id')
+    content_id = '.content2'.concat($id);
+    $(content_id).slideToggle('fast');
+  })
+
+$(document).on('click','.collapsible2',function(e){
   e.preventDefault();
-
-    $('#payment_save_modal').modal('show');
-
+    content_id = '.content';
+    $(content_id).slideToggle('fast');
 })
-      
+$(document).on('click','.collapsible3',function(e){
+  e.preventDefault();
+    content_id = '.content3';
+    $(content_id).slideToggle('fast');
+});
+  
   $(document).on('click','#search',function(e){
         e.preventDefault();
+    var search =$('#search_applicant').val();
 
-$('#search_modal').modal('show');
-
-      
+    if(search == ''){
+      $('#search_applicant').focus();
+      }else{
+       $.ajax({
+         type: 'post',
+         url: '{{ route('search_applicant_fetch') }}',
+         data:{
+           search:search
+         },
+         dataType:'json',
+         success:function(data){
+           $('.tbody_search').html(data.output);
+          $('#search_modal').modal('show');
+         }
+       })
+      }
       })
 
-   $('#addPayment_application').on('click',function(e){
-        e.preventDefault();
+   $(document).on('click','#select_applicant',function(e){
+     e.preventDefault();
+    var id= $('input[name=optradio]:checked').attr('id');
+    
+    $.ajax({
+      type: 'post',
+      url:'{{ route('select_applicant_fetch') }}',
+      data:{
+        id:id
+      },
+      dataType: 'json',
+      success:function(data){
+        $('#search_modal').modal('hide');
+        $.each(data.data,function($key,$value){
+          $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
+          $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
 
-
-          $('#application_id_payment').val(1);
-          $('#control_number').val("C32122");
-          $('#owners_name').html("Joylan Panungcat");
-          $('#dataBody').html('  <tr><td>1</td><td>FSEC</td> <td>Joylans Store</td> <td>Prk2, San Francisco</td><td>July 10 2021</td><td>500</td> </tr> ');
-          $('#total_payment').val('500');
-
-       
-
-      
-      })
+        })
+      }
+    })
+  
+   })
            
                             
       })

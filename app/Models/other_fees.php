@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class fee extends Model
+class other_fees extends Model
 {
     use HasFactory;
-    public $table='fees';
+    public $table = 'other_fees';
+    public $primaryKey='fees_id';
     public $timestamp=false;
-
-    public function other_fees(){
-        return $this->hasMany(other_fees::class,'fees_id');
+    
+    public function fee(){
+      return $this->belongsTo(fee::class,'fees_id');
     }
 }

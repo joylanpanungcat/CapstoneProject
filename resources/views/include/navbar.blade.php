@@ -379,10 +379,11 @@
 </html>
 
 {{-- jquery --}}
-{{--   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script> --}}
-
+  {{-- <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script> --}}
+  
   {{-- jquery 3.6.0 --}}
-  <script type="text/javascript" src="{{ asset('js/jquery/jquery-3.6.0.min.js') }}"></script>
+  {{-- <script type="text/javascript" src="{{ asset('js/jquery/jquery-3.6.0.min.js') }}"></script> --}}
+
 {{-- bootstrap --}}
 
     <script type="text/javascript" src="{{url('js/bootstrap/bootstrap.bundle.min.js')}}"></script>
@@ -395,6 +396,8 @@
 
     {{-- custom --}}
 <script type="text/javascript" src="{{url('js/custom.min.js')}}"></script>
+
+
 {{-- scrollbar --}}
    <script src="{{url('js/scrollbar/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 
