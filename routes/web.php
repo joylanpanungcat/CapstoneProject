@@ -7,7 +7,7 @@ use App\Http\Controllers\archivedController;
 use App\Http\Controllers\applicationController;
 use App\Http\Controllers\fileController;
 use App\Http\Controllers\feesController;
-
+use App\Http\Controllers\reportsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,6 +69,8 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('load_fees',[feesController::class,'load_fees'])->name('load_fees');
     Route::post('search_applicant_fetch',[feesController::class,'search_applicant_fetch'])->name('search_applicant_fetch');
     Route::post('select_applicant_fetch',[feesController::class,'select_applicant_fetch'])->name('select_applicant_fetch');
+    Route::post('select_fees',[feesController::class,'select_fees'])->name('select_fees');
+    Route::post('numberTowords',[feesController::class,'numberTowords'])->name('numberTowords');
     
     
  //archive
@@ -78,6 +80,7 @@ Route::group(['middleware'=>['accessPage']],function(){
  Route::post('account/restore/',[applicantController::class,'restore'])->name('restore');
  Route::view('archive','archive');
 Route::get("archivedFetch",[archivedController::class,"archivedFetch"])->name('archivedFetch');
+
 
 
 // file system
@@ -96,7 +99,12 @@ Route::post('moveFolderToSelected',[applicationController::class,"moveFolderToSe
 
 Route::post('moveViewParentFolderId',[applicationController::class,"moveViewParentFolderId"])->name('moveViewParentFolderId');
 
+//list 
 
+Route::view('approved_application','approved_application');
+
+//reports
+Route::get('reports',[reportsController::class,'reports'])->name('reports');
 });
 
 

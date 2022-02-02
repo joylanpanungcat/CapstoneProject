@@ -15,9 +15,6 @@
                 background-color: #b5b5b5;
             }
 
-
-
-
  .swal2-title {
   color: #FFF;
 }
@@ -915,6 +912,7 @@ function myFunction() {
           "orderable":false,
          },
         ],
+      
          autoWidth: false,
           scrollX:true,
           ajax: {

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class custom_fee extends Seeder
+class defaultFee extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,8 +15,9 @@ class custom_fee extends Seeder
     public function run()
     {
         //
-        DB::table('custom_fee')->insert([
-            'custom_description'=>''
+        DB::table('default')->insert([
+            'authority_of'=>'Joylan E. Panungcat',
+            'fee_assessor'=>'Miggy Ortega'
         ]);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomFeeTable extends Migration
+class CreateDefaultTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateCustomFeeTable extends Migration
      */
     public function up()
     {
-        Schema::create('custom_fee', function (Blueprint $table) {
-            $table->id('fees_id');
-            $table->string('custom_description')->nullable();
+        Schema::create('default', function (Blueprint $table) {
+            $table->id();
+            $table->string('authority_of');
+            $table->string('fee_assessor');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateCustomFeeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('custom_fee');
+        Schema::dropIfExists('default');
     }
 }

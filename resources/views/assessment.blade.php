@@ -1,16 +1,18 @@
 @extends('include.navbar')
 @section('title','Assessment')
 @section('content')
-
   <style type="text/css">
       table tbody tr td input{
         border: none;
         background-color: transparent;
         padding: 5px;
+        text-align: center;
+         font-size: 16px;
+
 
       }
       table tbody tr td input:hover{
-        border: 3px solid #0687d6;
+        border: 1px solid #2A3F54;
        
 
       }
@@ -46,9 +48,9 @@
     background-color:  #2A3F54;
 
 }
-.panel{
-  border: 1px solid #111;
+.panel-default{
   padding: 20px;
+  
 }
 input[type=checkbox]
 {
@@ -99,6 +101,10 @@ height: 30px;
 .group1{
    border: none;
   border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 4px;
+
 }
 .authority_name{
     border: none;
@@ -167,7 +173,42 @@ color: red;
   padding: 10px;
   font-size: 15px;
 }
+#authority_of, #fee_assessor{
+color: #2A3F54;
+text-transform: uppercase;
+text-align: center;
+font-size: 22px;
+font-weight: bold;
+letter-spacing: 1px;
+}
 
+#applicant_name , #applicant_address{
+color: #2A3F54;
+text-transform: capitalize;
+font-weight:bold;
+letter-spacing: 1px;
+}
+#total_amount{
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  color: #2A3F54;
+  font-size: 16px;
+  padding: 5px;
+}
+#total_amount_inwords{
+  font-size: 18px;
+  letter-spacing: 4px;
+  text-transform: capitalize;
+}
+.save_payment_button{
+  background-color: #1ABB9C;
+  color: #fff;
+}
+#print_payment_button{
+  background-color: #2A3F54;
+  color: #fff;
+}
   </style>
 
 
@@ -233,29 +274,28 @@ color: red;
 
                                 </tr>
                               </thead>
-                              <tbody >
+                              <tbody id="nature_payment_body">
                                 <tr>
                                   <td></td>
                                   <td></td>
                                   <td></td>
                                 </tr>
-                                <tr>
-                                  <td>TOTAL</td>
-                                  <td></td>
-                                  <td></td>
-                                </tr>
-                                  
-                                    
+                               
                                   </tbody>
+                                  <thead>
+                                      <td>TOTAL</td>
+                                      <td></td>
+                                      <td><input type="number" id="total_amount" class="total_amount" readonly></td>
+                                  </thead>
                  
                                   </table>
                                   <h7><b>TOTAL AMOUNT (IN WORDS):</b></h7>
-                                  <input type="text" name="" class="total_amount_inwords">
+                                  <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords" >
                                   <br><br><br>
                                 
                                 <div class="form-group group2">
                                   <label>Official Receipt No: </label>
-                                  <input type="text" name="" class="group1"><br>
+                                  <input type="text" name="" class="group1" ><br>
                                 <br>
                                    <br><br>
                                   <div class="">
@@ -268,9 +308,9 @@ color: red;
                                 </div>
 
                                   <div class="form-group group2" style="float:right;margin-top: 30px;">
-                                    <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name"></span></h5>
-                                    <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br>
-                                    <input type="text" name="" class="authority_name">
+                                    <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of" readonly style="width: 400px"></span></h5>
+                                    <label style="margin-left:45%">(Name of City/Municipal Fire Marshal)</label><br><br><br>
+                                    <input type="text" name="" class="authority_name" id="fee_assessor" readonly>
                                    <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
 
 
@@ -292,8 +332,8 @@ color: red;
                                   
                                      
                                       <div class="button-group total_body2 ">
-                                          <button type="button" class="btn btn-secondary save_payment_button" id="save_payment_button"><i class="fa fa-save" ></i>  Save</button>
-                                          <button type="button" class="btn btn-secondary " data-dismiss="modal" id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button>
+                                          <button type="button" class="btn  save_payment_button" id="save_payment_button"><i class="fa fa-save" ></i>  Save</button>
+                                          <button type="button" class="btn print_payment_button"  id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button>
                                       </div>
                                       </form>
                                     </div>
@@ -384,7 +424,7 @@ color: red;
           <div class="modal-footer">
                 
             <button class="btn btn-dager" data-dismiss="modal" id="okModal"><i class="fa fa-arrow-left"> </i> Back</button>
-            <button type="button" class="btn  additional_fees" data-dismiss="modal" id=""><i class="fa fa-credit-card" ></i>  Add fees</button>
+            <button type="button" class="btn  additional_fees" ><i class="fa fa-credit-card" ></i>  Add fees</button>
         
               </div>
     </div>
@@ -488,6 +528,7 @@ color: red;
       </div>
     </div>
   </div>  
+
 <script>
       var coll = document.getElementsByClassName('collapsible');
       var i;
@@ -502,6 +543,16 @@ color: red;
           }
         });
       }
+      function printDiv() {
+            var divContents = document.getElementById("panel-body").innerHTML;
+            var a = window.open('', '', 'height=1000, width=1000');
+            a.document.write('<html>');
+            a.document.write('<body > <h1>Application Payment<br>');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        }
 </script>
    
 <script type="text/javascript">
@@ -586,11 +637,40 @@ $(document).on('click','.collapsible3',function(e){
          }
        })
       }
+      });
+  $('.additional_fees').click(function(e){
+    e.preventDefault();
+    var checkbox= $('.payment_checkbox:checked');
+
+    if(checkbox.length>0){
+      var checkbox_value=[];
+      $(checkbox).each(function(){
+        checkbox_value.push($(this).val());
+      });
+
+      $.ajax({
+        type:'post',
+        url: '{{ route('select_fees') }}',
+        data:{
+          checkbox_value:checkbox_value
+        },
+        dataType: 'json',
+        success:function(data){
+          $('#nature_payment_body').html(data.output);
+          $('#add_fees').modal('hide');
+        }
       })
+    }else{
+      $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
+      $('#add_fees').modal('hide');
+
+    }
+   
+  })
 
    $(document).on('click','#select_applicant',function(e){
      e.preventDefault();
-    var id= $('input[name=optradio]:checked').attr('id');
+    var id= $('.optradio:checked').attr('id');
     
     $.ajax({
       type: 'post',
@@ -604,13 +684,41 @@ $(document).on('click','.collapsible3',function(e){
         $.each(data.data,function($key,$value){
           $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
           $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
-
-        })
+      
+        });
+        $.each(data.data2,function($key, $value){
+          $('#authority_of').val($value['authority_of']);
+          $('#fee_assessor').val($value['fee_assessor']);
+        });
       }
     })
   
-   })
-           
+   });
+
+   $(document).on('keyup','.assessment_total',function(e){
+     e.preventDefault();
+     var num = $(this).val();
+     var sum_value = 0;
+   
+     $('.assessment_total').each(function(){
+      sum_value += +$(this).val();
+      });
+      $('#total_amount').val(sum_value);
+      
+     $.ajax({
+       type: "POST",
+       url: "{{ route('numberTowords') }}",
+       data:{
+        num:sum_value
+       },
+       dataType: 'json',
+       success:function(data){
+    $('#total_amount_inwords').val(data.data +' ' +  'Pesos');
+
+       }
+     })
+
+   });
                             
       })
   </script>

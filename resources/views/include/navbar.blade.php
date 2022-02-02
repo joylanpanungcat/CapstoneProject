@@ -226,7 +226,7 @@
                   </li>
                    <li><a><i class="fa fa-file"></i> Reports <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a  href="approved_application.php" class="">Approved Application<span class="badge bg-danger" id="count_applicant"></span></a></li>
+                      <li><a  href="approved_application" class="">Approved Application<span class="badge bg-danger" id="count_applicant"></span></a></li>
                       <li><a href="rejected_application.php">Rejected Application</a></li>
                       <li><a href="renewal_reports.php">Application for Renewal</a></li>
                       
@@ -384,12 +384,21 @@
   {{-- jquery 3.6.0 --}}
   {{-- <script type="text/javascript" src="{{ asset('js/jquery/jquery-3.6.0.min.js') }}"></script> --}}
 
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" src="{{ asset('datatable/js/jquery.dataTables.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+
 {{-- bootstrap --}}
 
     <script type="text/javascript" src="{{url('js/bootstrap/bootstrap.bundle.min.js')}}"></script>
     {{-- datatable --}}
-    <script type="text/javascript" src="{{ asset('datatable/js/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('datatable/js/dataTables.bootstrap4.min.js') }}"></script>
+   
 
     {{-- sweetaler 2 --}}
     <script type="text/javascript" src="{{ asset('sweetalert2/sweetalert2.min.js') }}"></script>

@@ -4,23 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\fee;
-use App\Models\other_fees;
-use App\Models\custom_fee;
 use App\Models\applicant;
+use App\Models\defaultFee;
+use NumConvert;
 class feesController extends Controller
 {
     //
     public function load_fees(Request $req){
 
       if($req->search !=''){
-        $data= fee::where('natureof_payment','LIKE','%'.$req->search.'%')->get();
-        $data2=other_fees::where('other_fees','LIKE','%'.$req->search.'%')->get();
-        $data3=custom_fee::where('custom_description','LIKE','%'.$req->search.'%')->get();
+        $data=fee::where('natureof_payment','LIKE','%'.$req->search.'%')->where('category','=','main')->get();
+        $data2=fee::where('natureof_payment','LIKE','%'.$req->search.'%')->where('category','=','other_fees')->get();
 
       }else{
-        $data2=other_fees::all();
-        $data= fee::all();
-        $data3=custom_fee::all();
+        $data2=fee::where('category','=','other_fees')->get();
+        $data= fee::where('category','=','main')->get();
 
 
       }
@@ -30,7 +28,7 @@ class feesController extends Controller
 
         foreach($data as $item){
             $output .="<tr >
-            <td ><input type='checkbox' name='optradio' class='checkbox' ></td>
+            <td ><input type='checkbox' name='optradio' class='payment_checkbox checkbox' value=".$item['fees_id']."></td>
              <td>  
                <button type='button' class='collapsible'  id='".$item['fees_id']."' ><b>".$item['natureof_payment']."</b></button>
             <div class='content2".$item['fees_id']."'style='display:none;'>
@@ -48,9 +46,9 @@ class feesController extends Controller
             <div class='content' style='display:none;'>
               <table >
             <tr >
-              <td ><input type='checkbox' name='optradio' class='checkbox' ></td>
+              <td ><input type='checkbox' name='optradio' class='payment_checkbox checkbox' value=".$item2['fees_id']."></td>
                <td>  
-                 <p>".$item2['other_fees']."
+                 <p>".$item2['natureof_payment']."
               </p>
         
              </td>
@@ -58,34 +56,33 @@ class feesController extends Controller
           </table>
           </div>";
         }
-        if(count($data3)<1){
-          $custom .="<tr><td></td>
-           <td>  
-          <button type='button' class='collapsible collapsible3'><b>Custom Fee</b></button>
-          <div class='content3' style='display:none;'>
-           <input type='text' name='' class='custom_fee' placeholder='Nature of payment'>
+    //     if(count($data3)<1){
+    //       $custom .="<tr><td></td>
+    //        <td>  
+    //       <button type='button' class='collapsible collapsible3'><b>Custom Fee</b></button>
+    //       <div class='content3' style='display:none;'>
+    //        <input type='text' name='' class='custom_fee' placeholder='Nature of payment'>
   
-          </div>
-      </td> 
-      </tr>";
-        }else{
-      foreach($data3 as $item3){
-        $custom .=" <tr>
-        <td>  
-        <button type='button' class='collapsible collapsible3'><b>Custom Fee</b></button>
-        <div class='content3' style='display:none;'>
-         <input type='text' name='' class='custom_fee' placeholder='Nature of payment'>
+    //       </div>
+    //   </td> 
+    //   </tr>";
+    //     }else{
+    //   foreach($data3 as $item3){
+    //     $custom .=" <tr>
+    //     <td>  
+    //     <button type='button' class='collapsible collapsible3'><b>Custom Fee</b></button>
+    //     <div class='content3' style='display:none;'>
+    //      <input type='text' name='' class='custom_fee' placeholder='Nature of payment'>
 
-        </div>
-    </td> </tr>";
-      }
-    }
+    //     </div>
+    // </td> </tr>";
+    //   }
+    // }
     
 
         return response()->json([
            'data'=>$output,
            'others'=>$others,
-           'custom'=>$custom,
         ]);
     }
 
@@ -101,7 +98,7 @@ class feesController extends Controller
    }else{
     foreach($data as $item){
       $output .=  "<tr>
-      <td><input type='radio' name='optradio'   id=".$item['applicantId']."></td>
+      <td><input type='radio' name='optradio' class='optradio'  id=".$item['applicantId']."></td>
       <td>".$item['Fname']."  ".$item['Mname']."  ".$item['Lname']." </td>
        </tr>";
     }
@@ -117,10 +114,38 @@ class feesController extends Controller
     $id = $req->id;
 
     $data=applicant::with('address')->where('applicantId',$id)->get();
+    $data2=defaultFee::all();
     
     return response()->json([
-      'data'=>$data
+      'data'=>$data,
+      'data2'=>$data2
     ]);
 
   }
+
+  public function select_fees(Request $req){
+
+    $ids = $req->checkbox_value;
+    $output="";
+    
+    $data = fee::whereIn('fees_id',$ids)->get();
+    
+    foreach($data as $item){
+      $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' /></td><td><input type='number' class='assessment_total' /></td></tr>";
+    }
+
+    return response()->json([
+      'output' => $output
+    ]);
+  }
+
+public function numberTowords(Request $req)
+{
+  $num = $req->num;
+$data =(NumConvert::word($num));
+
+return response()->json([
+  'data'=>$data
+]);
+}
 }

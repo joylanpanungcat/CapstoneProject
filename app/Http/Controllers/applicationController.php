@@ -93,7 +93,8 @@ public function applicationFetch(Request $request){
     ->make(true);
   
 }
-    public function viewApplication(Request $request){
+
+public function viewApplication(Request $request){
     $account_id= $request->id;
       // $account_details=application::join('applicant','applicant.applicantId','=','application.applicantId')
       //   ->where('application.applicationId','=',$account_id)
