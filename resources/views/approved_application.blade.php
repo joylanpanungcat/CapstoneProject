@@ -237,11 +237,10 @@ overflow: auto;
                                       <label><b> Sort:</b></label>
                                       <select class="select_status" id="category_filter">
                                           <option value="">All</option>
-                                          <option value="pending">pending</option>
-                                          
-                                          <option value="approved">approved</option>
-                                          <option value="reinspection">reinspection</option>
-                                          <option value="renewal">renewal</option>
+                                          <option value="Fire Safety Inspection Certificate">FSIC</option>
+                                          <option value="Fire Safery Evaluation Clearance">FSEC</option>
+                                          <option value="Fire Safety Inspection Certificate for Business">FSIC for Business</option>
+                                          <option value="Fire Safety Inspection Certificate for Occupancy">FSIC for Occupancy</option>
                                       </select>
                                     </div>
                               
@@ -265,10 +264,10 @@ overflow: auto;
                               <thead >
                                
 
-                                <tr>
                                   <!-- <th>Select</th> -->
                                   <th>CONTROL #</th>
                                   <th>DATE</th>
+                                  <th>TYPE OF APPLLICATION</th>
                                   <th>TYPE OF OCCUPANCY</th>
                                   <th>NATURE OF BUSINESS </th>
                                   <th>OWNER / APPLICANT</th>
@@ -281,9 +280,9 @@ overflow: auto;
                                   <th>AMOUNT</th>
                                   <th>OR #</th>
                                   <th>DATA PAID IO#</th>
+                                  <th>status</th>
 
                                  
-                                </tr>
                               </thead>
                               
                                   </table>
@@ -314,11 +313,15 @@ overflow: auto;
      var dataTable= $('#applicationData2').DataTable({
         processing:true,
         info:true,
-       
-        'pageLength': 5,
+        "ordering": false,
+        dom: 'lBfrtip',
+        'sorting':false,
+        "buttons": [ { extend: 'csv', text: 'CSV', exportOptions: { modifier: { search: 'applied' }}},
+         { extend: 'excel', text: 'Excel', exportOptions: { modifier: { search: 'applied' }}}, 
+         { extend: 'pdf', text: 'PDF', exportOptions: { modifier: { search: 'applied' }}},
+          { extend: 'print', text: 'Print visible', exportOptions: { modifier: { search: 'applied' }}}
+           ],
         'aLengthMenu':[[5,10,25,50,-1],[5,10,25,50,"All"]],
-        "autoWidth": false,
-         autoWidth: false,
           scrollX:true,
           ajax: {
             url:"{{ route('reports') }}",
@@ -327,10 +330,11 @@ overflow: auto;
                   to_date:to_date
             }
           },
-
+       
         columns:[
         {data:'DT_RowIndex',name:'DT_RowIndex', class: 'table_header'},
         {data:'date_apply',name:'date_apply'},
+        {data:'type_application',name:'type_application'},
         {data:'type_occupancy',name:'type_occupancy'},
         {data:'nature_business',name:'nature_business'},
         {data:'nature_business',name:'nature_business'},
@@ -342,7 +346,14 @@ overflow: auto;
         {data:'BP_num',name:'BP_num'},
         {data:'BP_num',name:'BP_num'},
         {data:'OR_num',name:'OR_num'},
-        {data:'OR_num',name:'OR_num'}
+        {data:'OR_num',name:'OR_num'},
+        {
+          data:'status',name:'status',
+          render: function(data, type, row){
+            return btn = '<span class="badge badge-success">'+data+'</span>';
+          }
+        
+        }
         ]
      });
   }

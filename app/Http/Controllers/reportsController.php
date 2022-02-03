@@ -20,7 +20,8 @@ class reportsController extends Controller
          if($request->category != '' && empty($request->from_date) )
          {
             $data = application::with('applicant')
-                     ->where('status','=',$request->category)
+                     ->where('type_application','=',$request->category)
+                     ->where('status','=','approved')
                      ->orderBy('applicationId','desc')
                      ->get();
                 
@@ -29,12 +30,14 @@ class reportsController extends Controller
          {
           $data = application::with('applicant')
             ->whereBetween('date_apply', array($request->from_date, $request->to_date))
+            ->where('status','=','approved')
             ->get();
          }
          elseif($request->category != '' && !empty($request->from_date))
          {
           $data = application::with('applicant')
-          ->where('status','=',$request->category)
+          ->where('type_application','=',$request->category)
+          ->where('status','=','approved')
           ->whereBetween('date_apply', array($request->from_date, $request->to_date))
           ->get();
          }
@@ -42,6 +45,7 @@ class reportsController extends Controller
          {
           $data = application::with('applicant')
                 ->orderBy('applicationId','desc')
+                ->where('status','=','approved')
                 ->get();
          }
       
