@@ -65,7 +65,7 @@ class applicantController extends Controller
         $account->Fname=$request->First_Name;
         $account->Lname=$request->Last_Name;
         $account->username=$request->username;
-        $account->password=$request->password;
+        $account->password=Hash::make($request->password);
         $account->contact_num=$request->Contact_Number;
         $account->date_register=$request->date_register;
         $account->image='null';
@@ -101,6 +101,30 @@ class applicantController extends Controller
       
       }
     }
+  public function loginApplicant(Request $request){
+    $validator = Validator::make($request->all([
+      'username'=>'required',
+      'password'=>'required',
+    ]),);
+
+    if($validator->fails()){
+      return response()->json([
+        'status'=>400,
+        'errors'=>$validator->messages()
+    ]);
+    }else{
+      $applicant= applicant::where('username',$request->username)->first();
+
+      if($applicant && Hass::check($request->password, $applicant->password)){
+        $token = $user->createToken('Personal Access Token')->plainTextToken;
+        $reponse =['applicant'=>$applicant,'token'=>$token];
+        return response()->json($reponse,200);
+      }else{
+        $reponse = ['message'=>'Incorrect username or password'];
+        return response()->json($reponse,400);
+      }
+    }
+  }
 
     // get applicant detials
     public function getApplicantDetails(Request $request){

@@ -23,6 +23,10 @@ public function address(){
     return $this->hasOne(address::class,'applicantId','applicantId');
 }
 
+public function assessment(){
+    return $this->hasMany(assessment::class,'applicantId','applicantId');
+}
+
 
 
 }

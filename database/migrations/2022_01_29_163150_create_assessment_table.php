@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicantAssessmentTable extends Migration
+class CreateAssessmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateApplicantAssessmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicant_assessment', function (Blueprint $table) {
-            $table->id();
-            $table->string('account_code')->nullable();
-            $table->string('total')->nullable();
+        Schema::create('assessment', function (Blueprint $table) {
+            $table->id('assessmentId');
+            $table->unsignedBigInteger('applicantId')->nullable();
             $table->string('total_amount_words')->nullable();
             $table->string('receipt_no')->nullable();
-            
-
+            $table->string('defaultId')->nullable();
+            $table->string('amount_paid')->nullable();
+            $table->string('payment_date')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateApplicantAssessmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicat_assessment');
+        Schema::dropIfExists('assessment');
     }
 }

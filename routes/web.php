@@ -36,6 +36,7 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::get("accountFetch",[applicantController::class,"accountFetch"])->name('accountFetch');
     Route::get("logout",[verifyController::class,"logout"]);
     Route::post('addApplicant',[applicantController::class,"add"])->name('add.applicant');
+    Route::post('loginApplicant',[applicantController::class,'loginApplicant']);
     Route::post('getApplicantDetails',[applicantController::class,"getApplicantDetails"])->name('get.appplicant.details');
     Route::post('updateApplicant',[applicantController::class,"updateApplicant"])->name('update.appplicant');
   
@@ -71,6 +72,12 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('select_applicant_fetch',[feesController::class,'select_applicant_fetch'])->name('select_applicant_fetch');
     Route::post('select_fees',[feesController::class,'select_fees'])->name('select_fees');
     Route::post('numberTowords',[feesController::class,'numberTowords'])->name('numberTowords');
+    Route::post('save_assessment',[feesController::class,'save_assessment'])->name('save_assessment');
+    Route::post('udpate_account_code',[feesController::class,'udpate_account_code'])->name('udpate_account_code');
+    Route::post('assessment_total',[feesController::class,'assessment_total'])->name('assessment_total');
+    Route::post('search_assessment',[feesController::class,'search_assessment'])->name('search_assessment');
+    Route::post('select_assessment',[feesController::class,'select_assessment'])->name('select_assessment');
+    
     
     
  //archive

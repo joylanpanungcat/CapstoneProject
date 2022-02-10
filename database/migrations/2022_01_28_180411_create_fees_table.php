@@ -16,6 +16,8 @@ class CreateFeesTable extends Migration
         Schema::create('fees', function (Blueprint $table) {
             $table->id('fees_id');
             $table->string('natureof_payment')->nullable();
+            $table->string('account_code')->nullable();
+            $table->string('assessment_total')->nullable();
             $table->string('description')->nullable();
             $table->string('category')->nullable();
             $table->timestamps();

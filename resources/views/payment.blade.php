@@ -166,7 +166,33 @@ width: 100%;
 padding: 10px;
 font-size: 15px;
 }
-
+#authority_of, #fee_assessor{
+color: #2A3F54;
+text-transform: uppercase;
+text-align: center;
+font-size: 22px;
+font-weight: bold;
+letter-spacing: 1px;
+}
+#applicant_name , #applicant_address{
+color: #2A3F54;
+text-transform: capitalize;
+font-weight:bold;
+letter-spacing: 1px;
+}
+#total_amount{
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  color: #2A3F54;
+  font-size: 16px;
+  padding: 5px;
+}
+#total_amount_inwords{
+  font-size: 18px;
+  letter-spacing: 4px;
+  text-transform: capitalize;
+}
 </style>
 
 <body class="nav-md" id="main" >
@@ -199,7 +225,7 @@ font-size: 15px;
                   <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                      <div class="btn-group mr-2  " role="group" aria-label="First group">
           
-                                <input type="text" name="" placeholder="Full name">
+                                <input type="text" name="" placeholder="Full name" id="search_applicant">
  
                        <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
                        
@@ -223,8 +249,9 @@ font-size: 15px;
                                  <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
                                </center>
                              </div>
-                     <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="owners_name" name=""></span></h5></div>
-                      <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="owners_name" name=""></span></h5></div>
+                     <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
+                     
+                      <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                      <div class="panel-body" id="panel-body">
                        
                          <table class="table table-striped table-bordered" id="data"  style="width:100%;">
@@ -255,12 +282,12 @@ font-size: 15px;
                   
                                    </table>
                                    <h7><b>TOTAL AMOUNT (IN WORDS):</b></h7>
-                                   <input type="text" name="" class="total_amount_inwords">
+                                   <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords">
                                    <br><br><br>
                                  
                                  <div class="form-group group2">
                                    <label>Offical Receipt No: </label>
-                                   <input type="text" name="" class="group1"><br>
+                                   <input type="text" name="" class="group1" id="receipt_no"><br>
                                    <label>Amount Paid:</label>
                                    <input type="text" name="" class="group1"><br>
                                      <label>Payment Date:</label>
@@ -275,10 +302,11 @@ font-size: 15px;
                                  </div>
  
                                    <div class="form-group group2" style="float:right;margin-top: 30px;">
-                                     <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name"></span></h5>
+                                     <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of"></span></h5>
                                      <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
- 
-                                     <input type="text" name="" class="authority_name">
+                                     
+                                     
+                                     <input type="text" name="" class="authority_name" id='fee_assessor'>
                                     <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
  
  
@@ -335,7 +363,33 @@ font-size: 15px;
    </div>
  </div>
  </div>
- 
+ <div class="modal fade " id="search_modal" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content modal-md">
+      <div class="modal-header">
+        <h4 class="modal-title" id="ModalTitle"> Applicant's Name </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="modal-body">
+        
+            <div class="row">
+              <table class="table table-bordered">
+                <tbody class="tbody_search">
+                </tbody>
+               
+              </table>
+            </div>
+             <center>
+        <button class="btn btn-dager" data-dismiss="modal" id="okModal"><i class="fa fa-arrow-left"> </i> Back</button>
+        <button type="button" class="btn  " id="select_applicant" style="background-color: #1ABB9C;color:#fff;"><i class="fa fa-credit-card" ></i>Continue</button>
+        
+        </center>
+       
+    </div>
+  </div>
+</div>
+</div>
  
  
  
@@ -356,62 +410,67 @@ font-size: 15px;
        });
      }
    </script>   
-                  
- <script type="text/javascript">
-     $(document).ready(function(){
-     $(document).on('click','.additional_fees',function(e){
-       e.preventDefault();
- 
-       $('#additional').html('<h5>Additional Fees</h5><table class="table table-bordered"><tr><th>#</th><th style="width:750px">Discription</th><th style="width:200px;">Amount</th></tr><tr><td>1</td><td>Sample fee number 1</td><td>100</td></tr></table>');
-           $('#total_payment').val('600');
- 
- 
-     
-     })
-   $('.add_fees_button').on('click',function(e){
-     e.preventDefault();
-     $('#add_fees').modal('show');
- 
-   })
- $('.save_payment_button').on('click',function(e){
-   e.preventDefault();
- 
-   $('#save_payment').modal('show');
-
-  
- })
- $('.save_payment').on('click',function(e){
-   e.preventDefault();
- 
-     $('#payment_save_modal').modal('show');
- 
- })
-       
-   $(document).on('click','#search',function(e){
-         e.preventDefault();
- 
- $('#search_modal').modal('show');
- 
-       
-       })
- 
-    $('#addPayment_application').on('click',function(e){
-         e.preventDefault();
- 
- 
-           $('#application_id_payment').val(1);
-           $('#control_number').val("C32122");
-           $('#owners_name').html("Joylan Panungcat");
-           $('#dataBody').html('  <tr><td>1</td><td>FSEC</td> <td>Joylans Store</td> <td>Prk2, San Francisco</td><td>July 10 2021</td><td>500</td> </tr> ');
-           $('#total_payment').val('500');
- 
+ <script>
+   $(document).ready(function(){
+     $('#search').on('click',function(e){
+      $.ajaxSetup({
+                      headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                      }
+                  });
+      var search =$('#search_applicant').val();
+          if(search == ''){
+          $('#search_applicant').focus();
+          }else{
         
- 
-       
-       })
-            
-                             
-       })
-   </script>
+          $.ajax({
+            type:'post',
+            url:'{{ route('search_assessment') }}',
+            data:{
+              search:search
+            },
+            dataType: 'json',
+            success:function(data){
+              $('#search_modal').modal('show');
+              $('.tbody_search').html(data.output);
+            }
+          })
+          }
+     });
+    
+     $(document).on('click','#select_applicant',function(e){
+     e.preventDefault();
+    var id= $('.optradio:checked').attr('id');
+    
+    $.ajax({
+      type: 'post',
+      url:'{{ route('select_assessment') }}',
+      data:{
+        id:id
+      },
+      dataType: 'json',
+      success:function(data){
+        $('#search_modal').modal('hide');
+        $.each(data.data,function($key,$value){
+          $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
+          $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
+          $('#total_amount_inwords').val($value['total_amount_words']);
+          $('#receipt_no').val($value['receipt_no']);
+        });
+        $.each(data.data2,function($key, $value){
+          $('#authority_of').val($value['authority_of']);
+          $('#fee_assessor').val($value['fee_assessor']);
+        
+
+          
+          
+          $('#defaultId').val($value['id']);
+        });
+      }
+    })
+  
+   });
+   })
+ </script>
  
 @endsection 

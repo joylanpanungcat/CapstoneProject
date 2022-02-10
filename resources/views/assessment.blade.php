@@ -209,6 +209,9 @@ letter-spacing: 1px;
   background-color: #2A3F54;
   color: #fff;
 }
+.swal2-title {
+  color: #FFF;
+}
   </style>
 
 
@@ -295,7 +298,7 @@ letter-spacing: 1px;
                                 
                                 <div class="form-group group2">
                                   <label>Official Receipt No: </label>
-                                  <input type="text" name="" class="group1" ><br>
+                                  <input type="text" name="" class="group1" id="receipt_no"><br>
                                 <br>
                                    <br><br>
                                   <div class="">
@@ -311,6 +314,7 @@ letter-spacing: 1px;
                                     <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of" readonly style="width: 400px"></span></h5>
                                     <label style="margin-left:45%">(Name of City/Municipal Fire Marshal)</label><br><br><br>
                                     <input type="text" name="" class="authority_name" id="fee_assessor" readonly>
+                                    <input type="hidden" id="defaultId">
                                    <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
 
 
@@ -557,6 +561,7 @@ letter-spacing: 1px;
    
 <script type="text/javascript">
     $(document).ready(function(){
+      var adminPass='{{Session::get('adminID')['password']}}';
       $.ajaxSetup({
                       headers: {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -689,6 +694,7 @@ $(document).on('click','.collapsible3',function(e){
         $.each(data.data2,function($key, $value){
           $('#authority_of').val($value['authority_of']);
           $('#fee_assessor').val($value['fee_assessor']);
+          $('#defaultId').val($value['id']);
         });
       }
     })
@@ -719,7 +725,167 @@ $(document).on('click','.collapsible3',function(e){
      })
 
    });
-                            
+  $("#save_payment_button").on('click',function(e){
+    e.preventDefault();
+    var checkbox= $('.payment_checkbox:checked');
+    var id=$('.optradio:checked').attr('id');
+   var total_amount_words = $('#total_amount_inwords').val();
+    var receipt_no=$('#receipt_no').val();
+    var defaultId= $('#defaultId').val();
+
+
+        if(checkbox.length>0){
+          var checkbox_value=[];
+          $(checkbox).each(function(){
+            checkbox_value.push($(this).val());
+          });
+        }
+       
+    
+
+    Swal.fire({
+         title:"Save Assessment",
+         iconHtml: '<i class="fa fa-check"></i>',
+         iconColor: '#42ba96',
+              showCancelButton: true,
+              showConfirmButton:true,
+              focusConfirm: false,
+              background: 'rgb(0,0,0,.9)',
+              customClass : {
+              title: 'swal2-title'
+            },
+           allowOutsideClick: false,
+            
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+              Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                           return new Promise(function (resolve){
+                            $.ajax({
+                              type: 'post',
+                              url: '{{ route('save_assessment') }}',
+                              data:{
+                                id:id,
+                                total_amount_words:total_amount_words,
+                                receipt_no:receipt_no,
+                                defaultId:defaultId,
+                                checkbox_value:checkbox_value
+                              },
+                              dataType:'json',
+                              success:function(data){
+                                swal.close();
+                              toastr.success(data.msg);
+                              $('.payment_checkbox').prop( "checked", false );
+                              $('.optradio').prop( "checked", false );
+                              $('#total_amount_inwords').val('');
+                              $('#receipt_no').val('');
+                             $('#defaultId').val('');
+                             $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
+                             $('#applicant_name').val('');
+                            $('#applicant_address').val('');
+                            $('#authority_of').val('');
+                             $('#fee_assessor').val('');
+                             $('#search_applicant').val('');
+                             $('#total_amount').val('');
+                             
+                              }
+                            });
+                         
+                           })
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
+
+             },
+              backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+       
+               });
+  });
+
+  $(document).on('change','.assessment_input',function(e){
+    e.preventDefault();
+    var account_code =$(this).val();
+    var id= $(this).attr('id');
+
+    $.ajax({
+      type: 'post',
+      url: '{{ route('udpate_account_code') }}',
+      data:{
+        id:id,
+        account_code:account_code,
+      },
+    dataType:'json',
+    success:function(data){
+
+    }
+    })
+    
+  });
+  $(document).on('change','.assessment_total',function(e){
+    e.preventDefault();
+    var assessment_total =$(this).val();
+    var id= $(this).attr('id');
+
+    $.ajax({
+      type: 'post',
+      url: '{{ route('assessment_total') }}',
+      data:{
+        id:id,
+        assessment_total:assessment_total,
+      },
+    dataType:'json',
+    success:function(data){
+
+    }
+    })
+  })     
       })
   </script>
 

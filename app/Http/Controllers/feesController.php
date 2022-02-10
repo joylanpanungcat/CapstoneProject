@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\fee;
 use App\Models\applicant;
 use App\Models\defaultFee;
+use App\Models\assessment;
+use App\Models\subAssessment;
 use NumConvert;
 class feesController extends Controller
 {
@@ -131,13 +133,62 @@ class feesController extends Controller
     $data = fee::whereIn('fees_id',$ids)->get();
     
     foreach($data as $item){
-      $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' /></td><td><input type='number' class='assessment_total' /></td></tr>";
+      $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
     }
 
     return response()->json([
       'output' => $output
     ]);
   }
+  public function save_assessment(Request $request){
+    $ids = $request->checkbox_value;
+    $applicantid =$request->id;
+    $total_amount_words =$request->total_amount_words;
+    $receipt_no =$request->receipt_no;
+    $defaultId =$request->defaultId;
+
+        $assessment = new assessment();
+        $assessment->applicantId=$applicantid;
+        $assessment->total_amount_words=$total_amount_words;
+        $assessment->receipt_no=$receipt_no;
+        $assessment->defaultId=$defaultId;
+        $assessment->save();
+        $assessmentId= $assessment->assessmentId;
+        
+        foreach($ids as $id){
+          $sub_assessment= new subAssessment();
+          $sub_assessment->assessmentId=$assessmentId;
+          $sub_assessment->fees_id = $id;
+          $sub_assessment->save();
+        }
+
+    if($assessment){
+      return response()->json([
+        'msg'=>'Assessment Saved'
+      ]);
+    }
+
+    
+  }
+    
+public function udpate_account_code(Request $request){
+  $id =$request->id;
+  $account_code=$request->account_code;
+
+  $fees = fee::where('fees_id',$id);
+  $fees->update([
+    'account_code'=>$account_code
+  ]);
+}
+public function assessment_total(Request $request){
+  $id =$request->id;
+  $assessment_total=$request->assessment_total;
+
+  $fees = fee::where('fees_id',$id);
+  $fees->update([
+    'assessment_total'=>$assessment_total
+  ]);
+}
 
 public function numberTowords(Request $req)
 {
@@ -147,5 +198,43 @@ $data =(NumConvert::word($num));
 return response()->json([
   'data'=>$data
 ]);
+}
+public function search_assessment(Request $request){
+  $name = $request->search;
+  $output ='';
+  $data = applicant::where('Fname','LIKE','%'.$name.'%')->ORwhere('Lname','LIKE','%'.$name.'%')->with('assessment')->get();
+  if($data->count()<1){
+    $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
+  }else{
+   foreach($data as $item){
+     $output .=  "<tr>
+     <td><input type='radio' name='optradio' class='optradio'  id=".$item['applicantId']."></td>
+     <td>".$item['Fname']."  ".$item['Mname']."  ".$item['Lname']." </td>
+      </tr>";
+   }
+  }
+  return response()->json([
+    'output'=>$output,
+  ]);
+}
+
+public function select_assessment(Request $req){
+  $id = $req->id;
+
+  $data=applicant::with('address','assessment')->where('applicantId',$id)->get();
+  $data2=defaultFee::all();
+  foreach($data as $data){
+      $output = $data['assessment'];
+  }
+  foreach($output as $output){
+    $data3 = assessment::with('subAssessment')->where('applicantId',$output['assessmentId'])->first();
+  }
+  
+  return response()->json([
+    // 'data'=>$data,
+    // 'data2'=>$data2,
+    'data'=> $data3
+  ]);
+
 }
 }
