@@ -10,6 +10,8 @@ use App\Models\address;
 use App\Models\fileUpload;
 use App\Models\folderUpload;
 use App\Models\activity;
+use App\Models\assessment;
+use App\Models\subAssessment;
 
 // use Storage;
 use DataTables;
@@ -95,20 +97,29 @@ public function applicationFetch(Request $request){
 }
 
 public function viewApplication(Request $request){
+
     $account_id= $request->id;
-      // $account_details=application::join('applicant','applicant.applicantId','=','application.applicantId')
-      //   ->where('application.applicationId','=',$account_id)
-      //   ->get();
-
-      // return view('application_profile',compact('account_details'));
-
+    $output ='';
 
         $account_details = applicant::find($account_id);
         $applicantAdd=address::where('applicantId','=',$account_id)->first();
-         $applicationId=address::where('applicationId','=',$account_id)->first();
+        $applicationId=address::where('applicationId','=',$account_id)->first();
 
+      $assessment =applicant::join('assessment','assessment.applicantId','=','applicant.applicantId')
+      ->join('address','applicant.applicantId','=','address.applicantId')
+      ->join('application','applicant.applicantId','=','application.applicantId')
+      ->where('applicant.applicantId',$account_id)
+      ->get();
     
-       return view('application_profile',compact('account_details','applicantAdd','applicationId'));
+      // foreach ($assessment as $item){
+      //   $fees_id=$item['fees_id'];
+      // } 
+      // $list_fees= subAssessment::join('fees','fees.fees_id','=','sub_assessment.fees_id')->where('sub_assessment.fees_id',$fees_id)->get();
+      // foreach($list_fees as $item){
+      //   $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
+      // }
+      
+       return view('application_profile',compact('account_details','assessment','applicantAdd','applicationId'));
         
   
 

@@ -399,7 +399,86 @@ margin-top: 49px;
         background-color: #4D90FE !important; 
         color: #fff !important;
     }
+    .swal2-title{
+        color: #ffffff;
+    }
+    .total_body{
+margin-left: 80px;
+float: right;
+} 
+.total_body2{
+margin-left: 120px;
+float: right;
 
+}           
+.total{
+width: 200px;
+height: 30px;
+
+}
+.underline{
+border: none;
+border-bottom: 1px solid black;
+width: 80%; 
+}
+.total_amount_inwords{
+border: none;
+border-bottom: 1px solid black;
+padding: 10px;
+font-size: 20px;
+width: 100%;
+}
+.group1{
+ border: none;
+border-bottom: 1px solid black;
+}
+.authority_name{
+  border: none;
+border-bottom: 1px solid black;
+width: 300px;
+}
+.copy{
+border: 1px solid black;
+padding: 10px;
+width: 400px;
+}
+.copy label b{  
+color: red;
+}
+#authority_of, #fee_assessor{
+color: #2A3F54;
+text-transform: uppercase;
+text-align: center;
+font-size: 22px;
+font-weight: bold;
+letter-spacing: 1px;
+}
+#applicant_name , #applicant_address{
+color: #2A3F54;
+text-transform: capitalize;
+font-weight:bold;
+letter-spacing: 1px;
+}
+#total_amount{
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  color: #2A3F54;
+  font-size: 16px;
+  padding: 5px;
+}
+#total_amount_inwords{
+  font-size: 18px;
+  letter-spacing: 4px;
+  text-transform: capitalize;
+}
+.save_payment_button{
+  background-color: #1ABB9C;
+  color: #fff;
+}
+.group2{
+display: inline-block;
+}
 
 </style>
 <div class="right_col" role="main" >
@@ -597,16 +676,16 @@ margin-top: 49px;
                                         </td>
                                         <td>{{$application->status}}
                                         </td>
-                             <td><button type='' name='view' class='btn btn-defualt view'
+                                       
+                                 <td><button type='button'  class='btn btn-defualt business_info_button' id="{{ $application->applicationId }}"
                      ><i class='fa fa-eye'></i></button>
-                            </td>
+                             </td>
 
                                     </tr>
                                     @endforeach
 
                               
                                   </tbody>
-                                 {{--  <input type="" name="" id="account_id" value="<?=$data['account_id'] ?>" > --}}
                                  
 
                             </table>
@@ -626,7 +705,157 @@ margin-top: 49px;
                         
                                   </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-                         
+                                @if ($application->status =='approved' || $application->status =='pending' ||  $application->status =='reinspection' || $application->status =='forinspection')
+                                <div class='container'>   
+                                    <table class='table table-bordered table'>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Type of application</th>
+                                                <th>Business Name</th>
+                                                <th>Address</th>
+                                                    <th>Payment Status</th> 
+                                                <th>Action</th>
+        
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                             @if ($assessment->count()>0)
+                                               @foreach ($assessment as $application)
+                                              
+                                            @php 
+                                                $i=1;
+                                            @endphp
+        
+        
+                                            <tr>
+                                                <td>{{$i++}}
+                                                </td>
+                                                <td>
+                                                    {{$application->type_application}}
+                                                </td>
+                                                <td>{{$application->business_name}}
+                                                </td>
+                                                <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                                </td>
+                                                </td>
+                                                <td>{{$application->payment_status}}
+                                                </td>
+                                                <input type="hidden" value="{{ $application->applicantId }}" id="view_payment_applicationId">
+                                        <td><button type='' name='view' class='btn btn-success view view_payment_info'
+                                            id="{{$application->applicationId}}"><i class='fa fa-eye'></i></button>
+                                                </td>
+        
+                                            </tr>
+                                                 @endforeach
+
+                                            @else
+                                                 @foreach ($account_details->application as $application)
+                                                @php 
+                                                    $i=1;
+                                                @endphp
+        
+        
+                                            <tr>
+                                                <td>{{$i++}}
+                                                </td>
+                                                <td>
+                                                    {{$application->type_application}}
+                                                </td>
+                                                <td>{{$application->business_name}}
+                                                </td>
+                                                <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                                </td>
+                                                
+                                                <td>'Not Paid'
+                                                </td>
+                                                    <td><a href="{{ route('assessment') }}" target="_blank" type='' name='view' class='btn btn-primary view'
+                                            ><i class='fa fa-plus'></i></a>
+                                                    </td>
+        
+                                            </tr>
+                                            @endforeach
+                                            @endif
+                                          </tbody>
+                                         
+        
+                                    </table>
+                                </div>
+                                @elseif ($application->status =='renewal')
+                                <div class='container'>   
+                                    <table class='table table-bordered table'>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Type of application</th>
+                                                <th>Business Name</th>
+                                                <th>Address</th>
+                                                    <th> Status</th> 
+                                                <th>Action</th>
+        
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                             @if ($assessment->count()>0)
+                                             @foreach ($assessment as $application)
+                                              
+                                            @php 
+                                                $i=1;
+                                            @endphp
+        
+        
+                                            <tr>
+                                                <td>{{$i++}}
+                                                </td>
+                                                <td>
+                                                    {{$application->type_application}}
+                                                </td>
+                                                <td>{{$application->business_name}}
+                                                </td>
+                                                <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                                </td>
+                                                </td>
+                                                <td>{{$application->payment_status}}
+                                                </td>
+                                        <td><button type='' name='view' class='btn btn-defualt view'
+                                            ><i class='fa fa-eye'></i>Renew</button>
+                                                </td>
+        
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                            @foreach ($account_details->application as $application)
+                                            @php 
+                                                $i=1;
+                                            @endphp
+        
+        
+                                            <tr>
+                                                <td>{{$i++}}
+                                                </td>
+                                                <td>
+                                                    {{$application->type_application}}
+                                                </td>
+                                                <td>{{$application->business_name}}
+                                                </td>
+                                                <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                                </td>
+                                               
+                                                <td>{{$application->status}}
+                                                </td>
+                                                    <td><button type='' name='view' class='btn btn-primary view'
+                                            ><i class='fa fa-refresh'> </i></button>
+                                                    </td>
+        
+                                            </tr>
+                                            @endforeach
+                                            @endif
+                                          </tbody>
+                                         
+        
+                                    </table>
+                                </div>
+                                @endif
                           </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                                 <div class="row">
@@ -957,6 +1186,266 @@ margin-top: 49px;
   
   
 </div>
+
+{{-- modal business infor --}}
+<div class="modal fade" id="business_info_view" role="dialog" >
+    <div class="modal-dialog modal-xl" >
+      
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2  id="exampleModalLabel " > APPLICATION INFORMATION</h2>
+         
+       
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+ 
+        <div class="modal-body">
+            <div id=showEdit></div>
+          <form method="post" id="applicationAdd">
+          
+                <input type="hidden" name="" id="applicationId_businessInfo">
+              <table class="table ">
+                  <thead>
+                      <tr>
+                          <th style="width: 25%">Type Of Application</th>
+                          <th style="width: 25%">Control Number</th>
+                          <th style="width: 25%">Type of Occupancy</th>
+                          <th style="width: 25%">Nature of Business</th>
+                        
+
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                       
+          <td><input type="text" name="" id="type_application" class="form-control" ></td>
+           <td><input type="text" name="" id="control_number" class="form-control" ></td>
+    
+      <td><input type="text" name="" id="type_occupancy" class="form-control" ></td>
+       <td><input type="text" name="" id="nature_business" class="form-control"  ></td>
+                      
+
+                          
+                      </tr>
+                  </tbody>
+              </table>
+                
+                <table class="table ">
+                  <thead>
+                      <tr>  <th style="width: 25%">Business Name</th>
+                          <th style="width: 25%">Bin</th>
+                          <th style="width: 25%">BP number</th>
+                          <th style="width: 25%">Inspector Name</th>
+
+                      </tr>
+                  </thead>
+                   <tbody>
+                      <tr>
+                      <td><input type="text" name="" id="business_name" class="form-control" ></td>
+
+                           <td><input type="text" name="" id="Bin" class="form-control"  ></td>
+                           <td><input type="text" name="" id="BP_num" class="form-control" ></td>
+                            <td><select class="form-control" id="inpector_id">
+                                
+                                
+                            </select></td>
+                            
+              
+                        <!--   <td><select class="form-control" id="statusAdd">
+                                  <option value="Pending" id="status"></option>
+                                  <option  value="Process">Process</option>
+                                  <option  value="Approved">Approved</option>
+                              </select></td> -->
+                          
+                      </tr>
+                  </tbody>
+              </table>
+
+              <table class="table ">
+                <thead>
+                    <tr> 
+                         <th style="width: 25%">OR_num</th>
+                       <th style="width: 25%">Status</th>
+                       <th style="width: 25%">Date Apply</th>
+                       <th style="width: 25%">Remarks</th>
+
+                    </tr>
+                </thead>
+                 <tbody>
+                    <tr>
+                          <td><input type="text" name="" class="form-control" id="OR_num"></td>
+                          <td><select id="status"  class="form-control ">
+                            <option id="status"></option>
+                            <option value="forinspection">for inspection</option>
+                            <option value="pending">peding</option>
+                            <option value="approved">approved</option>
+                            <option value="reinspection">reinspection</option>
+                        </select></td>
+                        <td><input type="date" name="" class="form-control" id="date_apply"></td>
+                        <td><select id="remarks"  class="form-control ">
+                            <option id="remarks"></option>
+                            <option value="Old">Old</option>
+                            <option value="New">New</option>
+                        </select></td>
+
+                    </tr>
+                </tbody>
+            </table>
+               <input type="hidden" name="" id="application_id">
+                <!-- <input type="hidden" name="" id="inpector_id"> -->
+                <h4 style="opacity: 0.8;display:inline-block" id="set_schedule_text"></h4>
+
+                    <div class="button-group view_button" style="float: right">
+                        
+              </div>
+             </form>
+          </div>
+                
+            
+        </div>
+      </div>
+    </div>
+
+    
+
+      <div class="modal fade" id="set_schedule_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Set inspection schedule on</h5>
+            </div>
+            <div class="modal-body">
+                <input type="date" name="" class="form-control" id="date_inspection">
+              </div>
+            <div class="modal-footer">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="set">Set</button>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="payment_view_modal">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="x_panel">
+                                  <div id="show2"></div>
+                   
+                            <div class="x_content">
+                                  
+                 <div class="row">
+                  <div class="col-md-12">
+                      <div class="panel panel-default">
+                          <div class="title_payment">
+                          <center><h5><strong>ORDER OF PAYMENT</strong></h5>
+                            <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
+                          </center>
+                        </div>
+                <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
+                
+                 <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
+                <div class="panel-body" id="panel-body">
+                  
+                    <table class="table table-striped table-bordered" id="data"  style="width:100%;">
+                          <thead>
+                            <tr>
+                              <!-- <th>Select</th> -->
+                              
+                              <th>NATURE OF PAYMENT </th>
+                              <th>ACCOUNT CODE</th>
+                              <th >TOTAL</th>
+
+                            </tr>
+                          </thead>
+                          <tbody id="nature_payment_body">
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>TOTAL</td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                              
+                                
+                              </tbody>
+             
+                              </table>
+                              <h7><b>TOTAL AMOUNT (IN WORDS):</b></h7>
+                              <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords">
+                              <br><br><br>
+                            
+                            <div class="form-group group2">
+                              <label>Offical Receipt No: </label>
+                              <input type="text" name="" class="group1" id="receipt_no"><br>
+                              <input type="hidden" id="assessmentId">
+                              <label>Amount Paid:</label>
+                              <input type="text" name="" class="group1" id="amount_paid"><br>
+                                <label>Payment Date:</label>
+                              <input type="date" name="" class="group1" id="date_paid"><br><br>
+                              <div class="copy">
+                                <label><b>Original</b>/ (Applicant/Owner's Copy)</label><br>
+                                <label><b>Duplicate</b>/ (GSB/Collecting Agent copy)</label><br>
+                                <label><b>Triplicate</b>/ (BFP copy)</label><br>
+                                
+                              </div>
+
+                            </div>
+
+                              <div class="form-group group2" style="float:right;margin-top: 30px;">
+                                <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of"></span></h5>
+                                <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
+                                
+                                
+                                <input type="text" name="" class="authority_name" id='fee_assessor'>
+                               <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
+
+
+                            </div>
+
+
+                             
+                            
+
+                </div>
+              </div>
+                  </div>
+                 
+                 </div>  <br>
+                  <div class="row">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6 ">
+                                  <form>
+                              
+                                 
+                                  <div class="button-group total_body2 ">
+                                    <button type="button" class="btn btn-secondary " data-dismiss="modal" id="print_payment_button" style="display: inline-block;"  ><i class="fa fa-arrow-left" ></i>  Close</button>
+                                      <button type="button" class="btn btn-secondary save_payment_button" id="save_payment_button"><i class="fa fa-print" ></i>  Print</button>
+                                  </div>
+                                  </form>
+                                </div>
+                              </div>      
+                                    
+             
+
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
 <script type="text/javascript">
 
     // From http://learn.shayhowe.com/advanced-html-css/jquery
@@ -1946,7 +2435,212 @@ $('#updateDetails').on('submit',function(e){
     }
  });
 
-})
+});
+
+$('.business_info_button').on('click',function(e){
+    e.preventDefault();
+    var applicationId = $(this).attr('id');
+    
+    $.ajax({
+        type:'post',
+        url: '{{ route('view_business_info') }}',
+        data:{
+            applicationId:applicationId
+        },
+        dataType:'json',
+        success:function(data){
+    $('#business_info_view').modal('show');
+
+
+        $.each(data.data2, function(index, value){
+            $('#type_application').val(value['type_application']);
+            $('#applicationId_businessInfo').val(value['applicationId']);
+            $('#control_number').val(value['control_number']);
+            $('#type_occupancy').val(value['type_occupancy']);
+            $('#nature_business').val(value['nature_business']);
+            $('#business_name').val(value['business_name']);
+            $('#Bin').val(value['Bin']);
+            $('#BP_num').val(value['BP_num']);
+            $('#OR_num').val(value['OR_num']);
+            $('#status').val(value['status']);
+            $('#date_apply').val(value['date_apply']);
+            $('#remarks').val(value['remarks']);
+
+    $('.view_button').html('<button type="button" class="btn btn-primary" id="setSchedule"><i class="fa fa-calendar"> Set schedule</i></button><button type="submit" class="btn btn-warning"><i class="fa fa-pencil"> Update</i></button>');
+        });
+        $.each(data.inspector,function(index , value){
+            $('#inpector_id').append('<option value='+value['inspectorId']+'>'+value['Fname']+ ' ' +value['Lname']+'');
+        })
+
+        
+        $.each(data.schedule,function(index, value){
+            $('#set_schedule_text').html('Application Inspection set on ' + value['date_inspection']+'' );
+            $('#setSchedule').attr('disabled', 'disabled');
+        })
+        
+        }
+    })
+
+
+});
+
+
+$('#applicationAdd').on('submit',function(e){
+    e.preventDefault();
+    var applicationId =$('#applicationId_businessInfo').val();
+    var type_application =$('#type_application').val();
+    var control_number =  $('#control_number').val();
+    var type_occupancy =  $('#type_occupancy').val();
+    var nature_business = $('#nature_business').val();
+    var business_name =  $('#business_name').val();
+    var Bin =    $('#Bin').val();
+    var BP_num =   $('#BP_num').val();
+    var inpector_id =  $('#inpector_id').val();
+    var OR_num =   $('#OR_num').val();
+    var status =   $('#status').val();
+    var date_apply =  $('#date_apply').val();
+    var remarks =  $('#remarks').val();
+
+    $.ajax({
+        type:'post',
+        url:'{{ route('update_business_info') }}',
+        data:{
+            applicationId:applicationId,
+            type_application:type_application,
+            control_number:control_number,
+            type_occupancy:type_occupancy,
+            nature_business:nature_business,
+            business_name:business_name,
+            Bin:Bin,
+            BP_num:BP_num,
+            inpector_id:inpector_id,
+            OR_num:OR_num,
+            status:status,
+            date_apply:date_apply,
+            remarks:remarks,
+        },
+        dataType:'json',
+        success:function(data){
+            toastr.success(data.msg);
+            
+
+        }
+    })
+    
+});
+
+$(document).on('click','#setSchedule',function(e){
+    e.preventDefault();
+   
+    
+  
+  $('#set_schedule_modal').modal('show');
+   
+});
+
+$('#set').on('click',function(e){
+    e.preventDefault();
+
+    var applicationId = $('#applicationId_businessInfo').val();
+    var inpector_id = $('#inpector_id').val();
+    var applicantId = $('#applicantId_info').val();
+    var date_inspection=$('#date_inspection').val();
+
+     Swal.fire({
+          title:"Comfirm Schedule",
+            // titleFontColor:'red',
+
+          iconHtml: '<i class="fa fa-check"></i>',
+          iconColor: '#42ba96',
+              showCancelButton: true,
+              showConfirmButton:true,
+              focusConfirm: false,
+              background: 'rgb(0,0,0,.9)',
+              
+              customClass : {
+              title: 'swal2-title'
+            },
+            allowOutsideClick: false,
+              backdrop: `
+              url("/images/logo2.png")
+                    rgb(9 9 26 / 73%)
+                    center
+                    no-repeat
+                  `,
+              cancelButtonAriaLabel: 'Thumbs down',
+              cancelButtonText:
+                '<i class="fa fa-arrow-left"></i>Close',
+                  confirmButtonColor: '#3085d6',
+              confirmButtonText:
+                '<i class="fa fa-check"></i> Confirm',
+              confirmButtonAriaLabel: 'Thumbs up, great!',
+              preConfirm: function(){
+                  $.ajax({
+                      type: 'post',
+                      url:'{{ route('set_schedule') }}',
+                      data:{
+                        applicationId:applicationId,
+                        inpector_id:inpector_id,
+                        applicantId:applicantId,
+                        date_inspection:date_inspection
+                      },
+                      dataType: 'json',
+                      success:function(data){
+                            toastr.success(data.msg);
+                    $('#set_schedule_modal').modal('hide');
+                   $('#business_info_view').modal('hide');
+                   
+                            
+                      }
+
+                  })
+
+             }
+             
+                });
+});
+
+$('.view_payment_info').on('click',function(e){
+    e.preventDefault();
+    var applicationId  = $(this).attr('id');
+    var applicantId  = $('#view_payment_applicationId').val();
+
+    
+
+    $.ajax({
+        type: 'post',
+        url:'{{ route('payment_view') }}',
+        data:{
+            applicationId :applicationId,
+            applicantId :applicantId
+        },
+        dataType: 'json',
+        success:function(data){
+    $('#payment_view_modal').modal('show');
+    $('#nature_payment_body').html(data.output);
+            $.each(data.data,function($key,$value){
+          $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
+          $('#applicant_address').val($value['purok']+ ', ' +$value['barangay']+ ', '  + $value['city']);
+         ;
+          $('#total_amount_inwords').val($value['total_amount_words']);
+          $('#receipt_no').val($value['receipt_no']);
+          $('#assessmentId').val($value['assessmentId']);
+          $('#amount_paid').val($value['amount_paid']);
+          $('#date_paid').val($value['payment_date']);
+
+          
+
+          
+        });
+        $.each(data.data3,function($key, $value){
+          $('#defaultId').val($value['id']);
+          $('#authority_of').val($value['authority_of']);
+          $('#fee_assessor').val($value['fee_assessor']);
+        });
+        }
+    })
+
+});
 
 
 

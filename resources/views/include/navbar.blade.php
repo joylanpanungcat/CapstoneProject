@@ -184,13 +184,13 @@
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <ul class="nav side-menu">
-                  <li><a href="dashboard"><i class="fa fa-dashboard"></i> Dashboard </a>
+                  <li><a href="{{ route('Dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard </a>
                   </li>
                
-                  <li><a href="map"><i class="fa fa-map"></i> Susceptibility Map </a>
+                  <li><a href="{{ route('map') }}"><i class="fa fa-map"></i> Susceptibility Map </a>
                   </li>
-                  <li><a href="application" class="noti_app"><i class="fa fa-list-ol"></i> Application <span class="badge bg-danger" id="count_application"></span> </a>
-                     <li><a href="schedule"><i class="fa fa-calendar"></i>Schedule List</a>
+                  <li><a href="{{ route('application') }}" class="noti_app"><i class="fa fa-list-ol"></i> Application <span class="badge bg-danger" id="count_application"></span> </a>
+                     <li><a href="{{ route('schedule') }}"><i class="fa fa-calendar"></i>Schedule List</a>
                     
                   </li>
                     
@@ -198,10 +198,10 @@
                   <li><a href="renewal.php"><i class="fa fa-refresh"></i> Renewal </a>
                     
                   </li>
-                   <li><a href="payment"><i class="fa fa-money"></i> Payment </a>
+                   <li><a href="{{ route('payment') }}"><i class="fa fa-money"></i> Payment </a>
                     
                   </li>
-                  <li><a href="assessment"><i class="fa fa-credit-card"></i> Assessment </a>
+                  <li><a href="{{ route('assessment') }}"><i class="fa fa-credit-card"></i> Assessment </a>
                     
                   </li>
                   <li><a href="maintenance.php"><i class="fa fa-wrench"></i> Maintenance </a>
@@ -211,7 +211,7 @@
                   </li> -->
                   <li><a><i class="fa fa-users"></i> Account <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="account" class="noti_applicant">Applicant<span class="badge bg-danger" id="count_applicant"></span></a></li>
+                      <li><a href="{{ route('account') }}" class="noti_applicant">Applicant<span class="badge bg-danger" id="count_applicant"></span></a></li>
                       <li><a href="inspector.php">Inspector</a></li>
                       
                     </ul>
@@ -220,15 +220,15 @@
                    Emergency<span class="badge bg-danger" id="count"></span> </a>
                     
                   </li>
-                  <li><a href="archive" class="noti_em"><i class="fa fa-archive"></i>
+                  <li><a href="{{ route('archive') }}" class="noti_em"><i class="fa fa-archive"></i>
                    Archived<span class="badge bg-danger" id="count"></span> </a>
                     
                   </li>
                    <li><a><i class="fa fa-file"></i> Reports <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a  href="approved_application" class="">Approved Application<span class="badge bg-danger" id="count_applicant"></span></a></li>
-                      <li><a href="rejected_application.php">Rejected Application</a></li>
-                      <li><a href="renewal_reports.php">Application for Renewal</a></li>
+                      <li><a  href="{{ route('approved_application') }}" class="">Approved Application<span class="badge bg-danger" id="count_applicant"></span></a></li>
+                      <li><a href="{{ route('rejected_application') }}">Reinspection Application</a></li>
+                      <li><a href="{{ route('renewal_application') }}">Application for Renewal</a></li>
                       
                     </ul>
                   </li>

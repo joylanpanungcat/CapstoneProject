@@ -8,6 +8,9 @@ use App\Http\Controllers\applicationController;
 use App\Http\Controllers\fileController;
 use App\Http\Controllers\feesController;
 use App\Http\Controllers\reportsController;
+use App\Http\Controllers\scheduleController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,10 +48,14 @@ Route::group(['middleware'=>['accessPage']],function(){
     // Applicant Profile
    Route::post('applicant_profile',[applicantController::class,'applicationRecord'])->name('application.record');
    Route::post('update_info',[applicantController::class,'update_info'])->name('update_info');
-
+   Route::post('view_business_info',[applicantController::class,'view_business_info'])->name('view_business_info');
+   Route::post('update_business_info',[applicantController::class,'update_business_info'])->name('update_business_info');
+   Route::post('set_schedule',[applicantController::class,'set_schedule'])->name('set_schedule');
+   Route::post('payment_view',[applicantController::class,'payment_view'])->name('payment_view');
+   
    
    //application
-   Route::view('application','application');
+   Route::view('application','application')->name('application');
    Route::post('/multi-uploads',[applicationController::class,'filesUpload'])->name('filesUpload');
    Route::get('/applicationFetch',[applicationController::class,'applicationFetch'])->name('applicationFetch');
     Route::get('/application_profile/{id}',[applicationController::class,'viewApplication'])->name('application_profile');
@@ -58,15 +65,21 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('/archieve_application',[applicationController::class,'archieve_application'])->name('archieve_application');
     Route::post('restore_application',[applicationController::class,'restore_application'])->name('restore_application');
     //Map 
-    Route::view('map','map');
+    Route::view('map','map')->name('map');
     //
-    Route::view('schedule','schedule');
+    Route::view('schedule','schedule')->name('schedule');
 
     //payment
-    Route::view('payment','payment');
+    Route::view('payment','payment')->name('payment');
 
+    //schedule
+    Route::get('scheduleList',[scheduleController::class,'scheduleList'])->name('scheduleList');
+    Route::post('view_schedule',[scheduleController::class,'view_schedule'])->name('view_schedule');
+    Route::post('cancel_schedule',[scheduleController::class,'cancel_schedule'])->name('cancel_schedule');
+    Route::post('update_schedule',[scheduleController::class,'update_schedule'])->name('update_schedule');
+    
     //assessment
-    Route::view('assessment','assessment');
+    Route::view('assessment','assessment')->name('assessment');
     Route::post('load_fees',[feesController::class,'load_fees'])->name('load_fees');
     Route::post('search_applicant_fetch',[feesController::class,'search_applicant_fetch'])->name('search_applicant_fetch');
     Route::post('select_applicant_fetch',[feesController::class,'select_applicant_fetch'])->name('select_applicant_fetch');
@@ -77,6 +90,7 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('assessment_total',[feesController::class,'assessment_total'])->name('assessment_total');
     Route::post('search_assessment',[feesController::class,'search_assessment'])->name('search_assessment');
     Route::post('select_assessment',[feesController::class,'select_assessment'])->name('select_assessment');
+    Route::post('save_payment',[feesController::class,'save_payment'])->name('save_payment');
     
     
     
@@ -85,7 +99,7 @@ Route::group(['middleware'=>['accessPage']],function(){
  Route::view('account','account')->name('account');
 
  Route::post('account/restore/',[applicantController::class,'restore'])->name('restore');
- Route::view('archive','archive');
+ Route::view('archive','archive')->name('archive');
 Route::get("archivedFetch",[archivedController::class,"archivedFetch"])->name('archivedFetch');
 
 
@@ -108,10 +122,15 @@ Route::post('moveViewParentFolderId',[applicationController::class,"moveViewPare
 
 //list 
 
-Route::view('approved_application','approved_application');
+Route::view('approved_application','approved_application')->name('approved_application');
+Route::view('rejected_application','rejected_application')->name('rejected_application');
+Route::view('renewal_application','renewal_application')->name('renewal_application');
+
 
 //reports
 Route::get('reports',[reportsController::class,'reports'])->name('reports');
+Route::get('rejected_reports',[reportsController::class,'rejected_reports'])->name('rejected_reports');
+Route::get('renewal_reports',[reportsController::class,'renewal_reports'])->name('renewal_reports');
 });
 
 

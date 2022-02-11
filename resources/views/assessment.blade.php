@@ -299,6 +299,9 @@ letter-spacing: 1px;
                                 <div class="form-group group2">
                                   <label>Official Receipt No: </label>
                                   <input type="text" name="" class="group1" id="receipt_no"><br>
+                                  <input type="hidden" name="" class="group1" id="applicationId"><br>
+
+                                   
                                 <br>
                                    <br><br>
                                   <div class="">
@@ -638,6 +641,7 @@ $(document).on('click','.collapsible3',function(e){
          dataType:'json',
          success:function(data){
            $('.tbody_search').html(data.output);
+           $('#applicationId').val(data.applicationId);
           $('#search_modal').modal('show');
          }
        })
@@ -729,6 +733,9 @@ $(document).on('click','.collapsible3',function(e){
     e.preventDefault();
     var checkbox= $('.payment_checkbox:checked');
     var id=$('.optradio:checked').attr('id');
+    var applicationId=$('#applicationId').val();
+    var total_amount =$('#total_amount').val();
+    
    var total_amount_words = $('#total_amount_inwords').val();
     var receipt_no=$('#receipt_no').val();
     var defaultId= $('#defaultId').val();
@@ -803,6 +810,8 @@ $(document).on('click','.collapsible3',function(e){
                               data:{
                                 id:id,
                                 total_amount_words:total_amount_words,
+                                total_amount:total_amount,
+                                applicationId:applicationId,
                                 receipt_no:receipt_no,
                                 defaultId:defaultId,
                                 checkbox_value:checkbox_value

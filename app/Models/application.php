@@ -29,6 +29,9 @@ class application extends Model
     public function folderUpload(){
         return $this->hasMany(folderUpload::class,'applicationId','applicationId');
     }
+    public function assessment(){
+        $this->hasOne(assessment::class,'applicationId','applicationId');
+    }
    
    
   

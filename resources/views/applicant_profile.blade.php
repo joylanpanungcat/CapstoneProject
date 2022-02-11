@@ -184,6 +184,7 @@
                         
                                   </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                                <h1>This is payment content</h1>
                          
                           </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">

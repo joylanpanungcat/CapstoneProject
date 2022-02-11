@@ -215,7 +215,7 @@ overflow: auto;
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Approved Application</h3>
+                <h3>Renewal </h3>
             </div>
 
          
@@ -324,7 +324,7 @@ overflow: auto;
         'aLengthMenu':[[5,10,25,50,-1],[5,10,25,50,"All"]],
           scrollX:true,
           ajax: {
-            url:"{{ route('reports') }}",
+            url:"{{ route('renewal_reports') }}",
             data: {category:category,
                    from_date:from_date, 
                   to_date:to_date
@@ -349,7 +349,7 @@ overflow: auto;
         {
           data:'status',name:'status',
           render: function(data, type, row){
-            return btn = '<span class="badge badge-success">'+data+'</span>';
+            return btn = '<span class="badge badge-warning">'+data+'</span>';
           }
         
         }

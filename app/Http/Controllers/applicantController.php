@@ -9,6 +9,11 @@ use App\Models\applicant_account;
 use App\Models\application;
 use App\Models\applicant;
 use App\Models\address;
+use App\Models\inspector;
+use App\Models\schedule;
+use App\Models\assessment;
+use App\Models\defaultFee;
+
 use DataTables;
 
 class applicantController extends Controller
@@ -266,6 +271,109 @@ $address->update([
 //         return response()->json(['details'=>$accound_details]);
 // }
 
+public function view_business_info(Request $request){
+  $applicationId= $request->applicationId;
 
+  $data = application::where('applicationId',$applicationId)->get();
+  $inspector = inspector::get();
+  $schedule = schedule::where('applicationId',$applicationId)->get();
+
+  return response()->json([
+    'data2'=>$data,
+    'inspector'=>$inspector,
+    'schedule'=>$schedule
+  ]);
+  
+
+}
+public function update_business_info(Request $request){
+  $applicationId =$request->applicationId;
+  $type_application =$request->type_application;
+  $control_number =$request->control_number;
+  $type_occupancy =$request->type_occupancy;
+  $nature_business =$request->nature_business;
+  $business_name =$request->business_name;
+  $Bin =$request->Bin;
+  $BP_num =$request->BP_num;
+  $inpector_id =$request->inpector_id;
+  $OR_num =$request->OR_num;
+  $status =$request->status;
+  $date_apply =$request->date_apply;
+  $remarks =$request->remarks;
+
+        $data = application::where('applicationId',$applicationId);
+        $data->update([
+          'type_application' => $type_application,
+          'control_number' => $control_number,
+          'type_occupancy' => $type_occupancy,
+          'nature_business' => $nature_business,
+          'business_name' => $business_name,
+          'Bin' => $Bin,
+          'BP_num' => $BP_num,
+          'inpector_id' => $inpector_id,
+          'OR_num' => $OR_num,
+          'status' => $status,
+          'date_apply' => $date_apply,
+          'remarks' => $remarks,
+        ]);
+      
+        return response()->json([
+          'msg'=>'Successfully Update!'
+        ]);
+}
+
+public function set_schedule(Request $request){
+  $applicationId = $request->applicationId;
+  $inpector_id = $request->inpector_id;
+  $applicantId = $request->applicantId;
+  $date_inspection = $request->date_inspection;
+
+  $schedule = new schedule();
+  $schedule->applicantId=$applicantId;
+  $schedule->applicationId=$applicationId;
+  $schedule->inspectorId=$inpector_id;
+  $schedule->date_inspection=$date_inspection;
+  $schedule->save();
+
+  return response()->json([
+    'output'=>'INSPECTION SCHEDULE ON '.$date_inspection.'',
+    'msg'=> 'Set schedule successfully'
+  ]);
+
+}
+
+public function payment_view(Request $request){
+  $applicationId =$request->applicationId ;
+  $applicantId =$request->applicantId ;
+  $output = '';
+  $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
+  ->join('assessment','assessment.applicationId','=','application.applicationId')
+  ->join('address','address.applicantId','=','applicant.applicantId')
+  ->where('application.applicationId',$applicationId)
+  ->get();
+
+  $data2= assessment::join('sub_assessment','sub_assessment.assessmentId','=','assessment.assessmentId')
+          ->join('fees','fees.fees_id','=','sub_assessment.fees_id')
+          ->where('assessment.applicationId',$applicationId)
+  ->get();
+  $data3=defaultFee::all();
+
+  foreach($data2 as $item){
+    $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' readonly='' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  readonly=''/></td></tr>";
+    $total = $item['total_amount'];
+  }
+  $output.='<tr>
+  <td>TOTAL</td>
+  <td></td>
+  <td>'.$total.'</td>
+</tr>';
+
+  return response()->json([
+    'data'=>$data,
+    'output'=>$output,
+    'data2'=>$data2,
+    'data3'=>$data3
+  ]);
+}
 
 }

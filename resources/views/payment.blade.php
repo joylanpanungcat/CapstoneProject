@@ -193,6 +193,13 @@ letter-spacing: 1px;
   letter-spacing: 4px;
   text-transform: capitalize;
 }
+.save_payment_button{
+  background-color: #1ABB9C;
+  color: #fff;
+}
+.swal2-title {
+  color: #FFF;
+}
 </style>
 
 <body class="nav-md" id="main" >
@@ -265,7 +272,7 @@ letter-spacing: 1px;
  
                                  </tr>
                                </thead>
-                               <tbody >
+                               <tbody id="nature_payment_body">
                                  <tr>
                                    <td></td>
                                    <td></td>
@@ -288,10 +295,11 @@ letter-spacing: 1px;
                                  <div class="form-group group2">
                                    <label>Offical Receipt No: </label>
                                    <input type="text" name="" class="group1" id="receipt_no"><br>
+                                   <input type="hidden" id="assessmentId">
                                    <label>Amount Paid:</label>
-                                   <input type="text" name="" class="group1"><br>
+                                   <input type="text" name="" class="group1" id="amount_paid"><br>
                                      <label>Payment Date:</label>
-                                   <input type="text" name="" class="group1"><br><br>
+                                   <input type="date" name="" class="group1" id="date_paid"><br><br>
                                    <div class="copy">
                                      <label><b>Original</b>/ (Applicant/Owner's Copy)</label><br>
                                      <label><b>Duplicate</b>/ (GSB/Collecting Agent copy)</label><br>
@@ -390,8 +398,10 @@ letter-spacing: 1px;
   </div>
 </div>
 </div>
+
+
  
- 
+  
  
      
    <script type="text/javascript">
@@ -413,6 +423,7 @@ letter-spacing: 1px;
  <script>
    $(document).ready(function(){
      $('#search').on('click',function(e){
+  
       $.ajaxSetup({
                       headers: {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -451,25 +462,137 @@ letter-spacing: 1px;
       dataType: 'json',
       success:function(data){
         $('#search_modal').modal('hide');
-        $.each(data.data,function($key,$value){
+        $('#nature_payment_body').html(data.data);
+        $.each(data.data3,function($key,$value){
           $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
-          $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
+          $('#applicant_address').val($value['purok']+ ', ' +$value['barangay']+ ', '  + $value['city']);
+         ;
           $('#total_amount_inwords').val($value['total_amount_words']);
           $('#receipt_no').val($value['receipt_no']);
+          $('#assessmentId').val($value['assessmentId']);
         });
         $.each(data.data2,function($key, $value){
+          $('#defaultId').val($value['id']);
           $('#authority_of').val($value['authority_of']);
           $('#fee_assessor').val($value['fee_assessor']);
-        
-
-          
-          
-          $('#defaultId').val($value['id']);
         });
+        
       }
     })
   
    });
+   var adminPass='{{Session::get('adminID')['password']}}';
+
+   $('#save_payment_button').on('click',function(e){
+     var assessmentId=   $('#assessmentId').val();
+     var amount_paid=   $('#amount_paid').val();
+     var date_paid=   $('#date_paid').val();
+     Swal.fire({
+         title:"Save Payment",
+         iconHtml: '<i class="fa fa-check"></i>',
+         iconColor: '#42ba96',
+              showCancelButton: true,
+              showConfirmButton:true,
+              focusConfirm: false,
+              background: 'rgb(0,0,0,.9)',
+              customClass : {
+              title: 'swal2-title'
+            },
+           allowOutsideClick: false,
+            
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+              Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                           return new Promise(function (resolve){
+                             
+                               $.ajax({
+                                      type:'post',
+                                      url: '{{ route('save_payment') }}',
+                                      data:{
+                                        assessmentId:assessmentId,
+                                        amount_paid:amount_paid,
+                                        date_paid:date_paid
+                                      },
+                                      dataType: 'json',
+                                      success:function(data){
+                                         toastr.success(data.msg);
+                                       swal.close();
+                                        $('.payment_checkbox').prop( "checked", false );
+                                      $('.optradio').prop( "checked", false );
+                                      $('#total_amount_inwords').val('');
+                                      $('#receipt_no').val('');
+                                    $('#defaultId').val('');
+                                    $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
+                                    $('#applicant_name').val('');
+                                    $('#applicant_address').val('');
+                                    $('#authority_of').val('');
+                                    $('#fee_assessor').val('');
+                                    $('#search_applicant').val('');
+                                    $('#total_amount').val('');
+                                    $('#amount_paid').val('');
+                                    $('#date_paid').val('');
+                                      }
+                                    })
+                           })
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
+
+             },
+              backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+       
+               });
+
+
+   })
    })
  </script>
  

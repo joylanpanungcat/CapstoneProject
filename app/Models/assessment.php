@@ -18,4 +18,7 @@ class assessment extends Model
     public function subAssessment(){
         $this->hasOne(subAssessment::class,'assessmentId','assessmentId');
     }
+    public function application(){
+        $this->belongsTo(application::class,'applicationId','applicationId');
+    }
 }
