@@ -119,6 +119,15 @@ Route::post("renew_application_action",[renewalController::class,"renew_applicat
 //maintenance
 Route::view('maintenance','maintenance')->name('maintenance');
 Route::get('fetch_default_fees',[maintenanceController::class,'fetch_default_fees'])->name('fetch_default_fees');
+Route::post('view_main_fees',[maintenanceController::class,'view_main_fees'])->name('view_main_fees');
+Route::post('update_main_fees',[maintenanceController::class,'update_main_fees'])->name('update_main_fees');
+Route::post('view_other_fees',[maintenanceController::class,'view_other_fees'])->name('view_other_fees');
+Route::post('update_other_fees',[maintenanceController::class,'update_other_fees'])->name('update_other_fees');
+Route::post('view_authority',[maintenanceController::class,'view_authority'])->name('view_authority');
+Route::post('update_authority',[maintenanceController::class,'update_authority'])->name('update_authority');
+Route::post('add_main_fee',[maintenanceController::class,'add_main_fee'])->name('add_main_fee');
+Route::post('add_other_fee',[maintenanceController::class,'add_other_fee'])->name('add_other_fee');
+
 
 // file system
 Route::post('fetch_file',[applicationController::class,"fetch_file"])->name('fetch_file');

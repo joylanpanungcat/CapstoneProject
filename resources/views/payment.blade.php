@@ -1,5 +1,5 @@
 @extends('include.navbar')
-@section('title','applicant account')
+@section('title','Payment ')
 @section('content')
 <style type="text/css">
     table tbody tr td input{
