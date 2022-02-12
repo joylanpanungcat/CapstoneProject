@@ -15,6 +15,7 @@ use App\Models\assessment;
 use App\Models\defaultFee;
 
 use DataTables;
+use Hash;
 
 class applicantController extends Controller
 {
@@ -34,11 +35,10 @@ class applicantController extends Controller
                                   return "
                                   
 
-                                  <button type='button'  class='btn btn-defualt btn-xs sendArchive' id='".$row['accountId']."'><i class='fa fa-archive'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' id='".$row['accountId']."' ><i class='fa fa-edit'></i></button>||
+                                  <button type='button'  class='btn btn-defualt btn-xs actionButton sendArchive' id='".$row['accountId']."'><i class='fa fa-archive'></i></button>
+                                  <button type='button' name='update' class='btn btn-defualt actionButton  btn-xs update' id='".$row['accountId']."' ><i class='fa fa-eye'></i></button>
                             
                 <input type='hidden' id='account_id'  val='".$row['accountId']."'>
-
-                 <a type='button' name='viewApplicant' class='btn btn-defualt btn-xs ' href='applicant_profile/".$row['accountId']."' target='_blank'><i class='fa fa-eye'></i></a>
                 ";
                               })
                              ->rawColumns(['actions'])
@@ -70,7 +70,7 @@ class applicantController extends Controller
         $account->Fname=$request->First_Name;
         $account->Lname=$request->Last_Name;
         $account->username=$request->username;
-        $account->password=Hash::make($request->password);
+        $account->password=$request->password;
         $account->contact_num=$request->Contact_Number;
         $account->date_register=$request->date_register;
         $account->image='null';

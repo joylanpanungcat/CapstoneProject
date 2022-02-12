@@ -9,6 +9,8 @@ use App\Http\Controllers\fileController;
 use App\Http\Controllers\feesController;
 use App\Http\Controllers\reportsController;
 use App\Http\Controllers\scheduleController;
+use App\Http\Controllers\renewalController;
+use App\Http\Controllers\maintenanceController;
 
 
 /*
@@ -101,8 +103,22 @@ Route::group(['middleware'=>['accessPage']],function(){
  Route::post('account/restore/',[applicantController::class,'restore'])->name('restore');
  Route::view('archive','archive')->name('archive');
 Route::get("archivedFetch",[archivedController::class,"archivedFetch"])->name('archivedFetch');
+Route::post("view_account_archived",[archivedController::class,"view_account_archived"])->name('view_account_archived');
+Route::post("restore_account_user",[archivedController::class,"restore_account_user"])->name('restore_account_user');
+Route::get("fetchApplication",[archivedController::class,"fetchApplication"])->name('fetchApplication');
+Route::post("view_application",[archivedController::class,"view_application"])->name('view_application');
+Route::post("restoreApplication",[archivedController::class,"restoreApplication"])->name('restoreApplication');
 
+//renewal
 
+Route::view('renewal_application_main','renewal_application_main')->name('renewal_application_main');
+Route::get("renewalController",[renewalController::class,"renewal_application_fetch"])->name('renewalController');
+Route::post("view_renewal_application",[renewalController::class,"view_renewal_application"])->name('view_renewal_application');
+Route::post("renew_application_action",[renewalController::class,"renew_application_action"])->name('renew_application_action');
+
+//maintenance
+Route::view('maintenance','maintenance')->name('maintenance');
+Route::get('fetch_default_fees',[maintenanceController::class,'fetch_default_fees'])->name('fetch_default_fees');
 
 // file system
 Route::post('fetch_file',[applicationController::class,"fetch_file"])->name('fetch_file');

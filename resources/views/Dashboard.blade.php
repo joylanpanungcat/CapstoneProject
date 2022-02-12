@@ -81,7 +81,7 @@
                </div>
                <div class="count">2</div>
 
-               <h3><a href="application.php">Application</a></h3>
+               <h3><a href="{{ route('application') }}">Application</a></h3>
                <p>Old and New Application.</p>
              </div>
            </div>
@@ -91,7 +91,7 @@
                </div>
                <div class="count">2</div>
 
-               <h3><a href="application.php">Approved </a></h3>
+               <h3><a href="{{ route('approved_application') }}">Approved </a></h3>
                <p>Aprrove Application.</p>
              </div>
            </div>
@@ -101,7 +101,7 @@
                </div>
                <div class="count">2</div>
 
-               <h3><a href="application.php">Denied </a></h3>
+               <h3><a href="{{ route('rejected_application') }}">Reinspection </a></h3>
                <p>Denied  or status for reinspection</p>
              </div>
            </div> 
@@ -111,7 +111,7 @@
                </div>
                <div class="count">2</div>
 
-               <h3><a href="mail.php">Renewal</a></h3>
+               <h3><a href="{{ route('renewal_application_main') }}">Renewal</a></h3>
                <p>renewal of application</p>
              </div>
            </div>

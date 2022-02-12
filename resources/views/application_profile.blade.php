@@ -705,7 +705,7 @@ display: inline-block;
                         
                                   </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-                                @if ($application->status =='approved' || $application->status =='pending' ||  $application->status =='reinspection' || $application->status =='forinspection')
+                               
                                 <div class='container'>   
                                     <table class='table table-bordered table'>
                                         <thead>
@@ -781,81 +781,7 @@ display: inline-block;
         
                                     </table>
                                 </div>
-                                @elseif ($application->status =='renewal')
-                                <div class='container'>   
-                                    <table class='table table-bordered table'>
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Type of application</th>
-                                                <th>Business Name</th>
-                                                <th>Address</th>
-                                                    <th> Status</th> 
-                                                <th>Action</th>
-        
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                             @if ($assessment->count()>0)
-                                             @foreach ($assessment as $application)
-                                              
-                                            @php 
-                                                $i=1;
-                                            @endphp
-        
-        
-                                            <tr>
-                                                <td>{{$i++}}
-                                                </td>
-                                                <td>
-                                                    {{$application->type_application}}
-                                                </td>
-                                                <td>{{$application->business_name}}
-                                                </td>
-                                                <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
-                                                </td>
-                                                </td>
-                                                <td>{{$application->payment_status}}
-                                                </td>
-                                        <td><button type='' name='view' class='btn btn-defualt view'
-                                            ><i class='fa fa-eye'></i>Renew</button>
-                                                </td>
-        
-                                            </tr>
-                                            @endforeach
-                                            @else
-                                            @foreach ($account_details->application as $application)
-                                            @php 
-                                                $i=1;
-                                            @endphp
-        
-        
-                                            <tr>
-                                                <td>{{$i++}}
-                                                </td>
-                                                <td>
-                                                    {{$application->type_application}}
-                                                </td>
-                                                <td>{{$application->business_name}}
-                                                </td>
-                                                <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
-                                                </td>
-                                               
-                                                <td>{{$application->status}}
-                                                </td>
-                                                    <td><button type='' name='view' class='btn btn-primary view'
-                                            ><i class='fa fa-refresh'> </i></button>
-                                                    </td>
-        
-                                            </tr>
-                                            @endforeach
-                                            @endif
-                                          </tbody>
-                                         
-        
-                                    </table>
-                                </div>
-                                @endif
+                                
                           </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                                 <div class="row">

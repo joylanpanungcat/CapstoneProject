@@ -195,7 +195,7 @@
                   </li>
                     
                   </li>
-                  <li><a href="renewal.php"><i class="fa fa-refresh"></i> Renewal </a>
+                  <li><a href="{{ route('renewal_application_main') }}"><i class="fa fa-refresh"></i> Renewal </a>
                     
                   </li>
                    <li><a href="{{ route('payment') }}"><i class="fa fa-money"></i> Payment </a>
@@ -204,7 +204,7 @@
                   <li><a href="{{ route('assessment') }}"><i class="fa fa-credit-card"></i> Assessment </a>
                     
                   </li>
-                  <li><a href="maintenance.php"><i class="fa fa-wrench"></i> Maintenance </a>
+                  <li><a href="{{ route('maintenance') }}"><i class="fa fa-wrench"></i> Maintenance </a>
                     
                   </li>
                   <!--  <li><a><i class="fa fa-tasks"></i> Process </a>
