@@ -212,7 +212,7 @@
                   <li><a><i class="fa fa-users"></i> Account <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{ route('account') }}" class="noti_applicant">Applicant<span class="badge bg-danger" id="count_applicant"></span></a></li>
-                      <li><a href="inspector.php">Inspector</a></li>
+                      <li><a href="{{ route('inspector') }}">Inspector</a></li>
                       
                     </ul>
                   </li>

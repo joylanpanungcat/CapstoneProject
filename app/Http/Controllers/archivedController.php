@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\applicant_account;
 use App\Models\application;
+use App\Models\inspector;
 
 
 use DataTables;
@@ -96,6 +97,48 @@ public function restoreApplication(Request $request){
                 'msg'=>'something went wrong!' 
              ]);
            }
+}
+public function inspector_fetch_achived(){
+  $data = inspector::onlyTrashed()->get();
+             
+  return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('actions', function($row){
+                            return "
+                            <button type='button'  class='btn btn-defualt btn-xs view_inspector actionButton2' id='".$row['inspectorId']."'><i class='fa fa-eye'></i></button>
+          ";
+                        })
+                        ->addColumn('name', function($row){
+                          return $row['Fname'].' '.$row['Mname'];
+                         })
+                       ->rawColumns(['actions'])
+
+                    ->make(true);
+}
+
+public function view_inspector_arhived(Request $request){
+  $inspectorId = $request->inspectorId;
+  $data = inspector::onlyTrashed()->where('inspectorId',$inspectorId)->get();
+  return response()->json([
+      'data'=>$data
+  ]);
+  
+}
+public function restorInspector(Request $request){
+  $inspectorId =$request->inspectorId;
+  $query=inspector::withTrashed()->find($inspectorId )->restore();
+ if($query){
+          return response()->json([
+             'status'=>1,
+             'msg'=>'data undone' 
+          ]);
+        }else
+        {
+          return response()->json([
+             'status'=>0,
+             'msg'=>'something went wrong!' 
+          ]);
+        }
 }
     
 }

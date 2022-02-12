@@ -91,6 +91,7 @@ display: block;
     border: 1px dashed #c0ccda;
     border-radius: 6px;
     cursor: pointer;
+    height: 200px;
     
 }
 .icon i{
@@ -993,7 +994,7 @@ display: inline-block;
                 </div>
                 <div class="modal-body">
                     <form id="addFolderForm">
-                         <input type="text" name="" id="parentFolderId">
+                         <input type="hidden" name="" id="parentFolderId">
                         <div class="form-group">
                            
                             <label>Folder Name</label> 
@@ -1027,8 +1028,8 @@ display: inline-block;
                 </div>
                 <div class="modal-body">
                     <form id="addFileForm" enctype="multipart/form-data" >
-                         <input type="text" name="" id="parentFolderId2">
-                         <input type="text" value="<?php   echo $applicationId->applicationId ?>" id='applicationId' >
+                         <input type="hidden" name="" id="parentFolderId2">
+                         <input type="hidden" value="<?php   echo $applicationId->applicationId ?>" id='applicationId' >
                           <button type="button" class="btn btn-default addFiles"  data-toggle="dropzone">
                                   <label for="file">
                                    <i class="fa fa-file"></i>

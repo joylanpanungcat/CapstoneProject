@@ -11,6 +11,7 @@ use App\Http\Controllers\reportsController;
 use App\Http\Controllers\scheduleController;
 use App\Http\Controllers\renewalController;
 use App\Http\Controllers\maintenanceController;
+use App\Http\Controllers\inspectorController;
 
 
 /*
@@ -108,6 +109,10 @@ Route::post("restore_account_user",[archivedController::class,"restore_account_u
 Route::get("fetchApplication",[archivedController::class,"fetchApplication"])->name('fetchApplication');
 Route::post("view_application",[archivedController::class,"view_application"])->name('view_application');
 Route::post("restoreApplication",[archivedController::class,"restoreApplication"])->name('restoreApplication');
+Route::get("inspector_fetch_achived",[archivedController::class,"inspector_fetch_achived"])->name('inspector_fetch_achived');
+Route::post("view_inspector_arhived",[archivedController::class,"view_inspector_arhived"])->name('view_inspector_arhived');
+Route::post("restorInspector",[archivedController::class,"restorInspector"])->name('restorInspector');
+
 
 //renewal
 
@@ -115,6 +120,16 @@ Route::view('renewal_application_main','renewal_application_main')->name('renewa
 Route::get("renewalController",[renewalController::class,"renewal_application_fetch"])->name('renewalController');
 Route::post("view_renewal_application",[renewalController::class,"view_renewal_application"])->name('view_renewal_application');
 Route::post("renew_application_action",[renewalController::class,"renew_application_action"])->name('renew_application_action');
+
+//inspector
+Route::view('inspector','inspector')->name('inspector');
+Route::get('inspector_fetch',[inspectorController::class,'inspector_fetch'])->name('inspector_fetch');
+Route::post('view_inspector',[inspectorController::class,'view_inspector'])->name('view_inspector');
+Route::post('update_inspector',[inspectorController::class,'update_inspector'])->name('update_inspector');
+Route::post('add_inspectoradd_inspector',[inspectorController::class,'add_inspector'])->name('add_inspector');
+Route::post('archive_inspector',[inspectorController::class,'archive_inspector'])->name('archive_inspector');
+
+
 
 //maintenance
 Route::view('maintenance','maintenance')->name('maintenance');

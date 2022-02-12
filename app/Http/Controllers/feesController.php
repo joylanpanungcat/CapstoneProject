@@ -227,14 +227,11 @@ public function search_assessment(Request $request){
     $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
   }else{
    foreach($data as $item){
-    if(count($item['assessment'])>0 ){
+    if($item['assessment']->count() > 0 ){
       $output .=  "<tr>
       <td><input type='radio' name='optradio' class='optradio'  id=".$item['applicantId']."></td>
       <td>".$item['Fname']."  ".$item['Mname']."  ".$item['Lname']." </td>
        </tr>";
-    }else{
-    $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
-
     }
    }
   }

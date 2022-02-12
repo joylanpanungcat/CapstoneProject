@@ -459,7 +459,7 @@ position: absolute;
                             <div class="form-group row ">
                                                     <label class="control-label col-md-3 col-sm-3 ">Description</label>
                                                     <div class="col-md-9 col-sm-9 ">
-                                                        <textarea name="" id="description_other" cols="50" rows="10" style="width: 100%"></textarea>
+                                                        <textarea name="" id="description_add" cols="50" rows="10" style="width: 100%"></textarea>
                                                     </div>
                                                 </div>
                          

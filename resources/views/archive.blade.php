@@ -257,8 +257,10 @@ width: 10px !important;
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                           <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Application</a>
                           </li>
-                           <li role="presentation" class="active"><a href="#tab_content2" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Account </a>
+                           <li role="presentation" class="active"><a href="#tab_content2" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Applicant Account </a>
                           </li>
+                            <li role="presentation" class="active"><a href="#tab_content3" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Inspector Account </a>
+                            </li>
                          
                         
                         </ul>
@@ -295,6 +297,7 @@ width: 10px !important;
                         </div>
 
                              </div>
+                           
                                   
                               
                               <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
@@ -322,7 +325,42 @@ width: 10px !important;
                         </div>
                         </div>
                         </div>
+
+                          {{-- content 3 --}}
+                          <div role="tabpanel" class="tab-pane  " id="tab_content3" aria-labelledby="home-tab">
+                         <div class='container'>   
+                           <div class="x_content">
+                                    <br />
+                                       <!--  <button type="button" name="delete_all" id="delete_all" class="btn  btn-xs"><i class="fa fa-user-times fa-lg"></i></button> -->
+                                     <table class="table table-striped table-bordered" id="inspector_fetch"  style="width:100%;">
+                              <thead>
+                                     <tr>
+                                  <th>#</th>
+                                  <th>Inspector's name</th>
+                                  <th>Position</th>
+                                     <th>Username</th>
+                                  <th>Password</th>
+                                    <th >Action</th>
+                                   
+                                </tr>
+                              </thead>
+                              <tbody >
+                            
+                            
+                                  
+                                    
+                                  </tbody>
+                 
+                                  </table>
+
                         </div>
+                        </div>
+
+                             </div>
+                        </div>
+
+                        
+                        
                                </div>
                               </div>
        
@@ -368,7 +406,45 @@ width: 10px !important;
           </div>
         </div>
       </div>
+      {{-- modal inspector --}}
+      <div class="modal fade" id="modal_inspector" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Applicant Account Details</h5>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="" class="form-control" id="inspectorFname" readonly>
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" name="" class="form-control" id="inspectorLname" readonly>
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="" class="form-control" id="inspectorUsername" readonly>
+            </div>
 
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" name="" class="form-control" id="inspectorPassword"  readonly>
+            </div>
+            <div class="form-group">
+              <label>Date Deleted</label>
+              <input type="text" name="" class="form-control" id="deleted_at_inspector"  readonly>
+          </div>
+                <input type="hidden" name="" class="form-control" id="inspectorId" readonly>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success" id="restore_inspector"><i class="fa fa-refresh"> Restore</i></button>
+            </div>
+          </div>
+        </div>
+      </div>
       
       <div class="modal fade" id="modalViewApplication" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -469,6 +545,7 @@ width: 10px !important;
         ]
 
      });
+    
      var dataTable= $('#archiveData_account').DataTable({
         processing:true,
         info:true,
@@ -491,6 +568,31 @@ width: 10px !important;
         ]
 
      });
+     var dataTableInspector= $('#inspector_fetch').DataTable({
+        processing:true,
+        info:true,
+        'pageLength': 5,
+        'aLengthMenu':[[5,10,25,50,-1],[5,10,25,50,"All"]],
+          "columnDefs":[
+         {
+          "targets":[0, 3, 4,5],
+          "orderable":false,
+         },
+        ],
+          ajax: "{{ route('inspector_fetch_achived') }}",
+        columns:[
+        {data:'DT_RowIndex',name:'DT_RowIndex'},
+        {data:'name',name:'name'},
+        {data:'Position',name:'Position'},
+        {data:'username',name:'username'},
+        {data:'password',name:'password'},
+        {data:'actions',name:'actions'}
+        ]
+
+     });
+     
+
+
      $(document).on('click','.actionButton',function(e){
        e.preventDefault();
       var accountId =$(this).attr('id');
@@ -520,6 +622,36 @@ width: 10px !important;
 
 
      });
+     $(document).on('click','.view_inspector',function(e){
+       e.preventDefault();
+      var inspectorId =$(this).attr('id');
+
+      $.ajax({
+        type:'post',
+        url:"{{ route('view_inspector_arhived') }}",
+        data:{
+          inspectorId:inspectorId
+        },
+        dataType: 'json',
+        success:function(data){
+      $('#modal_inspector').modal('show');
+
+      $.each(data.data, function(key, value){
+          $('#inspectorFname').val(value['Fname']);
+          $('#inspectorLname').val(value['Lname']);
+          $('#inspectorUsername').val(value['username']);
+          $('#inspectorPassword').val(value['password']);
+          $('#inspectorId').val(value['inspectorId']);
+          $('#deleted_at_inspector').val(value['deleted_at']);
+      })
+      
+        }
+      })
+
+     });
+
+
+     
   $('#restore_account').on('click',function(e){
     e.preventDefault();
     var accountId= $('#accountAccountId').val();
@@ -730,6 +862,100 @@ $('#restore_application').on('click',function(e){
                  `
        
                }) 
+
+});
+
+$('#restore_inspector').on('click',function(e){
+  e.preventDefault();
+
+  var inspectorId= $('#inspectorId').val();
+  Swal.fire({
+         title:"Restore Account",
+           titleFontColor:'success',
+         iconHtml: '<i class="fa fa-refresh"></i>',
+         iconColor: '#169F85',
+             showCancelButton: true,
+             focusConfirm: false,
+             background: 'rgb(0,0,0,.9)',
+             customClass : {
+             title: 'swal2-title'
+           },
+           allowOutsideClick: false,
+            
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+           $('#modal_inspector').modal('hide');
+              Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                             $.ajax({
+                               type: 'post',
+                               url:'{{ route('restorInspector') }}',
+                               data:{
+                                inspectorId:inspectorId
+                               },
+                               dataType: 'json',
+                               success:function(data){
+                                 toastr.success(data.msg);
+                                 dataTableInspector.ajax.reload();
+                               }
+                             })
+                        
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
+
+             },
+              backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+       
+               }) 
+ 
 
 })
   

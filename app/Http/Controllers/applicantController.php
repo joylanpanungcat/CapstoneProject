@@ -362,11 +362,11 @@ public function payment_view(Request $request){
     $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' readonly='' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  readonly=''/></td></tr>";
     $total = $item['total_amount'];
   }
-  $output.='<tr>
-  <td>TOTAL</td>
-  <td></td>
-  <td>'.$total.'</td>
-</tr>';
+//   $output.='<tr>
+//   <td>TOTAL</td>
+//   <td></td>
+//   <td>'.$total.'</td>
+// </tr>';
 
   return response()->json([
     'data'=>$data,
