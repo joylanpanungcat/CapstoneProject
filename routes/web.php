@@ -67,6 +67,10 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('/storeimgae',[applicationController::class,'storeImage'])->name('storeimgae');
     Route::post('/archieve_application',[applicationController::class,'archieve_application'])->name('archieve_application');
     Route::post('restore_application',[applicationController::class,'restore_application'])->name('restore_application');
+    Route::post('view_inspection_report',[applicationController::class,'view_inspection_report'])->name('view_inspection_report');
+    Route::post('verify_inspection_report',[applicationController::class,'verify_inspection_report'])->name('verify_inspection_report');
+    
+    
     //Map 
     Route::view('map','map')->name('map');
     //

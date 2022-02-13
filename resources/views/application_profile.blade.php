@@ -842,10 +842,71 @@ display: inline-block;
                                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                                 <div class="col-md-12">
                                     <div class="x_panel">
-                                <div class="x_title">
-                                     
+                                    <div class="x_title">
+                                        
+                                    </div>
+                                    <div class="container">
+                                      <table class='table table-bordered table'>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Type of application</th>
+                                                <th>Inspector Name</th>
+                                                <th>Date inspected</th>
+                                                <th>Inspection Status</th> 
+                                                <th>Action</th>
+        
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                             @if ($inspection_details->count()>0)
+                                               @foreach ($inspection_details as $inspection_details)
+                                              
+                                            @php 
+                                                $i=1;
+                                            @endphp
+        
+        
+                                            <tr>
+                                                <td>{{$i++}}
+                                                </td>
+                                                <td>
+                                                    {{$inspection_details->type_application}}
+                                                </td>
+                                                
+                                                <td>{{$inspection_details->Fname}},{{$inspection_details->Lname}}
+                                                </td>
+                                                <td>{{$inspection_details->date_inspect}}
+                                                </td>
+                                                </td>
+                                                <td>{{$inspection_details->status}}
+                                                </td>
+                                                <input type="hidden" value="{{ $inspection_details->applicantId }}" id="view_payment_applicationId">
+                                        <td><button type='' name='view' class='btn btn-success view view_inspection_report'
+                                            id="{{$inspection_details->applicationId}}"><i class='fa fa-eye'></i></button>
+                                                </td>
+        
+                                            </tr>
+                                                 @endforeach
+
+                                            @else
+                                               
+        
+        
+                                            <tr>
+                                                <td class=""> No Inspection Report
+                                                </td>
+                                               
+                                                    </td>
+        
+                                            </tr>
+                                            @endif
+                                          </tbody>
+                                         
+        
+                                    </table>
+                                    </div>
                                 </div>
-                            </div>
                                 </div>
                                </div>
 
@@ -1075,15 +1136,15 @@ display: inline-block;
 <div id="menu-folder-clone" style="display: none;">
     <a href="javascript:void(0)" class="custom-menu-list file-option openFolder"><span><i class="fa fa-folder-open"></i></span> Open</a>
     <hr class="solid">
-    <a href="javascript:void(0)" class="custom-menu-list file-option moveFolderTo"><span><i  class="fa fa-arrows-alt" aria-hidden="true"></i></span>Move to</a>
+    {{-- <a href="javascript:void(0)" class="custom-menu-list file-option moveFolderTo"><span><i  class="fa fa-arrows-alt" aria-hidden="true"></i></span>Move to</a> --}}
      <a href="javascript:void(0)" class="custom-menu-list file-option renameFolder"><span><i class="fa fa-pencil"></i></span>Rename</a>
      <hr class="solid">
     <a href="javascript:void(0)" class="custom-menu-list file-option viewFolderDetails"><span><i class="fa fa-eye"></i></span>View details</a>
 
-     <a href="javascript:void(0)" class="custom-menu-list file-option edit"><span><i class="fa fa-arrow-circle-down "></i></span>Download</a>
+     {{-- <a href="javascript:void(0)" class="custom-menu-list file-option edit"><span><i class="fa fa-arrow-circle-down "></i></span>Download</a> --}}
      <hr class="solid">
-    <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-archive"></i></span>Send to Archive</a>
-     <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-file-archive-o"></i></span>Compressed(zipped)</a>
+    {{-- <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-archive"></i></span>Send to Archive</a> --}}
+     {{-- <a href="javascript:void(0)" class="custom-menu-list file-option delete"><span><i class="fa fa-file-archive-o"></i></span>Compressed(zipped)</a> --}}
 </div>
 
 <div id="menu-folder-clone2" style="display: none; " class="col-md-12">
@@ -1373,6 +1434,69 @@ display: inline-block;
           </div>
         </div>
       </div>
+  
+      <div id="inspection_modal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Inspection Report</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <form class="form-horizontal form-label-left">
+        
+                    <div class="form-group row ">
+                        <label class="control-label col-md-3 col-sm-3 ">Type of Application</label>
+                        <div class="col-md-9 col-sm-9 ">
+                          <input type="text" class="form-control" placeholder="Default Input" id="type_application_inspection"  readonly>
+                          </div>
+                    </div>
+                    <div class="form-group row ">
+                      <label class="control-label col-md-3 col-sm-3 ">Inspector Name</label>
+                      <div class="col-md-9 col-sm-9 ">
+                        <input type="text" class="form-control" placeholder="Default Input" id="inspector_name"  readonly>
+                        </div>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="control-label col-md-3 col-sm-3 ">Date Inspected</label>
+                    <div class="col-md-9 col-sm-9 ">
+                      <input type="text" class="form-control" placeholder="Default Input" id="date_inspected" readonly >
+                      </div>
+                </div>
+                <div class="form-group row ">
+                  <label class="control-label col-md-3 col-sm-3 ">Date Inspected</label>
+                  <div class="col-md-9 col-sm-9 ">
+                    <input type="text" class="form-control" placeholder="Default Input" id="inspection_status" readonly>
+                    </div>
+              </div>
+              <div class="form-group row ">
+                <label class="control-label col-md-3 col-sm-3 ">Verify Inspection Report</label>
+                <div class="col-md-9 col-sm-9 ">
+                  <input type="text" class="form-control" placeholder="Default Input" id="verify_inspection" readonly>
+                  </div>
+            </div>
+         
+
+              
+                      
+                        
+                   
+                    <div class="form-group" style="float: right" id="verify_button">
+
+                  </div>
+                         
+                    </form>
+                   
+                  
+              
+             
+                    
+                   
+                </div>
+              
+            </div>
+        </div>
+    </div>
 <script type="text/javascript">
 
     // From http://learn.shayhowe.com/advanced-html-css/jquery
@@ -2568,6 +2692,140 @@ $('.view_payment_info').on('click',function(e){
     })
 
 });
+
+$('.view_inspection_report').on('click',function(e){
+  e.preventDefault();
+  var applicationId = $(this).attr('id');
+
+  $.ajax({
+    type:'post',
+    url:'{{ route('view_inspection_report') }}',
+    data:{
+      applicationId:applicationId
+    },
+    dataType: 'json',
+    success:function(data){
+      $('#inspection_modal').modal('show');
+
+      $.each(data.data,function(key, value){
+        $('#type_application_inspection').val(value['type_application']);
+        $('#inspector_name').val(value['Fname'] + ' ' + value['Lname']);
+        $('#date_inspected').val(value['date_inspect']);
+        $('#inspection_status').val(value['status']);
+        if(value['verify'] == null){
+          $('#verify_inspection').val('not verify');
+          $('#verify_button').html(' <button type="button" class="btn btn-success verify_inspection_button" id='+value['applicationId']+'><i class="fa fa-check"> </i> Verify</button>')
+        }else{
+          $('#verify_inspection').val('verified');
+          $('#verify_button').html('');
+        }
+      })
+
+    }
+  })
+
+
+})
+
+$(document).on('click','.verify_inspection_button',function(e){
+  e.preventDefault();
+var applicationId = $(this).attr('id');
+var adminPass='{{Session::get('adminID')['password']}}';
+
+Swal.fire({
+         title:"Verify Inspection Report",
+         iconHtml: '<i class="fa fa-check"></i>',
+         iconColor: '#42ba96',
+              showCancelButton: true,
+              showConfirmButton:true,
+              focusConfirm: false,
+              background: 'rgb(0,0,0,.9)',
+              customClass : {
+              title: 'swal2-title'
+            },
+           allowOutsideClick: false,
+            
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+              $('#inspection_modal').modal('hide');
+              Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                           return new Promise(function (resolve){
+                            $.ajax({
+                              type:'post',
+                              url:'{{ route('verify_inspection_report') }}',
+                              data:{
+                                applicationId:applicationId,
+                              },
+                              dataType: 'json',
+                              success:function(data){
+                                swal.close();
+                                toastr.success(data.msg);
+                              }
+                            })
+                         
+                           })
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
+
+             },
+              backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+       
+               });
+
+
+
+
+  
+})
 
 
 

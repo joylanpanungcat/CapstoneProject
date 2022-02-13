@@ -12,6 +12,8 @@ use App\Models\folderUpload;
 use App\Models\activity;
 use App\Models\assessment;
 use App\Models\subAssessment;
+use App\Models\inspection_details;
+
 
 // use Storage;
 use DataTables;
@@ -110,6 +112,10 @@ public function viewApplication(Request $request){
       ->join('application','applicant.applicantId','=','application.applicantId')
       ->where('applicant.applicantId',$account_id)
       ->get();
+      $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
+      ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+      ->where('application.applicationId',$account_id)
+      ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
     
       // foreach ($assessment as $item){
       //   $fees_id=$item['fees_id'];
@@ -119,7 +125,8 @@ public function viewApplication(Request $request){
       //   $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
       // }
       
-       return view('application_profile',compact('account_details','assessment','applicantAdd','applicationId'));
+     
+       return view('application_profile',compact('account_details','assessment','applicantAdd','applicationId','inspection_details'));
         
   
 
@@ -916,5 +923,37 @@ public function restore_application(Request $request){
           ]);
         }
  
+}
+
+public function view_inspection_report(Request $request){
+  $applicationId =$request->applicationId;
+
+  $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
+  ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+  ->where('application.applicationId',$applicationId)
+  ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId'
+
+,'inspection_details.verify']);
+
+  return response()->json([
+    'data'=>$inspection_details
+  ]);
+
+
+}
+
+public function verify_inspection_report(Request $request){
+  $applicationId = $request->applicationId;
+  $verify = true;
+
+  $data = inspection_details::where('applicationId',$applicationId);
+  $data->update([
+    'verify'=>$verify
+  ]);
+
+  return response()->json([
+    'msg'=>'Inspection report verified'
+  ]);
+
 }
 }

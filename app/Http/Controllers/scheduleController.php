@@ -21,9 +21,9 @@ class scheduleController extends Controller
             $data = schedule::join('application','application.applicationId','=','schedule.applicationId')
                 ->join('applicant','applicant.applicantId','=','schedule.applicantId')
                 ->join('address','address.applicantId','applicant.applicantId') 
+                ->orderBy('schedule.applicantId','desc')
                 ->get();
            
-               
          
         return DataTables::of($data)
         // return DataTables::of($data)
