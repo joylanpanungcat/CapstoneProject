@@ -117,6 +117,10 @@ public function viewApplication(Request $request){
       ->where('application.applicationId',$account_id)
       ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
     
+      $certificate = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
+      ->get(['inspector.Fname','inspector.Lname','application.date_apply','application.type_application','application.status','application.applicationId']);
+
+
       // foreach ($assessment as $item){
       //   $fees_id=$item['fees_id'];
       // } 
@@ -125,8 +129,7 @@ public function viewApplication(Request $request){
       //   $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
       // }
       
-     
-       return view('application_profile',compact('account_details','assessment','applicantAdd','applicationId','inspection_details'));
+       return view('application_profile',compact('account_details','assessment','applicantAdd','applicationId','inspection_details','certificate'));
         
   
 
@@ -954,6 +957,23 @@ public function verify_inspection_report(Request $request){
   return response()->json([
     'msg'=>'Inspection report verified'
   ]);
+
+}
+
+public function print_certificate(Request $request){
+  $applicationId = $request->applicationId;
+  $output = '';
+  $data = application::where('applicationId',$applicationId)->get();
+
+  foreach($data as $data){
+    $type_application= $data['type_application'];
+  }
+
+  return response()->json([
+    'data'=>$type_application
+  ]);
+
+
 
 }
 }

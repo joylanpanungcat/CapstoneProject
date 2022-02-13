@@ -698,11 +698,56 @@ display: inline-block;
 
                              </div>
                                   <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
-                                   <div id="GFG" >
-                                 
-                            
-                           </div>
-                                  
+                                    <div class='container'>   
+                                      <table class='table table-bordered table'>
+                                          <thead>
+                                              <tr>
+                                                  <th>#</th>
+                                                  <th>Type of application</th>
+                                                  <th>Date Applied</th>
+                                                  <th>Inspector Name</th>
+                                                      <th>Application Status</th> 
+                                                  <th>Action</th>
+          
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                               @foreach ($certificate as $certificate)
+                                              @php 
+                                                  $i=1;
+                                              @endphp
+          
+          
+                                              <tr>
+                                                  <td>{{$i++}}
+                                                  </td>
+                                                  <td>
+                                                      {{$certificate->type_application}}
+                                                  </td>
+                                                  <td>{{$certificate->date_apply}}
+                                                  </td>
+                                                  <td>{{$certificate->Fname}},{{$certificate->Lname}}
+                                                  </td>
+                                                  <td>{{$certificate->status}}
+                                                  </td>
+                                                 
+                                           @if ($certificate->status != 'approved')
+                                             <td>Check payment and inspection details</td>
+                                             @else
+                                             <td><button type='button'  class='btn btn-defualt print_certificate ' id="{{ $certificate->applicationId }}"
+                                              ><i class='fa fa-print'></i></button>
+                                                      </td>
+                                           @endif
+          
+                                              </tr>
+                                              @endforeach
+          
+                                        
+                                            </tbody>
+                                           
+          
+                                      </table>
+                                  </div>
                         
                                   </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
@@ -1076,7 +1121,14 @@ display: inline-block;
             </div>
         </div>
     </div>
-
+    
+    <div id="Print_certificate" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content " id="print_content">
+            
+          </div>
+      </div>
+  </div>
 
 
     {{-- Add file --}}
@@ -1497,6 +1549,7 @@ display: inline-block;
             </div>
         </div>
     </div>
+
 <script type="text/javascript">
 
     // From http://learn.shayhowe.com/advanced-html-css/jquery
@@ -2825,6 +2878,40 @@ Swal.fire({
 
 
   
+});
+
+$('.print_certificate').on('click',function(e){
+  e.preventDefault();
+  var applicationId = $(this).attr('id');
+
+  $.ajax({
+    type:'post',
+    url:'{{ route('print_certificate') }}',
+    data:{
+      applicationId:applicationId
+    },
+    dataType:'json',
+    success:function(data){
+      $('#Print_certificate').modal('show');
+      var output='';
+      if(data.data =='Fire Safety Evaluation Clearance'){
+                    
+        $('#print_content').html(' <img src="{{url('images/certificate/fsec.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" id="print_cert"><i class="fa fa-print"></i> Print</button></div>');
+      }
+      
+    }
+  })
+  
+});
+
+$(document).on('click','#print_cert',function(e){
+  e.preventDefault();
+
+  var printContents = document.getElementById("print_content").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+
 })
 
 
