@@ -21,7 +21,7 @@ class applicationFactory extends Factory
      */
     public function definition()
     {
-        $datetime = $this->faker->dateTimeBetween('now','+2 years');
+        $datetime = $this->faker->dateTimeBetween('now','+11 months');
         $type_application = array('Fire Safety Inspection Certificate', 'Fire Safery Evaluation Clearance','Fire Safety Inspection Certificate for Business','Fire Safety Inspection Certificate for Occupancy');
         $rand_keys = $type_application[array_rand($type_application)];
         

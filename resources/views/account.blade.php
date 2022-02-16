@@ -517,8 +517,8 @@ width: 10px !important;
         columns:[
         {data:'DT_RowIndex',name:'DT_RowIndex'},
         {data:'Fname',name:'Fname'},
-        {data:'username',name:'username'},
         {data:'contact_num',name:'contact_num'},
+        {data:'username',name:'username'},
         {data:'password',name:'password'},
         {data:'actions',name:'actions'}
         ]

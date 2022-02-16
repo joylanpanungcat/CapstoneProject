@@ -3,6 +3,20 @@
 @section('title','applicant account')
 @section('content')
   <style type="text/css">
+   table tbody tr td input{
+        border: none;
+        background-color: transparent;
+        padding: 5px;
+        text-align: center;
+         font-size: 16px;
+
+
+      }
+      table tbody tr td input:hover{
+        border: 1px solid #2A3F54;
+       
+
+      }
 .profile2{
     border-radius: 50%;
     width: 50%;
@@ -734,8 +748,7 @@ display: inline-block;
                                            @if ($certificate->status != 'approved')
                                              <td>Check payment and inspection details</td>
                                              @else
-                                             <td><button type='button'  class='btn btn-defualt print_certificate ' id="{{ $certificate->applicationId }}"
-                                              ><i class='fa fa-print'></i></button>
+                                             <td>  <button type="button" class="btn btn-success  print_certificate"  id="{{ $certificate->applicationId }}" ><i class="fa fa-print"   ></i> Print</button>
                                                       </td>
                                            @endif
           
@@ -1381,7 +1394,7 @@ display: inline-block;
                             <div class="x_content">
                                   
                  <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-12" id="receipt">
                       <div class="panel panel-default">
                           <div class="title_payment">
                           <center><h5><strong>ORDER OF PAYMENT</strong></h5>
@@ -1399,7 +1412,7 @@ display: inline-block;
                               <!-- <th>Select</th> -->
                               
                               <th>NATURE OF PAYMENT </th>
-                              <th>ACCOUNT CODE</th>
+                              {{-- <th>ACCOUNT CODE</th> --}}
                               <th >TOTAL</th>
 
                             </tr>
@@ -1430,8 +1443,10 @@ display: inline-block;
                               <input type="hidden" id="assessmentId">
                               <label>Amount Paid:</label>
                               <input type="text" name="" class="group1" id="amount_paid"><br>
+                              <label>Change:</label>
+                              <input type="text" name="" class="group1" id="change"><br>
                                 <label>Payment Date:</label>
-                              <input type="date" name="" class="group1" id="date_paid"><br><br>
+                              <input type="input" name="" class="group1" id="date_paid"><br><br>
                               <div class="copy">
                                 <label><b>Original</b>/ (Applicant/Owner's Copy)</label><br>
                                 <label><b>Duplicate</b>/ (GSB/Collecting Agent copy)</label><br>
@@ -1468,8 +1483,8 @@ display: inline-block;
                               
                                  
                                   <div class="button-group total_body2 ">
-                                    <button type="button" class="btn btn-secondary " data-dismiss="modal" id="print_payment_button" style="display: inline-block;"  ><i class="fa fa-arrow-left" ></i>  Close</button>
-                                      <button type="button" class="btn btn-secondary save_payment_button" id="save_payment_button"><i class="fa fa-print" ></i>  Print</button>
+                                    <button type="button" class="btn btn-secondary " data-dismiss="modal" id="" style="display: inline-block;"  ><i class="fa fa-arrow-left" ></i>  Close</button>
+                                      <button type="button" class="btn btn-secondary save_payment_button" onclick="printDivPayment()"><i class="fa fa-print" ></i>  Print</button>
                                   </div>
                                   </form>
                                 </div>
@@ -1488,7 +1503,7 @@ display: inline-block;
       </div>
   
       <div id="inspection_modal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content ">
                 <div class="modal-header">
                     <h5 class="modal-title">Inspection Report</h5>
@@ -1496,38 +1511,180 @@ display: inline-block;
                 </div>
                 <div class="modal-body">
                   <form class="form-horizontal form-label-left">
-        
-                    <div class="form-group row ">
-                        <label class="control-label col-md-3 col-sm-3 ">Type of Application</label>
-                        <div class="col-md-9 col-sm-9 ">
+                    <div class="col-md-12">
+                    <div class="form-group row col-md-4">
+                        <label class="control-label">Type of Application</label>
+                        <div class=" ">
                           <input type="text" class="form-control" placeholder="Default Input" id="type_application_inspection"  readonly>
                           </div>
                     </div>
-                    <div class="form-group row ">
-                      <label class="control-label col-md-3 col-sm-3 ">Inspector Name</label>
-                      <div class="col-md-9 col-sm-9 ">
+                    <div class="form-group row  col-md-4">
+                      <label class="control-label ">Inspector Name</label>
+                      <div class=" ">
                         <input type="text" class="form-control" placeholder="Default Input" id="inspector_name"  readonly>
                         </div>
                   </div>
-                  <div class="form-group row ">
-                    <label class="control-label col-md-3 col-sm-3 ">Date Inspected</label>
-                    <div class="col-md-9 col-sm-9 ">
+                  <div class="form-group row col-md-4">
+                    <label class="control-label ">Date Inspected</label>
+                    <div class=" ">
                       <input type="text" class="form-control" placeholder="Default Input" id="date_inspected" readonly >
                       </div>
                 </div>
-                <div class="form-group row ">
-                  <label class="control-label col-md-3 col-sm-3 ">Date Inspected</label>
-                  <div class="col-md-9 col-sm-9 ">
+              </div>
+              <div class="col-md-12">
+                <div class="form-group row col-md-4">
+                  <label class="control-label  ">Inspection Status</label>
+                  <div class=" ">
                     <input type="text" class="form-control" placeholder="Default Input" id="inspection_status" readonly>
                     </div>
               </div>
-              <div class="form-group row ">
-                <label class="control-label col-md-3 col-sm-3 ">Verify Inspection Report</label>
-                <div class="col-md-9 col-sm-9 ">
+              <div class="form-group row col-md-4">
+                <label class="control-label  ">Verify Inspection Report</label>
+                <div class="">
                   <input type="text" class="form-control" placeholder="Default Input" id="verify_inspection" readonly>
                   </div>
             </div>
+              </div>
+              <div class="col-md-12">
+                <h2><strong>Evaluation Report</strong></h2>
+              </div>
+              <div class="col-md-12">
+              <div class="form-group row col-md-4">
+                <label class="control-label  ">Beams</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Beams" value="" id="beams" readonly>
+                </div>
+            </div>
+            <div class="form-group row  col-md-4 ">
+                <label class="control-label  ">Exterior Walls</label>
+                <div class=" ">
+                    <input type="text" class="form-control" placeholder="Exterior Walls" value="" id="exterior" readonly>
+                </div>
+            </div>
+            <div class="form-group row col-md-4 ">
+                <label class="control-label ">Main Stair</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Main Stairs" value="" id="main_stair" readonly>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group row col-md-4">
+                <label class="control-label ">Main Door</label>
+                <div class=" ">
+                    <input type="text" class="form-control" placeholder="Main Door" value="" id="main_door" readonly>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label  ">Columns</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Columns" value="" id="colums" readonly>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label  ">Corridor Walls</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Curridor Walls" value="" id="corridor_walls" readonly>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group row col-md-4">
+                <label class="control-label ">Windows</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Default Input" value="" id="windows" readonly>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label  ">Trussess</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Trussess" value="" id="trussess" readonly>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label ">Flooring</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Flooring" value="" id="flooring" readonly>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+          
+            <div class="form-group row col-md-4">
+                <label class="control-label  ">Room Partitions</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="room_partitions" value="" id="room_partitions" readonly>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label ">Ceiling</label>
+                <div class=" ">
+                    <input type="text" class="form-control" placeholder="Ceiling" value="" id="ceiling" readonly>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label">Roof</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Roof" value="" id="roof" readonly>
+                </div>
+            </div>
+          </div>
+          
+            <div class="form-group row col-md-12">
+                <h2><strong>Fire Protection Equipment</strong></h2>
+            </div>
+            <div class="col-md-12">
+            <div class="form-group row col-md-4">
+                <label class="control-label  ">Emergency Lights Provide</label>
+                <div class="form-group col-md-12">
+                    <select name="" id="emergency_lights" class="form-control col-md-12" readonly><option value="yes">Yes</option><option value="no">No</option></select>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label ">Number of Fire Stinguisher</label>
+                <div class=" ">
+                    <input type="text" class="form-control" placeholder="No. Stinguisher" value="" id="no_stinguisher" readonly>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label col-md-12">Equiped with fire alarm? </label>
+                <div class=" ">
+                    <select name="" id="fire_alarm" class="form-control col-md-12" disabled><option value="yes">Yes</option><option value="no">No</option></select>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group row col-md-4">
+                <label class="control-label ">Location of Control Panel</label>
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Location of contorl panel" value="" id="location_panel" readonly>
+                </div>
+            </div>
+          </div>
+            <div class="col-md-12">
+              <div class="form-group row col-md-4">
+                  <label class="control-label ">Sectional Occupancy</label>
+                  <div class="">
+                     <textarea name="" id="sectional_occupancy" cols="30" rows="5" disabled></textarea>
+                  </div>
+              </div>
          
+            <div class="form-group row col-md-4">
+                <label class="control-label ">Defect</label>
+                <div class="">
+                    <textarea name="" id="defects" cols="30" rows="5" disabled></textarea>
+                </div>
+            </div>
+            <div class="form-group row col-md-4">
+                <label class="control-label  " disabled>Recommendation</label>
+                <div class=" ">
+                    <textarea name="" id="recommendation" cols="30" rows="5" disabled></textarea>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+           
+          </div>
 
               
                       
@@ -1549,7 +1706,24 @@ display: inline-block;
             </div>
         </div>
     </div>
-
+    <script>
+    $(document).ready(function(e){
+      $(document).on('click','#printReceipt',function(e){
+        alert('nice ka one');
+      });
+      function printDiv() {
+          var divContents = document.getElementById("receipt").innerHTML;
+          var a = window.open('', '', 'height=1000, width=1000');
+          a.document.write('<html>');
+          a.document.write('<body stye="width:40px;height:50px"> ');
+          a.document.write(divContents);
+          a.document.write('</body></html>');
+          a.document.close();
+          a.print();
+      }
+    })
+    
+</script>
 <script type="text/javascript">
 
     // From http://learn.shayhowe.com/advanced-html-css/jquery
@@ -2731,6 +2905,7 @@ $('.view_payment_info').on('click',function(e){
           $('#assessmentId').val($value['assessmentId']);
           $('#amount_paid').val($value['amount_paid']);
           $('#date_paid').val($value['payment_date']);
+          $('#change').val($value['change']);
 
           
 
@@ -2765,6 +2940,25 @@ $('.view_inspection_report').on('click',function(e){
         $('#inspector_name').val(value['Fname'] + ' ' + value['Lname']);
         $('#date_inspected').val(value['date_inspect']);
         $('#inspection_status').val(value['status']);
+        $('#beams').val(value['beams']);
+     $('#exterior').val(value['exterior']);
+     $('#main_stair').val(value['main_stair']);
+    $('#main_door').val(value['main_door']);
+     $('#colums').val(value['colums']);
+    $('#corridor_walls').val(value['corridor_walls']);
+     $('#windows').val(value['windows']);
+     $('#trussess').val(value['trussess']);
+    $('#flooring').val(value['flooring']);
+     $('#room_partitions').val(value['room_partitions']);
+     $('#ceiling').val(value['ceiling']);
+     $('#roof').val(value['roof']);
+     $('#sectional_occupancy').val(value['sectional_occupancy']);
+     $('#emergency_lights').val(value['emergency_lights']);
+     $('#no_stinguisher').val(value['no_stinguisher']);
+    $('#fire_alarm').val(value['fire_alarm']);
+     $('#location_panel').val(value['location_panel']);
+     $('#defects').val(value['defects']);
+     $('#recommendation').val(value['recommendation']);
         if(value['verify'] == null){
           $('#verify_inspection').val('not verify');
           $('#verify_button').html(' <button type="button" class="btn btn-success verify_inspection_button" id='+value['applicationId']+'><i class="fa fa-check"> </i> Verify</button>')
@@ -2884,6 +3078,7 @@ $('.print_certificate').on('click',function(e){
   e.preventDefault();
   var applicationId = $(this).attr('id');
 
+
   $.ajax({
     type:'post',
     url:'{{ route('print_certificate') }}',
@@ -2895,24 +3090,23 @@ $('.print_certificate').on('click',function(e){
       $('#Print_certificate').modal('show');
       var output='';
       if(data.data =='Fire Safety Evaluation Clearance'){
-                    
-        $('#print_content').html(' <img src="{{url('images/certificate/fsec.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" id="print_cert"><i class="fa fa-print"></i> Print</button></div>');
+        $('#print_content').html(' <img src="{{url('images/certificate/fsec.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
       }
+      if(data.data =='Fire Safety Inspection Certificate for Business'){
+        $('#print_content').html(' <img src="{{url('images/certificate/fsic_business.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
+      }
+      if(data.data =='Fire Safety Inspection Certificate for Occupancy'){
+        $('#print_content').html(' <img src="{{url('images/certificate/fsic_occupancy.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
       
+      }
     }
   })
   
 });
 
-$(document).on('click','#print_cert',function(e){
-  e.preventDefault();
 
-  var printContents = document.getElementById("print_content").innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
 
-})
+
 
 
 
@@ -2921,7 +3115,29 @@ $(document).on('click','#print_cert',function(e){
 
 
   </script>
+<script>
+    function printDiv() {
+            var divContents = document.getElementById("print_content").innerHTML;
+            var a = window.open('', '', 'height=1000, width=1000');
+            a.document.write('<html>');
+            a.document.write('<body stye="width:40px;height:50px"> ');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        }
 
+        function printDivPayment() {
+            var divContents = document.getElementById("receipt").innerHTML;
+            var a = window.open('', '', 'height=1000, width=1000');
+            a.document.write('<html>');
+            a.document.write('<body stye="width:40px;height:50px"> ');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        }
+</script>
 
 
   @endsection 

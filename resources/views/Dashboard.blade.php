@@ -79,7 +79,7 @@
              <div class="tile-stats">
                <div class="icon"><i class="fa fa-tasks"></i>
                </div>
-               <div class="count">2</div>
+               <div class="count" id="applicationCount"></div>
 
                <h3><a href="{{ route('application') }}">Application</a></h3>
                <p>Old and New Application.</p>
@@ -89,7 +89,7 @@
              <div class="tile-stats">
                <div class="icon"><i class="fa fa-check"></i>
                </div>
-               <div class="count">2</div>
+               <div class="count" id="approvedCount"></div>
 
                <h3><a href="{{ route('approved_application') }}">Approved </a></h3>
                <p>Aprrove Application.</p>
@@ -99,7 +99,7 @@
              <div class="tile-stats">
                <div class="icon"><i class="fa fa-ban"></i>
                </div>
-               <div class="count">2</div>
+               <div class="count" id="reinspectionCount"></div>
 
                <h3><a href="{{ route('rejected_application') }}">Reinspection </a></h3>
                <p>Denied  or status for reinspection</p>
@@ -109,7 +109,7 @@
              <div class="tile-stats">
                <div class="icon"><i class="fa fa-refresh"></i>
                </div>
-               <div class="count">2</div>
+               <div class="count" id="renewalCount"></div>
 
                <h3><a href="{{ route('renewal_application_main') }}">Renewal</a></h3>
                <p>renewal of application</p>
@@ -261,6 +261,27 @@
     labels: ['Business Renewal','FSEC','FSIC for Business','FSIC for Occupancy']
   });
     </script>
+     <script>
+      $(document).ready(function(){
+        fetch()
+          function fetch(view = ''){
+              $.ajax({
+                  type:'get',
+                  url:'{{ route('fetch_dashboard') }}',
+                  dataType: 'json',
+                  success:function(data){
+                    $('#applicationCount').html(data.applicationCount);
+                    $('#approvedCount').html(data.approvedCount);
+                    $('#reinspectionCount').html(data.reinspectionCount);
+                    $('#renewalCount').html(data.renewalCount);
+         
+                  }
+  
+              })
+          }
+      })
+  </script>  
+  
      
 
 

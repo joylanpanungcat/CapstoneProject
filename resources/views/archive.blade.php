@@ -261,7 +261,10 @@ width: 10px !important;
                           </li>
                             <li role="presentation" class="active"><a href="#tab_content3" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Inspector Account </a>
                             </li>
-                         
+                            <li role="presentation" class="active"><a href="#tab_content4" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Schedules </a>
+                            </li>
+                            <li role="presentation" class="active"><a href="#tab_content5" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Fees </a>
+                            </li>
                         
                         </ul>
                          
@@ -357,6 +360,58 @@ width: 10px !important;
                         </div>
 
                              </div>
+
+                             <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                              <div class="row">
+                                <div class="x_content">
+                                  <br />
+                                     <!--  <button type="button" name="delete_all" id="delete_all" class="btn  btn-xs"><i class="fa fa-user-times fa-lg"></i></button> -->
+                                   <table class="table table-striped table-bordered" id="scheduleArchive" style="width:100%;">
+                            <thead>
+                              <tr>
+                                <!-- <th>Select</th> -->
+                                <th>#</th>
+                                <th>Business Name</th>
+                                <th>Type of application</th>
+                                <th>Date Apply</th>
+                                <th>Date of Inspection</th>
+                                  <th >Action</th>
+
+                              </tr>
+                            </thead>
+                            
+               
+                                </table>
+
+                      </div>
+                      </div>
+                      </div>
+                      <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
+                        <div class="row">
+                          <div class="x_content">
+                            <br />
+                               <!--  <button type="button" name="delete_all" id="delete_all" class="btn  btn-xs"><i class="fa fa-user-times fa-lg"></i></button> -->
+                             <table class="table table-striped table-bordered" id="feesArchive" style="width:100%;">
+                      <thead>
+                        <tr>
+                          <!-- <th>Select</th> -->
+                          <th>#</th>
+                          <th>Nature of payment</th>
+                          <th>Account Code</th>
+                          <th>Assessment total</th>
+                          <th>Date Deleted</th>
+                            <th >Action</th>
+
+
+                        </tr>
+                      </thead>
+                      
+         
+                          </table>
+
+                </div>
+                </div>
+                </div>
                         </div>
 
                         
@@ -590,8 +645,53 @@ width: 10px !important;
         ]
 
      });
-     
 
+     var dataTableSchedule= $('#scheduleArchive').DataTable({
+        processing:true,
+        info:true,
+        'pageLength': 5,
+        'aLengthMenu':[[5,10,25,50,-1],[5,10,25,50,"All"]],
+          "columnDefs":[
+         {
+          "targets":[0, 3, 4,5],
+          "orderable":false,
+         },
+        ],
+          ajax: "{{ route('schedule_fetch_archived') }}",
+        columns:[
+        {data:'DT_RowIndex',name:'DT_RowIndex'},
+        {data:'type_application',name:'type_application'},
+        {data:'business_name',name:'business_name'},
+        {data:'date_apply',name:'date_apply'},
+        {data:'date_inspection',name:'date_inspection'},
+        {data:'actions',name:'actions'}
+        ]
+
+     });
+     var dataTableFees= $('#feesArchive').DataTable({
+        processing:true,
+        info:true,
+        'pageLength': 5,
+        'aLengthMenu':[[5,10,25,50,-1],[5,10,25,50,"All"]],
+          "columnDefs":[
+         {
+          "targets":[0, 3, 4,5],
+          "orderable":false,
+         },
+        ],
+          ajax: "{{ route('fees_fetch_archived') }}",
+        columns:[
+        {data:'DT_RowIndex',name:'DT_RowIndex'},
+        {data:'natureof_payment',name:'natureof_payment'},
+        {data:'account_code',name:'account_code'},
+        {data:'assessment_total',name:'assessment_total'},
+        {data:'deleted_at',name:'deleted_at'},
+        {data:'actions',name:'actions'}
+        ]
+
+     });
+     
+     
 
      $(document).on('click','.actionButton',function(e){
        e.preventDefault();
@@ -650,8 +750,99 @@ width: 10px !important;
 
      });
 
-
      
+     $(document).on('click','.restoreSchedule',function(e){
+    e.preventDefault();
+    var scheduleId = $(this).attr('id');
+
+    Swal.fire({
+         title:"Restore Schedule",
+           titleFontColor:'success',
+         iconHtml: '<i class="fa fa-refresh"></i>',
+         iconColor: '#169F85',
+             showCancelButton: true,
+             focusConfirm: false,
+             background: 'rgb(0,0,0,.9)',
+             customClass : {
+             title: 'swal2-title'
+           },
+           allowOutsideClick: false,
+            
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+           $('#modalViewAccount').modal('hide');
+              Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                             $.ajax({
+                               type: 'post',
+                               url:'{{ route('restore_schedule') }}',
+                               data:{
+                                scheduleId:scheduleId
+                               },
+                               dataType: 'json',
+                               success:function(data){
+                                 toastr.success(data.msg);
+                                 dataTableSchedule.ajax.reload();
+                               }
+                             })
+                        
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
+
+             },
+              backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+       
+               }) 
+
+  });
   $('#restore_account').on('click',function(e){
     e.preventDefault();
     var accountId= $('#accountAccountId').val();
@@ -777,7 +968,7 @@ $('#restore_application').on('click',function(e){
   e.preventDefault();
   var applicationId = $('#applicationId').val();
   Swal.fire({
-         title:"Restore Account",
+         title:"Restore Application?",
            titleFontColor:'success',
          iconHtml: '<i class="fa fa-refresh"></i>',
          iconColor: '#169F85',
@@ -956,8 +1147,99 @@ $('#restore_inspector').on('click',function(e){
        
                }) 
  
+});
+$(document).on('click','.restoreFee',function(e){
+  e.preventDefault();
+var fees_id  = $(this).attr('id');
+  var inspectorId= $('#inspectorId').val();
+  Swal.fire({
+         title:"Restore Fee",
+           titleFontColor:'success',
+         iconHtml: '<i class="fa fa-refresh"></i>',
+         iconColor: '#169F85',
+             showCancelButton: true,
+             focusConfirm: false,
+             background: 'rgb(0,0,0,.9)',
+             customClass : {
+             title: 'swal2-title'
+           },
+           allowOutsideClick: false,
+            
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+           $('#modal_inspector').modal('hide');
+              Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                             $.ajax({
+                               type: 'post',
+                               url:'{{ route('restoreFee') }}',
+                               data:{
+                                fees_id:fees_id
+                               },
+                               dataType: 'json',
+                               success:function(data){
+                                 toastr.success(data.msg);
+                                 dataTableFees.ajax.reload();
+                               }
+                             })
+                        
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
 
-})
+             },
+              backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+       
+               }) 
+ 
+});
   
 
   })

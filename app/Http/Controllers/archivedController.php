@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\applicant_account;
 use App\Models\application;
 use App\Models\inspector;
+use App\Models\schedule;
+use App\Models\fee;
 
 
 use DataTables;
@@ -140,5 +142,69 @@ public function restorInspector(Request $request){
           ]);
         }
 }
-    
+public function schedule_fetch_archived(){
+  
+  $data = schedule::join('application','application.applicationId','=','schedule.applicationId')
+  ->onlyTrashed()->get();
+
+
+             
+  return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('actions', function($row){
+                            return "
+                            <button type='button'  class='btn btn-defualt btn-xs restoreSchedule actionButton2' id='".$row['scheduleId']."'><i class='fa fa-refresh'></i></button>
+          ";
+                        })
+                       ->rawColumns(['actions'])
+                     ->make(true);
+}
+
+public function restore_schedule(Request $request){
+  $scheduleId =$request->scheduleId;
+  $query=schedule::withTrashed()->find($scheduleId )->restore();
+ if($query){
+          return response()->json([
+             'status'=>1,
+             'msg'=>'data undone' 
+          ]);
+        }else
+        {
+          return response()->json([
+             'status'=>0,
+             'msg'=>'something went wrong!' 
+          ]);
+        }
+}
+
+public function fees_fetch_archived(){
+  
+  $data = fee::onlyTrashed()->get();
+  return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('actions', function($row){
+                            return "
+                            <button type='button'  class='btn btn-defualt btn-xs restoreFee actionButton2' id='".$row['fees_id']."'><i class='fa fa-refresh'></i></button>
+          ";
+                        })
+                       ->rawColumns(['actions'])
+                     ->make(true);
+}
+  
+public function restoreFee(Request $request){
+  $fees_id =$request->fees_id;
+  $query=fee::withTrashed()->find($fees_id )->restore();
+ if($query){
+          return response()->json([
+             'status'=>1,
+             'msg'=>'data undone' 
+          ]);
+        }else
+        {
+          return response()->json([
+             'status'=>0,
+             'msg'=>'something went wrong!' 
+          ]);
+        }
+}
 }

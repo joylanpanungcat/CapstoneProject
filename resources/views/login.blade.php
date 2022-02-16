@@ -27,7 +27,9 @@
     margin-top: -15px;
     color: red;
    }
-
+   .login_button{
+  background-color: #1ABB9C;
+}
 
   </style>
 
@@ -67,7 +69,7 @@
                 @enderror
               </div>
               <div>
-                <button type="submit" class="btn btn-secondary form-control" name="login">Login</button>
+                <button type="submit" class="btn btn-secondary form-control login_button" name="login">Login</button>
             
               </div>
            

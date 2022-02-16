@@ -216,7 +216,7 @@
                       
                     </ul>
                   </li>
-                    <li><a href="emergency.php" class="noti_em"><i class="fa fa-fire"></i>
+                    <li><a href="{{ route('emergency_page') }}" class="noti_em"><i class="fa fa-fire"></i>
                    Emergency<span class="badge bg-danger" id="count"></span> </a>
                     
                   </li>
@@ -237,12 +237,11 @@
                     <ul class="nav child_menu">
                       <li><span class="fa fa-chevron-down"></span><a>Fire Safety Inspection Certificate</a>
                           <ul class="nav child_menu">
-                            <li><a href="fsic_occupancy_report.php">FSIC for Occupancy </a></li>
-                            <li><a href="fsic_business_report.php">FSIC for Business </a></li>
-                            <li><a href="fsic_renewal_report.php">FSIC for Business Renewal </a></li>
+                            <li><a href="{{ route('fsic_occupancy_report') }}">FSIC for Occupancy </a></li>
+                            <li><a href="{{ route('fsic_business_report') }}">FSIC for Business </a></li>
                           </ul>
                       </li>
-                      <li><a href="fsec_report.php">Fire Safety Evaluation Clearance </a></li>
+                      <li><a href="{{ route('fsec_report') }}">Fire Safety Evaluation Clearance </a></li>
                       
                     </ul>
                   </li>
@@ -376,7 +375,9 @@
 
 
 </body>
+
 </html>
+
 
 {{-- jquery --}}
   {{-- <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script> --}}
@@ -386,12 +387,12 @@
 
   {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
   <script type="text/javascript" src="{{ asset('datatable/js/jquery.dataTables.min.js') }}"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script> --}}
 
 {{-- bootstrap --}}
 
@@ -420,3 +421,50 @@
 <script src="{{ asset('js/datepicker/datetimepicker.min.js') }}"></script> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+
+<script>
+  $(document).ready(function(){
+    function set_emergency(view = ''){
+      $.ajax({
+        type: 'get',
+        url: '{{ route('fetch_emergency') }}',
+        dataType: 'json',
+        success:function(data){
+          
+          if(data.dataCount > 0){
+            Swal.fire({
+              title:"FIRE EMERGENCY !!",
+              iconHtml: '<i class="fa fa-warning"></i>',
+              iconColor: '#ff2323',
+                    showConfirmButton:true,
+                    focusConfirm: false,
+                    background: 'rgb(0,0,0,.9)',
+                    customClass : {
+                    title: 'swal2-title'
+                  },
+                allowOutsideClick: false,
+                  
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText:
+                    '<i class="fa fa-arrow-right"></i> View Details',
+                  confirmButtonAriaLabel: 'Thumbs up, great!',
+                  cancelButtonText:
+                    '<i class="fa fa-arrow-left"></i>Close',
+                  cancelButtonAriaLabel: 'Thumbs down',
+            
+               }).then((result) => {
+                            window.location.href = "{{ route('emergency_view') }}";
+                        });
+          }
+        }
+      })
+      
+      
+    }
+    set_emergency();
+      setInterval(function(){ 
+        set_emergency();
+      }, 20000);
+
+  })
+</script>

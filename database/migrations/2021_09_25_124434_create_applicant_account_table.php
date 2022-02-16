@@ -15,13 +15,14 @@ class CreateApplicantAccountTable extends Migration
     {
         Schema::create('applicant_account', function (Blueprint $table) {
             $table->id('accountId');
-            $table->string('Fname');
-            $table->string('Lname');
-            $table->string('username');
-            $table->string('password');
-            $table->string('contact_num');
-            $table->string('date_register');
-            $table->string('image');
+            $table->string('Fname')->nullable();
+            $table->string('Lname')->nullable();
+            $table->string('username')->nullable();
+            $table->string('password')->nullable();
+            $table->string('contact_num')->nullable();
+            $table->string('alternative_num')->nullable();
+            $table->string('date_register')->nullable();
+            $table->string('image')->nullable();
         
             $table->timestamps();
         });

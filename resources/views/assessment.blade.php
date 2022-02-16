@@ -258,12 +258,11 @@ letter-spacing: 1px;
                       <div class="col-md-12">
                           <div class="panel panel-default">
                               <div class="title_payment">
-                              <center><h5><strong>ORDER OF PAYMENT</strong></h5>
-                                <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
-                              </center>
+                              <center><h5><strong>ASSESSMENT FEE</strong></h5>
+                              </center><br><br>
                             </div>
                     <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
-                     <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
+                     <div class="panel-heading" style="display: none"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                     <div class="panel-body" id="panel-body">
                       
                         <table class="table table-striped table-bordered" id="data"  style="width:100%;">
@@ -272,7 +271,7 @@ letter-spacing: 1px;
                                   <!-- <th>Select</th> -->
                                   
                                   <th>NATURE OF PAYMENT </th>
-                                  <th>ACCOUNT CODE</th>
+                                  {{-- <th>ACCOUNT CODE</th> --}}
                                   <th >TOTAL</th>
 
                                 </tr>
@@ -281,22 +280,20 @@ letter-spacing: 1px;
                                 <tr>
                                   <td></td>
                                   <td></td>
-                                  <td></td>
                                 </tr>
                                
                                   </tbody>
                                   <thead>
                                       <td>TOTAL</td>
-                                      <td></td>
                                       <td><input type="number" id="total_amount" class="total_amount" readonly></td>
                                   </thead>
                  
                                   </table>
-                                  <h7><b>TOTAL AMOUNT (IN WORDS):</b></h7>
-                                  <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords" >
+                                  <h7 style="display: none"><b>TOTAL AMOUNT (IN WORDS):</b></h7>
+                                  <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords"  style="display: none">
                                   <br><br><br>
                                 
-                                <div class="form-group group2">
+                                <div class="form-group group2"  style="display: none">
                                   <label>Official Receipt No: </label>
                                   <input type="text" name="" class="group1" id="receipt_no"><br>
                                   <input type="hidden" name="" class="group1" id="applicationId"><br>
@@ -313,7 +310,7 @@ letter-spacing: 1px;
 
                                 </div>
 
-                                  <div class="form-group group2" style="float:right;margin-top: 30px;">
+                                  <div class="form-group group2" style="float:right;margin-top: 30px;display: none"  >
                                     <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of" readonly style="width: 400px"></span></h5>
                                     <label style="margin-left:45%">(Name of City/Municipal Fire Marshal)</label><br><br><br>
                                     <input type="text" name="" class="authority_name" id="fee_assessor" readonly>
@@ -340,7 +337,7 @@ letter-spacing: 1px;
                                      
                                       <div class="button-group total_body2 ">
                                           <button type="button" class="btn  save_payment_button" id="save_payment_button"><i class="fa fa-save" ></i>  Save</button>
-                                          <button type="button" class="btn print_payment_button"  id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button>
+                                          {{-- <button type="button" class="btn print_payment_button"  id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button> --}}
                                       </div>
                                       </form>
                                     </div>

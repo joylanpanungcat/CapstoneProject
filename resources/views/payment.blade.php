@@ -180,14 +180,7 @@ text-transform: capitalize;
 font-weight:bold;
 letter-spacing: 1px;
 }
-#total_amount{
-  border: none;
-  text-align: center;
-  font-weight: bold;
-  color: #2A3F54;
-  font-size: 16px;
-  padding: 5px;
-}
+
 #total_amount_inwords{
   font-size: 18px;
   letter-spacing: 4px;
@@ -250,15 +243,13 @@ letter-spacing: 1px;
                       <br>    
                       <div class="row">
                        <div class="col-md-12">
-                           <div class="panel panel-default">
                                <div class="title_payment">
-                               <center><h5><strong>ORDER OF PAYMENT</strong></h5>
-                                 <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
+                               <center><h5><strong>PAYMENT</strong></h5>
                                </center>
-                             </div>
+                             </div><br><br>
                      <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
                      
-                      <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
+                      <div class="panel-heading" style="display: none"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                      <div class="panel-body" id="panel-body">
                        
                          <table class="table table-striped table-bordered" id="data"  style="width:100%;">
@@ -267,8 +258,7 @@ letter-spacing: 1px;
                                    <!-- <th>Select</th> -->
                                    
                                    <th>NATURE OF PAYMENT </th>
-                                   <th>ACCOUNT CODE</th>
-                                   <th >TOTAL</th>
+                                   <th style="width: 250px">TOTAL</th>
  
                                  </tr>
                                </thead>
@@ -276,23 +266,45 @@ letter-spacing: 1px;
                                  <tr>
                                    <td></td>
                                    <td></td>
-                                   <td></td>
                                  </tr>
                                  <tr>
                                    <td>TOTAL</td>
                                    <td></td>
-                                   <td></td>
                                  </tr>
                                    
-                                     
                                    </tbody>
                   
                                    </table>
-                                   <h7><b>TOTAL AMOUNT (IN WORDS):</b></h7>
-                                   <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords">
+                                   <div class="col-md-12">
+                                     <div class="col-md-9"></div>
+                                     <div class="col-md-3"> 
+                                    <div class="form-group row ">
+                                      <label class="control-label col-md-12 "> <strong>Payment</strong></label>
+                                      <div class="col-md-12 ">
+                                          <input type="number" class="form-control"  id="total_amount" readonly >
+                                      </div>
+                                  </div>
+                                      <div class="form-group row ">
+                                        <label class="control-label col-md-12 "> <strong>Amount</strong></label>
+                                        <div class="col-md-12 ">
+                                            <input type="number" class="form-control" placeholder="amount" id="amount" >
+                                        <span id="error_payment" style="color:red"></span>
+                                          
+                                          </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                      <label class="control-label col-md-12 "> <strong>Change</strong></label>
+                                      <div class="col-md-12 ">
+                                          <input type="text" class="form-control" id="change" readonly>
+                                      </div>
+                                  </div>
+                                     </div>
+                                   </div>
+                                   <h7 style="display: none"><b>TOTAL AMOUNT (IN WORDS):</b></h7>
+                                   <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords"  style="display: none">
                                    <br><br><br>
                                  
-                                 <div class="form-group group2">
+                                 <div class="form-group group2" style="display: none">
                                    <label>Offical Receipt No: </label>
                                    <input type="text" name="" class="group1" id="receipt_no"><br>
                                    <input type="hidden" id="assessmentId">
@@ -300,7 +312,7 @@ letter-spacing: 1px;
                                    <input type="text" name="" class="group1" id="amount_paid"><br>
                                      <label>Payment Date:</label>
                                    <input type="date" name="" class="group1" id="date_paid"><br><br>
-                                   <div class="copy">
+                                   <div class="copy" style="display: none">
                                      <label><b>Original</b>/ (Applicant/Owner's Copy)</label><br>
                                      <label><b>Duplicate</b>/ (GSB/Collecting Agent copy)</label><br>
                                      <label><b>Triplicate</b>/ (BFP copy)</label><br>
@@ -309,7 +321,7 @@ letter-spacing: 1px;
  
                                  </div>
  
-                                   <div class="form-group group2" style="float:right;margin-top: 30px;">
+                                   <div class="form-group group2" style="float:right;margin-top: 30px;display: none">
                                      <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of"></span></h5>
                                      <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
                                      
@@ -336,8 +348,8 @@ letter-spacing: 1px;
                                    
                                       
                                        <div class="button-group total_body2 ">
-                                           <button type="button" class="btn btn-secondary save_payment_button" id="save_payment_button"><i class="fa fa-save" ></i>  Save</button>
-                                           <button type="button" class="btn btn-secondary " data-dismiss="modal" id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button>
+                                           <button type="button" class="btn btn-secondary save_payment_button" id="save_payment_button" ><i class="fa fa-save" ></i>  Save</button>
+                                           {{-- <button type="button" class="btn btn-secondary " data-dismiss="modal" id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button> --}}
                                        </div>
                                        </form>
                                      </div>
@@ -448,7 +460,34 @@ letter-spacing: 1px;
           })
           }
      });
-    
+
+     $('#amount').keyup(function(e){
+       e.preventDefault();
+       var amount = $(this).val();
+       var total_amount = $('#total_amount').val();
+       var change = 0;
+       
+      if(total_amount >= amount  ){
+        $('#error_payment').html('Invalid inputs');
+        $('.save_payment_button').attr('disabled','disabled');
+        count = 1;
+        $('#change').val('');
+      }
+     if(amount >= total_amount){
+      change = (amount -total_amount );
+        $('#change').val(change);
+        $('#error_payment').html('');
+        $('.save_payment_button').removeAttr('disabled');
+      }
+      if(change < 0){
+        $('.save_payment_button').attr('disabled','disabled');
+        $('#change').val('');
+
+      }
+     })
+     
+
+
      $(document).on('click','#select_applicant',function(e){
      e.preventDefault();
     var id= $('.optradio:checked').attr('id');
@@ -463,6 +502,7 @@ letter-spacing: 1px;
       success:function(data){
         $('#search_modal').modal('hide');
         $('#nature_payment_body').html(data.data);
+        $('#total_amount').val(data.total_amount);
         $.each(data.data3,function($key,$value){
           $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
           $('#applicant_address').val($value['purok']+ ', ' +$value['barangay']+ ', '  + $value['city']);
@@ -485,8 +525,8 @@ letter-spacing: 1px;
 
    $('#save_payment_button').on('click',function(e){
      var assessmentId=   $('#assessmentId').val();
-     var amount_paid=   $('#amount_paid').val();
-     var date_paid=   $('#date_paid').val();
+     var amount_paid=   $('#amount').val();
+     var change=   $('#change').val();
      Swal.fire({
          title:"Save Payment",
          iconHtml: '<i class="fa fa-check"></i>',
@@ -547,8 +587,8 @@ letter-spacing: 1px;
                                       url: '{{ route('save_payment') }}',
                                       data:{
                                         assessmentId:assessmentId,
+                                        change:change,
                                         amount_paid:amount_paid,
-                                        date_paid:date_paid
                                       },
                                       dataType: 'json',
                                       success:function(data){
@@ -566,8 +606,9 @@ letter-spacing: 1px;
                                     $('#fee_assessor').val('');
                                     $('#search_applicant').val('');
                                     $('#total_amount').val('');
-                                    $('#amount_paid').val('');
+                                    $('#amount').val('');
                                     $('#date_paid').val('');
+                                    $('#change').val('');
                                       }
                                     })
                            })

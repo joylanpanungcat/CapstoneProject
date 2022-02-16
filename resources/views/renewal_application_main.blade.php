@@ -442,7 +442,7 @@ overflow: auto;
       if(checkbox.length<3){
       }else{
         Swal.fire({
-          title:"Add application?",
+          title:"Renew Application?",
             // titleFontColor:'red',
           iconHtml: '<i class="fa fa-check"></i>',
           iconColor: '#42ba96',
@@ -469,24 +469,67 @@ overflow: auto;
                 '<i class="fa fa-check"></i> Yes',
               confirmButtonAriaLabel: 'Thumbs up, great!',
               preConfirm: function(){
-                $.ajax({
-                  type:'post',
-                  url: '{{ route('renew_application_action')  }}',
-                  data:{
-                    applicationId:applicationId,
-                    status:status
-                  },
-                  dataType:'json',
-                  success:function(data){
-                    swal.close();
                 $('#schedule_modal').modal('hide');
-                   swal.close();
-                    toastr.success(data.msg);
-                    $('#applicationData2').DataTable().destroy();
-                fetch_data();
-                  }
-                  
-                })
+                Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                        $.ajax({
+                          type:'post',
+                          url: '{{ route('renew_application_action')  }}',
+                          data:{
+                            applicationId:applicationId,
+                            status:status
+                          },
+                          dataType:'json',
+                          success:function(data){
+                            swal.close();
+                        $('#schedule_modal').modal('hide');
+                          swal.close();
+                            toastr.success(data.msg);
+                            $('#applicationData2').DataTable().destroy();
+                        fetch_data();
+                          }
+                          
+                    })
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
+              
                 }
              
         

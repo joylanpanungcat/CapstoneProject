@@ -934,9 +934,7 @@ public function view_inspection_report(Request $request){
   $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
   ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
   ->where('application.applicationId',$applicationId)
-  ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId'
-
-,'inspection_details.verify']);
+  ->get();
 
   return response()->json([
     'data'=>$inspection_details
@@ -964,7 +962,7 @@ public function print_certificate(Request $request){
   $applicationId = $request->applicationId;
   $output = '';
   $data = application::where('applicationId',$applicationId)->get();
-
+$type_application = '';
   foreach($data as $data){
     $type_application= $data['type_application'];
   }

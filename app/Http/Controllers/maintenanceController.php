@@ -25,24 +25,26 @@ public function fetch_default_fees(){
    foreach($fees as $fee){
        $output .='
        <div class="form-group row ">
-       <label class="control-label col-md-7 col-sm-7 ">'.$fee['natureof_payment'].'</label>
+       <label class="control-label col-md-5 col-sm-5 ">'.$fee['natureof_payment'].'</label>
        <div class="col-md-3 col-sm-3 ">
            <input type="text" class="form-control" value='.$fee['assessment_total'].'>
        </div>
-       <div class="col-md-2 col-sm-2">
+       <div class="col-md-4 col-sm-4">
        <button type="button"  class="btn btn-defualt btn-xs actionButton default_fee " id='.$fee['fees_id'].'><i class="fa fa-pencil"></i></button>
+       <button type="button"  class="btn btn-defualt btn-xm actionButton other_fees_delete" id='.$fee['fees_id'].'><i class="fa fa-trash"></i></button>
        </div>
    </div>';
    }
    foreach($defaultFee as $fee){
     $output2 .='
-    <div class="form-group row ">
-    <label class="control-label col-md-7 col-sm-7 ">'.$fee['natureof_payment'].'</label>
-    <div class="col-md-3 col-sm-3 ">
+    <div class="form-group row  col-md-12">
+    <label class="control-label col-md-5  ">'.$fee['natureof_payment'].'</label>
+    <div class="col-md-3  ">
         <input type="text" class="form-control" value='.$fee['assessment_total'].'>
     </div>
-    <div class="col-md-2 col-sm-2">
-    <button type="button"  class="btn btn-defualt btn-xs actionButton other_fees" id='.$fee['fees_id'].'><i class="fa fa-pencil"></i></button>
+    <div class="col-md-4 ">
+    <button type="button"  class="btn btn-defualt btn-xm actionButton other_fees" id='.$fee['fees_id'].'><i class="fa fa-pencil"></i></button>
+    <button type="button"  class="btn btn-defualt btn-xm actionButton other_fees_delete" id='.$fee['fees_id'].'><i class="fa fa-trash"></i></button>
     </div>
 </div>';
 }
@@ -208,5 +210,24 @@ public function add_other_fee(Request $request){
     }
        
     }
+
+public function delete_fees(Request $request){
+    $fees_id = $request->fees_id;
+
+
+    $query= fee::find($fees_id)->delete();
+    if($query){
+        return response()->json([
+           'status'=>1,
+           'msg'=>'Successfullu Archived' 
+        ]);
+      }else
+      {
+        return response()->json([
+           'status'=>0,
+           'msg'=>'something went wrong!' 
+        ]);
+      }
+}
 
 }

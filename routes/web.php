@@ -38,6 +38,19 @@ Route::get('/welcome', function () {
 Route::group(['middleware'=>['accessPage']],function(){
 // Route::get("dashboard",[verifyController::class,"dashboard"]);
     Route::view('dashboard','Dashboard')->name('Dashboard');
+    Route::get('fetch_dashboard',[verifyController::class,'fetch_dashboard'])->name('fetch_dashboard');
+
+    //emergency 
+Route::get('fetch_emergency',[verifyController::class,'fetch_emergency'])->name('fetch_emergency');
+Route::view('emergency_page','emergency_page')->name('emergency_page');
+Route::get('emergency_view',[verifyController::class, 'emergency_view'])->name('emergency_view');
+Route::get('get_emergency',[verifyController::class,'get_emergency'])->name('get_emergency');
+Route::post('view_emergency',[verifyController::class,'view_emergency'])->name('view_emergency');
+
+
+   
+   
+   
     Route::get("account",[applicantController::class,"account"]);
     Route::get("accountFetch",[applicantController::class,"accountFetch"])->name('accountFetch');
     Route::get("logout",[verifyController::class,"logout"]);
@@ -114,8 +127,13 @@ Route::get("fetchApplication",[archivedController::class,"fetchApplication"])->n
 Route::post("view_application",[archivedController::class,"view_application"])->name('view_application');
 Route::post("restoreApplication",[archivedController::class,"restoreApplication"])->name('restoreApplication');
 Route::get("inspector_fetch_achived",[archivedController::class,"inspector_fetch_achived"])->name('inspector_fetch_achived');
+Route::get("schedule_fetch_archived",[archivedController::class,"schedule_fetch_archived"])->name('schedule_fetch_archived');
+Route::post("restore_schedule",[archivedController::class,"restore_schedule"])->name('restore_schedule');
+
 Route::post("view_inspector_arhived",[archivedController::class,"view_inspector_arhived"])->name('view_inspector_arhived');
 Route::post("restorInspector",[archivedController::class,"restorInspector"])->name('restorInspector');
+Route::get('fees_fetch_archived',[archivedController::class,'fees_fetch_archived'])->name('fees_fetch_archived');
+Route::post("restoreFee",[archivedController::class,"restoreFee"])->name('restoreFee');
 
 
 //renewal
@@ -146,6 +164,7 @@ Route::post('view_authority',[maintenanceController::class,'view_authority'])->n
 Route::post('update_authority',[maintenanceController::class,'update_authority'])->name('update_authority');
 Route::post('add_main_fee',[maintenanceController::class,'add_main_fee'])->name('add_main_fee');
 Route::post('add_other_fee',[maintenanceController::class,'add_other_fee'])->name('add_other_fee');
+Route::post('delete_fees',[maintenanceController::class,'delete_fees'])->name('delete_fees');
 
 
 // file system
@@ -175,6 +194,11 @@ Route::view('renewal_application','renewal_application')->name('renewal_applicat
 Route::get('reports',[reportsController::class,'reports'])->name('reports');
 Route::get('rejected_reports',[reportsController::class,'rejected_reports'])->name('rejected_reports');
 Route::get('renewal_reports',[reportsController::class,'renewal_reports'])->name('renewal_reports');
+
+Route::view('fsic_occupancy_report','fsic_occupancy_report')->name('fsic_occupancy_report');
+Route::view('fsic_business_report','fsic_business_report')->name('fsic_business_report');
+Route::view('fsec_report','fsec_report')->name('fsec_report');
+
 });
 
 

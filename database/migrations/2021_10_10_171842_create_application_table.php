@@ -25,8 +25,8 @@ class CreateApplicationTable extends Migration
      
       
             $table->unsignedBigInteger('accountId')->nullable();
-             $table->foreign('accountId')->references('accountId')->on('applicant_account') ->onUpdate('cascade')
-      ->onDelete('cascade');
+    //          $table->foreign('accountId')->references('accountId')->on('applicant_account') ->onUpdate('cascade')
+    //   ->onDelete('cascade');
             
 
             $table->string('type_application') ->nullable();

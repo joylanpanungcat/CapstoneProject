@@ -363,7 +363,7 @@ overflow: auto;
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="add">Edit</button>
+                            <button type="submit" class="btn btn-primary" id="add">Add</button>
                         </div>
                         </div>
                         </div>
@@ -449,7 +449,7 @@ overflow: auto;
       
 
     Swal.fire({
-         title:"Save Payment",
+         title:"Update Inspector",
          iconHtml: '<i class="fa fa-check"></i>',
          iconColor: '#42ba96',
               showCancelButton: true,
@@ -554,7 +554,7 @@ overflow: auto;
       var password =$('#password').val();
 
       Swal.fire({
-         title:"Save Payment",
+         title:"Add Inspector",
          iconHtml: '<i class="fa fa-check"></i>',
          iconColor: '#42ba96',
               showCancelButton: true,

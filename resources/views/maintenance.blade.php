@@ -536,7 +536,7 @@ position: absolute;
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                       }
                   });
- fetch()
+ fetch();
 function fetch(){
         $.ajax({
                     type:'get',
@@ -784,7 +784,7 @@ $('#Update__other_fees').on('click',function(e){
                                  success:function(data){
                                      toastr.success(data.msg);
                                      swal.close();
-                                     fetch()
+                                     fetch();
                                  }
                              })
                            })
@@ -814,6 +814,9 @@ $(document).on('click','.authority_view',function(e){
     e.preventDefault();
     
     var id = $(this).attr('id');
+    fetch();
+
+    function fetch(){
     $.ajax({
         type: 'post',
         url:'{{ route('view_authority') }}',
@@ -830,6 +833,7 @@ $(document).on('click','.authority_view',function(e){
             $('#authority_modal').modal('show');
         }
     })
+  }
    
 
 });
@@ -909,7 +913,7 @@ $('#update_authority').on('click',function(e){
                                  success:function(data){
                                      toastr.success(data.msg);
                                      swal.close();
-                                     fetch()
+                                     fetch();
                                  }
                              })
                            })
@@ -1147,6 +1151,97 @@ $('#add_other_fee_action').on('click',function(e){
        
                });
    
+});
+
+$(document).on('click','.other_fees_delete',function(e){
+  e.preventDefault();
+ var fees_id  = $(this).attr('id');
+
+  Swal.fire({
+         title:"Archive Fee?",
+           titleFontColor:'red',
+         iconHtml: '<i class="fa fa-archive"></i>',
+         iconColor: '#d82a3a',
+             showCancelButton: true,
+             focusConfirm: false,
+             background: 'rgb(0,0,0,.9)',
+             customClass : {
+             title: 'swal2-title'
+           },
+           allowOutsideClick: false,
+            
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+              Swal.fire({
+                input: 'password',
+                
+                 inputPlaceholder: 'Enter your password',
+                titleFontColor:'red',
+                 iconHtml: '<i class="fa fa-lock"></i>',
+                 iconColor: '#FFF',
+                     showCancelButton: true,
+                     focusConfirm: false,
+                     background: 'rgb(0,0,0,.9)',
+                     customClass : {
+                     title: 'swal2-title'
+                   },
+                   allowOutsideClick: false,
+                    
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText:
+                       '<i class="fa fa-check"></i> Confirm',
+                   
+                     cancelButtonText:
+                       '<i class="fa fa-arrow-left"></i>Cancel',
+                       customClass: {
+                           validationMessage: 'my-validation-message'
+                         },
+                   preConfirm: (value) => {
+                       
+                       if (value !== adminPass) {
+                         Swal.showValidationMessage(
+                           'incorrect password'
+                         )
+                       }
+                       if (value === adminPass) {
+                         $.ajax({
+                           type: 'post',
+                           url: '{{ route('delete_fees') }}',
+                           data:{
+                            fees_id:fees_id
+                           },
+                           dataType: 'json',
+                           success:function(data){
+                             toastr.success(data.msg);
+                             fetch();
+                           }
+                         })
+                       }
+                     },
+                      backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+             });
+
+             },
+              backdrop: `
+             url("/images/logo2.png")
+                   rgb(9 9 26 / 73%)
+                   center
+                   no-repeat
+                 `
+       
+               }) 
+
 });
     })
 </script>

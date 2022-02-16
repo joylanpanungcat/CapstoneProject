@@ -73,7 +73,7 @@ public function add_inspector(Request $request){
 
    if($query){
        return response()->json([
-           'msg'=>'Applicant Successfully Addedd!'
+           'msg'=>'Inspector Successfully Addedd!'
        ]);
    }
 }

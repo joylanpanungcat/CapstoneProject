@@ -509,7 +509,6 @@ overflow: auto;
                                     <h2 class="fs-title">Business Information</h2> 
                                     <div class="form-group col-md-6 "> 
                                   <select class="form-control" id="type_application2" onchange="myFunction()">
-                                    <option value="">Type Of Application</option>
                                         <option value="Fire Safety Evaluation Clearance " >Fire Safety Evaluation Clearance </option>
                                         <option value="FSIC for Occupancy " >FSIC for Occupancy </option>
                                         <option  value="FSIC for Business">FSIC for Business </option>
@@ -571,7 +570,6 @@ overflow: auto;
                                </div>
                                 <div class="form-group col-md-4"> 
                                   <select class="form-control" id="remarks" onchange="myFunction()">
-                                    <option value="">Remarks</option>
                                         <option value="Old">Old </option>
                                         <option value="New">New</option>
                                         

@@ -144,9 +144,9 @@ class feesController extends Controller
     $output="";
     
     $data = fee::whereIn('fees_id',$ids)->get();
-    
+    // <td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td>
     foreach($data as $item){
-      $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
+      $output .= "<tr><td>".$item['natureof_payment']."</td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
     }
 
     return response()->json([
@@ -260,30 +260,35 @@ public function select_assessment(Request $req){
   //   $list_fees= subAssessment::join('fees','fees.fees_id','=','sub_assessment.fees_id')
   //   ->where('sub_assessment.fees_id',$fees_id)->get();
   // } 
-
+  // <td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' readonly='' /></td>
   foreach($data3 as $item){
-    $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' readonly='' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  readonly=''/></td></tr>
+    $output .= "<tr><td>".$item['natureof_payment']."</td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  readonly=''/></td></tr>
     ";
+    $total_amount= $item['total_amount'];
   }
-  $output.="<tr> <td>TOTAL</td><td></td><td >".$item['total_amount']."</td> </tr>";
+  $output.="<tr> <td></td><td></td> </tr>";
  
   return response()->json([
     'data'=>$output,
     'data2'=>$data2,
     // 'list_fees'=>$list_fees,
-    'data3'=> $data3
+    'data3'=> $data3,
+    'total_amount'=>$total_amount
   ]);
 }
 public function save_payment(Request $request){
 $assessmentId = $request->assessmentId;
 $amount_paid = $request->amount_paid;
-$date_paid = $request->date_paid;
+$change = $request->change;
+$date_paid = date('y-m-d');
+
 $payment_status='paid';
   $assessment =assessment::where('assessmentId',$assessmentId);
   $assessment->update([
     'amount_paid'=> $amount_paid,
     'payment_date'=> $date_paid,
     'payment_status'=> $payment_status,
+    'change'=> $change,
   ]);
 
   return response()->json([
