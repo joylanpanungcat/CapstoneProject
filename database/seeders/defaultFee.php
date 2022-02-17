@@ -17,7 +17,8 @@ class defaultFee extends Seeder
         //
         DB::table('default')->insert([
             'authority_of'=>'Joylan E. Panungcat',
-            'fee_assessor'=>'Miggy Ortega'
+            'fee_assessor'=>'Miggy Ortega',
+            'chief'=>'Jay-art Sabandal'
         ]);
     }
 }

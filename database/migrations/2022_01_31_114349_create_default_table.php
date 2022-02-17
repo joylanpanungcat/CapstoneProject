@@ -17,6 +17,7 @@ class CreateDefaultTable extends Migration
             $table->id();
             $table->string('authority_of');
             $table->string('fee_assessor');
+            $table->string('chief');
             $table->timestamps();
         });
     }

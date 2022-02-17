@@ -44,6 +44,7 @@ class CreateApplicationTable extends Migration
             $table->string('date_apply')->nullable();
             $table->string('OR_num')->nullable();
             $table->string('count')->nullable();
+            $table->string('date_approved')->nullable();
             $table->string('filenames');
          
             $table->timestamps();

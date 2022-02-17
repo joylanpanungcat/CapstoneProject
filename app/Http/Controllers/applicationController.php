@@ -13,6 +13,7 @@ use App\Models\activity;
 use App\Models\assessment;
 use App\Models\subAssessment;
 use App\Models\inspection_details;
+use App\Models\defaultFee;
 
 
 // use Storage;
@@ -107,18 +108,19 @@ public function viewApplication(Request $request){
         $applicantAdd=address::where('applicantId','=',$account_id)->first();
         $applicationId=address::where('applicationId','=',$account_id)->first();
 
-      $assessment =applicant::join('assessment','assessment.applicantId','=','applicant.applicantId')
-      ->join('address','applicant.applicantId','=','address.applicantId')
-      ->join('application','applicant.applicantId','=','application.applicantId')
-      ->where('applicant.applicantId',$account_id)
+      $assessment =assessment::join('application','application.applicationId','=','assessment.applicationId')
+      ->join('applicant','applicant.applicantId','=','application.applicantId')
       ->get();
       $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
       ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
       ->where('application.applicationId',$account_id)
       ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
     
-      $certificate = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
-      ->get(['inspector.Fname','inspector.Lname','application.date_apply','application.type_application','application.status','application.applicationId']);
+      // $certificate = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
+      // ->get(['inspector.Fname','inspector.Lname','application.date_apply','application.type_application','application.status','application.applicationId']);
+    $certificate = assessment::join('application','application.applicationId','=','assessment.applicationId')
+    ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+    ->get(['application.type_application','application.date_apply','inspection_details.status','assessment.payment_status','application.applicationId']);
 
 
       // foreach ($assessment as $item){
@@ -128,7 +130,8 @@ public function viewApplication(Request $request){
       // foreach($list_fees as $item){
       //   $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
       // }
-      
+
+      // return dd($certificate);
        return view('application_profile',compact('account_details','assessment','applicantAdd','applicationId','inspection_details','certificate'));
         
   
@@ -961,14 +964,36 @@ public function verify_inspection_report(Request $request){
 public function print_certificate(Request $request){
   $applicationId = $request->applicationId;
   $output = '';
-  $data = application::where('applicationId',$applicationId)->get();
-$type_application = '';
+  $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
+  ->join('address','address.applicationId','=','application.applicationId')
+  ->join('assessment','assessment.applicationId','=','application.applicationId')
+  ->where('application.applicationId',$applicationId)
+  ->get();
+
+  $default = defaultFee::all();
+
   foreach($data as $data){
-    $type_application= $data['type_application'];
+    $business_name= $data['business_name'];
+    $address= $data['prk'].' '.$data['barangay'].' '.$data['city'] ;
+    $applicant= $data['Fname'].' '.$data['Mname'].' '.$data['Lname'] ;
+    $amount_paid = $data['amount_paid'];
+    $OR_num= $data['OR_num'];
+    $payment_date=$data['payment_date'];
+  }
+  foreach($default as $default){
+    $marshal = $default['authority_of'];
+    $chief = $default['chief'];
   }
 
   return response()->json([
-    'data'=>$type_application
+    'business_name'=>$business_name,
+    'address'=>$address,
+    'applicant'=>$applicant,
+    'amount_paid'=>$amount_paid,
+    'OR_num'=>$OR_num,
+    'payment_date'=>$payment_date,
+    'marshal'=>$marshal,
+    'chief'=>$chief,
   ]);
 
 

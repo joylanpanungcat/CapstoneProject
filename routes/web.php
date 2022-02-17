@@ -199,6 +199,9 @@ Route::view('fsic_occupancy_report','fsic_occupancy_report')->name('fsic_occupan
 Route::view('fsic_business_report','fsic_business_report')->name('fsic_business_report');
 Route::view('fsec_report','fsec_report')->name('fsec_report');
 
+//certificate 
+Route::view('certificate','certificate')->name('certificate');
+
 });
 
 

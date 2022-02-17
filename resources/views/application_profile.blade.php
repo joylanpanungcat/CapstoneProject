@@ -494,7 +494,147 @@ letter-spacing: 1px;
 .group2{
 display: inline-block;
 }
+.main-panel{
+    width: 750px;
+    border: 2px solid black;
+    padding: 20px;
+    
+}
+.main-panel input {
+    border: none;
+    border-bottom: 1px solid #000;
+    background-color: #F7F7F7;
+}
+.certificate_content{
+    height: ;
 
+}
+.certificate_content img{
+    margin-top: 20px;
+    width: 100%;
+}
+.certificate_content input{
+    border:none;
+    border-bottom: 1px solid #000;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;   
+    
+}
+.certificate_content .top p, h2, input{
+    text-align: center;
+    background-color: none;
+}
+.certificate_content h2 { 
+    font-weight: bold;
+    color: #2A3F54;
+    margin-top: -10px
+}
+.fsecn_no input {
+    border-bottom: 2px solid red;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;   
+}
+.fsecn_no{
+    color: red;
+}
+.fsecn_no strong {
+    font-size: 20px;
+}
+.fsec_mid {
+    font-weight: bold;
+    color:#2A3F54;
+    font-size: 90em;
+    text-decoration: underline;
+    text-align: justify;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.date_style{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.date_style input {
+    border-bottom: 2px solid #2A3F54;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;   
+}
+.to_whom{
+    text-align: justify;
+}
+.middle_design strong{
+font-weight: bold;
+color: #000;
+}
+.middle_design input{
+  font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;   
+    width: 60%;
+}
+.middle_design2 input{
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;   
+    width: 100%;
+}
+.middle_design2 p {
+    text-align: center
+}
+.owned input{
+  font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;   
+    width: 100%;
+    margin-left: -20px;
+}
+.representative{
+    text-align: end;
+    margin-left: -20px
+}
+.issued_for input{
+  font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;   
+    width: 100%;
+}
+.issued_for2{
+    width: 100%;
+}
+.violation{
+    text-indent: 20px;
+    margin-top: 10px
+}
+.note p{
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+}
+.paalala{
+    font-weight: bolder;
+    color: red;
+    text-align: center
+}
+.moto p{
+    text-align: center;
+    font-size: 30px;
+    color: #2A3F54;
+    font-weight: thin;
+
+}
+#print_content{
+  padding: 20px;
+}
+.button_print_cert button{
+ float: right; 
+}
+.being_issued_for{
+  font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;   
+}
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -719,7 +859,7 @@ display: inline-block;
                                                   <th>#</th>
                                                   <th>Type of application</th>
                                                   <th>Date Applied</th>
-                                                  <th>Inspector Name</th>
+                                                  <th>Inspection Status</th>
                                                       <th>Application Status</th> 
                                                   <th>Action</th>
           
@@ -740,7 +880,7 @@ display: inline-block;
                                                   </td>
                                                   <td>{{$certificate->date_apply}}
                                                   </td>
-                                                  <td>{{$certificate->Fname}},{{$certificate->Lname}}
+                                                  <td>{{$certificate->payment_status}}
                                                   </td>
                                                   <td>{{$certificate->status}}
                                                   </td>
@@ -813,7 +953,6 @@ display: inline-block;
                                                 @php 
                                                     $i=1;
                                                 @endphp
-        
         
                                             <tr>
                                                 <td>{{$i++}}
@@ -1136,11 +1275,192 @@ display: inline-block;
     </div>
     
     <div id="Print_certificate" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-md">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content " id="print_content">
-            
+            <div class="main-panel ">
+              <div class="row certificate_content" > 
+                  <div class=" col-md-12">
+                      <div class="col-md-2">
+                          <img src="{{ asset('images/dilg.png')  }}" alt="" style="width: 100%">
+                      </div>
+                      <div class="col-md-8">
+                          <div class=" top">
+                              <p>Republic of the Philippines
+                              <br><strong>Department of the Interior and local Government</strong></p>
+                              <h2 style="color:#2A3F54">BUREAU OF FIRE PROTECTION</h2>
+                             <center>
+                              <input type="text" name="" id="" style="width:40%">
+                              <input type="text" name="" id=""  style="width:60%">
+                              <input type="text" name="" id=""  style="width:80%">
+                          </center> 
+                          </div><br><br>
+                      </div>
+                      <div class="col-md-2">
+                          <img src="{{ asset('images/logo.png')  }}" alt="" style="width: 100%">
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-6 fsecn_no">
+                          <div class="col-md-6"><strong>FSEC NO . R</strong></div>
+                          <div class="col-md-4"><input type="text"></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+               <div class="col-md-12 fsec_mid"> 
+                      <h3><b>FIRE SAFETY EVALUATION CLEARANCE</b></h3>
+               </div>
           </div>
-      </div>
+              <div class="row date_style">
+                  <div class="col-md-8"></div>
+                  <div class="col-md-4"><input type="text"><br><span>Date</span></div>
+              </div>
+              <div class="row to_whom">
+                          <h2><strong >TO WHOM IT MAY CONCERN</strong></h2>
+                  <div class="row">
+                      <div class="col-md-12 middle_design">
+                      <p>By virtue of the provisions of RA 9514 otherwise known as the Fire Code of the Philippines of 2008 the application for</p>
+                              <strong >FIRE SAFETY EVALUATION CLEARANCE OF </strong><span><input type="text" name="" id="business_name_print" ></span>
+                              <div class="col-md-6"></div>
+                              <div class="col-md-6"><p>(Name of Building/ Structure Facility)</p></div>
+                          </p>
+                      </div>
+                      <div class="col-md-12 middle_design2">
+                          <div class="col-md-12">
+                              <input type="text" name="" id="address_print">
+                          </div>
+                          <div class="col-md-12">
+                              <p>to be constructed / renovated / altered / modified / change of occupancy located at</p>
+                          </div>
+                          <div class="col-md-12">
+                              <input type="text" name="" id="">
+                          </div>
+                          <div class="col-md-12">
+                              <p>(Address)</p>
+                          </div>
+                      </div>
+                      <div class="col-md-12 owned">
+                          <div class="col-md-12">
+                              <div class="col-md-2">owned by</div>
+                              <div class="col-md-4"><input type="text" name="" id="applicant_name"></div>
+                              <div class="col-md-6"> <p>is hereby <strong>GRANTED</strong> after the building plans and</p></div>
+                             
+                              <div class="col-md-12 representative">
+                                  <div class="col-md-6"><p>(Name of Owners/Representative)</p></div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="col-md-12">
+                              <p>other documents conform to the safety and life safety requirements of the Fire Code of the Philippines of 2008 and its IRR <br>
+                                  and that the recommendations in the Fire Safety Checklist (FSC) will be adopted.</p>
+                              </div>
+                              </div>
+                      </div>
+                      {{-- <div class="row being_issued_for ">
+                          <div class="col-md-12">
+                              <div class="col-md-12">
+                                  <p>This clearance is being issued for <span><input type="text" name="" id="" style="width: 350px"></span></p>
+                              </div>
+                              <div class="col-md-12">
+                                  <input type="text" name="" id="" style="width:100%">
+                              </div>
+                              </div>
+                      </div> --}}
+                      
+                      
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="col-md-12 violation">
+                                  <p>Violation of Fire Code provisions shall ipso facto cause this certificate null and void, and shall hold the owner of the
+                                      building liable to the penalties provided for by the said Fire code.
+                                      </p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row fire_code">
+                          <div class="col-md-12">
+                              <div class="col-md-4">
+                                  <div class="col-md-12">
+                                      <label for=""><b>Fire Code Fees</b></label>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <div class="col-md-6">
+                                          <label for="">Amount Paid:</label>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <input type="text"  style="width: 100%" id="amount_paid">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <div class="col-md-6">
+                                          <label for="">O.R. Number:</label>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <input type="text" id="OR_num_print">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <div class="col-md-6">
+                                          <label for="">Date:</label>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <input type="text" id="payment_date">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-4"></div>
+                              <div class="col-md-4">
+                                  <div class="col-md-12">
+                                      <p>RECOMMEND APPROVAL</p>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <input type="text" id="chief" style="font-size: 16px;text-align:center;font-weight:bold"><br>
+                                      <p style="text-align: center">CHIEF, FSES</p>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <p><strong>APPROVED :</strong></p>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <input type="text" name="" id="marshal" style="font-size: 16px;text-align:center;font-weight:bold"><br>
+                                      <p>CITY/MUNICIPAL FIRE MARSHAL</p>
+                                  </div>
+                              </div>
+      
+                              <div class="row note">
+                                  <div class="col-md-12">
+                                  <p><b>NOTE :  “This Clearance is accompanied by Fire safety Checklist and does not take the place of any license required by
+                                      law and is not transferable. Any change or alteration in the design and specification during construction shall require a
+                                      new clearance”</b></p>
+                                  </div>
+                              </div>
+                              <div class="row paalala">
+                                  <div class="col-md-12">
+                                  <p>PAALALA: “MAHIGPIT NA IPINAGBABAWAL NG PAMUNUAN NG BUREAU OF FIRE PROTECTION SA MGA KAWANI NITO ANG
+                                      MAGBENTA O MAGREKOMENDA NG ANUMANG BRAND NG FIRE EXTINGUISHER”</p>
+                                  </div>
+                              </div>
+                              <div class="row moto">
+                                  <div class="col-md-12 ">
+                                  <p><strong>"FIRE SAFETY IS OUR MAIN CONCERN"</strong></p>
+                              </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          <div class="button_print_cert" >
+            <button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button>
+            <button type="button" data-dismiss="modal" class="btn btn-default">close</button>
+          </div>
+          </div>
+          
+      </div> 
   </div>
 
 
@@ -1401,7 +1721,7 @@ display: inline-block;
                             <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
                           </center>
                         </div>
-                <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
+                <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name_payment" name=""></span></h5></div>
                 
                  <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                 <div class="panel-body" id="panel-body">
@@ -1442,7 +1762,7 @@ display: inline-block;
                               <input type="text" name="" class="group1" id="receipt_no"><br>
                               <input type="hidden" id="assessmentId">
                               <label>Amount Paid:</label>
-                              <input type="text" name="" class="group1" id="amount_paid"><br>
+                              <input type="text" name="" class="group1" id="amount_paid_payment"><br>
                               <label>Change:</label>
                               <input type="text" name="" class="group1" id="change"><br>
                                 <label>Payment Date:</label>
@@ -2883,7 +3203,6 @@ $('.view_payment_info').on('click',function(e){
     var applicationId  = $(this).attr('id');
     var applicantId  = $('#view_payment_applicationId').val();
 
-    
 
     $.ajax({
         type: 'post',
@@ -2897,7 +3216,7 @@ $('.view_payment_info').on('click',function(e){
     $('#payment_view_modal').modal('show');
     $('#nature_payment_body').html(data.output);
             $.each(data.data,function($key,$value){
-          $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
+          $('#applicant_name_payment').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
           $('#applicant_address').val($value['purok']+ ', ' +$value['barangay']+ ', '  + $value['city']);
          ;
           $('#total_amount_inwords').val($value['total_amount_words']);
@@ -3078,7 +3397,6 @@ $('.print_certificate').on('click',function(e){
   e.preventDefault();
   var applicationId = $(this).attr('id');
 
-
   $.ajax({
     type:'post',
     url:'{{ route('print_certificate') }}',
@@ -3088,17 +3406,26 @@ $('.print_certificate').on('click',function(e){
     dataType:'json',
     success:function(data){
       $('#Print_certificate').modal('show');
+        $('#business_name_print').val(data.business_name);
+        $('#address_print').val(data.address);
+        $('#applicant_name').val(data.applicant);
+        $('#amount_paid_payment').val(data.amount_paid);
+        $('#OR_num_print').val(data.OR_num);
+        $('#payment_date').val(data.payment_date);
+        $('#marshal').val(data.marshal);
+        $('#chief').val(data.chief);
+        
       var output='';
-      if(data.data =='Fire Safety Evaluation Clearance'){
-        $('#print_content').html(' <img src="{{url('images/certificate/fsec.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
-      }
-      if(data.data =='Fire Safety Inspection Certificate for Business'){
-        $('#print_content').html(' <img src="{{url('images/certificate/fsic_business.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
-      }
-      if(data.data =='Fire Safety Inspection Certificate for Occupancy'){
-        $('#print_content').html(' <img src="{{url('images/certificate/fsic_occupancy.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
+      // if(data.data =='Fire Safety Evaluation Clearance'){
+      //   $('#print_content').html(' <img src="{{url('images/certificate/fsec.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
+      // }
+      // if(data.data =='Fire Safety Inspection Certificate for Business'){
+      //   $('#print_content').html(' <img src="{{url('images/certificate/fsic_business.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
+      // }
+      // if(data.data =='Fire Safety Inspection Certificate for Occupancy'){
+      //   $('#print_content').html(' <img src="{{url('images/certificate/fsic_occupancy.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
       
-      }
+      // }
     }
   })
   
