@@ -88,7 +88,7 @@ public function applicationFetch(Request $request){
        return '
           <button type="button"  class="btn    sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
         </button>  
- <a type="button" name="viewApplicant" class="btn  actionButton" href="application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
+ <a type="button" name="viewApplicant" class="btn  actionButton" href="application_profile/'.$row['applicantId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
 ';
       })
 ->addColumn('name', function($row){
@@ -102,24 +102,53 @@ public function applicationFetch(Request $request){
 public function viewApplication(Request $request){
 
     $account_id= $request->id;
+    $applicantId= $request->id;
+
+    // $applicant = applicant::where('applicantId',$applicantId)->get();
+
     $output ='';
 
         $account_details = applicant::find($account_id);
+
+        $data =application::where('applicantId',$applicantId)->get();
+
+        foreach($data as $data){
+        $accountId =$data['accountId'];
+        }
+        $application = application::join('address','address.applicationId','=','application.applicationId')
+        ->where('application.applicantId',$applicantId)
+        ->ORwhere('application.accountId','=',$accountId)
+        ->get();
+
+        $uploaded = application::join('address','address.applicationId','=','application.applicationId')
+        ->where('application.applicantId',$applicantId)
+        ->ORwhere('application.accountId','=',$accountId)
+        ->get();
+
+        $assessment_no_payment = application::join('address','address.applicationId','=','application.applicationId')
+        ->where('application.applicantId',$applicantId)
+        ->ORwhere('application.accountId','=',$accountId)
+        ->get();
+    
+
+    
         $applicantAdd=address::where('applicantId','=',$account_id)->first();
         $applicationId=address::where('applicationId','=',$account_id)->first();
 
-      $assessment =assessment::join('application','application.applicationId','=','assessment.applicationId')
-      ->join('applicant','applicant.applicantId','=','application.applicantId')
-      ->get();
+        $assessment =assessment::join('application','application.applicationId','=','assessment.applicationId')
+        ->join('applicant','applicant.applicantId','=','application.applicantId')
+        ->where('application.applicantId',$account_id)
+        ->ORwhere('application.accountId','=',$accountId)
+        ->get();
+      
       $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
       ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
       ->where('application.applicationId',$account_id)
       ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
     
-      // $certificate = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
-      // ->get(['inspector.Fname','inspector.Lname','application.date_apply','application.type_application','application.status','application.applicationId']);
     $certificate = assessment::join('application','application.applicationId','=','assessment.applicationId')
     ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+    ->where('application.applicationId',$account_id)
     ->get(['application.type_application','application.date_apply','inspection_details.status','assessment.payment_status','application.applicationId']);
 
 
@@ -131,8 +160,8 @@ public function viewApplication(Request $request){
       //   $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
       // }
 
-      // return dd($certificate);
-       return view('admin/application_profile',compact('account_details','assessment','applicantAdd','applicationId','inspection_details','certificate'));
+     
+       return view('admin/application_profile',compact('application','assessment_no_payment','account_details','assessment','applicantAdd','applicationId','inspection_details','certificate','uploaded'));
         
   
 
@@ -225,7 +254,6 @@ public function viewApplication(Request $request){
 
         $type_application =$request->type_application;
 
-
         if($request->file('file')){
 
             $img = $request->file('file');
@@ -236,9 +264,6 @@ public function viewApplication(Request $request){
             $files=[];
             $path = public_path().'/files/';
           // $path= mkdir(public_path().'/files/'.$Fname.'-'.$Lname.'/'.$type_application);
-
- 
- 
         foreach($img as $file){
                 $name=$file->getClientOriginalName();
                // $imageName = strtotime(now()).rand(11111,99999).'.'.$img->getClientOriginalExtension();
@@ -249,7 +274,7 @@ public function viewApplication(Request $request){
     $path2=$Fname.$Lname.'/'.$type_application;
 
      $application = new application;
-       $application->where('applicationId', $userid)->update(['filenames'=>$path2]);
+      $application->where('applicationId', $userid)->update(['filenames'=>$path2]);
 
      $folder= new folderUpload;
       $folder->applicationId= $applicationId;
@@ -275,10 +300,9 @@ public function viewApplication(Request $request){
       foreach($files as $name){
                  $filesUpload= new  fileUpload;
                 $filesUpload->applicationId=$userid;
-               $filesUpload->filename=$name;
-               $filesUpload->folderId=$folderParent2;
-             $filesUpload->lastModified=date("F j, Y, g:i a");
-
+                 $filesUpload->filename=$name;
+                $filesUpload->folderId=$folderParent2;
+                $filesUpload->lastModified=date("F j, Y, g:i a");
                  $filesUpload->save();
       }
 

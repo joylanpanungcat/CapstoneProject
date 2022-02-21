@@ -274,49 +274,70 @@ $address->update([
 public function view_business_info(Request $request){
   $applicationId= $request->applicationId;
 
-  $data = application::where('applicationId',$applicationId)->get();
+  $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
+  ->where('applicationId',$applicationId)->get();
+   $address_application = application::join('address','address.applicationId','=','application.applicationId')
+  ->where('application.applicationId',$applicationId)->get();
+
+  $address_applicant = application::join('address','address.applicantId','=','application.applicantId')
+  ->where('application.applicationId',$applicationId)->get();
+
   $inspector = inspector::get();
   $schedule = schedule::where('applicationId',$applicationId)->get();
 
   return response()->json([
     'data2'=>$data,
     'inspector'=>$inspector,
+    'address_application'=>$address_application,
+    'address_applicant'=>$address_applicant,
     'schedule'=>$schedule
   ]);
   
 
 }
 public function update_business_info(Request $request){
-  $applicationId =$request->applicationId;
-  $type_application =$request->type_application;
-  $control_number =$request->control_number;
-  $type_occupancy =$request->type_occupancy;
-  $nature_business =$request->nature_business;
-  $business_name =$request->business_name;
-  $Bin =$request->Bin;
-  $BP_num =$request->BP_num;
-  $inpector_id =$request->inpector_id;
-  $OR_num =$request->OR_num;
-  $status =$request->status;
-  $date_apply =$request->date_apply;
-  $remarks =$request->remarks;
+ $applicationId = $request->applicationId_businessInfo;
+ $applicantId = $request->applicant_businessInfo;
+ 
 
-        $data = application::where('applicationId',$applicationId);
-        $data->update([
-          'type_application' => $type_application,
-          'control_number' => $control_number,
-          'type_occupancy' => $type_occupancy,
-          'nature_business' => $nature_business,
-          'business_name' => $business_name,
-          'Bin' => $Bin,
-          'BP_num' => $BP_num,
-          'inpector_id' => $inpector_id,
-          'OR_num' => $OR_num,
-          'status' => $status,
-          'date_apply' => $date_apply,
-          'remarks' => $remarks,
+        $application = application::where('applicationId',$applicationId);
+        $application->update([
+          'type_application' => $request->type_application,
+          'control_number' => $request->control_number,
+          'type_occupancy' => $request->type_occupancy,
+          'nature_business' =>$request->nature_business,
+          'business_name' => $request->type_occupancy,
+          'Bin' =>$request->Bin,
+          'BP_num' => $request->BP_num,
+          'OR_num' =>$request->OR_num,
+          'status' => $request->status,
+          'date_apply' =>$request->date_apply,
+          'remarks' => $request->remarks,
         ]);
-      
+
+        $applicant = applicant::where('applicantId',$applicantId);
+        $applicant->update([
+          'Fname'=>$request->Fname_Business,
+          'Lname'=>$request->Fname_Business,
+          'Mname'=>$request->Mname_Business,
+          'contact_num'=>$request->contact_num_Business,
+          'alcontact'=>$request->alcontact_business,
+        ]);
+
+        $address_applicant = address::where('applicantId',$applicantId);
+        $address_applicant->update([
+          'purok'=>$request->purok_applicant,
+          'barangay'=>$request->barangay_applicant,
+          'city'=>$request->city_applicant,
+        ]);
+
+        $address_application = address::where('applicationId',$applicationId);
+        $address_application->update([
+          'purok'=>$request->purok_business,
+          'barangay'=>$request->barangay_business,
+          'city'=>$request->barangay_business,
+        ]);
+
         return response()->json([
           'msg'=>'Successfully Update!'
         ]);

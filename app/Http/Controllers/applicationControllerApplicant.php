@@ -7,12 +7,15 @@ use App\Models\address;
 use App\Models\applicant;
 use App\Models\applicant_account;
 use App\Models\emergency;
+use App\Models\folderUpload;
+use App\Models\fileUpload;
 
 class applicationControllerApplicant extends Controller
 {
     //
     public function add_appllication_action(Request $request){
         $accountId   = session()->get('accountId')['accountId'];
+        $applicantFname =session()->get('accountId')['Fname'];
         $type_application  =$request->type_application;
         $type_occupancy  =$request->type_occupancy;
         $nature_business  =$request->nature_business;
@@ -26,11 +29,29 @@ class applicationControllerApplicant extends Controller
         $purok   =$request->purok ;
         $barangay   =$request->barangay ;
 
+        $applicant_purok   =$request->applicant_purok ;
+        $applicant_barangay   =$request->applicant_barangay ;
+        $applicant_city   =$request->applicant_city ;
+
         $Fname =$request->Fname;
         $Lname =$request->Lname;
         $Mname =$request->Mname;
         $contact_num =$request->contact_num;
 
+        if($request->file('file')){
+            $img = $request->file('file');
+
+         
+             $files=[];
+             $path = public_path().'/files/';
+            foreach($img as $file){
+                 $name=$file->getClientOriginalName();
+               // $imageName = strtotime(now()).rand(11111,99999).'.'.$img->getClientOriginalExtension();
+                $file->move($path.$Fname.$Lname.'/'.$type_application,$name);
+                  $files[]=$name;  
+                }
+        }
+        $path2=$Fname.$Lname.'/'.$type_application;
         $applicant = new applicant;
         $applicant->Fname =$Fname;
         $applicant->Lname =$Lname;
@@ -48,9 +69,8 @@ class applicationControllerApplicant extends Controller
         $application->business_name=$business_name;
         $application->date_apply =$date_apply;
         $application->status= $status;
-        $application->filenames= $filenames;
+        $application->filenames= $path2;
         $application->remarks= $remarks;
-        
         $application->save();
         $applicationId= $application->applicationId;
 
@@ -63,10 +83,42 @@ class applicationControllerApplicant extends Controller
 
         $address2 = new address;
         $address2->applicantId= $applicantId;
-        $address2->purok=$purok;
-        $address2->barangay=$barangay;
-        $address2->city=$city;
+        $address2->purok=$applicant_purok;
+        $address2->barangay=$applicant_barangay;
+        $address2->city=$applicant_city;
         $address2->save();
+        
+        
+        
+        $folder= new folderUpload;
+        $folder->applicationId= $applicationId;
+        $folder->folderName= $Fname.$Lname;
+        $folder->uploader= $applicantFname;
+        $folder->parentId= null;
+        $folder->created=date("F j, Y, g:i a");
+        $folder->lastModified=date("F j, Y, g:i a");
+        $folder->save();
+        $folderParent = $folder->folderId;
+
+        
+      $folder2= new folderUpload;
+      $folder2->applicationId= $applicationId;
+      $folder2->folderName= $type_application;
+      $folder2->parentId= $folderParent;
+      $folder2->uploader= $applicantFname;
+      $folder2->lastModified=date("F j, Y, g:i a");
+      $folder2->created=date("F j, Y, g:i a");
+      $folder2->save();
+      $folderParent2 = $folder2->folderId;
+
+      foreach($files as $name){
+        $filesUpload= new  fileUpload;
+       $filesUpload->applicationId=$applicationId;
+        $filesUpload->filename=$name;
+       $filesUpload->folderId=$folderParent2;
+       $filesUpload->lastModified=date("F j, Y, g:i a");
+        $filesUpload->save();
+}
 
         return response()->json([
             'msg'=>'Applied Successfully'

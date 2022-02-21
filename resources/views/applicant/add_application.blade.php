@@ -100,34 +100,55 @@
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">First Name</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="First Name" id="Fname" >
+                                            <input type="text" class="form-control" placeholder="First Name" id="Fname" name="Fname">
                                         </div>
                                     </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Last Name</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="Last Name" id="Lname" >
+                                            <input type="text" class="form-control" placeholder="Last Name" id="Lname" name="Lname" >
                                         </div>
                                     </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Middle Name</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="Middle Name" id="Mname" >
+                                            <input type="text" class="form-control" placeholder="Middle Name" id="Mname" name="Mname">
                                         </div>
                                     </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Contact Number</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="Contact Number" id="contact_num" >
+                                            <input type="text" class="form-control" placeholder="Contact Number" id="contact_num" name="contact_num">
                                         </div>
                                     </div>
+                                    <div class="form-group row ">
+                                      <h5> Address</h5> 
+                                  </div>
+                                  <div class="form-group row ">
+                                    <label class="control-label col-md-3 col-sm-3 ">Purok</label>
+                                    <div class="col-md-9 col-sm-9 ">
+                                        <input type="text" class="form-control" placeholder="Purok" id="applicant_purok" name="applicant_purok">
+                                    </div>
+                                </div>
+                                <div class="form-group row ">
+                                  <label class="control-label col-md-3 col-sm-3 ">Barangay</label>
+                                  <div class="col-md-9 col-sm-9 ">
+                                      <input type="text" class="form-control" placeholder="Barangay" id="applicant_barangay" name="applicant_barangay">
+                                  </div>
+                              </div>
+                              <div class="form-group row ">
+                                <label class="control-label col-md-3 col-sm-3 ">City</label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="text" class="form-control" placeholder="City" id="applicant_city" name="applicant_city" >
+                                </div>
+                            </div>
                                     <div class="form-group row ">
                                       <h2><strong>Business Details</strong></h2> 
                                   </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Type of Application</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <select class="select_status form-control" id="type_application" >
+                                            <select class="select_status form-control" id="type_application" name="type_application" >
                                                 <option value="Fire Safety Inspection Certificate">Fire Safety Inspection Certificate</option>
                                                 <option value="Fire Safery Evaluation Clearance">Fire Safery Evaluation Clearance</option>
                                                 <option value="Fire Safety Inspection Certificate for Business">Fire Safety Inspection Certificate for Business</option>
@@ -138,31 +159,34 @@
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Type of Occupancy (eg. Mercantile, Business)</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="Type of Occupancy" id="type_occupancy" >
+                                            <input type="text" class="form-control" placeholder="Type of Occupancy" id="type_occupancy" name="type_occupancy" >
                                         </div>
                                     </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Nature of Business (e.g Sari-sari)</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="Nature Of Business" id="nature_business" >
+                                            <input type="text" class="form-control" placeholder="Nature Of Business" id="nature_business" name="nature_business" >
                                         </div>
                                     </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Business Name</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="Business Name" id="business_name" >
+                                            <input type="text" class="form-control" placeholder="Business Name" id="business_name" name="business_name" >
                                         </div>
                                     </div>
                                     <div class="form-group row ">
+                                      <h5> Address</h5> 
+                                  </div>
+                                    <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Purok</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="Purok" id="purok" >
+                                            <input type="text" class="form-control" placeholder="Purok" id="purok" name="purok">
                                         </div>
                                     </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Barangay</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="barangay" id="barangay" >
+                                            <input type="text" class="form-control" placeholder="barangay" id="barangay" name="barangay">
                                         </div>
                                     </div>
                                     <div class="form-group row ">
@@ -171,6 +195,15 @@
                                           <input type="text" class="form-control" value="Panabo" readonly >
                                       </div>
                                   </div>
+                                  <div class="form-group row ">
+                                    <h2><strong>Application Requirements</strong></h2> 
+                                </div>
+                                <div class="form-group row ">
+                                  <label class="control-label col-md-3 col-sm-3 "></label>
+                                  <div class="col-md-9 col-sm-9 ">
+                                      <input type="file" class="form-control" name="file[]" readonly multiple>
+                                  </div>
+                              </div>
                                   
                                     
                       
@@ -206,18 +239,6 @@
 
   $('#add_application').on('submit',function(e){
     e.preventDefault();
-    var type_application = $('#type_application').val();
-    var type_occupancy = $('#type_occupancy').val();
-    var nature_business = $('#nature_business').val();
-    var business_name = $('#business_name').val();
-    var Fname = $('#Fname').val();
-    var Lname = $('#Lname').val();
-    var Mname = $('#Mname').val();
-    var contact_num = $('#contact_num').val();
-    var purok = $('#purok').val();
-    var barangay = $('#barangay').val();
-
-
 
     Swal.fire({
           title: 'Application Confirmation',
@@ -235,44 +256,31 @@
         }).then((result) => {
           if (result.isConfirmed) {
 
-           $.ajax({
-               type:'post',
-               url: '{{ route('add_appllication_action') }}',
-               data:{
-              
-                type_application:type_application,
-                type_occupancy:type_occupancy,
-                nature_business:nature_business,
-                business_name:business_name,
-                Fname:Fname,
-                Lname:Lname,
-                Mname:Mname,
-                contact_num:contact_num,
-                purok:purok,
-                barangay:barangay,
-                
-               },
-               dataType: 'json',
-               success:function(data){
-                             Swal.fire({
-                            title:"Successfully Applied",
-                            icon:'success',
-                                showConfirmButton:true,
-                                focusConfirm: false,
-                                background: 'rgb(0,0,0,.9)',
-                                customClass : {
-                                    title: 'swal2-title'
-                                }, 
-                            background: 'rgb(0,0,0,.9)',
-                            confirmButtonColor: '#1ABB9C',
-                            confirmButtonText: 'login',
-                        }).then((result) => {
-                            window.location.href = "application";
-                        })
-
-               }
-           })
-
+            $.ajax({
+      type: 'post',
+      url:'{{ route('add_appllication_action') }}',
+      data: new FormData(this),
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success:function(data){
+        Swal.fire({
+              title:"Successfully Applied",
+              icon:'success',
+                  showConfirmButton:true,
+                  focusConfirm: false,
+                  background: 'rgb(0,0,0,.9)',
+                  customClass : {
+                      title: 'swal2-title'
+                  }, 
+              background: 'rgb(0,0,0,.9)',
+              confirmButtonColor: '#1ABB9C',
+              confirmButtonText: 'login',
+          }).then((result) => {
+              window.location.href = "application";
+          })
+      }
+    })
           }
         })
 

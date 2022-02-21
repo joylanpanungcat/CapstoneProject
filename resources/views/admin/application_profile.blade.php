@@ -522,7 +522,7 @@ display: inline-block;
     
 }
 .certificate_content .top p, h2, input{
-    text-align: center;
+    /* text-align: center; */
     background-color: none;
 }
 .certificate_content h2 { 
@@ -635,6 +635,18 @@ color: #000;
     font-weight: bold;
     letter-spacing: 2px;   
 }
+
+#business_info_view .business-modal-body {
+    height:400px;
+    overflow-y: auto;
+    align-content: center;
+    position: relative;
+}
+#business_info_view .business-modal-footer{
+    position: sticky;
+}
+
+
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -811,12 +823,10 @@ color: #000;
                                     </tr>
                                   </thead>
                                   <tbody>
-                                     @foreach ($account_details->application as $application)
                                     @php 
-                                        $i=1;
+                                    $i=1;
                                     @endphp
-
-
+                                     @foreach ($application as $application)
                                     <tr>
                                         <td>{{$i++}}
                                         </td>
@@ -825,7 +835,7 @@ color: #000;
                                         </td>
                                         <td>{{$application->business_name}}
                                         </td>
-                                        <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                        <td>{{$application->purok}},{{$application->barangay}},{{$application->city}}
                                         </td>
                                         <td>{{$application->date_apply}}
                                         </td>
@@ -926,7 +936,6 @@ color: #000;
                                                 $i=1;
                                             @endphp
         
-        
                                             <tr>
                                                 <td>{{$i++}}
                                                 </td>
@@ -944,25 +953,24 @@ color: #000;
                                         <td><button type='' name='view' class='btn btn-success view view_payment_info'
                                             id="{{$application->applicationId}}"><i class='fa fa-eye'></i></button>
                                                 </td>
-        
                                             </tr>
                                                  @endforeach
 
                                             @else
-                                                 @foreach ($account_details->application as $application)
-                                                @php 
-                                                    $i=1;
-                                                @endphp
+                                            @php 
+                                            $i=1;
+                                        @endphp
+                                                 @foreach ($assessment_no_payment as $assessment)
         
                                             <tr>
                                                 <td>{{$i++}}
                                                 </td>
                                                 <td>
-                                                    {{$application->type_application}}
+                                                    {{$assessment->type_application}}
                                                 </td>
-                                                <td>{{$application->business_name}}
+                                                <td>{{$assessment->business_name}}
                                                 </td>
-                                                <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                                <td>{{$assessment->purok}},{{$assessment->barangay}},{{$assessment->city}}
                                                 </td>
                                                 
                                                 <td>'Not Paid'
@@ -998,40 +1006,31 @@ color: #000;
                                   </thead>
                                   <tbody>
                               <tbody>
-                                     @foreach ($account_details->application as $application)
-                                    @php 
-                                        $i=1;
-                                    @endphp
+                                @php 
+                                $i=1;
+                              @endphp
 
-
+                                        @foreach ($uploaded as $uploaded)
                                     <tr>
                                         <td>{{$i++}}
                                         </td>
                                         <td>
-                                            {{$application->type_application}}
+                                            {{$uploaded->type_application}}
                                         </td>
-                                        <td>{{$application->business_name}}
+                                        <td>{{$uploaded->business_name}}
                                         </td>
-                                        <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
+                                        <td>{{$uploaded->purok}},{{$uploaded->barangay}},{{$uploaded->city}}
                                         </td>
-                                        <td>{{$application->date_apply}}
+                                        <td>{{$uploaded->date_apply}}
                                         </td>
-                                        <td>{{$application->status}}
+                                        <td>{{$uploaded->status}}
                                         </td>
                                          <td>    <button  class="btn viewDocuments view" data-toggle="modal"><i class="fa fa-eye"></i></button>
                                         </td>
 
                                     </tr>
                                     @endforeach
-
-                              
                                   </tbody>
-
-                              
-                                  </tbody>
-                                 {{--  <input type="" name="" id="account_id" value="<?=$data['account_id'] ?>" > --}}
-                                 
-
                             </table>
              
                                 </div>
@@ -1088,15 +1087,29 @@ color: #000;
 
                                             @else
                                                
-        
+                                            @php 
+                                            $i=1;
+                                        @endphp
+                                                 @foreach ($assessment_no_payment as $assessment)
         
                                             <tr>
-                                                <td class=""> No Inspection Report
+                                                <td>{{$i++}}
                                                 </td>
-                                               
+                                                <td>
+                                                    {{$assessment->type_application}}
+                                                </td>
+                                                <td>N/A
+                                                </td>
+                                                <td>N/A
+                                                </td>
+                                                
+                                                <td>'No Inspection Report'
+                                                </td>
+                                                    <td>No Inspection Report
                                                     </td>
         
                                             </tr>
+                                            @endforeach
                                             @endif
                                           </tbody>
                                          
@@ -1573,110 +1586,223 @@ color: #000;
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
- 
-        <div class="modal-body">
+        <form method="post" id="applicationAdd">
+        <div class="modal-body business-modal-body">
             <div id=showEdit></div>
-          <form method="post" id="applicationAdd">
           
-                <input type="hidden" name="" id="applicationId_businessInfo">
-              <table class="table ">
-                  <thead>
-                      <tr>
-                          <th style="width: 25%">Type Of Application</th>
-                          <th style="width: 25%">Control Number</th>
-                          <th style="width: 25%">Type of Occupancy</th>
-                          <th style="width: 25%">Nature of Business</th>
-                        
-
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                       
-          <td><input type="text" name="" id="type_application" class="form-control" ></td>
-           <td><input type="text" name="" id="control_number" class="form-control" ></td>
-    
-      <td><input type="text" name="" id="type_occupancy" class="form-control" ></td>
-       <td><input type="text" name="" id="nature_business" class="form-control"  ></td>
-                      
-
-                          
-                      </tr>
-                  </tbody>
-              </table>
-                
-                <table class="table ">
-                  <thead>
-                      <tr>  <th style="width: 25%">Business Name</th>
-                          <th style="width: 25%">Bin</th>
-                          <th style="width: 25%">BP number</th>
-                          <th style="width: 25%">Inspector Name</th>
-
-                      </tr>
-                  </thead>
-                   <tbody>
-                      <tr>
-                      <td><input type="text" name="" id="business_name" class="form-control" ></td>
-
-                           <td><input type="text" name="" id="Bin" class="form-control"  ></td>
-                           <td><input type="text" name="" id="BP_num" class="form-control" ></td>
-                            <td><select class="form-control" id="inpector_id">
-                                
-                                
-                            </select></td>
-                            
-              
-                        <!--   <td><select class="form-control" id="statusAdd">
-                                  <option value="Pending" id="status"></option>
-                                  <option  value="Process">Process</option>
-                                  <option  value="Approved">Approved</option>
-                              </select></td> -->
-                          
-                      </tr>
-                  </tbody>
-              </table>
-
-              <table class="table ">
-                <thead>
-                    <tr> 
-                         <th style="width: 25%">OR_num</th>
-                       <th style="width: 25%">Status</th>
-                       <th style="width: 25%">Date Apply</th>
-                       <th style="width: 25%">Remarks</th>
-
-                    </tr>
-                </thead>
-                 <tbody>
-                    <tr>
-                          <td><input type="text" name="" class="form-control" id="OR_num"></td>
-                          <td><select id="status"  class="form-control ">
-                            <option id="status"></option>
-                            <option value="forinspection">for inspection</option>
-                            <option value="pending">peding</option>
-                            <option value="approved">approved</option>
-                            <option value="reinspection">reinspection</option>
-                        </select></td>
-                        <td><input type="date" name="" class="form-control" id="date_apply"></td>
-                        <td><select id="remarks"  class="form-control ">
-                            <option id="remarks"></option>
-                            <option value="Old">Old</option>
-                            <option value="New">New</option>
-                        </select></td>
-
-                    </tr>
-                </tbody>
-            </table>
-               <input type="hidden" name="" id="application_id">
+          
+            <input type="hidden" name="applicationId_businessInfo" id="applicationId_businessInfo" name="applicationId_businessInfo">
+            <input type="hidden" name="applicant_businessInfo" id="applicant_businessInfo" name="applicationId_businessInfo">
+                <div class="col-md-12">
+                    <h2><strong>Applicant</strong></h2>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">First Name</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="Fname_Business" id="Fname_Business" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Last Name</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="Lname_Business" id="Lname_Business" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Middle Name</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="Mname_Business" id="Mname_Business" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Contact Number</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="contact_num_Business" id="contact_num_Business" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Alternative Number</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="alcontact_business" id="alcontact_business" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Purok</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="purok_applicant" id="purok_applicant" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Barangay</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="barangay_applicant" id="barangay_applicant" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">City</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="city_applicant" id="city_applicant" class="form-control" >
+                          </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h2><strong>Business</strong></h2>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Type of Application</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="type_application" id="type_application" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Control Number</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="control_number" id="control_number" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Type of Occupancy</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="type_occupancy" id="type_occupancy" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Nature of Business</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="nature_business" id="nature_business" class="form-control"  >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Business Name</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="business_name" id="business_name" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Bin</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="Bin" id="Bin" class="form-control"  >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">BP number</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="BP_num" id="BP_num" class="form-control" >
+                          </div>
+                    </div>
+                   
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">OR Number</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="OR_num" class="form-control" id="OR_num">
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Status</label>
+                    </div>
+                        <div class="col-md-12">
+                            <select id="status"  class="form-control " name="status">
+                                <option id="status"></option>
+                                <option value="forinspection">for inspection</option>
+                                <option value="pending">peding</option>
+                                <option value="approved">approved</option>
+                                <option value="reinspection">reinspection</option>
+                            </select>
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Date Apply</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="date" name="date_apply" class="form-control" id="date_apply">
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Remarks</label>
+                    </div>
+                        <div class="col-md-12">
+                            <select id="remarks"  class="form-control " name="remarks">
+                                <option id="remarks"></option>
+                                <option value="Old">Old</option>
+                                <option value="New">New</option>
+                            </select>
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Purok</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="purok_business" id="purok_business" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Barangay</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="barangay_business" id="barangay_business" class="form-control" >
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">City</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="city_business" id="city_business" class="form-control" >
+                          </div>
+                    </div>
+                </div>
+               <input type="hidden" name="" id="application_id" name="application_id">
                 <!-- <input type="hidden" name="" id="inpector_id"> -->
-                <h4 style="opacity: 0.8;display:inline-block" id="set_schedule_text"></h4>
-
-                    <div class="button-group view_button" style="float: right">
-                        
-              </div>
-             </form>
-          </div>
                 
-            
+
+          </div>
+          <div class="modal-footer business-modal-footer">
+            <h4 style="opacity: 0.8;display:inline-block" id="set_schedule_text"></h4>
+            <div class="button-group view_button" style="float: right">
+                        
+            </div>
+          </div>
+       </form>   
+       
         </div>
       </div>
     </div>
@@ -1687,10 +1813,29 @@ color: #000;
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Set inspection schedule on</h5>
+                <h5 class="modal-title">Set inspection schedule</h5>
             </div>
             <div class="modal-body">
-                <input type="date" name="" class="form-control" id="date_inspection">
+                <div class="col-md-12">
+                    <div class="form-group row col-md-12">
+                        <div class="col-md-12">
+                        <label class="control-label ">Inspector Name</label>
+                    </div>
+                        <div class="col-md-12">
+                            <select class="form-control" id="inpector_id">
+                            </select>
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-12">
+                        <div class="col-md-12">
+                        <label class="control-label ">Date</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="date" name="" class="form-control" id="date_inspection">
+                          </div>
+                    </div>
+                </div>
+               
               </div>
             <div class="modal-footer">
                 <div class="modal-footer">
@@ -2138,10 +2283,10 @@ $('.tabs-nav a:first').trigger('click'); // Default
             $('#viewDocuments').modal('show');
        
           
-        $('.modal-dialog').draggable({
-      handle: ".modal-header"
+            $('.modal-dialog').draggable({
+        handle: ".modal-header"
 
-    });
+            });
         });
 
         $('#fileParent').click(function(e){
@@ -2149,7 +2294,7 @@ $('.tabs-nav a:first').trigger('click'); // Default
 
             $('#path').children().remove();
             $(' #folderName').val('');
-$(' #errorFolder').html('');
+        $(' #errorFolder').html('');
         load_folder_list();
         })
 
@@ -3063,9 +3208,28 @@ $('.business_info_button').on('click',function(e){
             $('#status').val(value['status']);
             $('#date_apply').val(value['date_apply']);
             $('#remarks').val(value['remarks']);
+            $('#Fname_Business').val(value['Fname']);
+            $('#Lname_Business').val(value['Lname']);
+            $('#Mname_Business').val(value['Mname']);
+            $('#contact_num_Business').val(value['contact_num']);
+            $('#alcontact_business').val(value['alcontact']);
+            $('#applicant_businessInfo').val(value['applicantId']);
+            
 
     $('.view_button').html('<button type="button" class="btn btn-primary" id="setSchedule"><i class="fa fa-calendar"> Set schedule</i></button><button type="submit" class="btn btn-warning"><i class="fa fa-pencil"> Update</i></button>');
         });
+        $.each(data.address_application,function(key, value){
+            $('#purok_business').val(value['purok']);
+            $('#barangay_business').val(value['barangay']);
+            $('#city_business').val(value['city']);
+        });
+
+        $.each(data.address_applicant,function(key, value){
+            $('#purok_applicant').val(value['purok']);
+            $('#barangay_applicant').val(value['barangay']);
+            $('#city_applicant').val(value['city']);
+        });
+
         $.each(data.inspector,function(index , value){
             $('#inpector_id').append('<option value='+value['inspectorId']+'>'+value['Fname']+ ' ' +value['Lname']+'');
         })
@@ -3085,43 +3249,15 @@ $('.business_info_button').on('click',function(e){
 
 $('#applicationAdd').on('submit',function(e){
     e.preventDefault();
-    var applicationId =$('#applicationId_businessInfo').val();
-    var type_application =$('#type_application').val();
-    var control_number =  $('#control_number').val();
-    var type_occupancy =  $('#type_occupancy').val();
-    var nature_business = $('#nature_business').val();
-    var business_name =  $('#business_name').val();
-    var Bin =    $('#Bin').val();
-    var BP_num =   $('#BP_num').val();
-    var inpector_id =  $('#inpector_id').val();
-    var OR_num =   $('#OR_num').val();
-    var status =   $('#status').val();
-    var date_apply =  $('#date_apply').val();
-    var remarks =  $('#remarks').val();
-
     $.ajax({
         type:'post',
         url:'{{ route('update_business_info') }}',
-        data:{
-            applicationId:applicationId,
-            type_application:type_application,
-            control_number:control_number,
-            type_occupancy:type_occupancy,
-            nature_business:nature_business,
-            business_name:business_name,
-            Bin:Bin,
-            BP_num:BP_num,
-            inpector_id:inpector_id,
-            OR_num:OR_num,
-            status:status,
-            date_apply:date_apply,
-            remarks:remarks,
-        },
+        data: new FormData(this),
+        contentType: false,
+      processData: false,
         dataType:'json',
         success:function(data){
             toastr.success(data.msg);
-            
-
         }
     })
     

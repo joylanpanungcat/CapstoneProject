@@ -81,7 +81,7 @@
                </div>
                <div class="count" id="applicationCount"></div>
 
-               <h3><a href="{{ route('application') }}">Application</a></h3>
+               <h3><a href="{{ route('applicationAdmin') }}">Application</a></h3>
                <p>Old and New Application.</p>
              </div>
            </div>
