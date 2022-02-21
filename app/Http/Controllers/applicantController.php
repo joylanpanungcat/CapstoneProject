@@ -23,7 +23,7 @@ class applicantController extends Controller
 
   // fetch applicant account data
   public function account(){
-    return view('account');
+    return view('admin/account');
   }
     public function accountFetch(){
        $data = applicant_account::
@@ -183,7 +183,7 @@ public function viewApplicant(Request $request){
     $account_id= $request->id;
       $account_details=applicant_account::find($account_id);
 
-      return view('applicant_profile')->with('account_details',$account_details);
+      return view('admin/applicant_profile')->with('account_details',$account_details);
  
 }
 public function swalert(Request $request){

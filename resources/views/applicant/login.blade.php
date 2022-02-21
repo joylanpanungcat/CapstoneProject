@@ -60,6 +60,7 @@
                    <p class="error2">{{$message}}</p>
                 @enderror
          
+
               </div>
               <div>
                 <input type="password" class="form-control" placeholder="Password"  name="password" />
@@ -90,5 +91,13 @@
   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
 
     <script type="text/javascript" src="{{url('js/bootstrap/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('sw.js') }}"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
     </html>
  

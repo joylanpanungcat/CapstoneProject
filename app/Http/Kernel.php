@@ -48,9 +48,16 @@ class Kernel extends HttpKernel
          'accessPage' => [
               \App\Http\Middleware\AuthCheck::class,
         ],
-          'alreadyLog' => [
+        'accessPageApplicant' => [
+            \App\Http\Middleware\AuthCheckApplicant::class,
+      ],
+      'accessPageInspector' => [
+        \App\Http\Middleware\AuthCheckInspector::class,
+         ],
+        'alreadyLog' => [
               \App\Http\Middleware\AlreadyLog::class,
         ],
+        
     ];
 
     /**

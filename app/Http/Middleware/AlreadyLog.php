@@ -16,7 +16,13 @@ class AlreadyLog
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Session()->has('adminID') && (url('/')==$request->url())){
+        if(Session()->has('adminID') && ((url('/')==$request->url()) || (url('register')==$request->url()))){
+            return back();
+        }
+        if(Session()->has('accountId') && ((url('/')==$request->url()) || (url('register')==$request->url()))){
+            return back();
+        }
+        if(Session()->has('inspectorId') && ((url('/')==$request->url()) || (url('register')==$request->url()))){
             return back();
         }
         return $next($request);

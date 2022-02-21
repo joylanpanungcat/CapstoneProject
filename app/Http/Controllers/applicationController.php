@@ -132,7 +132,7 @@ public function viewApplication(Request $request){
       // }
 
       // return dd($certificate);
-       return view('application_profile',compact('account_details','assessment','applicantAdd','applicationId','inspection_details','certificate'));
+       return view('admin/application_profile',compact('account_details','assessment','applicantAdd','applicationId','inspection_details','certificate'));
         
   
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\admin;
+use App\Models\applicant_account;
+use App\Models\inspector;
 use App\Models\application;
 use App\Models\emergency;
 
@@ -19,16 +21,35 @@ class verifyController extends Controller
         'username'=>'required',
         'password'=>'required'
        ]);
-       $admin=admin::where(['username'=>$req->username])->first();
-
+        $admin=admin::where(['username'=>$req->username])->first();
+       $applicant=applicant_account::where(['username'=>$req->username])->first();
+       $inspector=inspector::where(['username'=>$req->username])->first();
+       
        if($admin){
             if($req->password===$admin['password']){
                 $req->session()->put('adminID',$admin);
+                return redirect("DashboardAdmin");
+            }else{
+                 return back()->with('error',"Invalid Inputs");
+            }
+         }
+         if($inspector){
+            if($req->password===$inspector['password']){
+                $req->session()->put('inspectorId',$inspector);
+                return redirect("dashboard_inspector");
+            }else{
+                 return back()->with('error',"Invalid Inputs");
+            }
+         }
+         if($applicant){
+            if($req->password===$applicant['password']){
+                $req->session()->put('accountId',$applicant);
                 return redirect("dashboard");
             }else{
                  return back()->with('error',"Invalid Inputs");
             }
-         }else{
+         }
+         else{
         return back()->with('error',"Invalid Inputs");
        }
     }
@@ -44,6 +65,19 @@ class verifyController extends Controller
     public function logout(){
         if(Session::has('adminID')){
             Session::pull('adminID');
+            return redirect('/');
+        }
+    }
+    public function logoutInspector(){
+        if(Session::has('inspectorId')){
+            Session::pull('inspectorId');
+            return redirect('/');
+        }
+    }
+    
+    public function logoutApplicant(){
+        if(Session::has('accountId')){
+            Session::pull('accountId');
             return redirect('/');
         }
     }
@@ -93,7 +127,7 @@ class verifyController extends Controller
 
         // return dd($data);
 
-        return view('emergency_page');
+        return view('admin/emergency_page');
     }
 
    

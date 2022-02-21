@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AuthCheck
+class AuthCheckInspector
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class AuthCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!Session()->has('adminID')){
+        if(!Session()->has('inspectorId')){
             return back();
         }
         return $next($request);
