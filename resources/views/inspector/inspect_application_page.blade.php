@@ -83,7 +83,9 @@
 
           <div class="row">
 
+                  <div class="col-md-12">
                     <h2>Inspection Details</h2>
+                  </div>
                  
                     <hr class="separate"> 
 
@@ -245,7 +247,7 @@
 
  <script>
   $(document).ready(function(){
-    var adminPass='{{Session::get('adminID')['password']}}';
+    var adminPass='{{Session::get('inspectorId')['password']}}';
     $.ajaxSetup({
                       headers: {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -229,7 +229,7 @@
 
  <script>
   $(document).ready(function(){
-    var adminPass='{{Session::get('adminID')['password']}}';
+    var adminPass='{{Session::get('accountId')['password']}}';
     $.ajaxSetup({
                       headers: {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -20,7 +20,7 @@ class applicationControllerInspector extends Controller
         ->where('application.applicationId',$applicationId)->get();
 
 
-        return view('application_profile',['data'=>$data]);
+        return view('inspector/application_profile',['data'=>$data]);
 
     }
 
@@ -66,7 +66,7 @@ class applicationControllerInspector extends Controller
 
     public function inspect_application_record(Request $request){
         $applicationId = $request->applicationId;
-        $inspectorId = session()->get('adminID')['inspectorId'];
+        $inspectorId = session()->get('inspectorId')['inspectorId'];
         $date_inspect= date('y-m-d');
         $beams = $request->beams;
         $exterior = $request->exterior;
@@ -193,7 +193,7 @@ class applicationControllerInspector extends Controller
     public function profile_inspect(Request $request){
         $applicationId = $request->id;
 
-        return view('inspect_application_page',['applicationId'=>$applicationId]);
+        return view('inspector/inspect_application_page',['applicationId'=>$applicationId]);
     }
 
 

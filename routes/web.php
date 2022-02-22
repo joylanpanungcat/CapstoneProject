@@ -251,19 +251,19 @@ Route::group(['middleware'=>['accessPageInspector']],function(){
         Route::view('for_inspection','inspector/for_inspection')->name('for_inspection');
         Route::get('fetch_inspection',[inspectionController::class,'fetch_inspection'])->name('fetch_inspection'); 
     //application profile
-    Route::get('/application_profile/{id}',[applicationController::class,'viewApplication'])->name('application_profile');
-    Route::post('inspect_application_record',[applicationController::class,'inspect_application_record'])->name('inspect_application_record');
+    Route::get('/application_profile_inspector/{id}',[applicationControllerInspector::class,'viewApplication'])->name('application_profile');
+    Route::post('inspect_application_record',[applicationControllerInspector::class,'inspect_application_record'])->name('inspect_application_record');
     // inspection history
     Route::view('inspection_history','inspector/inspection_history')->name('inspection_history');
     Route::get('fetch_history_application',[inspectionController::class,'fetch_history_application'])->name('fetch_history_application'); 
-    Route::get('/inspection_history/application/{id}',[applicationController::class,'inspection_history_view']);
+    Route::get('/inspection_history/application/{id}',[applicationControllerInspector::class,'inspection_history_view']);
 
     //inspected application
     Route::view('inspected_application','inspector/inspected_application')->name('inspected_application');
     Route::get('fetch_inspected_application',[inspectionController::class,'fetch_inspected_application'])->name('fetch_inspected_application'); 
-    Route::get('/inspected/application/{id}',[applicationController::class,'inspection_inspected_view']);
-    Route::post('update_inspected_application',[applicationController::class,'update_inspected_application'])->name('update_inspected_application');
-    Route::get('application_profile/inspect/{id}',[applicationController::class,'profile_inspect']);
+    Route::get('/inspected/application/{id}',[applicationControllerInspector::class,'inspection_inspected_view']);
+    Route::post('update_inspected_application',[applicationControllerInspector::class,'update_inspected_application'])->name('update_inspected_application');
+    Route::get('application_profile_inspector/inspect/{id}',[applicationControllerInspector::class,'profile_inspect']);
     //profile
     Route::get('profile_view',[inspectionController::class,'profile_view'])->name('profile_view');
     Route::post('update_inspector',[inspectionController::class,'update_inspector'])->name('update_inspector');

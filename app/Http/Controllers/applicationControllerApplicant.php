@@ -168,7 +168,7 @@ class applicationControllerApplicant extends Controller
     ->where('application.applicationId',$applicationId)
     ->get();
 
-    return view('application_view',['data'=>$data]);
+    return view('applicant/application_view',['data'=>$data]);
    }
 
    public function connect_account(Request $request){

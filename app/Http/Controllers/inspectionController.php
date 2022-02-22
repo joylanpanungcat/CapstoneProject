@@ -26,16 +26,13 @@ class inspectionController extends Controller
        ->get();
 
         if($data->count()>0){
-            // $data2= schedule::join('application','schedule.applicationId','=','application.applicationId')
-            // ->join('applicant','applicant.applicantId','=','application.applicantId')
-            // ->where('inspectorId',$inpsectorId)->get();
 
             foreach($data as $data){
                 $output .='  <tr>
                             <td>'.$count++.'</td>
                             <td>'.$data['Fname']." ". $data['Lname'].'</td>
                             <td>'.$data['date_inspection'].'</td>
-                            <td><a type="button" name="viewApplicant" class="btn  actionButton" href="application_profile/'.$data['applicationId'].'" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a></td>
+                            <td><a type="button" name="viewApplicant" class="btn  actionButton" href="application_profile_inspector/'.$data['applicationId'].'" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a></td>
                         </tr>';
             }
            

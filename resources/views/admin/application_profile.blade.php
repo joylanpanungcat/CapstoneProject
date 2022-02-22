@@ -645,7 +645,14 @@ color: #000;
 #business_info_view .business-modal-footer{
     position: sticky;
 }
+.no_user{
+    align-content: center;
 
+}
+.no_user img{
+width: 40%;
+height: 40%;
+}
 
 </style>
 <div class="right_col" role="main" >
@@ -661,15 +668,36 @@ color: #000;
         <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
+
+                            @php
+                            $count = $applicant_account->count();
+                                foreach($applicant_account as $account){
+                                    $Fname = $account['Fname'];
+                                    $Lname = $account['Lname'];
+                                    $username = $account['username'];
+                                    $password = $account['password'];
+                                    $contact_num = $account['contact_num'];
+                                    $alternative_num = $account['alternative_num'];
+                                    $date_register = $account['date_register'];
+                                    $purok  = $account['purok'];
+                                    $barangay  = $account['barangay'];
+                                    $city  = $account['city'];
+                                    $accountId  = $account['accountId'];
+                                }
+                                    
+                            @endphp
                           
                             <div class="x_panel">
                                 <div class="x_title">
-                                    <h2>Applicant Information  <small></small></h2>
+                                    <h2>Account Information  <small></small></h2>
 
 
                                    
                                     <div class="clearfix"></div>
                                 </div>
+                                @if($count >= 1)
+                                    
+                             
                               <div class="col-md-12 applicant-account">
                                     <div class="col-md-4"></div>
                                     <div class="col-md-8">
@@ -686,7 +714,7 @@ color: #000;
                                 <img src="{{ asset('images/profile/')."/".rand(1,5).".jpg" }}" class="profile2">
                                 <h5 class="Applicant">
                                   
-                              {{ $account_details->Fname }}  {{ $account_details->Lname }}
+                              {{ $Fname }}  {{ $count}}
                                     
                                
                
@@ -701,59 +729,56 @@ color: #000;
                               
                                  <form method="post" id="updateDetails">
                                     <div class="col-md-8 personalInfo ">  
-                                         
-                                
-                                      
                                           
                                
                                 <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="hidden" name="" id="applicantId_info" class="form-control" value="{{ $account_details->applicantId  }}">
-                                        <input type="text" name="" id="Fname_info" class="form-control" value="{{ $account_details->Fname }}">
+                                        <input type="hidden" name="" id="applicantId_info" class="form-control" value="{{ $accountId }}">
+                                        <input type="text" name="" id="Fname_info" class="form-control" value="{{ $Lname }}">
                                     </div>
                                   </div>
                                   <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Middle Name</label>
-                                        <input type="text" name="" id="Mname_info" class="form-control" value="{{ $account_details->Mname }}" >
+                                        <input type="text" name="" id="Mname_info" class="form-control" value="" >
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" name="" id="Lname_info" class="form-control" value="{{ $account_details->Lname }}" >
+                                        <input type="text" name="" id="Lname_info" class="form-control" value="{{ $Lname}}" >
                                     </div><br>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Contact No</label>
-                                        <input type="text" name="" id="contact_num_info" class="form-control" value="{{ $account_details->contact_num }}">
+                                        <input type="text" name="" id="contact_num_info" class="form-control" value="{{ $contact_num }}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Alternative Contact</label>
-                                        <input type="text" name="" id="alcontact_info" class="form-control" value="{{ $account_details->alcontact }}">
+                                        <input type="text" name="" id="alcontact_info" class="form-control" value="{{ $alternative_num}}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Purok</label>
-                                        <input type="text" name="" id="purok_info" class="form-control" value=" {{$applicantAdd->purok}}
+                                        <input type="text" name="" id="purok_info" class="form-control" value=" {{$purok}}
                                       " >
                                     </div><br>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>Barangay</label>
-                                        <input type="text" name="" id="barangay_info" class="form-control" value="{{$applicantAdd->barangay}}">
+                                        <input type="text" name="" id="barangay_info" class="form-control" value="{{$barangay}}">
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
                                     <div class="form-group">
                                         <label>City</label>
-                                        <input type="text" name="" id="city_info" class="form-control" value="{{$applicantAdd->city}}" >
+                                        <input type="text" name="" id="city_info" class="form-control" value="{{$city}}" >
                                     </div>
                                   </div>
                                    <div class="col-md-4">  
@@ -768,6 +793,16 @@ color: #000;
                                    </form>
                 <br><br>
                          </div>
+                         @else
+                         <div class="col-md-12">
+                             <div class="container no_user">
+                                 <center>
+                                    <img src="{{ asset('images/no_user.png') }}" alt="">
+                                 </center>
+                                
+                             </div>
+                         </div>
+                         @endif
 
                          <div class="col-md-12">
                               {{-- <hr class="separate"> --}}
@@ -3265,9 +3300,6 @@ $('#applicationAdd').on('submit',function(e){
 
 $(document).on('click','#setSchedule',function(e){
     e.preventDefault();
-   
-    
-  
   $('#set_schedule_modal').modal('show');
    
 });
@@ -3277,7 +3309,7 @@ $('#set').on('click',function(e){
 
     var applicationId = $('#applicationId_businessInfo').val();
     var inpector_id = $('#inpector_id').val();
-    var applicantId = $('#applicantId_info').val();
+    var applicantId = $('#applicant_businessInfo').val();
     var date_inspection=$('#date_inspection').val();
 
      Swal.fire({

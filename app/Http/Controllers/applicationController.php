@@ -120,6 +120,12 @@ public function viewApplication(Request $request){
         ->ORwhere('application.accountId','=',$accountId)
         ->get();
 
+        $applicant_account = application::join('applicant_account','applicant_account.accountId','=','application.accountId')
+        ->join('address','address.applicantId','=','application.accountId')
+        ->where('application.accountId',$accountId)
+        ->get();
+
+
         $uploaded = application::join('address','address.applicationId','=','application.applicationId')
         ->where('application.applicantId',$applicantId)
         ->ORwhere('application.accountId','=',$accountId)
@@ -161,7 +167,7 @@ public function viewApplication(Request $request){
       // }
 
      
-       return view('admin/application_profile',compact('application','assessment_no_payment','account_details','assessment','applicantAdd','applicationId','inspection_details','certificate','uploaded'));
+       return view('admin/application_profile',compact('application','applicant_account','assessment_no_payment','account_details','assessment','applicantAdd','applicationId','inspection_details','certificate','uploaded'));
         
   
 

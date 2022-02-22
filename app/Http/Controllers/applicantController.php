@@ -349,6 +349,7 @@ public function set_schedule(Request $request){
   $applicantId = $request->applicantId;
   $date_inspection = $request->date_inspection;
 
+
   $schedule = new schedule();
   $schedule->applicantId=$applicantId;
   $schedule->applicationId=$applicationId;
