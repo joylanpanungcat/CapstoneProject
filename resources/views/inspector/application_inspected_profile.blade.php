@@ -313,7 +313,11 @@
                                   <div class="form-group row ">
                                       <label class="control-label col-md-3 col-sm-3 ">Status </label>
                                       <div class="col-md-9 col-sm-9 ">
-                                          <select name="" id="status" class="form-control"><option value="approved">Approved</option><option value="reinspection">Reinspection</option></select>
+                                        <select class="form-control" id="status">
+                                            <option value="{{ $status }}" id="inspection_status">{{ $status }}</option>
+                                            <option value="reinspection">reinspection</option>
+                                            <option value="approved">approved</option>
+                                          </select>
                                       </div>
                                   </div>
 
@@ -323,16 +327,12 @@
                                           <input type="text" class="form-control" placeholder="Default Input" value="{{$date_inspect }} " readonly>
                                       </div>
                                   </div>
-                                  <div class="form-group row ">
+                                  {{-- <div class="form-group row ">
                                     <label class="control-label col-md-3 col-sm-3 ">Inspection Status</label>
                                     <div class="col-md-9 col-sm-9 ">
-                                      <select class="form-control" id="inspection_status">
-                                        <option value="{{ $status }}" id="inspection_status">{{ $status }}</option>
-                                        <option value="reinspection">reinspection</option>
-                                        <option value="approved">approved</option>
-                                      </select>
+                                     
                                     </div>
-                                </div>
+                                </div> --}}
                       
                                             <input type="hidden" class="form-control" placeholder="Default Input" id="applicationId" value="{{ $applicationId }}">
                                     
@@ -359,7 +359,7 @@
 
  <script>
   $(document).ready(function(){
-    var adminPass='{{Session::get('adminID')['password']}}';
+    var adminPass='{{Session::get('inspectorId')['password']}}';
     $.ajaxSetup({
                       headers: {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

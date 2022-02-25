@@ -56,9 +56,11 @@
 
 
  <!-- PWA  -->
- <meta name="theme-color" content="#6777ef"/>
- <link rel="apple-touch-icon" href="{{ asset('image/logo.png') }}">
- <link rel="manifest" href="{{ asset('/manifest.json') }}">
+ <link rel="manifest" href="{{ asset('manifest.json') }}">
+ <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+ <meta name="apple-mobile-app-status-bar" content="#6777ef">
+ <meta name="theme-color" content="#6777ef">
+ 
 
 </head>
 <body class="nav-md" id="main" >
@@ -365,11 +367,4 @@
 <script src="{{ asset('js/datepicker/datetimepicker.min.js') }}"></script> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
-{{-- <script src="{{ asset('sw.js') }}"></script>
-<script>
-    if (!navigator.serviceWorker.controller) {
-        navigator.serviceWorker.register("sw.js").then(function (reg) {
-            console.log("Service worker has been registered for scope: " + reg.scope);
-        });
-    }
-</script> --}}
+<script src="{{ asset('js/app.js') }}"></script>

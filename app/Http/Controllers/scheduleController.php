@@ -24,7 +24,8 @@ class scheduleController extends Controller
                 ->join('applicant','applicant.applicantId','=','schedule.applicantId')
                 ->join('address','address.applicantId','applicant.applicantId') 
                 ->orderBy('schedule.applicantId','desc')
-                ->where('schedule.inspected',null)
+                ->whereNull('schedule.inspected')
+                ->whereNull('schedule.deleted_at')
                 ->get();
            
          

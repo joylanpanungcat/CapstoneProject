@@ -12,6 +12,7 @@ use App\Http\Controllers\scheduleController;
 use App\Http\Controllers\renewalController;
 use App\Http\Controllers\maintenanceController;
 use App\Http\Controllers\inspectorController;
+use App\Http\Controllers\Fallback;
 
 //applicant Controller
 use App\Http\Controllers\registerController;
@@ -41,7 +42,8 @@ Route::get('/welcome', function () {
 
 // Route::view('sample','sample');
 
-
+Route::view('fallback','admin.fallback')->name('fallback');
+Route::get('return_fallback',[Fallback::class,'return_fallback'])->name('return_fallback');
 
 //Group middleware page auth
 Route::group(['middleware'=>['accessPage']],function(){
@@ -64,7 +66,9 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('updateApplicant',[applicantController::class,"updateApplicant"])->name('update.appplicant');
   
     Route::get('applicant_profile/{id}',[applicantController::class,'viewApplicant'])->name('applicant_profile');
-
+    //fallback
+    // Route::view('fallback','admin.fallback')->name('fallback');
+   
     // Applicant Profile
    Route::post('applicant_profile',[applicantController::class,'applicationRecord'])->name('application.record');
    Route::post('update_info',[applicantController::class,'update_info'])->name('update_info');

@@ -1,10 +1,10 @@
 {
-    "name": "Applicant",
-    "short_name": "LPT",
+    "name": "BFP",
+    "short_name": "BFP",
     "start_url": "/index.php",
     "background_color": "#6777ef",
     "description": "Applicant",
-    "display": "fullscreen",
+    "display": "standalone",
     "theme_color": "#6777ef",
     "icons": [
         {

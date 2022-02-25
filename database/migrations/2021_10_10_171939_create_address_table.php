@@ -18,6 +18,7 @@ class CreateAddressTable extends Migration
              $table->unsignedBigInteger('applicationId')->nullable();
             //  $table->foreign('applicationId')->references('applicationId')->on('application') ->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('applicantId')->nullable();
+            $table->unsignedBigInteger('accountId')->nullable();
             //  $table->foreign('applicantId')->references('applicantId')->on('applicant') ->onUpdate('cascade')->onDelete('cascade');
             
             $table->string('purok')->nullable();

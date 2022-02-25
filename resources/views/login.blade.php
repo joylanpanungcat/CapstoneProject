@@ -8,11 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+    <meta name="apple-mobile-app-status-bar" content="#6777ef">
+    <meta name="theme-color" content="#6777ef">
+
     <title>Login  </title>
    <!-- Bootstrap -->
    <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}">
-
-
    <link rel="stylesheet" type="text/css" href="{{url('css/css/font-awesome.min.css')}}">
    <!-- Custome Css -->
    <link rel="stylesheet" type="text/css" href="{{url('css/custom.min.css')}}">
@@ -88,7 +91,7 @@
     </div>
   </body>
   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
-
     <script type="text/javascript" src="{{url('js/bootstrap/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     </html>
  

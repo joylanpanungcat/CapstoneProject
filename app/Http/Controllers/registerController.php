@@ -58,10 +58,10 @@ class registerController extends Controller
        $data->date_register =$date_register;
        $data->image='';
       $request = $data->save();
-      $applicantId = $data->accountId;
+      $accountId = $data->accountId;
 
       $address =  new address;
-      $address->applicantId =$applicantId;
+      $address->accountId =$accountId;
        $address->purok=$purok;
        $address->barangay=$barangay;
        $address->city=$city;

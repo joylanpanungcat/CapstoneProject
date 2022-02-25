@@ -283,7 +283,7 @@ public function view_business_info(Request $request){
   ->where('application.applicationId',$applicationId)->get();
 
   $inspector = inspector::get();
-  $schedule = schedule::where('applicationId',$applicationId)->get();
+  $schedule = schedule::where('applicationId',$applicationId)->whereNull('deleted_at')->get();
 
   return response()->json([
     'data2'=>$data,
@@ -348,6 +348,11 @@ public function set_schedule(Request $request){
   $inpector_id = $request->inpector_id;
   $applicantId = $request->applicantId;
   $date_inspection = $request->date_inspection;
+
+  $data = application::where('applicationId',$applicationId);
+  $data->update([
+    'status'=>'forinspection'
+  ]);
 
 
   $schedule = new schedule();

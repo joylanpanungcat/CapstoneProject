@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\admin;
 use App\Models\applicant_account;
 use App\Models\inspector;
@@ -184,6 +185,10 @@ class verifyController extends Controller
     return response()->json([
         'data'=>$data
     ]);
+  }
+
+  public function return_fallback(){
+      return redirect()->back();
   }
 
 }

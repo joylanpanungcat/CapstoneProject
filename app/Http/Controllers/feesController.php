@@ -90,6 +90,7 @@ class feesController extends Controller
 
   public function search_applicant_fetch(Request $req){
     $search = $req->search;
+    $applicationId = 0;
     
     $output = '';
 
