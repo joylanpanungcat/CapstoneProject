@@ -103,8 +103,7 @@ public function search_scheduel(Request $req){
     $name = $req->search_applicant;
     $output = '';
 
-       $data = application::join('assessment','assessment.applicationId','=','application.applicationId')
-    ->join('applicant','applicant.applicantId','=','application.applicantId')
+       $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
     ->whereNotIn('application.applicationId',schedule::get(['applicationId'])->toArray())
     ->where('applicant.Fname','LIKE','%'.$name.'%')
     // ->ORwhere('applicant.Lname','LIKE','%'.$name.'%')

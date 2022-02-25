@@ -143,15 +143,20 @@ class feesController extends Controller
 
     $ids = $req->checkbox_value;
     $output="";
+    $total = 0;
     
     $data = fee::whereIn('fees_id',$ids)->get();
     // <td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td>
     foreach($data as $item){
-      $output .= "<tr><td>".$item['natureof_payment']."</td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
+      $output .= "<tr><td>".$item['natureof_payment']."</td>
+      <td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  />
+      </td></tr>";
+      $total += $item['assessment_total'];
     }
 
     return response()->json([
-      'output' => $output
+      'output' => $output,
+      'total'=>$total
     ]);
   }
   public function save_assessment(Request $request){

@@ -336,7 +336,7 @@ letter-spacing: 1px;
                                   
                                      
                                       <div class="button-group total_body2 ">
-                                          <button type="button" class="btn  save_payment_button" id="save_payment_button"><i class="fa fa-save" ></i>  Save</button>
+                                          <button type="button" class="btn  save_payment_button" id="save_payment_button" disabled><i class="fa fa-save" ></i>  Save</button>
                                           {{-- <button type="button" class="btn print_payment_button"  id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button> --}}
                                       </div>
                                       </form>
@@ -664,6 +664,8 @@ $(document).on('click','.collapsible3',function(e){
         success:function(data){
           $('#nature_payment_body').html(data.output);
           $('#add_fees').modal('hide');
+          $('#total_amount').val(data.total);
+          $('#save_payment_button').removeAttr('disabled');
         }
       })
     }else{
@@ -673,6 +675,8 @@ $(document).on('click','.collapsible3',function(e){
     }
    
   })
+
+ 
 
    $(document).on('click','#select_applicant',function(e){
      e.preventDefault();
@@ -732,6 +736,7 @@ $(document).on('click','.collapsible3',function(e){
     var id=$('.optradio:checked').attr('id');
     var applicationId=$('#applicationId').val();
     var total_amount =$('#total_amount').val();
+    var name = $('#applicant_name').val();
     
    var total_amount_words = $('#total_amount_inwords').val();
     var receipt_no=$('#receipt_no').val();
@@ -745,8 +750,8 @@ $(document).on('click','.collapsible3',function(e){
           });
         }
        
-    
-
+    if(name != ''){
+      
     Swal.fire({
          title:"Save Assessment",
          iconHtml: '<i class="fa fa-check"></i>',
@@ -853,6 +858,8 @@ $(document).on('click','.collapsible3',function(e){
                  `
        
                });
+    }
+
   });
 
   $(document).on('change','.assessment_input',function(e){

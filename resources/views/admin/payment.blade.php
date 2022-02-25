@@ -348,7 +348,7 @@ letter-spacing: 1px;
                                    
                                       
                                        <div class="button-group total_body2 ">
-                                           <button type="button" class="btn btn-secondary save_payment_button" id="save_payment_button" ><i class="fa fa-save" ></i>  Save</button>
+                                           <button type="button" class="btn btn-secondary save_payment_button" id="save_payment_button"  disabled><i class="fa fa-save" ></i>  Save</button>
                                            {{-- <button type="button" class="btn btn-secondary " data-dismiss="modal" id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button> --}}
                                        </div>
                                        </form>
@@ -467,12 +467,15 @@ letter-spacing: 1px;
        var total_amount = $('#total_amount').val();
        var change = 0;
        
+     if(total_amount != '' || total_amount != 0){
+  
       if(total_amount >= amount  ){
         $('#error_payment').html('Invalid inputs');
         $('.save_payment_button').attr('disabled','disabled');
         count = 1;
         $('#change').val('');
       }
+    
      if(amount >= total_amount){
       change = (amount -total_amount );
         $('#change').val(change);
@@ -482,8 +485,11 @@ letter-spacing: 1px;
       if(change < 0){
         $('.save_payment_button').attr('disabled','disabled');
         $('#change').val('');
-
       }
+     }else{
+      $('.save_payment_button').attr('disabled','disabled');
+    
+     }
      })
      
 
