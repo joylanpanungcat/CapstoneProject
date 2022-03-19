@@ -46,6 +46,8 @@ class CreateApplicationTable extends Migration
             $table->string('count')->nullable();
             $table->string('date_approved')->nullable();
             $table->string('filenames');
+            $table->string('long')->nullable();
+            $table->string('lat')->nullable();
          
             $table->timestamps();
         });

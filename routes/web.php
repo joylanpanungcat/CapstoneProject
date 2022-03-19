@@ -24,6 +24,9 @@ use App\Http\Controllers\inspectionController;
 use App\Http\Controllers\applicationControllerInspector;
 use App\Http\Controllers\loginController;
 
+//Map
+
+use App\Http\Controllers\mapController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -94,6 +97,7 @@ Route::group(['middleware'=>['accessPage']],function(){
     
     //Map 
     Route::view('map','admin/map')->name('map');
+    Route::get('fetch_application_map',[mapController::class,'fetch_application_map'])->name('fetch_application_map');
     //
     Route::view('schedule','admin/schedule')->name('schedule');
 

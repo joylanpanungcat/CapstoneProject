@@ -1,9 +1,13 @@
 @extends('admin/include.navbar')
 @section('title','applicant account')
 @section('content')
-<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   <link rel="stylesheet" href="{{ asset('css/leaflet/geocoder.css') }}" />
 
 <style type="text/css">
     table tbody tr td input{
@@ -24,9 +28,9 @@
        border: 3px solid #0687d6;
     }
    #user_data tr.removeRow
-          {
-              background-color: #b5b5b5;
-          }
+  {
+      background-color: #b5b5b5;
+  }
 
 
 .compose .compose-header {
@@ -61,85 +65,333 @@ width: 50%;
 border-bottom: 3px solid #1ABB9C;
 margin-top: 60px;
 }
+
+.leaflet-bottom {
+  display: none;
+}
+.leaflet-touch .leaflet-control-geocoder-icon {
+    width: 38px;
+    height: 36px;
+}
+.leaflet-touch .leaflet-bar a {
+    width: 37px;
+    height: 36px;
+}
+.leaflet-left .leaflet-control {
+    margin-left: 4px;
+}
+#refreshButton{
+  position: absolute;
+    z-index: 500;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 16%;
+    border: 1px solid #b5aaaa;
+    left: 6px;
+    top: 9px;
+}
+
+#refreshButton i{
+  font-size: 20px;
+    color: #5d5555;
+}
+
+/* side nav */
+
+element.style {
+    width: 0px;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: 504;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    background-color: #fff;
+    box-shadow: 6px 1px 22px -7px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+#closeNav-button{
+  margin-top: 5px;
+    margin-left: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#closeNav-button i{
+  color: #060606;
+    font-size: 20px;
+}
+.header .btn-group {
+  padding-top: 45px;
+  margin-left: 5px;
+  margin-bottom: 14px;
+}
+.header .btn-group input{
+  width: 189px;
+}
+.sidenav .content-list .item{
+    width: 91%;
+    margin-top: 10px;
+    margin-left: 7px;
+    display: flex;
+    padding-top: 6px;
+    font-size: 28px;
+    border: 1px solid;
+    height: 39px;
+    overflow: hidden;
+   
+}
+
+
+.sidenav .content-list .item:hover{
+  background-color: #2A3F54;
+  opacity: 0.7;
+  color: #fff;
+  cursor: pointer;
+}
+.sidenav .content-list .item h5 {
+  width: 193px;
+    font-size: 17px;
+    padding-top: 2px;
+    padding-left: 6px;
+    line-height: 24px;
+}
+.sidenav .content-list{
+  overflow-x: hidden;
+    height: 348px;
+}
+
+@media screen  and (max-width: 1920px){
+  .leaflet-left {
+    position: absolute;
+    bottom: 0;
+    right: 33px;
+    top: 80%;
+    left: 96%;
+}
+}
+@media screen  and (max-width: 1400px){
+  .leaflet-left {
+    position: absolute;
+    bottom: 0;
+    right: 33px;
+    top: 80%;
+    left: 95%;
+}
+}
+
+
 </style>
 
 
-  
-     
- 
- 
   <div class="right_col" role="main" >
      <div class="">
         
  <div class="modal fade" id="updateRecord" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                       <div class="modal-dialog modal-sm" >
- 
-                         <div class="modal-content">
-                         
-                          <form>
-                           <center><h5><b> Update  Map Information</b></h5></center>
-                            <div class="form-control">
-                              <input type="file" name="">
- 
-                            </div>
- 
-                          </form><br>
-                         <button type="button" class="btn  btn-sm btn_update "><i class="fa fa-edit fa-lg"  ></i>Update</button>
-                         </div>
-                       </div>
-                     </div>
-                        <div class="">
-                       <div class="page-title">
-                         <div class="title_left">
-                             <h3>Susceptibility Map</h3>
-                         </div>
- 
-                         <div class="title_right">
-                           <button class="btn btn-default" data-toggle="modal" data-target="#updateRecord"><i class="fa fa-edit fa-lg"  ></i>Update</button>
-                   
-                         </div>
-                     </div>
-                     <hr class="separate2">
-                     </div>
+        <div class="modal-dialog modal-sm" >
+          <div class="modal-content">
+          <form>
+            <center><h5><b> Update  Map Information</b></h5></center>
+            <div class="form-control">
+              <input type="file" name="">
+
+            </div>
+
+          </form><br>
+          <button type="button" class="btn  btn-sm btn_update " onclick="closeNav()"><i class="fa fa-edit fa-lg"  ></i>Update</button>
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <div class="page-title">
+          <div class="title_left">
+              <h3>Susceptibility Map</h3>
+          </div>
+
+          <div class="title_right">
+            <button class="btn btn-default" data-toggle="modal" data-target="#updateRecord"><i class="fa fa-edit fa-lg"  ></i>Update</button>
+
+          </div>
+      </div>
+    <hr class="separate2">
+    </div>
                      
          <div class="clearfix"></div>
-                     <div class="row">
-                         <div class="col-md-12  ">
-                   <div class="x_panel">
-                  
-                     <div class="x_content">
-                       <div class="dashboard-widget-content">
-                         
-                         <div id="map" class="col-md-12" style="height:440px;"></div>
-                   
-                       </div>
-                     </div>
-                   </div>
-                         </div>
-                     </div>
+          <div class="row">
+              <div class="col-md-12  ">
+                <div class="x_panel">
+                  <div class="x_content">
+                    <div class="dashboard-widget-content">
+                      <div id="mySidenav" class="sidenav">
+                        <div>
+                          <div class="header">
+                            <button class="btn " onclick="closeNav()" id="closeNav-button"><i class="fa fa-bars"></i></button>
+                            <div class="btn-group mr-2  " role="group" aria-label="First group">
+                              <input type="text" name="" placeholder="Full name" id="search_application">
+                            <button type="button" class="btn btn-secondary " id="search" ><i class="fa fa-search"></i></button>
+                          </div>
+                        </div>
+                        <div class="content-list">
+                          
+                        </div>
+                        </div>
+                      </div>
+                      <div id="map" class="col-md-12" style="height:440px;">
+                        <button id="refreshButton" onclick="openNav()">
+                          <i class="fa fa-solid fa-bars"></i>
+                        </button></div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
      </div>
   </div>
-                          
-                          
-              
- 
- 
-   
    </body>
+   <script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+       
+   <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
- 
-
-<script type="text/javascript">
-    // var map = L.map('map').setView([7.3087, 125.6841], 13);
- 
-    navigator.geolocation.getCurrentPosition(showPosition);
- function showPosition(position) {
- var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
- });
- osm.addTo(map)
- };
+   <script type="text/javascript">
+     // var map = L.map('map').setView([7.3087, 125.6841], 13);
   
-  </script>
+  var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+  // osm.addTo(map)
+  
+    var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3'],
+      });
+  // googleStreets.addTo(map)
+  
+    var Terrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3']
+      });
+  
+    // Terrain.addTo(map)
+      var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3'],
+      });
+  
+      // googleSat.addTo(map)
+  
+      var map = L.map('map', {
+      center: [7.3087, 125.6841],
+      zoom: 13,
+      layers: [googleStreets, Terrain,googleSat,osm]
+  });
+    var baseMaps = {
+      "googleStreets": googleStreets,
+      "Terrain": Terrain,
+      "googleSat": googleSat,
+      "osm": osm
+  };
+  L.control.layers(baseMaps).addTo(map);
+  
+  var baseMaps = {
+      "<span style='color: gray'>Terrain</span>": Terrain,
+      "googleStreets": googleStreets,
+      "googleSat": googleSat,
+      "osm": osm
+  };
+  // var geojson = L.geoJson(googleStreets, Terrain).addTo(map);
+  
+         // Load kml file
+              fetch('assets/example1.kml')
+                  .then(res => res.text())
+                  .then(kmltext => {
+                      // Create new kml overlay
+                      const parser = new DOMParser();
+                      const kml = parser.parseFromString(kmltext, 'text/xml');
+                      const track = new L.KML(kml);
+                      map.addLayer(track);
+  
+                      // Adjust map to show the kml
+                      const bounds = track.getBounds();
+                      map.fitBounds(bounds);
+                  });
+  
+   L.Control.geocoder().addTo(map);
 
+   $(document).on('click','.item',function(e){
+     e.preventDefault();
+      var long = $('.long').val();
+      var lat =$('.lat').val();
+      var pop = L.popup({
+        closeOnClick : true
+      }).setContent('some text');
+      var marker = L.marker([long,lat]).addTo(map).bindPopup(pop);
+
+      map.flyTo([long,lat],20);
+   })
+  
+   </script>
+<script src="{{ asset('js/kml.js') }}"></script>
+
+<script>
+  $(document).ready(function(){
+    fetchApplication();
+    function fetchApplication(business_name =''){
+      $.ajax({
+        type:'get',
+        url:'{{ route('fetch_application_map') }}',
+        data:{
+          business_name:business_name
+        },
+        dataType: 'json',
+        success:function(data){
+          $('.content-list').html(data.output);
+        }
+      
+      });
+    }
+
+  $('#search').on('click',function(e){
+    e.preventDefault();
+    var business_name = $('#search_application').val();
+    fetchApplication(business_name);
+    });
+
+
+    $('#search_application').on('keyup',function(e){
+      e.preventDefault();
+      var business_name = $(this).val();
+      if(business_name ==''){
+        fetchApplication(business_name);
+      }
+    });
+
+  })
+</script>
 @endsection 
