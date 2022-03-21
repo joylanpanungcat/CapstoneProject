@@ -154,7 +154,7 @@ element.style {
     padding-top: 6px;
     font-size: 28px;
     border: 1px solid;
-    /* height: 39px; */
+    height: 39px;
     overflow: hidden;
    
 }
@@ -284,81 +284,130 @@ element.style {
    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
    <script type="text/javascript">
- 
- L.mapquest.key = 'LAx0wIuGORRKAYko5EV2n17VGGARYcDv';
+     // var map = L.map('map').setView([7.3087, 125.6841], 13);
+  
+  var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+  // osm.addTo(map)
+  
+    var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3'],
+      });
+  // googleStreets.addTo(map)
+  
+    var Terrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3']
+      });
+  
+    // Terrain.addTo(map)
+      var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3'],
+      });
 
- var mapLayer = L.mapquest.tileLayer('map');
- 
-    var map = L.mapquest.map('map', {
-      center:[ 7.299101, 125.682612],
-      layers: mapLayer,
-      zoom: 18
-    });
 
-    L.control.layers({
-          'Map': mapLayer,
-          'Hybrid': L.mapquest.tileLayer('hybrid'),
-          'Satellite': L.mapquest.tileLayer('satellite'),
-          'Dark':  L.mapquest.tileLayer('dark'),
-          'Light':  L.mapquest.tileLayer('light')
-      }).addTo(map);
 
-  $(document).on('click','.item',function(e){
-       e.preventDefault();
-      var long2 = $('.long').val();
-      var lat2 =$('.lat').val();
-      var start_lat =7.299101;
-      var start_lng = 125.682612;
-    
+     
+      // googleSat.addTo(map)
+  
+      // var map = L.map('map', {
+      //     center: [ 7.299101,  125.682612],
+      //     zoom: 18,
+      //     layers: osm
+      // });
 
-     var directions = L.mapquest.directions();
-        directions.route({
-         locations: [
-            { latLng: { lat:start_lat , lng: start_lng} },
-             { latLng: { lat: long2, lng:lat2 } }
-          ],
-          options: {
-            timeOverage: 100,
-            maxRoutes: 3,
-          }
-        },createMap);
+      L.mapquest.key = 'LAx0wIuGORRKAYko5EV2n17VGGARYcDv';
 
+  let map = L.mapquest.map('map', {
+    layers: googleSat,
+    center: [ 7.299101,  125.682612],
+    zoom: 18
+});
+$(document).on('click','.item',function(){
+      var long = $('.long').val();
+      var lat =$('.lat').val();
+     
+       start_lat=7.299101;
+       start_long=125.682612;
+       end_lat=lat;
+       end_long=long;
+
+      // var pop = L.popup({
+      //   closeOnClick : true
+      // }).setContent('some text');
+      // var marker = L.marker([long,lat]).addTo(map).bindPopup(pop);
+      // map.flyTo([long,lat],20);
+      runDirection(start_lat,start_long,end_lat,end_long);
    })
-    
+var start_lat,start_long,end_lat,end_long;
 
-function createMap (err, response){
-    var customLayer = L.mapquest.directionsLayer({
-    // directions.setLayerOptions({
-      startMarker: {
-        icon: 'circle',
-        draggable: false,
-        iconOptions: {
-          size: 'sm',
-          primaryColor: '#1fc715',
-          secondaryColor: '#1fc715',
-          symbol: 'A'
-        }
+runDirection(start_lat,start_long,end_lat,end_long);
+function runDirection(start_lat,start_long,end_lat,end_long){
+    var dir = mapquest.routing.directions();
+    dir.route({
+          locations: [
+            { latLng: { lat:start_lat , lng: start_long} },
+          { latLng: { lat: end_lat, lng:end_long } }
+          ]
+      });
+   CustomRouteLayer = mapquest.Routing.RouteLayer.extend({
+   
+      createStartMarker: (location) => {
+          var custom_icon;
+          var marker;
+        
+          custom_icon = L.icon({
+              iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+              iconSize: [20, 29],
+              iconAnchor: [10, 29],
+              popupAnchor: [0, -29]
+          });
+          marker = L.marker(location.latLng, {icon: custom_icon}).addTo(map);
+
+          return marker;
       },
-      endMarker: {
-        icon: 'circle',
-        draggable: false,
-        iconOptions: {
-          size: 'sm',
-          primaryColor: '#e9304f',
-          secondaryColor: '#e9304f',
-          symbol: 'B'
-        }
-      },
-      routeRibbon: {
-        color: "#2aa6ce",
-        opacity: 1.0,
-        showTraffic: false,
-        draggable: false
-      },
-      directionsResponse: response
-   });
-   customLayer.addTo(map);
+
+      createEndMarker: (location) => {
+          var custom_icon;
+          var marker;
+
+          custom_icon = L.icon({
+              iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+              iconSize: [20, 29],
+              iconAnchor: [10, 29],
+              popupAnchor: [0, -29]
+          });
+
+          marker = L.marker(location.latLng, {icon: custom_icon}).addTo(map);
+          return marker;
+      }
+  });
+  map.addLayer(new CustomRouteLayer({
+      directions: dir,
+      fitBounds: true
+  })); 
 }
+// var myIcon = L.icon({
+//               iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+//               iconSize: [20, 29],
+//               iconAnchor: [10, 29],
+//               popupAnchor: [0, -29]
+//           });
+// var bfp = L.marker([7.299058972623437, 125.6825359300602],{icon: myIcon}).addTo(map);
+
+    var baseMaps = {
+      "googleStreets": googleStreets,
+      "Terrain": Terrain,
+      "googleSat": googleSat,
+      "osm": osm,
+      'mapLayer':mapLayer
+  };
+  // L.control.layers(baseMaps).addTo(map);
+
+
   fetchApplication();
      function fetchApplication(business_name =''){
        $.ajax({
@@ -387,8 +436,6 @@ function createMap (err, response){
          fetchApplication(business_name);
        }
      });
-
-   
    
 
   

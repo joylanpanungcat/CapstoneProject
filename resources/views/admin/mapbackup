@@ -1,13 +1,16 @@
 @extends('admin/include.navbar')
 @section('title','applicant account')
 @section('content')
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+   <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=LAx0wIuGORRKAYko5EV2n17VGGARYcDv"></script>
+   <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-routing.js?key=LAx0wIuGORRKAYko5EV2n17VGGARYcDv"></script>
 
 
    <link rel="stylesheet" href="{{ asset('css/leaflet/geocoder.css') }}" />
-   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script> --}}
-   <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
-   <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+
 <style type="text/css">
     table tbody tr td input{
       border: none;
@@ -154,7 +157,7 @@ element.style {
     padding-top: 6px;
     font-size: 28px;
     border: 1px solid;
-    /* height: 39px; */
+    height: 39px;
     overflow: hidden;
    
 }
@@ -177,11 +180,7 @@ element.style {
   overflow-x: hidden;
     height: 348px;
 }
-.leaflet-div-icon{
-  background: none;
-  border: none
 
-}
 
 @media screen  and (max-width: 1920px){
   .leaflet-left {
@@ -284,81 +283,132 @@ element.style {
    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
    <script type="text/javascript">
- 
- L.mapquest.key = 'LAx0wIuGORRKAYko5EV2n17VGGARYcDv';
+     // var map = L.map('map').setView([7.3087, 125.6841], 13);
+  
+  var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+  // osm.addTo(map)
+  
+    var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3'],
+      });
+  // googleStreets.addTo(map)
+  
+    var Terrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3']
+      });
+  
+    // Terrain.addTo(map)
+      var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3'],
+      });
+      var mapLayer = MQ.mapLayer(), map;
+      // googleSat.addTo(map)
+  
+      var map = L.map('map', {
+      center: [7.308707, 125.684120],
+      zoom: 13,
+      layers: mapLayer
+  });
 
- var mapLayer = L.mapquest.tileLayer('map');
- 
-    var map = L.mapquest.map('map', {
-      center:[ 7.299101, 125.682612],
-      layers: mapLayer,
-      zoom: 18
-    });
+  L.control.layers({
+                'Map': mapLayer,
+                'Hybrid': MQ.hybridLayer(),
+                'Satellite': MQ.satelliteLayer(),
+                'Dark': MQ.darkLayer(),
+                'Light': MQ.lightLayer()
+            }).addTo(map);
 
-    L.control.layers({
-          'Map': mapLayer,
-          'Hybrid': L.mapquest.tileLayer('hybrid'),
-          'Satellite': L.mapquest.tileLayer('satellite'),
-          'Dark':  L.mapquest.tileLayer('dark'),
-          'Light':  L.mapquest.tileLayer('light')
-      }).addTo(map);
+//   let map = L.map('map', {
+//     layers: MQ.mapLayer(),
+//     center: [35.791188, -78.636755],
+//     zoom: 12
+// });
+  
+var dir = MQ.routing.directions();
 
-  $(document).on('click','.item',function(e){
-       e.preventDefault();
-      var long2 = $('.long').val();
-      var lat2 =$('.lat').val();
-      var start_lat =7.299101;
-      var start_lng = 125.682612;
-    
+dir.route({
+      locations: [
+          { latLng: { lat: 7.303290, lng: 125.679530} },
+          { latLng: { lat: 7.299252, lng: 125.680303} }
+      ]
+  });
 
-     var directions = L.mapquest.directions();
-        directions.route({
-         locations: [
-            { latLng: { lat:start_lat , lng: start_lng} },
-             { latLng: { lat: long2, lng:lat2 } }
-          ],
-          options: {
-            timeOverage: 100,
-            maxRoutes: 3,
-          }
-        },createMap);
+  CustomRouteLayer = MQ.Routing.RouteLayer.extend({
+      createStartMarker: (location) => {
+          var custom_icon;
+          var marker;
 
-   })
-    
+          custom_icon = L.icon({
+              iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+              iconSize: [20, 29],
+              iconAnchor: [10, 29],
+              popupAnchor: [0, -29]
+          });
 
-function createMap (err, response){
-    var customLayer = L.mapquest.directionsLayer({
-    // directions.setLayerOptions({
-      startMarker: {
-        icon: 'circle',
-        draggable: false,
-        iconOptions: {
-          size: 'sm',
-          primaryColor: '#1fc715',
-          secondaryColor: '#1fc715',
-          symbol: 'A'
-        }
+          marker = L.marker(location.latLng, {icon: custom_icon}).addTo(map);
+
+          return marker;
       },
-      endMarker: {
-        icon: 'circle',
-        draggable: false,
-        iconOptions: {
-          size: 'sm',
-          primaryColor: '#e9304f',
-          secondaryColor: '#e9304f',
-          symbol: 'B'
-        }
-      },
-      routeRibbon: {
-        color: "#2aa6ce",
-        opacity: 1.0,
-        showTraffic: false,
-        draggable: false
-      },
-      directionsResponse: response
-   });
-   customLayer.addTo(map);
-}
+
+      createEndMarker: (location) => {
+          var custom_icon;
+          var marker;
+
+          custom_icon = L.icon({
+              iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+              iconSize: [20, 29],
+              iconAnchor: [10, 29],
+              popupAnchor: [0, -29]
+          });
+
+          marker = L.marker(location.latLng, {icon: custom_icon}).addTo(map);
+          return marker;
+      }
+  });
+  map.addLayer(new CustomRouteLayer({
+      directions: dir,
+      fitBounds: true
+  })); 
+
+  // var marker = L.marker([7.299058972623437, 125.6825359300602],{icon: myIcon}).addTo(map);
+    var baseMaps = {
+      "googleStreets": googleStreets,
+      "Terrain": Terrain,
+      "googleSat": googleSat,
+      "osm": osm
+  };
+  L.control.layers(baseMaps).addTo(map);
+  
+  var baseMaps = {
+      "<span style='color: gray'>Terrain</span>": Terrain,
+      "googleStreets": googleStreets,
+      "googleSat": googleSat,
+      "osm": osm
+  };
+  // var geojson = L.geoJson(googleStreets, Terrain).addTo(map);
+  
+         // Load kml file
+  //             fetch('assets/example1.kml')
+  //                 .then(res => res.text())
+  //                 .then(kmltext => {
+  //                     // Create new kml overlay
+  //                     const parser = new DOMParser();
+  //                     const kml = parser.parseFromString(kmltext, 'text/xml');
+  //                     const track = new L.KML(kml);
+  //                     map.addLayer(track);
+  
+  //                     // Adjust map to show the kml
+  //                     const bounds = track.getBounds();
+  //                     map.fitBounds(bounds);
+  //                 });
+  
+  //  L.Control.geocoder().addTo(map);
+
   fetchApplication();
      function fetchApplication(business_name =''){
        $.ajax({
@@ -376,21 +426,31 @@ function createMap (err, response){
      }
  
    $('#search').on('click',function(e){
+     e.preventDefault();
      var business_name = $('#search_application').val();
      fetchApplication(business_name);
      });
  
  
      $('#search_application').on('keyup',function(e){
+       e.preventDefault();
        var business_name = $(this).val();
        if(business_name ==''){
          fetchApplication(business_name);
        }
      });
 
-   
-   
+   $(document).on('click','.item',function(e){
+     e.preventDefault();
+      var long = $('.long').val();
+      var lat =$('.lat').val();
+      var pop = L.popup({
+        closeOnClick : true
+      }).setContent('some text');
+      var marker = L.marker([long,lat]).addTo(map).bindPopup(pop);
 
+      map.flyTo([long,lat],20);
+   })
   
    </script>
 
