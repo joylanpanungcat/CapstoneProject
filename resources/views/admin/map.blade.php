@@ -323,41 +323,43 @@ element.style {
           }
         },createMap);
 
+        L.mapquest.textMarker([start_lat, start_lng], {
+            text: 'BFP',
+            subtext: 'Beauro Of Fire Protection',
+            position: 'bottom',
+          
+        }).addTo(map);
    })
     
 
 function createMap (err, response){
-    var customLayer = L.mapquest.directionsLayer({
-    // directions.setLayerOptions({
-      startMarker: {
-        icon: 'circle',
-        draggable: false,
-        iconOptions: {
-          size: 'sm',
-          primaryColor: '#1fc715',
-          secondaryColor: '#1fc715',
-          symbol: 'A'
-        }
-      },
-      endMarker: {
-        icon: 'circle',
-        draggable: false,
-        iconOptions: {
-          size: 'sm',
-          primaryColor: '#e9304f',
-          secondaryColor: '#e9304f',
-          symbol: 'B'
-        }
-      },
-      routeRibbon: {
-        color: "#2aa6ce",
-        opacity: 1.0,
-        showTraffic: false,
-        draggable: false
-      },
-      directionsResponse: response
-   });
-   customLayer.addTo(map);
+ 
+  var DirectionsLayerWithCustomMarkers = L.mapquest.DirectionsLayer.extend({
+    createStartMarker: function(location, stopNumber) {
+      var custom_icon;
+      custom_icon = L.icon({
+              iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+              iconSize: [20, 29],
+              iconAnchor: [10, 29],
+              popupAnchor: [0, -29]
+          });
+      return L.marker(location.latLng, {icon: custom_icon}).bindPopup('Start');
+    },
+
+    createWaypointMarker: function(location, stopNumber) {
+      return L.marker(location.latLng, {}).bindPopup('Waypoint');
+    },
+
+    createEndMarker: function(location, stopNumber) {
+      return L.marker(location.latLng, {}).bindPopup('End');
+    }
+  });
+
+  var directionsLayer = new DirectionsLayerWithCustomMarkers({
+    directionsResponse: response
+   }).addTo(map);
+
+
 }
   fetchApplication();
      function fetchApplication(business_name =''){
