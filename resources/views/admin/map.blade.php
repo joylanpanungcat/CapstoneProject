@@ -2,12 +2,17 @@
 @section('title','applicant account')
 @section('content')
 
-
-
-   <link rel="stylesheet" href="{{ asset('css/leaflet/geocoder.css') }}" />
-   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script> --}}
-   <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
-   <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+{{-- <link rel="stylesheet" href="{{ asset('css/leaflet/leaflet-1.7.1.css') }}"> --}}
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<link rel="stylesheet" href="{{ asset('css/leaflet/geocoder.css') }}" />
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script> --}}
+<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+<link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 <style type="text/css">
     table tbody tr td input{
       border: none;
@@ -249,7 +254,7 @@ element.style {
                           <div class="header">
                             <button class="btn " onclick="closeNav()" id="closeNav-button"><i class="fa fa-bars"></i></button>
                             <div class="btn-group mr-2  " role="group" aria-label="First group">
-                              <input type="text" name="" placeholder="Full name" id="search_application">
+                              <input type="text" name="" placeholder="Business Name" id="search_application">
                             <button type="button" class="btn btn-secondary " id="search" ><i class="fa fa-search"></i></button>
                           </div>
                         </div>
@@ -286,36 +291,83 @@ element.style {
    <script type="text/javascript">
  
  L.mapquest.key = 'LAx0wIuGORRKAYko5EV2n17VGGARYcDv';
+ var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
+          maxZoom: 20,
+          subdomains:['mt0','mt1','mt2','mt3'],
+      });
 
- var mapLayer = L.mapquest.tileLayer('map');
+var Terrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+//  var mapLayer = L.mapquest.tileLayer(googleSat);
  
     var map = L.mapquest.map('map', {
       center:[ 7.299101, 125.682612],
-      layers: mapLayer,
+      layers: googleSat,
       zoom: 18
     });
 
-    L.control.layers({
-          'Map': mapLayer,
-          'Hybrid': L.mapquest.tileLayer('hybrid'),
-          'Satellite': L.mapquest.tileLayer('satellite'),
+    // L.control.layers({
+    //       'Dark': mapLayer,
+    //       'Hybrid': L.mapquest.tileLayer('hybrid'),
+    //       'Satellite': L.mapquest.tileLayer('satellite'),
+    //       'Map':  L.mapquest.tileLayer('map'),
+    //       'Light':  L.mapquest.tileLayer('light'),
+    //       'GoogleSat':googleSat
+    //   }).addTo(map);
+      L.control.layers({
+          'Terrain': Terrain,
+          'GoogleSat':googleSat,
+          'osm':osm,
           'Dark':  L.mapquest.tileLayer('dark'),
-          'Light':  L.mapquest.tileLayer('light')
       }).addTo(map);
+
+
+var myIcon = L.icon({
+      iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+      iconSize: [20, 29],
+      iconAnchor: [10, 29],
+      popupAnchor: [0, -29]
+  });
+var bfp = L.marker([7.299101,125.682612],{icon: myIcon}).addTo(map);
+L.mapquest.textMarker([7.299101,125.682612], {
+            text: 'BFP',
+            subtext: 'Beauro Of Fire Protection',
+            position: 'bottom',
+        }).addTo(map);
+
+var business_name = '';
+var address_map = '';
+var applicantName_map = '';
+var contactNumber_map = '';
+var alt_number = '';
+
 
   $(document).on('click','.item',function(e){
        e.preventDefault();
-      var long2 = $('.long').val();
-      var lat2 =$('.lat').val();
+      var applicationId = $(this).attr('id');
+      var long2 = $('.long'+applicationId+'').val();
+      var lat2 =$('.lat'+applicationId+'').val();
       var start_lat =7.299101;
       var start_lng = 125.682612;
-    
 
+
+    business_name =$('.business_name_map'+applicationId+'').val();
+    address_map =$('.address_map'+applicationId+'').val();
+    applicantName_map =$('.applicantName_map'+applicationId+'').val();
+    contactNumber_map =$('.contactNumber_map'+applicationId+'').val();
+    alt_number =$('.alt_number'+applicationId+'').val();
+   
      var directions = L.mapquest.directions();
         directions.route({
          locations: [
             { latLng: { lat:start_lat , lng: start_lng} },
-             { latLng: { lat: long2, lng:lat2 } }
+             { latLng: { lat: lat2, lng:long2 } }
           ],
           options: {
             timeOverage: 100,
@@ -329,6 +381,15 @@ element.style {
             position: 'bottom',
           
         }).addTo(map);
+
+        var endText = L.mapquest.textMarker([lat2,long2], {
+            text: business_name,
+            subtext: 'Applicant',
+            position: 'right',
+          
+        });
+        endText.addTo(map);
+
    })
     
 
@@ -337,21 +398,23 @@ function createMap (err, response){
   var DirectionsLayerWithCustomMarkers = L.mapquest.DirectionsLayer.extend({
     createStartMarker: function(location, stopNumber) {
       var custom_icon;
+      var popup = '<div class="custom-popup"><div class="header-custom-popup"><h5 style="font-size: 16px;color: #0044cc;">BUREAU OF FIRE PROTECTION</h5></div><div class="content-custom-popup">Category: Government <br>Province: Davao Del Norte <br> City: Panabo City <br> Phone: (084) 822 0160 <br> Address: Salvacion, Panabo City </div></div>';
       custom_icon = L.icon({
               iconUrl: '{{ asset('map-icons/building-solid.png') }}',
               iconSize: [20, 29],
               iconAnchor: [10, 29],
               popupAnchor: [0, -29]
           });
-      return L.marker(location.latLng, {icon: custom_icon}).bindPopup('Start');
+      return L.marker(location.latLng, {icon: custom_icon}).bindPopup(popup);
     },
 
     createWaypointMarker: function(location, stopNumber) {
-      return L.marker(location.latLng, {}).bindPopup('Waypoint');
+      return L.marker(location.latLng, {});
     },
 
     createEndMarker: function(location, stopNumber) {
-      return L.marker(location.latLng, {}).bindPopup('End');
+      var popup = '<div class="custom-popup"><div class="header-custom-popup"><h5 style="font-size: 16px;color: #0044cc;">'+business_name.toUpperCase()+'</h5></div><div class="content-custom-popup">Address: <b>'+address_map+'</b> <br> Applicant Name: <b>'+applicantName_map+'</b><br> Contact Number:<b>'+contactNumber_map+'</b><br> Alt Number: <b>'+alt_number+'</b></div></div>';
+      return L.marker(location.latLng, {}).bindPopup(popup);
     }
   });
 
