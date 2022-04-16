@@ -403,4 +403,9 @@ public function payment_view(Request $request){
   ]);
 }
 
+public function index(){
+  $data = applicant_account::get();
+  return response()->json($data);
+}
+
 }

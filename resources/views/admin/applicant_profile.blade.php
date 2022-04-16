@@ -2,42 +2,42 @@
 @extends('admin/include.navbar')
 @section('title','applicant account')
 @section('content')
-  
+
 <div class="right_col" role="main" >
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                
+
             </div>
 
         </div>
 
-                    
-                    
+
+
         <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
-                          
+
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Account Profile  <small></small></h2>
 
 
-                                   
+
                                     <div class="clearfix"></div>
                                 </div>
                               <div class="col-md-12 applicant-account">
                                     <div class="col-md-4"></div>
                                     <div class="col-md-8">
                                         <div id="showDetail"></div>
-                                        
+
                                     </div>
 
 
-                    
+
                             <div class="col-md-4 " style="margin-top: 3%;" >
-                                
-                                         
+
+
 
                                 <img src="../assets/images/" class="profile2">
                                 <h5 class="Applicant">{{$account_details['Fname']}} {{$account_details['Lname']}}</h5>
@@ -50,13 +50,6 @@
                                 </div> -->
                                 <div class="col-md-4 ">
                                  <form method="post">
-                                    
-                                         
-                                
-                                      
-                                          
-                               
-                                    
                                 <div class="form-group">
                                     <label>Contact Number</label>
                                     <input type="text" name="" id="contact_numDetails" class="form-control" value="{{$account_details['contact_num']}}">
@@ -69,7 +62,7 @@
                                     <label>Username</label>
                                     <input type="text" name="" id="contact_numDetails" class="form-control" value="" readonly>
                                 </div>
-                                 
+
                                 <div class="form-group">
                                     <label>Date Register</label>
                                     <input type="text" name="" id="date_registerDetails" class="form-control" value="" readonly>
@@ -101,7 +94,7 @@
                                 <div class="x_title">
                                     <h2>Transaction  <small></small></h2>
 
-                                   
+
                                     <div class="clearfix"></div>
                                 </div>
                          </div>
@@ -113,7 +106,7 @@
                           <h2>Login Record</h2>
                            <div id="chart" style="width:700px"></div>
                         </div> -->
-                        
+
                       <!-- </div> -->
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
@@ -131,11 +124,11 @@
                           </li>
 
                         </ul>
-                         
+
                         <div id="myTabContent" class="tab-content">
                           <div role="tabpanel" class="tab-pane active " id="tab_content1" aria-labelledby="home-tab">
                             <div id='showDelete'></div>
-                         <div class='container'>   
+                         <div class='container'>
                             <table class='table table-bordered table'>
                                 <thead>
                                     <tr>
@@ -157,79 +150,40 @@
                                 @empty
                                  <tr>
                                         <td align='center' colspan='6' style="color: red;"><i class='fa fa-warning'></i>No Application</td>
-                                       
+
                                         <tr>"
-                                         
+
                                   @endforelse
 
-                              
+
                                   </tbody>
-                                 {{--  <input type="" name="" id="account_id" value="<?=$data['account_id'] ?>" > --}}
-                                 
 
                             </table>
                         </div>
-               
-
-                            
-
-
                              </div>
                                   <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
                                    <div id="GFG" >
-                                 
-                            
                            </div>
-                                  
-                        
                                   </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
                                 <h1>This is payment content</h1>
-                         
+
                           </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                                 <div class="row">
-
-             
-            </div>
+                                </div>
                               </div>
                                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                                 <div class="col-md-12">
                                     <div class="x_panel">
                                 <div class="x_title">
-                                     
+
                                 </div>
                             </div>
                                 </div>
                                </div>
-
-                               
                                <div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
-                              
-                  
-</div>
-
-
-
-                       <!--     <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                         <div class="x_panel">
-                          <div class="x_title">
-                            <h2>Invoice  <small></small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                              </li>
-                          
-                            
-                            </ul>
-                            <div class="clearfix"></div>
-                          </div>
-                        </div>
-                       </div> -->
-
-                             <!--  <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                            <p>On process... </p>
-
-                            </div> -->
+                            </div>
                             </div>
 
                         </div>
@@ -248,7 +202,7 @@
         </div>
         <div class="modal-body">
         <div class="x_panel">
-                   
+
                     <div class="x_content">
                         <form class="form-horizontal form-label-left">
                             <h6><b>Business Details</b></h6>
@@ -324,27 +278,27 @@
 
 
                         </div>
-                    
+
 
 
                     </form>
                     </div>
                             </div>
-                           
+
                                 <center>
           <button class="btn btn-primary" data-dismiss="modal" ><i class="fa fa-arrow-left"></i> Back</button></center>
-   
+
         </div>
-    
-       
-     
-         
-          
-       
+
+
+
+
+
+
       </div>
     </div>
   </div>
-  
+
 
   <div class="modal fade" id="payment_success" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -352,27 +306,27 @@
         <div class="modal-header">
              <h4 class="modal-title">Payment Send Successfully</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
+
         </div>
         <form method="post">
-        
+
         <div class="modal-footer">
           <button type="button" class="btn btn-success" data-dismiss="modal">Ok</button>
-        
+
         </div>
     </form>
       </div>
     </div>
   </div>
   <!-- View Payment -->
-  
+
    <div class="modal fade" id="view_payment" role="dialog">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
              <h5 class="modal-title">Payment Information</small></h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
+
         </div>
         <form method="post">
         <div class="modal-body">
@@ -401,12 +355,12 @@
                   <input type="text" name=""  id="" class="form-control" value="07/04/2021 13:04:45 PM" >
               </div>
               <input type="hidden" name="" id="application_id_payment">
-              
+
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-      
+
         </div>
     </form>
       </div>
@@ -419,7 +373,7 @@
         <div class="modal-header">
              <h5 class="modal-title">Add payment to>><br><small id="owners_payment"></small></h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
+
         </div>
         <form method="post">
         <div class="modal-body">
@@ -443,9 +397,9 @@
                   <label>Amount</label>
                   <input type="text" name=""  id="amount_payment" class="form-control" >
               </div>
-            
+
               <input type="hidden" name="" id="application_id_payment">
-              
+
           </div>
         </div>
         <div class="modal-footer">
@@ -460,9 +414,9 @@
 
 <div class="modal fade" id="viewCertificate_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-xl" >
-                        
+
                         <div class="modal-content">
-                         
+
                            <div class="col-md-12 col-sm-12  ">
                 <div class="x_panel">
                   <div class="x_title">
@@ -486,7 +440,7 @@
                      <center>
                                 <img src="../assets/images/form1.jpg" class="image1">
                             </center>
-                                 
+
                                   </div>
                                   <div class="button-group">
                                       <button type="button" class="btn btn-secondary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button>
@@ -501,9 +455,9 @@
   <!-- viewFile -->
    <div class="modal fade" id="viewFiles_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-xl" >
-                        
+
                         <div class="modal-content">
-                         
+
                            <div class="col-md-12 col-sm-12  ">
                 <div class="x_panel">
                   <div class="x_title">
@@ -540,13 +494,13 @@
 <!-- view_modal -->
   <div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-xl" >
-                        
+
                         <div class="modal-content">
                           <div class="modal-header">
                             <center>
                             <h2  id="exampleModalLabel " > APPLICATION INFORMATION</h2>
                             </center>
-                         
+
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -568,7 +522,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                         
+
                              <td><input type="text" name="" id="Fname" class="form-control" ></td>
                               <td><input type="text" name="" id="Lname" class="form-control" ></td>
                               <td><input type="text" name="" id="contact_num" class="form-control" ></td>
@@ -576,7 +530,7 @@
                                              <td><input type="text" name="" id="barangay" class="form-control"></td>
                                              <td><input type="text" name="" id="city" class="form-control" ></td>
 
-                                            
+
                                         </tr>
                                     </tbody>
                                 </table><br>
@@ -603,17 +557,17 @@
                                                 </select></td> -->
                             <td><input type="text" name="" id="type_application" class="form-control" ></td>
                              <td><input type="text" name="" id="control_number" class="form-control"  readonly=""></td>
-                      
+
                         <td><input type="text" name="" id="type_occupancy" class="form-control" ></td>
                          <td><input type="text" name="" id="nature_business" class="form-control"  ></td>
                           <td><input type="text" name="" id="business_name" class="form-control" ></td>
-                                        
 
-                                            
+
+
                                         </tr>
                                     </tbody>
                                 </table>
-                                  
+
                                   <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -627,11 +581,11 @@
                                     </thead>
                                      <tbody>
                                         <tr>
-                                           
+
                                              <td><input type="text" name="" id="Bin" class="form-control"  ></td>
                                              <td><input type="text" name="" id="BP_num" class="form-control" ></td>
                                               <td><select class="form-control" id="inpector_id">
-                                                  
+
                                               </select></td>
                                               <td><input type="text" name="" class="form-control" id="OR_num"></td>
                                      <td><input type="text" name="" class="form-control" id="status" readonly=""></td>
@@ -640,7 +594,7 @@
                                                     <option  value="Process">Process</option>
                                                     <option  value="Approved">Approved</option>
                                                 </select></td> -->
-                                            
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -651,8 +605,8 @@
                                 </div>
                                </form>
                             </div>
-                                  
-                              
+
+
                           </div>
                         </div>
                       </div>
@@ -665,7 +619,7 @@
 
              <h5 class="modal-title">Add Schedule<br><small id="Fname"></small><small id="Lname"></small></h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
+
         </div>
         <form method="post">
         <div class="modal-body">
@@ -691,7 +645,7 @@
                   <input type="date" name="" class="form-control" id="date_inspection">
               </div>
               <input type="hidden" name="" id="modalId">
-              
+
           </div>
         </div>
         <div class="modal-footer">
@@ -707,13 +661,13 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header payment_success">
-    
+
       <h4 class="modal-title" id="ModalTitle">Schedule Addedd Successfully!</h4>
 
-        
+
       </div>
       <!-- <div class="modal-body">
-    
+
       </div> -->
       <center>
 
@@ -723,7 +677,7 @@
 </div>
 </div>
 
-                
+
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -731,7 +685,7 @@
         <div class="modal-header">
              <h5 class="modal-title">Send Invoice to>><br><small id="owners"></small></h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-         
+
         </div>
         <form method="post">
         <div class="modal-body">
@@ -749,7 +703,7 @@
                   <input type="text" name="" readonly="" id="modatlPayment" class="form-control">
               </div>
               <input type="hidden" name="" id="modalId">
-              
+
           </div>
         </div>
         <div class="modal-footer">
@@ -760,11 +714,11 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
 
 
 
-  
+
  {{--  <script type="text/javascript">
       $(document).ready(function(){
            $.ajaxSetup({
@@ -786,9 +740,9 @@
                 }
             })
 
-            
+
         }
         application();
       })
   </script> --}}
-  @endsection 
+  @endsection

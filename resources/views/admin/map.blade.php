@@ -22,7 +22,7 @@ crossorigin=""></script>
     }
     table tbody tr td input:hover{
       border: 3px solid #0687d6;
-     
+
 
     }
     .title_right button{
@@ -42,7 +42,7 @@ crossorigin=""></script>
   }
 .compose .compose-header .close {
 text-shadow: 0 1px 0 #ffffff;
-line-height: .8; 
+line-height: .8;
 color: #fff;
 }
 .compose-footer button{
@@ -161,7 +161,7 @@ element.style {
     border: 1px solid;
     /* height: 39px; */
     overflow: hidden;
-   
+
 }
 
 
@@ -213,7 +213,7 @@ element.style {
 
   <div class="right_col" role="main" >
      <div class="">
-        
+
  <div class="modal fade" id="updateRecord" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm" >
           <div class="modal-content">
@@ -242,7 +242,7 @@ element.style {
       </div>
     <hr class="separate2">
     </div>
-                     
+
          <div class="clearfix"></div>
           <div class="row">
               <div class="col-md-12  ">
@@ -259,15 +259,17 @@ element.style {
                           </div>
                         </div>
                         <div class="content-list">
-                          
+
                         </div>
                         </div>
                       </div>
-                      <div id="map" class="col-md-12" style="height:440px;">
+                    {{-- <div id="map" class="col-md-12" style="height:440px;">
                         <button id="refreshButton" onclick="openNav()">
-                          <i class="fa fa-solid fa-bars"></i>
-                        </button></div>
-                      
+                            <i class="fa fa-solid fa-bars"></i>
+                        </button>
+                    </div> --}}
+                    <iframe src="https://editor.giscloud.com/rest/1/maps/1903414/render.iframe?bound=125.16038111816408,7.144658966796868,126.09833888183596,7.531240387695306&toolbar=true&popups=true&layerlist=true" width="100%" height="400" frameborder="0"></iframe>
+
                     </div>
                   </div>
                 </div>
@@ -280,185 +282,184 @@ element.style {
     function openNav() {
       document.getElementById("mySidenav").style.width = "250px";
     }
-    
+
     function closeNav() {
       document.getElementById("mySidenav").style.width = "0";
     }
     </script>
-       
+
    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
    <script type="text/javascript">
- 
- L.mapquest.key = 'LAx0wIuGORRKAYko5EV2n17VGGARYcDv';
- var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
-          maxZoom: 20,
-          subdomains:['mt0','mt1','mt2','mt3'],
-      });
 
-var Terrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&',{
-        maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3']
-    });
-var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-});
+        L.mapquest.key = 'LAx0wIuGORRKAYko5EV2n17VGGARYcDv';
+        var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3'],
+            });
 
-//  var mapLayer = L.mapquest.tileLayer(googleSat);
- 
-    var map = L.mapquest.map('map', {
-      center:[ 7.299101, 125.682612],
-      layers: googleSat,
-      zoom: 18
-    });
-
-    // L.control.layers({
-    //       'Dark': mapLayer,
-    //       'Hybrid': L.mapquest.tileLayer('hybrid'),
-    //       'Satellite': L.mapquest.tileLayer('satellite'),
-    //       'Map':  L.mapquest.tileLayer('map'),
-    //       'Light':  L.mapquest.tileLayer('light'),
-    //       'GoogleSat':googleSat
-    //   }).addTo(map);
-      L.control.layers({
-          'Terrain': Terrain,
-          'GoogleSat':googleSat,
-          'osm':osm,
-          'Dark':  L.mapquest.tileLayer('dark'),
-      }).addTo(map);
-
-
-var myIcon = L.icon({
-      iconUrl: '{{ asset('map-icons/building-solid.png') }}',
-      iconSize: [20, 29],
-      iconAnchor: [10, 29],
-      popupAnchor: [0, -29]
-  });
-var bfp = L.marker([7.299101,125.682612],{icon: myIcon}).addTo(map);
-L.mapquest.textMarker([7.299101,125.682612], {
-            text: 'BFP',
-            subtext: 'Beauro Of Fire Protection',
-            position: 'bottom',
-        }).addTo(map);
-
-var business_name = '';
-var address_map = '';
-var applicantName_map = '';
-var contactNumber_map = '';
-var alt_number = '';
-
-
-  $(document).on('click','.item',function(e){
-       e.preventDefault();
-      var applicationId = $(this).attr('id');
-      var long2 = $('.long'+applicationId+'').val();
-      var lat2 =$('.lat'+applicationId+'').val();
-      var start_lat =7.299101;
-      var start_lng = 125.682612;
-
-
-    business_name =$('.business_name_map'+applicationId+'').val();
-    address_map =$('.address_map'+applicationId+'').val();
-    applicantName_map =$('.applicantName_map'+applicationId+'').val();
-    contactNumber_map =$('.contactNumber_map'+applicationId+'').val();
-    alt_number =$('.alt_number'+applicationId+'').val();
-   
-     var directions = L.mapquest.directions();
-        directions.route({
-         locations: [
-            { latLng: { lat:start_lat , lng: start_lng} },
-             { latLng: { lat: lat2, lng:long2 } }
-          ],
-          options: {
-            timeOverage: 100,
-            maxRoutes: 3,
-          }
-        },createMap);
-
-        L.mapquest.textMarker([start_lat, start_lng], {
-            text: 'BFP',
-            subtext: 'Beauro Of Fire Protection',
-            position: 'bottom',
-          
-        }).addTo(map);
-
-        var endText = L.mapquest.textMarker([lat2,long2], {
-            text: business_name,
-            subtext: 'Applicant',
-            position: 'right',
-          
+        var Terrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            });
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         });
-        endText.addTo(map);
 
-   })
-    
+        var panabo = L.tileLayer('https://editor.giscloud.com/rest/1/maps/1903414/render.iframe?bound=125.16038111816408,7.144658966796868,126.09833888183596,7.531240387695306&toolbar=true&popups=true&layerlist=true" frameborder="0"');
 
-function createMap (err, response){
- 
-  var DirectionsLayerWithCustomMarkers = L.mapquest.DirectionsLayer.extend({
-    createStartMarker: function(location, stopNumber) {
-      var custom_icon;
-      var popup = '<div class="custom-popup"><div class="header-custom-popup"><h5 style="font-size: 16px;color: #0044cc;">BUREAU OF FIRE PROTECTION</h5></div><div class="content-custom-popup">Category: Government <br>Province: Davao Del Norte <br> City: Panabo City <br> Phone: (084) 822 0160 <br> Address: Salvacion, Panabo City </div></div>';
-      custom_icon = L.icon({
-              iconUrl: '{{ asset('map-icons/building-solid.png') }}',
-              iconSize: [20, 29],
-              iconAnchor: [10, 29],
-              popupAnchor: [0, -29]
-          });
-      return L.marker(location.latLng, {icon: custom_icon}).bindPopup(popup);
-    },
+        //  var mapLayer = L.mapquest.tileLayer(googleSat);
 
-    createWaypointMarker: function(location, stopNumber) {
-      return L.marker(location.latLng, {});
-    },
+            var map = L.mapquest.map('map', {
+            center:[ 7.299101, 125.682612],
+            layers: googleSat,
+            zoom: 18
+            });
 
-    createEndMarker: function(location, stopNumber) {
-      var popup = '<div class="custom-popup"><div class="header-custom-popup"><h5 style="font-size: 16px;color: #0044cc;">'+business_name.toUpperCase()+'</h5></div><div class="content-custom-popup">Address: <b>'+address_map+'</b> <br> Applicant Name: <b>'+applicantName_map+'</b><br> Contact Number:<b>'+contactNumber_map+'</b><br> Alt Number: <b>'+alt_number+'</b></div></div>';
-      return L.marker(location.latLng, {}).bindPopup(popup);
-    }
-  });
-
-  var directionsLayer = new DirectionsLayerWithCustomMarkers({
-    directionsResponse: response
-   }).addTo(map);
+            // L.control.layers({
+            //       'Dark': mapLayer,
+            //       'Hybrid': L.mapquest.tileLayer('hybrid'),
+            //       'Satellite': L.mapquest.tileLayer('satellite'),
+            //       'Map':  L.mapquest.tileLayer('map'),
+            //       'Light':  L.mapquest.tileLayer('light'),
+            //       'GoogleSat':googleSat
+            //   }).addTo(map);
+            L.control.layers({
+                'Terrain': Terrain,
+                'GoogleSat':googleSat,
+                'osm':osm,
+                'Dark':  L.mapquest.tileLayer('dark'),
+                'Panabo':panabo
+            }).addTo(map);
 
 
-}
-  fetchApplication();
-     function fetchApplication(business_name =''){
-       $.ajax({
-         type:'get',
-         url:'{{ route('fetch_application_map') }}',
-         data:{
-           business_name:business_name
-         },
-         dataType: 'json',
-         success:function(data){
-           $('.content-list').html(data.output);
-         }
-       
-       });
-     }
- 
-   $('#search').on('click',function(e){
-     var business_name = $('#search_application').val();
-     fetchApplication(business_name);
-     });
- 
- 
-     $('#search_application').on('keyup',function(e){
-       var business_name = $(this).val();
-       if(business_name ==''){
-         fetchApplication(business_name);
-       }
-     });
+        var myIcon = L.icon({
+            iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+            iconSize: [20, 29],
+            iconAnchor: [10, 29],
+            popupAnchor: [0, -29]
+        });
+        var bfp = L.marker([7.299101,125.682612],{icon: myIcon}).addTo(map);
+        L.mapquest.textMarker([7.299101,125.682612], {
+                    text: 'BFP',
+                    subtext: 'Beauro Of Fire Protection',
+                    position: 'bottom',
+                }).addTo(map);
 
-   
-   
+        var business_name = '';
+        var address_map = '';
+        var applicantName_map = '';
+        var contactNumber_map = '';
+        var alt_number = '';
 
-  
+
+        $(document).on('click','.item',function(e){
+            e.preventDefault();
+            var applicationId = $(this).attr('id');
+            var long2 = $('.long'+applicationId+'').val();
+            var lat2 =$('.lat'+applicationId+'').val();
+            var start_lat =7.299101;
+            var start_lng = 125.682612;
+
+
+            business_name =$('.business_name_map'+applicationId+'').val();
+            address_map =$('.address_map'+applicationId+'').val();
+            applicantName_map =$('.applicantName_map'+applicationId+'').val();
+            contactNumber_map =$('.contactNumber_map'+applicationId+'').val();
+            alt_number =$('.alt_number'+applicationId+'').val();
+
+            var directions = L.mapquest.directions();
+                directions.route({
+                locations: [
+                    { latLng: { lat:start_lat , lng: start_lng} },
+                    { latLng: { lat: lat2, lng:long2 } }
+                ],
+                options: {
+                    timeOverage: 100,
+                    maxRoutes: 3,
+                }
+                },createMap);
+
+                L.mapquest.textMarker([start_lat, start_lng], {
+                    text: 'BFP',
+                    subtext: 'Beauro Of Fire Protection',
+                    position: 'bottom',
+
+                }).addTo(map);
+
+                var endText = L.mapquest.textMarker([lat2,long2], {
+                    text: business_name,
+                    subtext: 'Applicant',
+                    position: 'right',
+
+                });
+                endText.addTo(map);
+
+        })
+
+
+        function createMap (err, response){
+
+        var DirectionsLayerWithCustomMarkers = L.mapquest.DirectionsLayer.extend({
+            createStartMarker: function(location, stopNumber) {
+            var custom_icon;
+            var popup = '<div class="custom-popup"><div class="header-custom-popup"><h5 style="font-size: 16px;color: #0044cc;">BUREAU OF FIRE PROTECTION</h5></div><div class="content-custom-popup">Category: Government <br>Province: Davao Del Norte <br> City: Panabo City <br> Phone: (084) 822 0160 <br> Address: Salvacion, Panabo City </div></div>';
+            custom_icon = L.icon({
+                    iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+                    iconSize: [20, 29],
+                    iconAnchor: [10, 29],
+                    popupAnchor: [0, -29]
+                });
+            return L.marker(location.latLng, {icon: custom_icon}).bindPopup(popup);
+            },
+
+            createWaypointMarker: function(location, stopNumber) {
+            return L.marker(location.latLng, {});
+            },
+
+            createEndMarker: function(location, stopNumber) {
+            var popup = '<div class="custom-popup"><div class="header-custom-popup"><h5 style="font-size: 16px;color: #0044cc;">'+business_name.toUpperCase()+'</h5></div><div class="content-custom-popup">Address: <b>'+address_map+'</b> <br> Applicant Name: <b>'+applicantName_map+'</b><br> Contact Number:<b>'+contactNumber_map+'</b><br> Alt Number: <b>'+alt_number+'</b></div></div>';
+            return L.marker(location.latLng, {}).bindPopup(popup);
+            }
+        });
+
+        var directionsLayer = new DirectionsLayerWithCustomMarkers({
+            directionsResponse: response
+        }).addTo(map);
+
+
+        }
+        fetchApplication();
+            function fetchApplication(business_name =''){
+            $.ajax({
+                type:'get',
+                url:'{{ route('fetch_application_map') }}',
+                data:{
+                business_name:business_name
+                },
+                dataType: 'json',
+                success:function(data){
+                $('.content-list').html(data.output);
+                }
+
+            });
+            }
+
+        $('#search').on('click',function(e){
+            var business_name = $('#search_application').val();
+            fetchApplication(business_name);
+            });
+
+
+            $('#search_application').on('keyup',function(e){
+            var business_name = $(this).val();
+            if(business_name ==''){
+                fetchApplication(business_name);
+            }
+            });
+
    </script>
 
-   
-  
-@endsection 
+
+
+@endsection

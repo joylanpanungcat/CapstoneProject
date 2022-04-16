@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\applicantController;
+use App\Http\Controllers\api\loginController;
+use App\Http\Controllers\api\register;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::apiResource('applicant',applicantController::class);
+
+Route::prefix('/user')->group(function(){
+    Route::post('/login',[loginController::class,'login']);
+    Route::post('/register',[register::class,'register_applicant']);
+
+    Route::group([
+        'middleware' => 'auth:api'
+      ], function() {
+          Route::get('getUser', [loginController::class,'user']);
+          Route::get('logout', [loginController::class,'logout']);
+
+      });
 });
+
+Route::apiResource('applicantAcountDetails',loginController::class);

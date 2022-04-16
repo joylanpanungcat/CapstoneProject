@@ -3,7 +3,7 @@
 @section('content')
 
   <style type="text/css">
-    
+
       .title_right button{
         float: right;
       }
@@ -25,7 +25,7 @@
     width: 1200px;
 }
 button.close-modal{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -36,7 +36,7 @@ button.close-modal{
     padding: 2px;
 }
 button.close-modal:hover{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -72,10 +72,10 @@ button.close-modal:hover{
             border: 1px dashed #c0ccda;
             border-radius: 6px;
             cursor: pointer;
-            
+
         }
 
-       
+
         .dz-progress{
             display: none;
         }
@@ -100,8 +100,8 @@ button.close-modal:hover{
 
   width: 10px;
   height: 10px;
- 
-  
+
+
 } */
 /* .actionButton i {
   margin-top: -5px;
@@ -119,7 +119,7 @@ button.close-modal:hover{
   margin-left: -20px;
 }
 .actionButton:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -138,7 +138,7 @@ button.close-modal:hover{
   vertical-align: middle;
 }
 .addApplicantionTooltip:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -185,14 +185,14 @@ overflow: auto;
 }
 
 .dataTables_wrapper  .dataTables_paginate  .paginate_button.active .page-link{
- 
+
   background-color: #1ABB9C !important;
 
 }
 
 .addApplication .modal-content{
   height: 90vh;
-  
+
 }
 
 
@@ -213,21 +213,21 @@ overflow: auto;
             </div>
 
             <div class="title_right">
-             
+
                 <button class="btn btn-default addApplicantionTooltip " data-toggle="modal" data-target="#addApplication" ><i class="fa fa-user-plus fa-lg tags"   data-toggle="tooltip" data-placement="bottom" title="Add Application"></i></button>
             </div>
         </div>
         <hr class="separate2">
-                    
-                    
+
+
         <div class="clearfix"></div>
-       
+
 
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                       <div id="show2"></div>
-                           
+
                                 <div class="x_content">
                                     <br />
                                     <div class="col-md-4 sort_select">
@@ -235,13 +235,13 @@ overflow: auto;
                                       <select class="select_status" id="category_filter">
                                           <option value="">All</option>
                                           <option value="pending">pending</option>
-                                          
+
                                           <option value="approved">approved</option>
                                           <option value="reinspection">reinspection</option>
                                           <option value="renewal">renewal</option>
                                       </select>
                                     </div>
-                              
+
                                     <div class="col-md-8">
                                       <div class="row input-daterange" style="float: right">
                                         <div class="">
@@ -257,16 +257,16 @@ overflow: auto;
                                     </div>
                                     </div>
                                     <br><br>   <br><br>
-                                       
+
                             <table class="table table-striped table-bordered" id="applicationData"  style="width:100%;">
                               <thead>
-                               
+
 
                                 <tr>
                                   <!-- <th>Select</th> -->
                                   <th>#</th>
                                   <th>Type of Application</th>
-                              
+
                                   <th>Applicant's name</th>
                                     <th>Status</th>
                                   <th>Remarks</th>
@@ -275,11 +275,11 @@ overflow: auto;
 
                                 </tr>
                               </thead>
-                           
-                 
+
+
                                   </table>
 
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -291,7 +291,7 @@ overflow: auto;
 
                           <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-xl" >
-                        
+
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5  id="exampleModalLabel ">Edit Applicant <small id="owners2"></small></h5>
@@ -299,7 +299,7 @@ overflow: auto;
 
                             <div id="connect"></div>
 
-                          
+
 
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
@@ -319,8 +319,8 @@ overflow: auto;
                                             <th>Barangay</th>
                                             <th>City</th>
 
-                                           
-                                          
+
+
 
                                         </tr>
                                     </thead>
@@ -330,12 +330,12 @@ overflow: auto;
 
                                             <td><input type="text" name="" id="Lname" class="form-control" ></td>
                                              <td><input type="text" name="" id="contact_num" class="form-control" ></td>
-                                          
+
                                              <td><input type="text" name="" id="purok" class="form-control" ></td>
                                              <td><input type="text" name="" id="barangay" class="form-control"></td>
                                               <td><input type="text" name="" id="city" class="form-control" readonly=""></td>
 
-                                            
+
                                         </tr>
                                     </tbody>
                                 </table><br>
@@ -348,14 +348,14 @@ overflow: auto;
                                             <th>Type of Occupancy</th>
                                             <th>Nature of Business</th>
                                         <th>Business Name</th>
-                                         
+
 
 
                                         </tr>
                                     </thead>
                                      <tbody>
                                          <tr>
-                                            
+
                                                <td><input type="text" name="" id="type_application" class="form-control" ></td>
                                                <td><input type="text" name="control_number" id="control_number" class="form-control" readonly="" ></td>
                                             <td><input type="text" name="" id="type_occupancy" class="form-control" ></td>
@@ -364,15 +364,15 @@ overflow: auto;
 <input type="hidden" name="" id="account_id1" class="form-control"  >
 <input type="hidden" name="" id="account_id2" class="form-control"  >
 
-                                            
+
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                                   <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                                
+
                                             <th>Inpector Name</th>
                                             <th>Bin</th>
                                             <th>BP number</th>
@@ -382,7 +382,7 @@ overflow: auto;
                                     </thead>
                                      <tbody>
                                         <tr>
-                                             
+
                                             <td><input type="text" name="" id="inpector_id" class="form-control" readonly=""></td>
                                              <td><input type="text" name="" id="Bin" class="form-control"  ></td>
                                              <td><input type="text" name="" id="BP_num" class="form-control" ></td>
@@ -394,35 +394,35 @@ overflow: auto;
                                         </tr>
                                     </tbody>
                                 </table>
-                               
+
                                       <div class="button-group">
                                     <button class="btn btn-secondary application_modal_update" type="submit"><i class="fa fa-edit" ></i>Update</button>
                                    <!--  <button class="btn btn-secondary"><i class="fa fa-calendar"></i>  Add</button> -->
-                                   
+
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                                </form>
                             </div>
-                                  
-                              
+
+
                           </div>
                         </div>
                       </div>
-                               
+
 
     <!-- Add Application MOdal -->
                   <div class="modal fade" id="addApplication" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl addApplication" > 
+          <div class="modal-dialog modal-xl addApplication" >
             <div class="modal-content">
-                         
+
                           <div class="modal-body">
                               {{-- <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" class="">
                               <span >&times;</span>
                             </button> --}}
                             <div class="panel panel-default addApplicationPanel">
                                     <div class="panel-body">
-                                        
-                                 
+
+
                             <div id="showModalUpdate"></div>
                             <!-- MultiStep Form -->
 <div class="container-fluid" id="grad1">
@@ -437,7 +437,7 @@ overflow: auto;
                         <form id="msform" action="{{ route('storeData') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <!-- progressbar -->
-                          
+
                             <ul id="progressbar">
                                 <li class="active" id="account"><strong>Applicant</strong></li>
                                 <li id="personal"><strong>Business</strong></li>
@@ -447,52 +447,52 @@ overflow: auto;
                             <fieldset  class="fieldset">
                                 <div class="form-card col-md-12">
                                     <h2 class="fs-title">Applicant Information</h2> <br>
-                                    <div class="form-group col-md-4"> 
-                                    
+                                    <div class="form-group col-md-4">
+
                                       <input type="text" class="form-control has-feedback-left input_fieldset1 " id="FnameAdd" name="FnameAdd" placeholder="First Name" onchange="myFunction()" >
                                             <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                       </div>
-                                      <div class="form-group col-md-4"> 
-                                  
+                                      <div class="form-group col-md-4">
+
                                       <input type="text" class="form-control has-feedback-left input_fieldset1 " id="LnameAdd" name="LnameAdd" placeholder="Last Name" onchange="myFunction()" >
                                             <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                      </div>
-                                   <div class="form-group col-md-4"> 
-                               
+                                   <div class="form-group col-md-4">
+
 
                                      <input type="text" class="form-control has-feedback-left input_fieldset1" id="middleAdd" name="middleAdd" placeholder="Middle Name " onchange="myFunction()" >
                                             <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                                </div>
-                               <div class="form-group col-md-4"> 
-                                  
+                               <div class="form-group col-md-4">
+
                                     <input type="text" class="form-control has-feedback-left input_fieldset1" id="contactAdd" name="contactAdd"  onchange="myFunction()" placeholder="Contact No.">
                                             <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                                </div>
-                                 <div class="form-group col-md-4"> 
-                                   
+                                 <div class="form-group col-md-4">
+
 
                                      <input type="text" class="form-control has-feedback-left input_fieldset1" id="alcontactAdd" name="alcontactAdd"  onchange="myFunction()" placeholder="Alternative Contact" >
                                             <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
                                     </div>
 
-                                   
-                                    <br>    
+
+                                    <br>
                                     <div class="form-group col-md-12 "> <h5>Address</h5>
                                     </div>
 
-                                     <div class="form-group col-md-4"> 
-                                  
+                                     <div class="form-group col-md-4">
+
                                    <input type="text" class="form-control has-feedback-left input_fieldset1" id="purokAdd" name="purokAdd" placeholder="Purok" onchange="myFunction()">
                                             <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                                     </div>
-                                    <div class="form-group col-md-4"> 
-                               
+                                    <div class="form-group col-md-4">
+
 
                                    <input type="text" class="form-control has-feedback-left input_fieldset1" id="barangayAdd" name="barangayAdd" placeholder="Barangay" onchange="myFunction()">
                                             <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                                     </div>
                                     <div class="form-group col-md-4">
-                                 
+
                                     <input type="text" class="form-control has-feedback-left input_fieldset1" id="cityAdd" name="cityAdd" placeholder="City" onchange="myFunction()">
                                             <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
 
@@ -501,119 +501,119 @@ overflow: auto;
 
                                  <button type="button" name="next" class="btn next2 action-button"  value="Next" />Next <i class="fa fa-arrow-right"></i></button>
                                 <button type="button" class="btn btn-default  action-button-cancel "    />Cancel </button>
-                              
+
                             </fieldset>
-                        
+
                             <fieldset class="fieldset fieldset_input2">
                                 <div class="form-card col-md-12">
-                                    <h2 class="fs-title">Business Information</h2> 
-                                    <div class="form-group col-md-6 "> 
+                                    <h2 class="fs-title">Business Information</h2>
+                                    <div class="form-group col-md-6 ">
                                   <select class="form-control" id="type_application2" onchange="myFunction()">
                                         <option value="Fire Safety Evaluation Clearance " >Fire Safety Evaluation Clearance </option>
                                         <option value="FSIC for Occupancy " >FSIC for Occupancy </option>
                                         <option  value="FSIC for Business">FSIC for Business </option>
-                                      
+
                                                 </select>
                                       </div>
-                                    
-                                          
-                                      <div class="form-group col-md-6"> 
+
+
+                                      <div class="form-group col-md-6">
                                {{--    <input type="hidden" name="" id="control_numberAdd" class="form-control" > --}}
-                                
+
                                     <input type="text" class="form-control has-feedback-left input_fieldset1" id="type_occupancy2Add" name="type_occupancy2Add" placeholder="Type of Occupancy" onchange="myFunction()">
                                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
                                      </div>
-                                   <div class="form-group col-md-6"> 
-                                  
+                                   <div class="form-group col-md-6">
+
 
                                         <input type="text" class="form-control has-feedback-left input_fieldset1" id="nature_businessAdd" name="nature_businessAdd" placeholder="Nature of Business" onchange="myFunction()">
                                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
                                </div>
-                               <div class="form-group col-md-6"> 
-                                  
+                               <div class="form-group col-md-6">
+
                                        <input type="text" class="form-control has-feedback-left input_fieldset1" id="business_nameAdd" name="business_nameAdd" placeholder="Business Name" onchange="myFunction()">
                                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
                                </div>
 
-                            <div class="form-group col-md-4"> 
-                                  
+                            <div class="form-group col-md-4">
+
 
                                         <input type="text" class="form-control has-feedback-left input_fieldset1" id="control_number2" name="control_number2" placeholder="Control Number " onchange="myFunction()">
                                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
                                </div>
-                               <div class="form-group col-md-4"> 
-                               
+                               <div class="form-group col-md-4">
+
 
                                        <input type="text" class="form-control has-feedback-left input_fieldset1" id="BinAdd" name="BinAdd" placeholder="Bin" onchange="myFunction()">
                                             <span class="fa fa-building-o   form-control-feedback left" aria-hidden="true"></span>
 
                                     </div>
-                                    <br>    
-                                     <div class="form-group col-md-4"> 
-                                 
+                                    <br>
+                                     <div class="form-group col-md-4">
+
                                       <input type="text" class="form-control has-feedback-left input_fieldset1" id="BP_numAdd" name="BP_numAdd" placeholder="BP Number" onchange="myFunction()">
                                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
                                     </div>
-                                    <div class="form-group col-md-4"> 
-                               
+                                    <div class="form-group col-md-4">
+
 
                                       <input type="text" class="form-control has-feedback-left input_fieldset1" id="OR_numAdd" name="OR_numAdd" onchange="myFunction()" placeholder="OR Number" >
                                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
 
                                </div>
-                                <div class="form-group col-md-4"> 
-                               
+                                <div class="form-group col-md-4">
+
 
                                       <input type="date" class="form-control has-feedback-left input_fieldset1" id="date_apply" name="date_apply" onchange="myFunction()" onclick="this.type='date'" onblur="this.type='text'" placeholder="Date Applied" >
                                             <span class="fa fa-building-o form-control-feedback left" aria-hidden="true"></span>
 
                                </div>
-                                <div class="form-group col-md-4"> 
+                                <div class="form-group col-md-4">
                                   <select class="form-control" id="remarks" onchange="myFunction()">
                                         <option value="Old">Old </option>
                                         <option value="New">New</option>
-                                        
+
                                     </select>
                                       </div>
                                 <div class="form-group col-md-12 "> <h5>Address</h5>
                                     </div>
 
-                                     <div class="form-group col-md-4"> 
-                                  
+                                     <div class="form-group col-md-4">
+
                                    <input type="text" class="form-control has-feedback-left input_fieldset1" id="purokAddBus" name="purokAddBus" placeholder="Purok" onchange="myFunction()">
                                             <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                                     </div>
-                                    <div class="form-group col-md-4"> 
-                               
+                                    <div class="form-group col-md-4">
+
 
                                    <input type="text" class="form-control has-feedback-left input_fieldset1" id="barangayBus" name="barangayBus" placeholder="Barangay" onchange="myFunction()">
                                             <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
                                     </div>
                                     <div class="form-group col-md-4">
-                                 
+
                                     <input type="text" class="form-control has-feedback-left input_fieldset1" id="cityBus" name="cityBus" placeholder="City" onchange="myFunction()">
                                             <span class="fa fa-map-marker form-control-feedback left" aria-hidden="true"></span>
 
                                </div>
 
                                     <div class="form-group col-md-4">
-                                   <input type="hidden" name="" class="form-control" id="statusAdd" value="pending" readonly="" onchange="myFunction()"> 
+                                   <input type="hidden" name="" class="form-control" id="statusAdd" value="pending" readonly="" onchange="myFunction()">
 
                                </div>
                                 </div>
-                               
+
                              <button type="button" name="next" class="btn next2 action-button" value="Next Step" />Next <i class="fa fa-arrow-right"></i></button>
                                 <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button>
                           <button type="button" class="btn btn-default  action-button-cancel "    />Cancel </button>
-                                
+
                             </fieldset>
-                           
+
             <fieldset class="fieldset">
                 <div class="form-card">
                     <h2 class="fs-title">Requirements</h2>
                    <div class="panel-group">
                     <div class="panel panel-default">
-                    
+
                       <div class="panel-body">
                              <div class="input-group xpress control-group lst increment">
                              <div class=" input-group xpress control-group lst  col-md-8" >
@@ -625,44 +625,44 @@ overflow: auto;
                                 </button>
 
                                 </div>
-                                
+
                         </div>
-                     
+
                       </div>
                     </div>
-                    
-                        
-      
+
+
+
                          <div class="dropzone dropzoneDragArea my-custom-scrollbar " id="dropzoneDragArea" >
 
                             <div  class="dz-message">
                                 <div class="icon">
                                     <i class="fa fa-upload"></i>
-                                   
+
                                 </div>
                                  <h2>You can drag and drop files to add</h2>
                             </div>
-                         
-                            
-                           
+
+
+
                         </div>
 
                             <p>Only JPG, PNG, PDF, DOC (Word) and  XLS (Excel) files types are supported. Maximum file size is 25MB, maximun attachments:3.</p>
-                          
-                     
-                  
-                    
+
+
+
+
                   </div>
-                     
-           
-                 
-                        
-                  
-                    
+
+
+
+
+
+
                 </div><button type="button" name="next" class="btn next2 action-button" value="Next Step" />Next <i class="fa fa-arrow-right"></i></button>
                  <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button>
                  <button type="button" class="btn btn-default  action-button-cancel "    />Cancel </button>
-             
+
             </fieldset>
                             <fieldset class="fieldset">
     <div class="form-card">
@@ -717,9 +717,9 @@ overflow: auto;
                       <strong><Label id="cityPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
                  </div>
              </div>
-                
+
                       <h2><strong>Business Information</strong></h2>
-                 
+
                   <div class="row">
                       <div class="col-md-6"><div class="col-md-6">
                  <label>Type Of Application:</label></div>
@@ -787,27 +787,27 @@ overflow: auto;
                              <strong><Label id="cityBusPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
                          </div>
 
-                                             
+
                                         </div>
                                          <h2><strong>Requirements</strong></h2>
                                          <div class="row " >
-                                             
+
                                          </div>
 
-                                       
+
                                    </div>
                                 </div>
 <input type="hidden" class="userid" name="userid" id="userid" value="">
 <input type="hidden" class="userid" name="FnameFiles" id="FnameFiles" value="">
-                        
+
                                 <button type="submit" class="btn btn-success  " id="submit">Submit</button>
                                  <button type="button" name="previous" class="btn previous action-button-previous" value="Previous" /> <i class="fa fa-arrow-left"></i>Previous </button>
                                  <button type="button" class="btn btn-default  action-button-cancel "    />Cancel </button>
                             </fieldset>
-                                  
+
                         </form>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -815,9 +815,9 @@ overflow: auto;
 </div>
 </div>
 </div>
-                           
+
                             </div>
-               
+
                           </div>
 
 
@@ -874,7 +874,7 @@ function myFunction() {
   document.getElementById("type_application2Prev").innerHTML = type_application2;
   document.getElementById("alcontactAddPrev").innerHTML = alcontactAdd;
   document.getElementById("middleAddPrev").innerHTML = middleAdd;
- 
+
 }
 
 </script>
@@ -890,7 +890,7 @@ function myFunction() {
                       }
                   });
     $('[data-toggle="tooltip"]').tooltip();
-  
+
     $('.input-daterange').datepicker({
       todayBtn:'linked',
       format:'yyyy-mm-dd',
@@ -910,15 +910,13 @@ function myFunction() {
           "orderable":false,
          },
         ],
-      
          autoWidth: false,
           scrollX:true,
           ajax: {
             url:"{{ route('applicationFetch') }}",
             data: {category:category,
-                   from_date:from_date, 
+                   from_date:from_date,
                   to_date:to_date
-
             }
           },
         // ajax: "{{ route('applicationFetch') }}",
@@ -955,7 +953,7 @@ function myFunction() {
    alert('Both Date is required');
   }
  });
- 
+
  $('#refresh').click(function(){
   $('#from_date').val('');
   $('#to_date').val('');
@@ -985,12 +983,12 @@ $('.action-button-cancel').on('click',function(e){
               confirmButtonText:
                 '<i class="fa fa-check"></i> Yes',
               confirmButtonAriaLabel: 'Thumbs up, great!',
-              
-              
+
+
               preConfirm: function(){
                 $('#msform')[0].reset();
                myDropzone.removeAllFiles();
-                   
+
              $('#addApplication').modal('hide');
 
 
@@ -1027,13 +1025,13 @@ $('.action-button-cancel').on('click',function(e){
           });
 });
 
-  
+
         Dropzone.autoDiscover = false;
-// Dropzone.options.demoform = false;   
+// Dropzone.options.demoform = false;
 let token = $('meta[name="csrf-token"]').attr('content');
  var admin ='{{Session::get('adminID')['username']}}';
 
-var myDropzone = new Dropzone("div#dropzoneDragArea", { 
+var myDropzone = new Dropzone("div#dropzoneDragArea", {
     paramName: "file",
     url: "{{ url('/storeimgae') }}",
     addRemoveLinks: true,
@@ -1051,7 +1049,7 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
         //form submission code goes here
         $(document).on('submit','#msform',function(event) {
 
-          
+
 
             //Make sure that the form isn't actully being sent.
             event.preventDefault();
@@ -1085,7 +1083,7 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
             var middleAdd=$('#middleAdd').val();
 
             URL = $("#msform").attr('action');
-           
+
 
    Swal.fire({
           title:"Add application?",
@@ -1106,7 +1104,7 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
                     center
                     no-repeat
                   `,
-             
+
               cancelButtonAriaLabel: 'Thumbs down',
               cancelButtonText:
                 '<i class="fa fa-arrow-left"></i>Close',
@@ -1114,11 +1112,11 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
               confirmButtonText:
                 '<i class="fa fa-check"></i> Yes',
               confirmButtonAriaLabel: 'Thumbs up, great!',
-              
-              
+
+
               preConfirm: function(){
-             
-              
+
+
 
             $.ajax({
                 type: 'POST',
@@ -1152,13 +1150,13 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
                 dataType:'json',
                 success: function(result){
                     if(result.status == "success"){
-                        // fetch the useid 
+                        // fetch the useid
                         var userid = result.user_id;
                         $("#userid").val(userid); // inseting userid into hidden input field
                         $("#FnameFiles").val(result.Fname);
-                        
+
                         //process the queue
-                  
+
                         myDropzone.processQueue();
                     }else{
                         console.log("error");
@@ -1166,8 +1164,8 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
                 }
             });
              }
-             
-        
+
+
                 });
 
         });
@@ -1186,21 +1184,21 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
            formData.append('Mname', Mname);
            formData.append('admin', admin);
            formData.append('type_application', type_application);
-           
+
         });
-        
+
         this.on("success", function (file, response) {
             //reset the form
             $('#msform')[0].reset();
             //reset dropzone
                this.removeAllFiles();
-          
-                   
+
+
              $('#addApplication').modal('hide');
             //  dataTable.ajax.reload();
             $('#applicationData').DataTable().destroy();
              fetch_data();
-       
+
         });
 
         this.on("queuecomplete", function () {
@@ -1213,7 +1211,7 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
             $('.modal-content fieldset').first().show();
         toastr.success('Application Added Successfully');
 
-    
+
 
 
             $('#FnamePrev').html('');
@@ -1242,19 +1240,19 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
 
 
 
-        
+
         // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
         // of the sending event because uploadMultiple is set to true.
         this.on("sendingmultiple", function() {
           // Gets triggered when the form is actually being sent.
           // Hide the success button or the complete form.
         });
-        
+
         this.on("successmultiple", function(files, response) {
           // Gets triggered when the files have successfully been sent.
           // Redirect user or notify of success.
         });
-        
+
         this.on("errormultiple", function(files, response) {
           // Gets triggered when there was an error sending the files.
           // Maybe show form again, and notify user of error
@@ -1268,7 +1266,7 @@ $(document).on('click','.sendArchive',function(e){
   swalDelete(id);
 })
 function swalDelete(accountId){
-       
+
        console.log(adminPass);
 
         Swal.fire({
@@ -1283,7 +1281,7 @@ function swalDelete(accountId){
              title: 'swal2-title'
            },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -1294,7 +1292,7 @@ function swalDelete(accountId){
              preConfirm: function(){
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -1306,19 +1304,19 @@ function swalDelete(accountId){
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
-                       
+
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -1331,7 +1329,7 @@ function swalDelete(accountId){
                            data:{accountId:accountId} ,
                            url: '{{ route('archieve_application') }}',
                            dataType:'json'
-                          
+
                          })
                          // in case of successfully understood ajax response
                            .done(function (data) {
@@ -1340,10 +1338,10 @@ function swalDelete(accountId){
                               fetch_data();
                               toastr.success(data.msg+'  <a type="button" style="color:#000" class="restore" id='+accountId+' ><strong>   UNDO.</strong></a>');
                               //  dataTable.ajax.reload();
-                           
+
                            })
                            .fail(function (erordata) {
-                            
+
                            })
 
                            })
@@ -1364,8 +1362,8 @@ function swalDelete(accountId){
                    center
                    no-repeat
                  `
-       
-               }) 
+
+               })
      }
      $(document).on('click','.restore',function(e){
         e.preventDefault();
@@ -1385,15 +1383,15 @@ function swalDelete(accountId){
         }
        })
       })
- 
+
     });
     </script>
-    
-   
-    
+
+
+
  <script type="text/javascript" src="{{ asset('js/appscript/wizardForm.js') }}"></script>
 
-    
 
-  
-  @endsection 
+
+
+  @endsection
