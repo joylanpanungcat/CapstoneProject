@@ -23,7 +23,7 @@ class CreateApplicantAccountTable extends Migration
             $table->string('alternative_num')->nullable();
             $table->string('date_register')->nullable();
             $table->string('image')->nullable();
-        
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -36,6 +36,6 @@ class CreateApplicantAccountTable extends Migration
     public function down()
     {
         Schema::dropIfExists('applicant_account');
-       
+
     }
 }

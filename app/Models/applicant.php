@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class applicant extends Model
 {
     use HasFactory;
@@ -13,8 +12,6 @@ class applicant extends Model
     public $timestamps=false;
      protected $fillable=['applicantId','Fname','Lname','Mname','contact_num','alcontact'];
 
-
-  
 public function application(){
     return $this->hasMany(application::class,'applicantId','applicantId');
 }

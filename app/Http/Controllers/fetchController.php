@@ -16,9 +16,9 @@ class fetchController extends Controller
         $accountId   = session()->get('accountId')['accountId'];
         $count = 1;
         $output = '';
-        
+
         $data2 = application::where('accountId',$accountId )->get();
- 
+
 
         if($data2->count()>0){
             foreach($data2 as $data){
@@ -29,23 +29,23 @@ class fetchController extends Controller
                             <td><a type="button" name="viewApplicant" class="btn  actionButton" href="application/view/'.$data['applicationId'].'" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a></td>
                         </tr>';
             }
-           
+
         }else{
             $output.='<tr><td colspan="4">No Application</td></tr>';
 
         }
 
-     
+
         return response()->json([
             'output'=>$output
         ]);
     }
 
     public function profile_fetch(){
-        $accountId   = session()->get('accountId')['accountId'];
+          $accountId   = session()->get('accountId')['accountId'];
 
-        $data = applicant_account::where('accountId', $accountId)
-        ->join('address','address.applicantId','=','applicant_account.accountId')
+             $data = applicant_account::where('applicant_account.accountId', $accountId)
+        ->join('address','address.accountId','=','applicant_account.accountId')
         ->get();
 
         return view('applicant.profile',['data'=>$data]);
@@ -57,7 +57,7 @@ class fetchController extends Controller
         $status ='renewal';
         $approved ='approved';
         $output = '';
-        
+
         $data=application::where('accountId',$accountId)->get();
         $dataCount=count($data);
 
@@ -93,10 +93,10 @@ class fetchController extends Controller
         $count = 1;
         $output = '';
         $status = 'renewal';
-        
+
         $data2 = application::where('accountId',$accountId )
         ->where('status',$status)->get();
- 
+
 
         if($data2->count()>0){
             foreach($data2 as $data){
@@ -107,13 +107,13 @@ class fetchController extends Controller
                             <td><a type="button" name="viewApplicant" class="btn  actionButton" href="renewal/view/'.$data['applicationId'].'" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a></td>
                         </tr>';
             }
-           
+
         }else{
             $output.='<tr><td colspan="4">No Application</td></tr>';
 
         }
 
-     
+
         return response()->json([
             'output'=>$output
         ]);

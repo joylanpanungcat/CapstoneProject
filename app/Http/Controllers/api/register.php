@@ -28,6 +28,7 @@ class register extends Controller
        $data->username =$username;
        $data->password = $password;
        $data->contact_num =$contact_num;
+       $data->alternative_num ='';
        $data->date_register =date('y-m-d');
        $data->image='';
        $save = $data->save();

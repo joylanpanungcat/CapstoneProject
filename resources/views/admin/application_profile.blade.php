@@ -14,7 +14,7 @@
       }
       table tbody tr td input:hover{
         border: 1px solid #2A3F54;
-       
+
 
       }
 .profile2{
@@ -40,7 +40,7 @@
 
     outline: none !important;
     box-shadow: none !important;
-  
+
 }
 .folder tr td{
     height: 10px;
@@ -90,7 +90,7 @@ display: block;
             border: 1px dashed #c0ccda;
             border-radius: 6px;
             cursor: pointer;
-            
+
         }
 
 .dz-message{
@@ -106,7 +106,7 @@ display: block;
     border-radius: 6px;
     cursor: pointer;
     height: 200px;
-    
+
 }
 .icon i{
         font-size: 3em;
@@ -168,7 +168,7 @@ hr.solid {
   z-index: 1; /* Stay on top */
   top: 0;
   right: 0;
-  background-color: #FFFFFF; 
+  background-color: #FFFFFF;
   border-left: 1px solid;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px; /* Place content 60px from the top */
@@ -176,7 +176,7 @@ hr.solid {
 }
 
 #main {
-  transition: margin-right .5s; 
+  transition: margin-right .5s;
 }
 
 .sidebar .closebtn {
@@ -232,7 +232,7 @@ margin-top: 49px;
     height: 24vmax;
     overflow: auto;
     overflow-x: hidden;
-    
+
 
 }
 .view-header{
@@ -259,7 +259,7 @@ margin-top: 49px;
 .description{
     height: 5vmax;
     overflow: hidden;
-   
+
 
 }
 .description::-webkit-scrollbar {
@@ -282,7 +282,7 @@ margin-top: 49px;
     height:100vh;
     overflow:auto
 }
-.file-folder.ui-draggable-dragging { 
+.file-folder.ui-draggable-dragging {
     background-color: green; }
 
 .ui-state-hover{
@@ -386,12 +386,12 @@ margin-top: 49px;
          cursor: pointer;
     }
     .custom-menu2 div.moveFolderToClass{
-            
+
             font-size: 16px;
             padding: 10px;
     }
      .custom-menu2 div.moveFolderToClass2{
-            
+
             font-size: 16px;
             padding: 10px;
             opacity: 0.6;
@@ -411,7 +411,7 @@ margin-top: 49px;
     .moveFolderViewIconHover:hover{
           padding: 5px;
         border-radius: 5px;
-        background-color: #4D90FE !important; 
+        background-color: #4D90FE !important;
         color: #fff !important;
     }
     .swal2-title{
@@ -420,12 +420,12 @@ margin-top: 49px;
     .total_body{
 margin-left: 80px;
 float: right;
-} 
+}
 .total_body2{
 margin-left: 120px;
 float: right;
 
-}           
+}
 .total{
 width: 200px;
 height: 30px;
@@ -434,7 +434,7 @@ height: 30px;
 .underline{
 border: none;
 border-bottom: 1px solid black;
-width: 80%; 
+width: 80%;
 }
 .total_amount_inwords{
 border: none;
@@ -457,7 +457,7 @@ border: 1px solid black;
 padding: 10px;
 width: 400px;
 }
-.copy label b{  
+.copy label b{
 color: red;
 }
 #authority_of, #fee_assessor{
@@ -498,7 +498,7 @@ display: inline-block;
     width: 750px;
     border: 2px solid black;
     padding: 20px;
-    
+
 }
 .main-panel input {
     border: none;
@@ -518,14 +518,14 @@ display: inline-block;
     border-bottom: 1px solid #000;
     font-size: 18px;
     font-weight: bold;
-    letter-spacing: 2px;   
-    
+    letter-spacing: 2px;
+
 }
 .certificate_content .top p, h2, input{
     /* text-align: center; */
     background-color: none;
 }
-.certificate_content h2 { 
+.certificate_content h2 {
     font-weight: bold;
     color: #2A3F54;
     margin-top: -10px
@@ -534,7 +534,7 @@ display: inline-block;
     border-bottom: 2px solid red;
     font-size: 18px;
     font-weight: bold;
-    letter-spacing: 2px;   
+    letter-spacing: 2px;
 }
 .fsecn_no{
     color: red;
@@ -559,7 +559,7 @@ display: inline-block;
     border-bottom: 2px solid #2A3F54;
     font-size: 18px;
     font-weight: bold;
-    letter-spacing: 2px;   
+    letter-spacing: 2px;
 }
 .to_whom{
     text-align: justify;
@@ -571,13 +571,13 @@ color: #000;
 .middle_design input{
   font-size: 18px;
     font-weight: bold;
-    letter-spacing: 2px;   
+    letter-spacing: 2px;
     width: 60%;
 }
 .middle_design2 input{
     font-size: 18px;
     font-weight: bold;
-    letter-spacing: 2px;   
+    letter-spacing: 2px;
     width: 100%;
 }
 .middle_design2 p {
@@ -586,7 +586,7 @@ color: #000;
 .owned input{
   font-size: 18px;
     font-weight: bold;
-    letter-spacing: 2px;   
+    letter-spacing: 2px;
     width: 100%;
     margin-left: -20px;
 }
@@ -597,7 +597,7 @@ color: #000;
 .issued_for input{
   font-size: 18px;
     font-weight: bold;
-    letter-spacing: 2px;   
+    letter-spacing: 2px;
     width: 100%;
 }
 .issued_for2{
@@ -628,12 +628,12 @@ color: #000;
   padding: 20px;
 }
 .button_print_cert button{
- float: right; 
+ float: right;
 }
 .being_issued_for{
   font-size: 18px;
     font-weight: bold;
-    letter-spacing: 2px;   
+    letter-spacing: 2px;
 }
 
 #business_info_view .business-modal-body {
@@ -659,12 +659,12 @@ height: 40%;
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                
+
             </div>
 
         </div>
 
- 
+
         <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
@@ -684,40 +684,40 @@ height: 40%;
                                     $city  = $account['city'];
                                     $accountId  = $account['accountId'];
                                 }
-                                    
+
                             @endphp
-                          
+
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>Account Information  <small></small></h2>
 
 
-                                   
+
                                     <div class="clearfix"></div>
                                 </div>
                                 @if($count >= 1)
-                                    
-                             
+
+
                               <div class="col-md-12 applicant-account">
                                     <div class="col-md-4"></div>
                                     <div class="col-md-8">
                                         <div id="showDetail"></div>
-                                        
+
                                     </div>
 
 
-                    
+
                             <div class="col-md-4 img" style="margin-top: 3%;" >
-                                
-                                         
+
+
 
                                 <img src="{{ asset('images/profile/')."/".rand(1,5).".jpg" }}" class="profile2">
                                 <h5 class="Applicant">
-                                  
+
                               {{ $Fname }}  {{ $count}}
-                                    
-                               
-               
+
+
+
                                    </h5>
 
                             </div>
@@ -726,64 +726,64 @@ height: 40%;
                                   <button class="btn btn-secondary buttons" id="compose" ><i class="fa fa-envelope-o"></i></button>
                                   <button class="btn btn-secondary buttons" ><i class="fa fa-phone"></i></button>
                                 </div> -->
-                              
+
                                  <form method="post" id="updateDetails">
-                                    <div class="col-md-8 personalInfo ">  
-                                          
-                               
-                                <div class="col-md-4">  
+                                    <div class="col-md-8 personalInfo ">
+
+
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>First Name</label>
                                         <input type="hidden" name="" id="applicantId_info" class="form-control" value="{{ $accountId }}">
                                         <input type="text" name="" id="Fname_info" class="form-control" value="{{ $Lname }}">
                                     </div>
                                   </div>
-                                  <div class="col-md-4">  
+                                  <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Middle Name</label>
                                         <input type="text" name="" id="Mname_info" class="form-control" value="" >
                                     </div>
                                   </div>
-                                   <div class="col-md-4">  
+                                   <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Last Name</label>
                                         <input type="text" name="" id="Lname_info" class="form-control" value="{{ $Lname}}" >
                                     </div><br>
                                   </div>
-                                   <div class="col-md-4">  
+                                   <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Contact No</label>
                                         <input type="text" name="" id="contact_num_info" class="form-control" value="{{ $contact_num }}">
                                     </div>
                                   </div>
-                                   <div class="col-md-4">  
+                                   <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Alternative Contact</label>
                                         <input type="text" name="" id="alcontact_info" class="form-control" value="{{ $alternative_num}}">
                                     </div>
                                   </div>
-                                   <div class="col-md-4">  
+                                   <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Purok</label>
                                         <input type="text" name="" id="purok_info" class="form-control" value=" {{$purok}}
                                       " >
                                     </div><br>
                                   </div>
-                                   <div class="col-md-4">  
+                                   <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Barangay</label>
                                         <input type="text" name="" id="barangay_info" class="form-control" value="{{$barangay}}">
                                     </div>
                                   </div>
-                                   <div class="col-md-4">  
+                                   <div class="col-md-4">
                                     <div class="form-group">
                                         <label>City</label>
                                         <input type="text" name="" id="city_info" class="form-control" value="{{$city}}" >
                                     </div>
                                   </div>
-                                   <div class="col-md-4">  
-                                 
-                             
+                                   <div class="col-md-4">
+
+
                                   <div class="form-group">
                                     <label></label>
                                     <button type="submit" name="" class="btn btn-secondary " id="">Update</button>
@@ -799,7 +799,7 @@ height: 40%;
                                  <center>
                                     <img src="{{ asset('images/no_user.png') }}" alt="">
                                  </center>
-                                
+
                              </div>
                          </div>
                          @endif
@@ -809,7 +809,7 @@ height: 40%;
                                 <div class="x_title">
                                     <h2>Business Information  <small></small></h2>
 
-                                   
+
                                     <div class="clearfix"></div>
                                 </div>
                          </div>
@@ -821,7 +821,7 @@ height: 40%;
                           <h2>Login Record</h2>
                            <div id="chart" style="width:700px"></div>
                         </div> -->
-                        
+
                       <!-- </div> -->
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
@@ -839,11 +839,11 @@ height: 40%;
                           </li>
 
                         </ul>
-                         
+
                         <div id="myTabContent" class="tab-content">
                           <div role="tabpanel" class="tab-pane active " id="tab_content1" aria-labelledby="home-tab">
                             <div id='showDelete'></div>
-                         <div class='container'>   
+                         <div class='container'>
                             <table class='table table-bordered table'>
                                 <thead>
                                     <tr>
@@ -851,14 +851,14 @@ height: 40%;
                                         <th>Type of application</th>
                                         <th>Business Name</th>
                                         <th>Address</th>
-                                            <th>Date Applied</th> 
+                                            <th>Date Applied</th>
                                         <th>Status</th>
                                         <th>Action</th>
 
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    @php 
+                                    @php
                                     $i=1;
                                     @endphp
                                      @foreach ($application as $application)
@@ -876,7 +876,7 @@ height: 40%;
                                         </td>
                                         <td>{{$application->status}}
                                         </td>
-                                       
+
                                  <td><button type='button'  class='btn btn-defualt business_info_button' id="{{ $application->applicationId }}"
                      ><i class='fa fa-eye'></i></button>
                              </td>
@@ -884,20 +884,20 @@ height: 40%;
                                     </tr>
                                     @endforeach
 
-                              
+
                                   </tbody>
-                                 
+
 
                             </table>
                         </div>
-               
 
-                            
+
+
 
 
                              </div>
                                   <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
-                                    <div class='container'>   
+                                    <div class='container'>
                                       <table class='table table-bordered table'>
                                           <thead>
                                               <tr>
@@ -905,18 +905,18 @@ height: 40%;
                                                   <th>Type of application</th>
                                                   <th>Date Applied</th>
                                                   <th>Inspection Status</th>
-                                                      <th>Application Status</th> 
+                                                      <th>Application Status</th>
                                                   <th>Action</th>
-          
+
                                               </tr>
                                             </thead>
                                             <tbody>
                                                @foreach ($certificate as $certificate)
-                                              @php 
+                                              @php
                                                   $i=1;
                                               @endphp
-          
-          
+
+
                                               <tr>
                                                   <td>{{$i++}}
                                                   </td>
@@ -929,28 +929,28 @@ height: 40%;
                                                   </td>
                                                   <td>{{$certificate->status}}
                                                   </td>
-                                                 
+
                                            @if ($certificate->status != 'approved')
                                              <td>Check payment and inspection details</td>
                                              @else
                                              <td>  <button type="button" class="btn btn-success  print_certificate"  id="{{ $certificate->applicationId }}" ><i class="fa fa-print"   ></i> Print</button>
                                                       </td>
                                            @endif
-          
+
                                               </tr>
                                               @endforeach
-          
-                                        
+
+
                                             </tbody>
-                                           
-          
+
+
                                       </table>
                                   </div>
-                        
+
                                   </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-                               
-                                <div class='container'>   
+
+                                <div class='container'>
                                     <table class='table table-bordered table'>
                                         <thead>
                                             <tr>
@@ -958,19 +958,19 @@ height: 40%;
                                                 <th>Type of application</th>
                                                 <th>Business Name</th>
                                                 <th>Address</th>
-                                                    <th>Payment Status</th> 
+                                                    <th>Payment Status</th>
                                                 <th>Action</th>
-        
+
                                             </tr>
                                           </thead>
                                           <tbody>
                                              @if ($assessment->count()>0)
                                                @foreach ($assessment as $application)
-                                              
-                                            @php 
+
+                                            @php
                                                 $i=1;
                                             @endphp
-        
+
                                             <tr>
                                                 <td>{{$i++}}
                                                 </td>
@@ -992,11 +992,11 @@ height: 40%;
                                                  @endforeach
 
                                             @else
-                                            @php 
+                                            @php
                                             $i=1;
                                         @endphp
                                                  @foreach ($assessment_no_payment as $assessment)
-        
+
                                             <tr>
                                                 <td>{{$i++}}
                                                 </td>
@@ -1007,22 +1007,22 @@ height: 40%;
                                                 </td>
                                                 <td>{{$assessment->purok}},{{$assessment->barangay}},{{$assessment->city}}
                                                 </td>
-                                                
+
                                                 <td>'Not Paid'
                                                 </td>
                                                     <td><a href="{{ route('assessment') }}" target="_blank" type='' name='view' class='btn btn-primary view'
                                             ><i class='fa fa-plus'></i></a>
                                                     </td>
-        
+
                                             </tr>
                                             @endforeach
                                             @endif
                                           </tbody>
-                                         
-        
+
+
                                     </table>
                                 </div>
-                                
+
                           </div>
                               <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                                 <div class="row">
@@ -1041,7 +1041,7 @@ height: 40%;
                                   </thead>
                                   <tbody>
                               <tbody>
-                                @php 
+                                @php
                                 $i=1;
                               @endphp
 
@@ -1067,14 +1067,14 @@ height: 40%;
                                     @endforeach
                                   </tbody>
                             </table>
-             
+
                                 </div>
                               </div>
                                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
                                 <div class="col-md-12">
                                     <div class="x_panel">
                                     <div class="x_title">
-                                        
+
                                     </div>
                                     <div class="container">
                                       <table class='table table-bordered table'>
@@ -1084,27 +1084,27 @@ height: 40%;
                                                 <th>Type of application</th>
                                                 <th>Inspector Name</th>
                                                 <th>Date inspected</th>
-                                                <th>Inspection Status</th> 
+                                                <th>Inspection Status</th>
                                                 <th>Action</th>
-        
+
                                             </tr>
                                           </thead>
                                           <tbody>
                                              @if ($inspection_details->count()>0)
                                                @foreach ($inspection_details as $inspection_details)
-                                              
-                                            @php 
+
+                                            @php
                                                 $i=1;
                                             @endphp
-        
-        
+
+
                                             <tr>
                                                 <td>{{$i++}}
                                                 </td>
                                                 <td>
                                                     {{$inspection_details->type_application}}
                                                 </td>
-                                                
+
                                                 <td>{{$inspection_details->Fname}},{{$inspection_details->Lname}}
                                                 </td>
                                                 <td>{{$inspection_details->date_inspect}}
@@ -1116,17 +1116,17 @@ height: 40%;
                                         <td><button type='' name='view' class='btn btn-success view view_inspection_report'
                                             id="{{$inspection_details->applicationId}}"><i class='fa fa-eye'></i></button>
                                                 </td>
-        
+
                                             </tr>
                                                  @endforeach
 
                                             @else
-                                               
-                                            @php 
+
+                                            @php
                                             $i=1;
                                         @endphp
                                                  @foreach ($assessment_no_payment as $assessment)
-        
+
                                             <tr>
                                                 <td>{{$i++}}
                                                 </td>
@@ -1137,32 +1137,32 @@ height: 40%;
                                                 </td>
                                                 <td>N/A
                                                 </td>
-                                                
+
                                                 <td>'No Inspection Report'
                                                 </td>
                                                     <td>No Inspection Report
                                                     </td>
-        
+
                                             </tr>
                                             @endforeach
                                             @endif
                                           </tbody>
-                                         
-        
+
+
                                     </table>
                                     </div>
                                 </div>
                                 </div>
                                </div>
 
-                               
+
                                <div role="tabpanel" class="tab-pane fade" id="tab_content6" aria-labelledby="profile-tab">
-                              
-                  
+
+
 </div>
 
 
-                       
+
                             </div>
 
 
@@ -1175,7 +1175,7 @@ height: 40%;
 
 
 
- 
+
     <!-- Modal HTML -->
     <div id="viewDocuments" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl view-modal-dialog">
@@ -1200,15 +1200,15 @@ height: 40%;
                     </h7>
                 </div>
                 <div id="path" class="d-inline-block scrollmenu">
-                   
-                    
+
+
                 </div>
                 </div>
 
     <div id="folder_table" class="table-responsive table-wrapper-scroll-y my-custom-scrollbar "  cellspacing="0"
   width="100%"></div>
-   
-                </div> 
+
+                </div>
 
  <div id="mySidebar" class="sidebar">
         <div class="view-header">
@@ -1219,14 +1219,14 @@ height: 40%;
             <div class="col-md-9 ">
                   <h4 style="color: #3C4043;display:inline; text-align: center;" id="folderNameView">     </h4>
             </div>
-     
+
         </div>
         <div class="col-md-2">
              <button type="reset" class="bnt btn-default closebtn" id="closeFolderDetails"><i class='fa fa-times' style="color:#7e8082;" data-toggle="tooltip" data-placement="bottom" title="Hide Details" ></i></button>
-            
+
         </div>
-       
-       
+
+
         <div class="col-md-12">
             <ul class="tabs-nav">
                 <li class=""><a href="#tab-1" >Detials</a>
@@ -1234,7 +1234,7 @@ height: 40%;
                 <li class="tab-active"><a href="#tab-2">Activity</a>
                 </li>
             </ul>
-        
+
               {{-- <hr class="separate">    --}}
         </div>
          </div>
@@ -1263,32 +1263,32 @@ height: 40%;
                 </div>
                 <div class="form-group">
                     <textarea class="description" disabled="true" >
-                        
+
                     </textarea>
                     <textarea class="descriptionOld" style="display:none" >
-                        
+
                     </textarea>
                     {{-- <input type="hidden" name="" id="descriptionId" > --}}
-               
 
-                    
+
+
                 </div>
-               
-               
+
+
             </div>
             <div id="tab-2" >
-               
+
 
             </div>
         </div>
-     
+
 
 </div>
                 </div>
             </div>
         </div>
     </div>
-       
+
 
        {{-- Add folder --}}
        <div id="addFolder" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1302,31 +1302,31 @@ height: 40%;
                     <form id="addFolderForm">
                          <input type="hidden" name="" id="parentFolderId">
                         <div class="form-group">
-                           
-                            <label>Folder Name</label> 
+
+                            <label>Folder Name</label>
                       <input type="text" name="" class="form-control" id="folderName" placeholder="Enter folder name">
                              <div id="errorFolder" style="color:red"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                         
+
                     </form>
-                   
-                  
-              
-             
-                    
-                   
+
+
+
+
+
+
                 </div>
-              
+
             </div>
         </div>
     </div>
-    
+
     <div id="Print_certificate" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content " id="print_content">
             <div class="main-panel ">
-              <div class="row certificate_content" > 
+              <div class="row certificate_content" >
                   <div class=" col-md-12">
                       <div class="col-md-2">
                           <img src="{{ asset('images/dilg.png')  }}" alt="" style="width: 100%">
@@ -1340,7 +1340,7 @@ height: 40%;
                               <input type="text" name="" id="" style="width:40%">
                               <input type="text" name="" id=""  style="width:60%">
                               <input type="text" name="" id=""  style="width:80%">
-                          </center> 
+                          </center>
                           </div><br><br>
                       </div>
                       <div class="col-md-2">
@@ -1357,7 +1357,7 @@ height: 40%;
                   </div>
               </div>
               <div class="row">
-               <div class="col-md-12 fsec_mid"> 
+               <div class="col-md-12 fsec_mid">
                       <h3><b>FIRE SAFETY EVALUATION CLEARANCE</b></h3>
                </div>
           </div>
@@ -1394,7 +1394,7 @@ height: 40%;
                               <div class="col-md-2">owned by</div>
                               <div class="col-md-4"><input type="text" name="" id="applicant_name"></div>
                               <div class="col-md-6"> <p>is hereby <strong>GRANTED</strong> after the building plans and</p></div>
-                             
+
                               <div class="col-md-12 representative">
                                   <div class="col-md-6"><p>(Name of Owners/Representative)</p></div>
                               </div>
@@ -1418,8 +1418,8 @@ height: 40%;
                               </div>
                               </div>
                       </div> --}}
-                      
-                      
+
+
                       <div class="row">
                           <div class="col-md-12">
                               <div class="col-md-12 violation">
@@ -1477,7 +1477,7 @@ height: 40%;
                                       <p>CITY/MUNICIPAL FIRE MARSHAL</p>
                                   </div>
                               </div>
-      
+
                               <div class="row note">
                                   <div class="col-md-12">
                                   <p><b>NOTE :  “This Clearance is accompanied by Fire safety Checklist and does not take the place of any license required by
@@ -1500,15 +1500,15 @@ height: 40%;
                       </div>
                   </div>
               </div>
-              
+
           </div>
           <div class="button_print_cert" >
             <button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button>
             <button type="button" data-dismiss="modal" class="btn btn-default">close</button>
           </div>
           </div>
-          
-      </div> 
+
+      </div>
   </div>
 
 
@@ -1528,23 +1528,23 @@ height: 40%;
                                   <label for="file">
                                    <i class="fa fa-file"></i>
                                   </label>
-                                
+
                                 </button>
                         <div class="form-group ">
-                           
-                         
+
+
                          <div class="dropzone dropzoneDragArea my-custom-scrollbar " id="dropzoneDragArea" >
 
                             <div  class="dz-message">
                                 <div class="icon">
                                     <i class="fa fa-upload"></i>
-                                   
+
                                 </div>
                                  <h2>You can drag and drop files to add</h2>
                             </div>
-                         
-                            
-                           
+
+
+
                         </div>
 
                             <p>Only JPG, PNG, PDF, DOC (Word) and  XLS (Excel) files types are supported. Maximum file size is 25MB, maximun attachments:3.</p>
@@ -1557,15 +1557,15 @@ height: 40%;
                             <div class="row">
                               <!-- Image preview -->
                             </div>
-                          </div>    
+                          </div>
                         </div>
                         </div>
                 </div>
-              
+
             </div>
         </div>
     </div>
-        
+
 <div id="menu-folder-clone" style="display: none;">
     <a href="javascript:void(0)" class="custom-menu-list file-option openFolder"><span><i class="fa fa-folder-open"></i></span> Open</a>
     <hr class="solid">
@@ -1581,7 +1581,7 @@ height: 40%;
 </div>
 
 <div id="menu-folder-clone2" style="display: none; " class="col-md-12">
-     
+
          <div class="col-md-12 header-clone2">
             <div class="col-md-2"  data-toggle='tooltip' data-placement='bottom' title='Back'><h2 class="moveToFolderParentIdBack"><i class="fa fa-chevron-left"></i></h2></div>
             <div class="col-md-8"> <h2 class="moveTo-header"><b> </b></h2></div>
@@ -1594,38 +1594,38 @@ height: 40%;
 
          </div>
          <div class="col-md-12 body-clone2">
-            
+
          </div>
          <div class="col-md-12 footer-clone2">
          <div class="button-group button-move">
              <button class="btn btn-primary"><i class="fa fa-plus"></i> Add folder</button>
 
-             
+
          </div>
          </div>
 
-  
-  
+
+
 </div>
 
 {{-- modal business infor --}}
 <div class="modal fade" id="business_info_view" role="dialog" >
     <div class="modal-dialog modal-xl" >
-      
+
       <div class="modal-content">
         <div class="modal-header">
           <h2  id="exampleModalLabel " > APPLICATION INFORMATION</h2>
-         
-       
+
+
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="post" id="applicationAdd">
+        <form id="applicationAdd">
         <div class="modal-body business-modal-body">
             <div id=showEdit></div>
-          
-          
+
+
             <input type="hidden" name="applicationId_businessInfo" id="applicationId_businessInfo" name="applicationId_businessInfo">
             <input type="hidden" name="applicant_businessInfo" id="applicant_businessInfo" name="applicationId_businessInfo">
                 <div class="col-md-12">
@@ -1757,7 +1757,7 @@ height: 40%;
                             <input type="text" name="BP_num" id="BP_num" class="form-control" >
                           </div>
                     </div>
-                   
+
                     <div class="form-group row col-md-3">
                         <div class="col-md-12">
                         <label class="control-label ">OR Number</label>
@@ -1827,22 +1827,22 @@ height: 40%;
                 </div>
                <input type="hidden" name="" id="application_id" name="application_id">
                 <!-- <input type="hidden" name="" id="inpector_id"> -->
-                
+
 
           </div>
           <div class="modal-footer business-modal-footer">
             <h4 style="opacity: 0.8;display:inline-block" id="set_schedule_text"></h4>
             <div class="button-group view_button" style="float: right">
-                        
+
             </div>
           </div>
-       </form>   
-       
+       </form>
+
         </div>
       </div>
     </div>
 
-    
+
 
       <div class="modal fade" id="set_schedule_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1870,7 +1870,7 @@ height: 40%;
                           </div>
                     </div>
                 </div>
-               
+
               </div>
             <div class="modal-footer">
                 <div class="modal-footer">
@@ -1890,9 +1890,9 @@ height: 40%;
                     <div class="col-md-12 col-sm-12 ">
                         <div class="x_panel">
                                   <div id="show2"></div>
-                   
+
                             <div class="x_content">
-                                  
+
                  <div class="row">
                   <div class="col-md-12" id="receipt">
                       <div class="panel panel-default">
@@ -1902,15 +1902,15 @@ height: 40%;
                           </center>
                         </div>
                 <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name_payment" name=""></span></h5></div>
-                
+
                  <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                 <div class="panel-body" id="panel-body">
-                  
+
                     <table class="table table-striped table-bordered" id="data"  style="width:100%;">
                           <thead>
                             <tr>
                               <!-- <th>Select</th> -->
-                              
+
                               <th>NATURE OF PAYMENT </th>
                               {{-- <th>ACCOUNT CODE</th> --}}
                               <th >TOTAL</th>
@@ -1928,15 +1928,15 @@ height: 40%;
                               <td></td>
                               <td></td>
                             </tr>
-                              
-                                
+
+
                               </tbody>
-             
+
                               </table>
                               <h7><b>TOTAL AMOUNT (IN WORDS):</b></h7>
                               <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords">
                               <br><br><br>
-                            
+
                             <div class="form-group group2">
                               <label>Offical Receipt No: </label>
                               <input type="text" name="" class="group1" id="receipt_no"><br>
@@ -1951,7 +1951,7 @@ height: 40%;
                                 <label><b>Original</b>/ (Applicant/Owner's Copy)</label><br>
                                 <label><b>Duplicate</b>/ (GSB/Collecting Agent copy)</label><br>
                                 <label><b>Triplicate</b>/ (BFP copy)</label><br>
-                                
+
                               </div>
 
                             </div>
@@ -1959,8 +1959,8 @@ height: 40%;
                               <div class="form-group group2" style="float:right;margin-top: 30px;">
                                 <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of"></span></h5>
                                 <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
-                                
-                                
+
+
                                 <input type="text" name="" class="authority_name" id='fee_assessor'>
                                <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
 
@@ -1968,31 +1968,31 @@ height: 40%;
                             </div>
 
 
-                             
-                            
+
+
 
                 </div>
               </div>
                   </div>
-                 
+
                  </div>  <br>
                   <div class="row">
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6 ">
                                   <form>
-                              
-                                 
+
+
                                   <div class="button-group total_body2 ">
                                     <button type="button" class="btn btn-secondary " data-dismiss="modal" id="" style="display: inline-block;"  ><i class="fa fa-arrow-left" ></i>  Close</button>
                                       <button type="button" class="btn btn-secondary save_payment_button" onclick="printDivPayment()"><i class="fa fa-print" ></i>  Print</button>
                                   </div>
                                   </form>
                                 </div>
-                              </div>      
-                                    
-             
+                              </div>
 
-                            
+
+
+
                             </div>
                         </div>
                     </div>
@@ -2001,7 +2001,7 @@ height: 40%;
           </div>
         </div>
       </div>
-  
+
       <div id="inspection_modal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content ">
@@ -2109,7 +2109,7 @@ height: 40%;
             </div>
           </div>
           <div class="col-md-12">
-          
+
             <div class="form-group row col-md-4">
                 <label class="control-label  ">Room Partitions</label>
                 <div class="">
@@ -2129,7 +2129,7 @@ height: 40%;
                 </div>
             </div>
           </div>
-          
+
             <div class="form-group row col-md-12">
                 <h2><strong>Fire Protection Equipment</strong></h2>
             </div>
@@ -2168,7 +2168,7 @@ height: 40%;
                      <textarea name="" id="sectional_occupancy" cols="30" rows="5" disabled></textarea>
                   </div>
               </div>
-         
+
             <div class="form-group row col-md-4">
                 <label class="control-label ">Defect</label>
                 <div class="">
@@ -2183,26 +2183,26 @@ height: 40%;
             </div>
           </div>
           <div class="col-md-12">
-           
+
           </div>
 
-              
-                      
-                        
-                   
+
+
+
+
                     <div class="form-group" style="float: right" id="verify_button">
 
                   </div>
-                         
+
                     </form>
-                   
-                  
-              
-             
-                    
-                   
+
+
+
+
+
+
                 </div>
-              
+
             </div>
         </div>
     </div>
@@ -2222,7 +2222,7 @@ height: 40%;
           a.print();
       }
     })
-    
+
 </script>
 <script type="text/javascript">
 
@@ -2247,7 +2247,7 @@ $('.tabs-nav a:first').trigger('click'); // Default
 
       $(document).ready(function(){
 
-  $('[data-toggle="tooltip"]').tooltip(); 
+  $('[data-toggle="tooltip"]').tooltip();
   var elementClicked=false;
 
 
@@ -2259,7 +2259,7 @@ $('.tabs-nav a:first').trigger('click'); // Default
 
     let token = $('meta[name="csrf-token"]').attr('content');
        Dropzone.autoDiscover = false;
-    var myDropzone = new Dropzone("div#dropzoneDragArea", { 
+    var myDropzone = new Dropzone("div#dropzoneDragArea", {
         paramName: "file",
         url: "{{ url('/addFile') }}",
         addRemoveLinks: true,
@@ -2278,8 +2278,8 @@ $('.tabs-nav a:first').trigger('click'); // Default
             var parentFolderId2=  $('#parentFolderId2').val();
              URL = $("#addFileForm").attr('action');
                     myDropzone.processQueue();
-                   
-           
+
+
            });
         this.on('sending', function(file, xhr, formData){
              let parentFolderId2 = $('#parentFolderId2').val();
@@ -2291,24 +2291,24 @@ $('.tabs-nav a:first').trigger('click'); // Default
 
         this.on("success", function (file, response) {
              let parentFolderId2 = $('#parentFolderId2').val();
-               this.removeAllFiles(); 
+               this.removeAllFiles();
              $('#addFile').modal('hide');
                 fetch_data(parentFolderId2);
 
-       
+
         });
          this.on("queuecomplete", function () {
         toastr.success('file Added Successfully');
-   
+
 
         });
 
-            
+
         }
-           
+
 
 });
-     
+
 
         $('.viewDocuments').on('click',function(e){
             e.preventDefault();
@@ -2316,8 +2316,8 @@ $('.tabs-nav a:first').trigger('click'); // Default
 
 
             $('#viewDocuments').modal('show');
-       
-          
+
+
             $('.modal-dialog').draggable({
         handle: ".modal-header"
 
@@ -2334,7 +2334,7 @@ $('.tabs-nav a:first').trigger('click'); // Default
         })
 
  load_folder_list();
-   
+
         function load_folder_list(){
              $('#addFileButton').hide();
         var Fname = '<?php   echo $account_details->Fname ?>';
@@ -2356,11 +2356,11 @@ $('.tabs-nav a:first').trigger('click'); // Default
 
                      $('#parentFolderId').val(data.parentId);
                      $('#parentFolderId2').val(data.parentId);
-                         
+
                 }
             })
         }
-  
+
   $(document).on('dblclick','.file-folder',function(e){
             e.preventDefault();
 
@@ -2374,7 +2374,7 @@ $('.tabs-nav a:first').trigger('click'); // Default
                 url: '{{ route('viewFolder') }}',
                 type:'post',
                 data:{
-                   
+
                     applicationId:applicationId,
                     folderId:folderId,
                     parentId:parentId
@@ -2382,10 +2382,10 @@ $('.tabs-nav a:first').trigger('click'); // Default
                 dataType: 'json',
                 success:function(data){
                      $('#folder_table').html(data.data);
-               
+
                      $('#path').append('<div id='+data.folderParentId+' class="d-inline-block"><a type="button" class="btn  pathView" id="'+data.folderId+'"><span><input type="hidden" value="'+data.folderParentId+'" id="folderIdPath"><i class="fa fa-folder">'+data.folderName+'</i></span></a></div>');
-                     
-                          
+
+
 
                       $('#parentFolderId').val(folderId);
                       $('#parentFolderId2').val(folderId);
@@ -2420,14 +2420,14 @@ $('#path div#'+folderId).nextAll('div').remove();
     }
 })
 
- 
+
 })
 
 
     $(document).on('submit','#addFolderForm',function(e){
         e.preventDefault();
         var parentFolderId=$('#parentFolderId').val();
-     
+
         var folderName=$('#folderName').val();
           var Fname = '<?php   echo $account_details->Fname ?>';
         var Lname= '<?php   echo $account_details->Lname ?>';
@@ -2451,19 +2451,19 @@ $('#path div#'+folderId).nextAll('div').remove();
                 $(' #folderName').val('');
                 $(' #errorFolder').html('');
                 fetch_data(data.parentId);
-         
+
                 }else{
                       $('#errorFolder').html(data.error);
                 }
-               
-              
-                
-              
+
+
+
+
             }
         })
 
     });
-    
+
 
 
     function fetch_data(parentId2){
@@ -2476,7 +2476,7 @@ $('#path div#'+folderId).nextAll('div').remove();
                 url: '{{ route('viewFolder') }}',
                 method:'post',
                 data:{
-                   
+
                     Fname:Fname,
                     Lname:Lname,
                     folderId:folderId,
@@ -2493,7 +2493,7 @@ $('#path div#'+folderId).nextAll('div').remove();
     $(document).on('click','.viewFolderDetails', function(e){
           $('.viewFolderDetails').hide();
          var folderId2 = $(this).attr('id');
-        
+
          viewFolderDetails(folderId2);
         $('.file-folder[id='+folderId2+']').addClass('active2 ');
         $('.file-folder').addClass('folderSelected');
@@ -2504,17 +2504,17 @@ $('#path div#'+folderId).nextAll('div').remove();
                 var folderId2 = $(this).attr('id');
                viewFolderDetails(folderId2);
           elementClicked=true;
-         
-       
+
+
 
 
             })
           elementClicked=true;
 
- 
+
      });
      function viewFolderDetails(folderId2){
-   
+
    var folderId2=folderId2;
      $('.description').attr('id',folderId2);
    $.ajax({
@@ -2540,7 +2540,7 @@ $('#path div#'+folderId).nextAll('div').remove();
 
 
             $('#modifiedFolder').html(value['lastModified']);
-            
+
             $('#createdFolder').html(value['created']);
             if(data.output!='' || data.description!=''){
                 $('#tab-2').html(data.output);
@@ -2556,13 +2556,13 @@ $('#path div#'+folderId).nextAll('div').remove();
                   $('.description').val('');
 
             }
-         
+
             });
-         
+
         document.getElementById("mySidebar").style.width = "250px";
           document.getElementById("viewFolderModal").style.marginRight = "250px";
             }
-       
+
         }
 
    });
@@ -2577,7 +2577,7 @@ $('#path div#'+folderId).nextAll('div').remove();
             $('.description').focus();
 
          });
- 
+
      $('.description').focusout(function(e){
             e.preventDefault();
         var folderId = $(this).attr('id');
@@ -2623,7 +2623,7 @@ $('#path div#'+folderId).nextAll('div').remove();
               element.style.height = (10+element.scrollHeight)+"px";
                $container = $('.tabs-stage');
                 $container.animate({ scrollTop: $container[0].scrollHeight });
- 
+
             }
      function addDescription(descriptionId){
          var description = $('.description').val();
@@ -2647,7 +2647,7 @@ $('#path div#'+folderId).nextAll('div').remove();
         $('.description').attr('disabled',true);
         $('.description').addClass('description-view');
         }
-          
+
     }else{
         description=description.trim().replace(/\s+/g, " ");
         $.ajax({
@@ -2671,7 +2671,7 @@ $('#path div#'+folderId).nextAll('div').remove();
 
  }
 
- 
+
 
 
 
@@ -2688,7 +2688,7 @@ $(document).on('click','.file-folder',function(e){
           $('.file-folder[id='+folderId+']').addClass('active2');
           elementClicked=true;
     }
-   
+
 
 });
 
@@ -2697,7 +2697,7 @@ $(document).on('click','.file-folder',function(e){
 
      $('.active2').draggable({
                 cursor: 'move',
-                revert: true, 
+                revert: true,
                   revertDuration: 200,
                 helper: myHelper,
                  start  : function(event, ui){
@@ -2720,9 +2720,9 @@ $(document).on('click','.file-folder',function(e){
 
             } );
  })
- 
+
 function myHelper( event,ui ) {
- 
+
     var folderName= $(this).attr('name');
      var numItems = $('.active2').length;
         var ids = $('.active2').map(function () {
@@ -2735,9 +2735,9 @@ function myHelper( event,ui ) {
             if(ids.length==1){
                    var helper ='<div class="helper">'+folderName+' </div>';
                }else{
-                var helper ='<div class="helper">'+folderName+' <span class="badge badge-light">'+count+'</span></div>';  
+                var helper ='<div class="helper">'+folderName+' <span class="badge badge-light">'+count+'</span></div>';
                }
-    
+
         }
 
   return helper;
@@ -2747,7 +2747,7 @@ function handleDragStop( event, ui ) {
      $('.active2').each(function(){
                 $('.active2').removeClass('dragStart');
                 })
- 
+
   // var offsetXPos = parseInt( ui.offset.left );
   // var offsetYPos = parseInt( ui.offset.top );
   // alert( "Drag stopped!nnOffset: (" + offsetXPos + ", " + offsetYPos + ")n");
@@ -2814,7 +2814,7 @@ function handleDropEvent( event, ui ) {
     $('.moveButton').last().remove();
     var parentId=$('#parentFolderId').val();
    $('.moveToFolderSelected').val(folderId);
-  
+
 
         $('.file-folder[id='+folderId+']').addClass('active2 ');
           elementClicked=true;
@@ -2840,9 +2840,9 @@ function handleDropEvent( event, ui ) {
             Lname:Lname
         },
         dataType:'json',
-       
+
         success:function(data){
-            $('.body-clone2').html(data.output);   
+            $('.body-clone2').html(data.output);
         $('.moveToFolderParentId').val(parentId);
         $('.moveToFolderParentId2').val(parentId);
         $('.constantParentId').val(data.constantParentId);
@@ -2867,7 +2867,7 @@ function handleDropEvent( event, ui ) {
             cursor:'pointer'
           });
         $('.moveFolderView[id='+folderId2+']').show();
-       
+
         // moveTo-header
     });
       $(document).on('mouseout','.moveFolderToClass',function(e){
@@ -2888,7 +2888,7 @@ function handleDropEvent( event, ui ) {
           moveFolderView =true;
           e.stopPropagation();
          moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
-     
+
         })
         $(document).on('click','.moveToFolderParentIdBack',function(e){
 
@@ -2897,7 +2897,7 @@ function handleDropEvent( event, ui ) {
              var selected = $('.moveToFolderSelected').val();
          moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
         })
-      
+
          $(document).on('dblclick','.moveFolderToClass',function(){
                     var folderIdView = $(this).attr('id');
                     var parentId=$('#parentFolderId').val();
@@ -2905,7 +2905,7 @@ function handleDropEvent( event, ui ) {
          moveFolderViewFetch(folderIdView,parentId,applicationId,selected);
          });
  })
- 
+
 var moveFolderView =false;
  function moveFolderViewFetch(folderIdView,parentId,applicationId,selected){
             $('.moveFolderToClass').removeClass('activeMove');
@@ -2933,7 +2933,7 @@ var moveFolderView =false;
                         },
                         dataType:'json',
                         success:function(data){
-                             $('.body-clone2').html(data.output);         
+                             $('.body-clone2').html(data.output);
                              $('.moveToFolderParentId').val(folderIdView);
                              $('.moveToFolderParentId2').val(data.folderParentId);
                           $('.moveToFolderSelected').val(selected);
@@ -2952,7 +2952,7 @@ var moveFolderView =false;
                              $('.moveButton').removeAttr('disabled title');
                           $('.moveButton').removeClass('btn-default').addClass('btn-primary');
                           $('.moveButton').html('Move here');
-         
+
 
                           }
                         }
@@ -2977,40 +2977,40 @@ var moveFolderView =false;
                   $('.moveToFolderParentId').val(data.parentId);
                   // var folderParentId= $('.moveToFolderParentId2').val();
                    var selectedParentId = $('.selectedParentId').val();
-                
+
                    if(selectedParentId == data.parentId){
                              $('.moveButton').attr('disabled',true);
                             $('.moveButton').attr('title','Item is already in this folder');
                              $('.moveButton').removeClass('btn-primary').addClass('btn-default');
-                          
+
                         }else{
                             $('.moveButton').removeAttr('disabled title');
                           $('.moveButton').removeClass('btn-default').addClass('btn-primary');
                           $('.moveButton').html('Move here');
                         }
 
-                 
+
                   }else{
                      $('.moveFolderToClass').removeClass('activeMove');
                       $('.moveFolderToClass[id='+moveFolderViewId+']').addClass('activeMove');
                         $('.moveToFolderParentId').val(moveFolderViewId);
                      // var folderParentId= $('.moveToFolderParentId2').val();
                      // var folderParentId2= $('.moveButton').attr('id');
-                       
+
                      $('.moveButton').removeAttr('disabled title');
                      $('.moveButton').removeClass('btn-default').addClass('btn-primary');
                     $('.moveButton').html('Move ');
 
 
-                          
+
                   }
             }
            });
-        
+
 
               $('.moveFolderViewIcon').removeClass('moveFolderViewIconHover');
            $('.moveFolderViewIcon[id='+moveFolderViewId+']').addClass(' moveFolderViewIconHover');
-            
+
        })
 
 
@@ -3045,7 +3045,7 @@ var moveFolderView =false;
             $(this).siblings('div').show();
              $(this).addClass('keyupfired');
             folderRename(folderName,folderNameOld,folderId);
-             
+
              }
         });
 
@@ -3059,17 +3059,17 @@ var moveFolderView =false;
                  $(this).siblings('div').show();
                 $(this).addClass('keyupfired');
                 folderRename(folderName,folderNameOld,folderId);
-           
+
 
               }
 
         }
-       
+
     });
 
 })
 
- 
+
     function folderRename(folderName,folderNameOld,folderId){
         var folderName=folderName;
         var folderNameOld=folderNameOld;
@@ -3077,7 +3077,7 @@ var moveFolderView =false;
         var admin ='{{Session::get('adminID')['username']}}';
         var applicationId= '<?php   echo $applicationId->applicationId ?>';
         var parentFolderId=$('#parentFolderId').val();
- 
+
         if (folderName.trim() == '' || folderName.trim()===folderNameOld.trim()) {
             $('.renameFolder2').val(folderNameOld);
             $('.renameFolder2').hide();
@@ -3100,7 +3100,7 @@ var moveFolderView =false;
                     viewFolderDetails(folderId2);
 
                     }
-            
+
             fetch_data(parentFolderId);
 
                 }
@@ -3108,7 +3108,7 @@ var moveFolderView =false;
          }
     }
 
-$(document).on("contextmenu",'.file-folder', function(event) { 
+$(document).on("contextmenu",'.file-folder', function(event) {
     event.preventDefault();
 
     $("div.custom-menu").hide();
@@ -3126,7 +3126,7 @@ $('.moveFolderToClass').removeClass('moveFolderToClass activeMove');
          custom.find('.viewFolderDetails').attr('id',$(this).attr('id'));
          custom.find('.renameFolder').attr('id',$(this).attr('id'));
          custom.find('.moveFolderTo').attr('id',$(this).attr('id'));
-  
+
     custom.css({top: '200px', left: event.pageX + "px"});
       custom.appendTo("#viewDocuments");
 $('.openFolder').on('click',function(e){
@@ -3138,7 +3138,7 @@ $('.openFolder').on('click',function(e){
                 url: '{{ route('viewFolder') }}',
                 type:'post',
                 data:{
-                   
+
                     applicationId:applicationId,
                     folderId:folderId,
                     parentId:parentId
@@ -3146,9 +3146,9 @@ $('.openFolder').on('click',function(e){
                 dataType: 'json',
                 success:function(data){
                      $('#folder_table').html(data.data);
-               
+
                      $('#path').append('<div id='+data.folderParentId+' class="d-inline-block"><a type="button" class="btn  pathView" id="'+data.folderId+'"><span><input type="hidden" value="'+data.folderParentId+'" id="folderIdPath"><i class="fa fa-folder">'+data.folderName+'</i></span></a></div>');
-                     
+
 
                       $('#parentFolderId').val(folderId);
                       $('#parentFolderId2').val(folderId);
@@ -3159,9 +3159,9 @@ $('.openFolder').on('click',function(e){
 
 
 });
- 
+
      $('html').click(function(e) {
-        
+
          $('.custom-menu').hide();
          // $('.custom-menu2').hide();
          if(elementClicked!=true){
@@ -3179,7 +3179,7 @@ $('.openFolder').on('click',function(e){
     // });
 })
 
-   
+
 $('#updateDetails').on('submit',function(e){
     e.preventDefault();
   var id =$('#applicantId_info').val();
@@ -3192,7 +3192,7 @@ $('#updateDetails').on('submit',function(e){
   var barangay	 =$('#barangay_info').val();
   var city =$('#city_info').val();
 
- 
+
  $.ajax({
     type:'POST',
     url: "{{ route('update_info') }}",
@@ -3218,7 +3218,7 @@ $('#updateDetails').on('submit',function(e){
 $('.business_info_button').on('click',function(e){
     e.preventDefault();
     var applicationId = $(this).attr('id');
-    
+
     $.ajax({
         type:'post',
         url: '{{ route('view_business_info') }}',
@@ -3249,7 +3249,7 @@ $('.business_info_button').on('click',function(e){
             $('#contact_num_Business').val(value['contact_num']);
             $('#alcontact_business').val(value['alcontact']);
             $('#applicant_businessInfo').val(value['applicantId']);
-            
+
 
     $('.view_button').html('<button type="button" class="btn btn-primary" id="setSchedule"><i class="fa fa-calendar"> Set schedule</i></button><button type="submit" class="btn btn-warning"><i class="fa fa-pencil"> Update</i></button>');
         });
@@ -3269,12 +3269,12 @@ $('.business_info_button').on('click',function(e){
             $('#inpector_id').append('<option value='+value['inspectorId']+'>'+value['Fname']+ ' ' +value['Lname']+'');
         })
 
-        
+
         $.each(data.schedule,function(index, value){
             $('#set_schedule_text').html('Application Inspection set on ' + value['date_inspection']+'' );
             $('#setSchedule').attr('disabled', 'disabled');
         })
-        
+
         }
     })
 
@@ -3295,13 +3295,13 @@ $('#applicationAdd').on('submit',function(e){
             toastr.success(data.msg);
         }
     })
-    
+
 });
 
 $(document).on('click','#setSchedule',function(e){
     e.preventDefault();
   $('#set_schedule_modal').modal('show');
-   
+
 });
 
 $('#set').on('click',function(e){
@@ -3322,7 +3322,7 @@ $('#set').on('click',function(e){
               showConfirmButton:true,
               focusConfirm: false,
               background: 'rgb(0,0,0,.9)',
-              
+
               customClass : {
               title: 'swal2-title'
             },
@@ -3355,14 +3355,14 @@ $('#set').on('click',function(e){
                             toastr.success(data.msg);
                     $('#set_schedule_modal').modal('hide');
                    $('#business_info_view').modal('hide');
-                   
-                            
+
+
                       }
 
                   })
 
              }
-             
+
                 });
 });
 
@@ -3394,9 +3394,9 @@ $('.view_payment_info').on('click',function(e){
           $('#date_paid').val($value['payment_date']);
           $('#change').val($value['change']);
 
-          
 
-          
+
+
         });
         $.each(data.data3,function($key, $value){
           $('#defaultId').val($value['id']);
@@ -3478,7 +3478,7 @@ Swal.fire({
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -3490,7 +3490,7 @@ Swal.fire({
               $('#inspection_modal').modal('hide');
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -3502,18 +3502,18 @@ Swal.fire({
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -3533,7 +3533,7 @@ Swal.fire({
                                 toastr.success(data.msg);
                               }
                             })
-                         
+
                            })
                        }
                      },
@@ -3552,13 +3552,13 @@ Swal.fire({
                    center
                    no-repeat
                  `
-       
+
                });
 
 
 
 
-  
+
 });
 
 $('.print_certificate').on('click',function(e){
@@ -3582,7 +3582,7 @@ $('.print_certificate').on('click',function(e){
         $('#payment_date').val(data.payment_date);
         $('#marshal').val(data.marshal);
         $('#chief').val(data.chief);
-        
+
       var output='';
       // if(data.data =='Fire Safety Evaluation Clearance'){
       //   $('#print_content').html(' <img src="{{url('images/certificate/fsec.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
@@ -3592,11 +3592,11 @@ $('.print_certificate').on('click',function(e){
       // }
       // if(data.data =='Fire Safety Inspection Certificate for Occupancy'){
       //   $('#print_content').html(' <img src="{{url('images/certificate/fsic_occupancy.jpg')}}" alt=""><div class="modal-footer"><button type="button" data-dismiss="modal" class="btn btn-default">close</button><button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button></div>');
-      
+
       // }
     }
   })
-  
+
 });
 
 
@@ -3635,5 +3635,5 @@ $('.print_certificate').on('click',function(e){
 </script>
 
 
-  @endsection 
+  @endsection
 

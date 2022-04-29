@@ -235,10 +235,10 @@ element.style {
               <h3>Susceptibility Map</h3>
           </div>
 
-          <div class="title_right">
+          {{-- <div class="title_right">
             <button class="btn btn-default" data-toggle="modal" data-target="#updateRecord"><i class="fa fa-edit fa-lg"  ></i>Update</button>
 
-          </div>
+          </div> --}}
       </div>
     <hr class="separate2">
     </div>

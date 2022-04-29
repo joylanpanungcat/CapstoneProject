@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\applicantController;
 use App\Http\Controllers\api\loginController;
 use App\Http\Controllers\api\register;
+use App\Http\Controllers\api\applicantAppController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::prefix('/user')->group(function(){
         'middleware' => 'auth:api'
       ], function() {
           Route::get('getUser', [loginController::class,'user']);
+          Route::post('updateUser', [applicantAppController::class,'updateUser']);
           Route::get('logout', [loginController::class,'logout']);
 
       });

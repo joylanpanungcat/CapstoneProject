@@ -1098,12 +1098,12 @@ var myDropzone = new Dropzone("div#dropzoneDragArea", {
               title: 'swal2-title'
             },
             allowOutsideClick: false,
-              backdrop: `
-              url("/images/logo2.png")
-                    rgb(9 9 26 / 73%)
-                    center
-                    no-repeat
-                  `,
+            //   backdrop: `
+            //   url("/images/logo2.png")
+            //         rgb(9 9 26 / 73%)
+            //         center
+            //         no-repeat
+            //       `,
 
               cancelButtonAriaLabel: 'Thumbs down',
               cancelButtonText:
@@ -1347,21 +1347,21 @@ function swalDelete(accountId){
                            })
                        }
                      },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
+            //           backdrop: `
+            //  url("/images/logo2.png")
+            //        rgb(9 9 26 / 73%)
+            //        center
+            //        no-repeat
+            //      `
              });
 
              },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
+            //   backdrop: `
+            //  url("/images/logo2.png")
+            //        rgb(9 9 26 / 73%)
+            //        center
+            //        no-repeat
+            //      `
 
                })
      }

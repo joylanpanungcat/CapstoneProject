@@ -28,7 +28,7 @@
     }
 .compose .compose-header .close {
   text-shadow: 0 1px 0 #ffffff;
-  line-height: .8; 
+  line-height: .8;
   color: #fff;
 }
 .compose-footer button{
@@ -58,7 +58,7 @@ background-color: transparent;
 width: 1200px;
 }
 button.close-modal{
-   
+
 width: 40px;
 height: 40px;
 line-height: 40px;
@@ -69,7 +69,7 @@ margin: 0 auto 10px auto;
 padding: 2px;
 }
 button.close-modal:hover{
-   
+
 width: 40px;
 height: 40px;
 line-height: 40px;
@@ -105,10 +105,10 @@ line-height: 1px;
         border: 1px dashed #c0ccda;
         border-radius: 6px;
         cursor: pointer;
-        
+
     }
 
-   
+
     .dz-progress{
         display: none;
     }
@@ -249,22 +249,22 @@ width: 10px !important;
             </div>
 
             <div class="title_right">
-             
+
                 <button class="btn btn-default"><i class="fa fa-user-plus fa-lg"  data-toggle="modal" data-target="#Modal"></i></button>
             </div>
         </div>
 
-                    
-        <hr class="separate2">    
+
+        <hr class="separate2">
         <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                       <div id="show2"></div>
-                             
+
                                 <div class="x_content">
                                     <br />
-                                     
+
                                      <table class="table table-striped table-bordered table-hover" id="accountData" style="width:100%;">
                               <thead>
                                 <tr>
@@ -277,15 +277,15 @@ width: 10px !important;
                                 </tr>
                               </thead>
                               <tbody >
-                             
+
                                 {{--     <th width="200px" id="action"><button type="button" name="delete" class="btn btn-defualt btn-xs delete" i><i class='fa fa-trash'></i></button>|| <button type='button' name='update' class='btn btn-defualt btn-xs update' ><i class='fa fa-edit'></i></button>||
 <input type='hidden' name='account_id2' value=".$row['account_id'].">
 
  <button type='submit' name='view' class='btn btn-defualt btn-xs '  ><i class='fa fa-eye'></i></button>
 </th> --}}
-                            
+
                                   </tbody>
-                 
+
                                   </table>
                                 </div>
                             </div>
@@ -337,7 +337,7 @@ width: 10px !important;
                                             <label><b>City</b></label>
                                             <input type="" name="" class="form-control" placeholder="Purok" readonly="" value="Panabo City"  id="city">
                                              <span class="text-danger error-text city_error"></span>
-                                            
+
                                         </div>
                                     </div>
                                       <div class="col-md-6">
@@ -349,8 +349,8 @@ width: 10px !important;
                                             <input type="" name="" class="form-control" placeholder="Contact Number" id="Contact_Number">
                                              <span class="text-danger error-text Contact_Number_error"></span>
                                               <input type="hidden" name="" class="form-control" placeholder="Contact Number" id="date_register" value="<?php echo date("Y/M/D  h:i:s")?>">
-                                            
-                                            
+
+
                                         </div>
                                     </div>
                                     </div>
@@ -363,7 +363,7 @@ width: 10px !important;
                                 </div>
                                 </div>
 
-                               
+
                                 </div>
                                 </form>
 
@@ -407,8 +407,8 @@ width: 10px !important;
                                     <input type="hidden" name="" class="form-control" id="editAccount_id">
 
 
-                     
-                            
+
+
                                 </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -417,7 +417,7 @@ width: 10px !important;
                                 </div>
                                 </div>
                            </form>
-                               
+
                                 </div>
 
     <script type="text/javascript">
@@ -430,7 +430,7 @@ width: 10px !important;
            toastr.options =
                   {
                     "closeButton" : true
-                   
+
                   }
     var adminPass='{{Session::get('adminID')['password']}}';
       $('#formAdd').on('submit', function(e){
@@ -445,7 +445,7 @@ width: 10px !important;
                         var Contact_Number=$('#Contact_Number').val();
                         var date_register=$('#date_register').val();
                         var form=this;
-                    
+
                    $.ajax({
                             url: $(form).attr('action'),
                             method:$(form).attr('method'),
@@ -469,7 +469,7 @@ width: 10px !important;
                               $(form).find('span.error-text').text('');
                             },
                             success: function(response){
-                               
+
                                 // $('#Modal').modal('hide');
                                 // $('#formAdd')[0].reset();
                                 // load_data();
@@ -480,7 +480,7 @@ width: 10px !important;
                               $('span.'+key+'_error').text(message[0]);
                               // $(this).find('span'+key+'_error').text(message[0]);
                               });
-                              
+
                                 }
                                 else{
                                    // $('#show2').html(response.message);
@@ -490,12 +490,12 @@ width: 10px !important;
                                       dataTable.ajax.reload();
 
                                 }
-                             
-                                
+
+
                             }
-                         
+
                         });
-                        
+
 
                     });
 
@@ -531,18 +531,14 @@ width: 10px !important;
                     // alert(update);
                     // $('.update').find('form')[0].reset();
                     $('.update').find('span.error-text').text('');
-              $.post('<?= route('get.appplicant.details')  ?>', {account_id:account_id},function(data){
-                
+                 $.post('<?= route('get.appplicant.details')  ?>', {account_id:account_id},function(data){
                                 $('#editFname').val(data.details.Fname);
                                 $('#editLname').val(data.details.Lname);
                                 $('#editUsername').val(data.details.username);
                                 $('#editPassword').val(data.details.password);
                                 $('#editAccount_id').val(data.details.accountId);
-
                                $('#ModalEdit').modal('show');
               },'json');
-
-
                 });
       $(document).on('submit','#editForm',function(e){
           e.preventDefault();
@@ -574,27 +570,27 @@ width: 10px !important;
                         //         dataTable.ajax.reload();
                         // }
                         success: function(response){
-                               
-                             
+
+
                                 if(response.status==400)
                                 {
                               $.each(response.errors,function(key , message){
                               $('span.'+key+'_error2').text(message[0]);
                               // $(this).find('span'+key+'_error').text(message[0]);
                               });
-                              
+
                                 }
                                 else{
                                    // $('#show2').html(response.message);
                                     $('#ModalEdit').modal('hide');
                                    toastr.success(response.msg);
-                                    
+
                                      // $('#formAdd')[0].reset();
                                       dataTable.ajax.reload();
 
                                 }
-                             
-                                
+
+
                             }
                     });
       });
@@ -606,7 +602,7 @@ width: 10px !important;
           });
 
       function swalDelete(accountId){
-       
+
         console.log(adminPass);
 
          Swal.fire({
@@ -621,7 +617,7 @@ width: 10px !important;
               title: 'swal2-title'
             },
             allowOutsideClick: false,
-             
+
               confirmButtonColor: '#3085d6',
               confirmButtonText:
                 '<i class="fa fa-check"></i> Yes',
@@ -632,7 +628,7 @@ width: 10px !important;
               preConfirm: function(){
                Swal.fire({
                  input: 'password',
-                 
+
                   inputPlaceholder: 'Enter your password',
                  titleFontColor:'red',
                   iconHtml: '<i class="fa fa-lock"></i>',
@@ -644,19 +640,19 @@ width: 10px !important;
                       title: 'swal2-title'
                     },
                     allowOutsideClick: false,
-                     
+
                       confirmButtonColor: '#3085d6',
                       confirmButtonText:
                         '<i class="fa fa-check"></i> Confirm',
-                    
+
                       cancelButtonText:
                         '<i class="fa fa-arrow-left"></i>Cancel',
                         customClass: {
                             validationMessage: 'my-validation-message'
                           },
                     preConfirm: (value) => {
-                        
-                        
+
+
                         if (value !== adminPass) {
                           Swal.showValidationMessage(
                             'incorrect password'
@@ -669,17 +665,17 @@ width: 10px !important;
                             data:{accountId:accountId} ,
                             url: '{{ route('swalert') }}',
                             dataType:'json'
-                           
+
                           })
                           // in case of successfully understood ajax response
                             .done(function (data) {
                                 swal.close();
-                                 
+
                                toastr.success(data.msg+'  <a type="button" style="color:#000" class="restore" id='+accountId+' ><strong>   UNDO.</strong></a>');
                                 dataTable.ajax.reload();
                             })
                             .fail(function (erordata) {
-                             
+
                             })
 
                             })
@@ -700,8 +696,8 @@ width: 10px !important;
                     center
                     no-repeat
                   `
-        
-                }) 
+
+                })
       }
       $(document).on('click','.restore',function(e){
         e.preventDefault();
@@ -727,7 +723,7 @@ width: 10px !important;
             toastr.options =
               {
                 "closeButton" : true
-               
+
               }
                toastr.success("{{ session('message') }}");
             @endif
@@ -737,8 +733,8 @@ width: 10px !important;
 
 
 
-       
 
 
 
-  @endsection 
+
+  @endsection

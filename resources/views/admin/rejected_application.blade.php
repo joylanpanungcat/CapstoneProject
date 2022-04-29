@@ -3,7 +3,7 @@
 @section('content')
 
   <style type="text/css">
-    
+
       .title_right button{
         float: right;
       }
@@ -28,7 +28,7 @@
     width: 1200px;
 }
 button.close-modal{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -39,7 +39,7 @@ button.close-modal{
     padding: 2px;
 }
 button.close-modal:hover{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -75,10 +75,10 @@ button.close-modal:hover{
             border: 1px dashed #c0ccda;
             border-radius: 6px;
             cursor: pointer;
-            
+
         }
 
-       
+
         .dz-progress{
             display: none;
         }
@@ -103,8 +103,8 @@ button.close-modal:hover{
 
   width: 10px;
   height: 10px;
- 
-  
+
+
 } */
 /* .actionButton i {
   margin-top: -5px;
@@ -122,7 +122,7 @@ button.close-modal:hover{
   margin-left: -20px;
 }
 .actionButton:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -141,7 +141,7 @@ button.close-modal:hover{
   vertical-align: middle;
 }
 .addApplicantionTooltip:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -188,14 +188,14 @@ overflow: auto;
 }
 
 .dataTables_wrapper  .dataTables_paginate  .paginate_button.active .page-link{
- 
+
   background-color: #1ABB9C !important;
 
 }
 
 .addApplication .modal-content{
   height: 90vh;
-  
+
 }
 
 
@@ -218,19 +218,19 @@ overflow: auto;
                 <h3>Reinspection </h3>
             </div>
 
-         
+
         </div>
         <hr class="separate2">
-                    
-                    
+
+
         <div class="clearfix"></div>
-       
+
 
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                       <div id="show2"></div>
-                           
+
                                 <div class="x_content">
                                     <br />
                                     <div class="col-md-4 sort_select">
@@ -243,7 +243,7 @@ overflow: auto;
                                           <option value="Fire Safety Inspection Certificate for Occupancy">FSIC for Occupancy</option>
                                       </select>
                                     </div>
-                              
+
                                     <div class="col-md-8">
                                       <div class="row input-daterange" style="float: right">
                                         <div class="">
@@ -259,10 +259,10 @@ overflow: auto;
                                     </div>
                                     </div>
                                     <br><br>   <br><br>
-                                       
+
                             <table class="table table-striped table-bordered " id="applicationData2" style="width: 100%"  >
                               <thead >
-                               
+
 
                                   <!-- <th>Select</th> -->
                                   <th>CONTROL #</th>
@@ -282,12 +282,12 @@ overflow: auto;
                                   <th>DATA PAID IO#</th>
                                   <th>status</th>
 
-                                 
+
                               </thead>
-                              
+
                                   </table>
 
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -315,9 +315,8 @@ overflow: auto;
         info:true,
         "ordering": false,
         dom: 'lBfrtip',
-        'sorting':false,
         "buttons": [ { extend: 'csv', text: 'CSV', exportOptions: { modifier: { search: 'applied' }}},
-         { extend: 'excel', text: 'Excel', exportOptions: { modifier: { search: 'applied' }}}, 
+         { extend: 'excel', text: 'Excel', exportOptions: { modifier: { search: 'applied' }}},
          { extend: 'pdf', text: 'PDF', exportOptions: { modifier: { search: 'applied' }}},
           { extend: 'print', text: 'Print visible', exportOptions: { modifier: { search: 'applied' }}}
            ],
@@ -326,11 +325,11 @@ overflow: auto;
           ajax: {
             url:"{{ route('rejected_reports') }}",
             data: {category:category,
-                   from_date:from_date, 
+                   from_date:from_date,
                   to_date:to_date
             }
           },
-       
+
         columns:[
         {data:'DT_RowIndex',name:'DT_RowIndex', class: 'table_header'},
         {data:'date_apply',name:'date_apply'},
@@ -351,7 +350,7 @@ overflow: auto;
           render: function(data, type, row){
             return btn = '<span class="badge badge-danger">'+data+'</span>';
           }
-        
+
         }
         ]
      });
@@ -380,7 +379,7 @@ overflow: auto;
   }
  });
 
-  
+
  $('#refresh').click(function(){
   $('#from_date').val('');
   $('#to_date').val('');
@@ -390,5 +389,5 @@ overflow: auto;
   })
 </script>
 
-  
-  @endsection 
+
+  @endsection
