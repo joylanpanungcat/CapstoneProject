@@ -40,15 +40,13 @@ class applicationControllerApplicant extends Controller
 
         if($request->file('file')){
             $img = $request->file('file');
-
-         
-             $files=[];
-             $path = public_path().'/files/';
+            $files=[];
+            $path = public_path().'/files/';
             foreach($img as $file){
                  $name=$file->getClientOriginalName();
                // $imageName = strtotime(now()).rand(11111,99999).'.'.$img->getClientOriginalExtension();
                 $file->move($path.$Fname.$Lname.'/'.$type_application,$name);
-                  $files[]=$name;  
+                  $files[]=$name;
                 }
         }
         $path2=$Fname.$Lname.'/'.$type_application;
@@ -87,9 +85,9 @@ class applicationControllerApplicant extends Controller
         $address2->barangay=$applicant_barangay;
         $address2->city=$applicant_city;
         $address2->save();
-        
-        
-        
+
+
+
         $folder= new folderUpload;
         $folder->applicationId= $applicationId;
         $folder->folderName= $Fname.$Lname;
@@ -100,31 +98,31 @@ class applicationControllerApplicant extends Controller
         $folder->save();
         $folderParent = $folder->folderId;
 
-        
-      $folder2= new folderUpload;
-      $folder2->applicationId= $applicationId;
-      $folder2->folderName= $type_application;
-      $folder2->parentId= $folderParent;
-      $folder2->uploader= $applicantFname;
-      $folder2->lastModified=date("F j, Y, g:i a");
-      $folder2->created=date("F j, Y, g:i a");
-      $folder2->save();
-      $folderParent2 = $folder2->folderId;
+
+        $folder2= new folderUpload;
+        $folder2->applicationId= $applicationId;
+        $folder2->folderName= $type_application;
+        $folder2->parentId= $folderParent;
+        $folder2->uploader= $applicantFname;
+        $folder2->lastModified=date("F j, Y, g:i a");
+        $folder2->created=date("F j, Y, g:i a");
+        $folder2->save();
+        $folderParent2 = $folder2->folderId;
 
       foreach($files as $name){
-        $filesUpload= new  fileUpload;
-       $filesUpload->applicationId=$applicationId;
-        $filesUpload->filename=$name;
-       $filesUpload->folderId=$folderParent2;
-       $filesUpload->lastModified=date("F j, Y, g:i a");
-        $filesUpload->save();
-}
+            $filesUpload= new  fileUpload;
+            $filesUpload->applicationId=$applicationId;
+            $filesUpload->filename=$name;
+            $filesUpload->folderId=$folderParent2;
+            $filesUpload->lastModified=date("F j, Y, g:i a");
+            $filesUpload->save();
+        }
 
         return response()->json([
             'msg'=>'Applied Successfully'
         ]);
 
-        
+
     }
 
     public function update_profile(Request $request){
@@ -151,13 +149,13 @@ class applicationControllerApplicant extends Controller
             'purok'=>$purok,
             'barangay'=>$barangay,
         ]);
-                
+
         return response()->json([
             'msg'=>'Successfully Updated'
         ]);
     }
 
-    
+
 
    public function view_application (Request $request){
     $applicationId = $request->id;
@@ -176,7 +174,7 @@ class applicationControllerApplicant extends Controller
        $control_number =$request->control_num_connect;
        $contact_num =$request->contact_num_connect;
        $code =200;
-        
+
 
        $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
        ->where('application.control_number',$control_number)
@@ -192,7 +190,7 @@ class applicationControllerApplicant extends Controller
                  $code =400;
 
            }
-    
+
        }
 
        return response()->json([
@@ -200,7 +198,7 @@ class applicationControllerApplicant extends Controller
        ]);
    }
    public function update_application(Request $request){
-    
+
     $applicationId = $request->applicationId;
     $type_occupancy = $request->type_occupancy;
     $nature_business = $request->nature_business;
@@ -210,7 +208,7 @@ class applicationControllerApplicant extends Controller
     $Lname = $request->Lname;
     $purok = $request->purok;
     $barangay = $request->barangay;
-    
+
     $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
     ->join('address','address.applicationId','=','application.applicationId')
     ->where('application.applicationId',$applicationId);
@@ -233,17 +231,17 @@ class applicationControllerApplicant extends Controller
    public function delete_application(Request $request){
     $accountId=$request->applicationId;
     $query= application::find($accountId)->delete();
-   
+
       if($query){
              return response()->json([
                 'status'=>1,
-                'msg'=>'data archived' 
+                'msg'=>'data archived'
              ]);
            }else
            {
              return response()->json([
                 'status'=>0,
-                'msg'=>'something went wrong!' 
+                'msg'=>'something went wrong!'
              ]);
            }
    }
@@ -268,7 +266,7 @@ public function send_emergency(Request $request){
     ->where('application.accountId',$accountId)->where('business_name',$business_name)
     ->get();
 
- 
+
     foreach($data as $data){
 
         $applicationId = $data['applicationId'];

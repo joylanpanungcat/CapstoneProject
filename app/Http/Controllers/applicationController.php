@@ -38,8 +38,8 @@ class applicationController extends Controller
 
   //                                 return '
   //                                 <button type="button"  class="btn   btn-sm  sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
-  //                               </button>   || 
-                            
+  //                               </button>   ||
+
   //                        <a type="button" name="viewApplicant" class="btn  btn-sm actionButton" href="application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
   //               ';
   //                             })
@@ -58,7 +58,7 @@ public function applicationFetch(Request $request){
                ->where('status','=',$request->category)
                ->orderBy('applicationId','desc')
                ->get();
-          
+
    }
    elseif($request->from_date !='' && $request->category == '')
    {
@@ -87,7 +87,7 @@ public function applicationFetch(Request $request){
 
        return '
           <button type="button"  class="btn    sendArchive actionButton" data-toggle="tooltip" data-placement="bottom" title="Archive" id="'.$row['applicationId'].'"><i class="fa fa-archive"></i>
-        </button>  
+        </button>
  <a type="button" name="viewApplicant" class="btn  actionButton" href="application_profile/'.$row['applicantId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
 ';
       })
@@ -96,7 +96,7 @@ public function applicationFetch(Request $request){
  })
      ->rawColumns(['actions'])
     ->make(true);
-  
+
 }
 
 public function viewApplication(Request $request){
@@ -135,9 +135,9 @@ public function viewApplication(Request $request){
         ->where('application.applicantId',$applicantId)
         ->ORwhere('application.accountId','=',$accountId)
         ->get();
-    
 
-    
+
+
         $applicantAdd=address::where('applicantId','=',$account_id)->first();
         $applicationId=address::where('applicationId','=',$account_id)->first();
 
@@ -146,12 +146,12 @@ public function viewApplication(Request $request){
         ->where('application.applicantId',$account_id)
         ->ORwhere('application.accountId','=',$accountId)
         ->get();
-      
+
       $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
       ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
       ->where('application.applicationId',$account_id)
       ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
-    
+
     $certificate = assessment::join('application','application.applicationId','=','assessment.applicationId')
     ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
     ->where('application.applicationId',$account_id)
@@ -160,16 +160,16 @@ public function viewApplication(Request $request){
 
       // foreach ($assessment as $item){
       //   $fees_id=$item['fees_id'];
-      // } 
+      // }
       // $list_fees= subAssessment::join('fees','fees.fees_id','=','sub_assessment.fees_id')->where('sub_assessment.fees_id',$fees_id)->get();
       // foreach($list_fees as $item){
       //   $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
       // }
 
-     
+
        return view('admin/application_profile',compact('application','applicant_account','assessment_no_payment','account_details','assessment','applicantAdd','applicationId','inspection_details','certificate','uploaded'));
-        
-  
+
+
 
 }
     public function storeData(Request $request) {
@@ -203,7 +203,7 @@ public function viewApplication(Request $request){
             $applicant->Fname = $Fname;
             $applicant->Lname = $Lname;
             $applicant->Mname = $middleAdd;
-           
+
             $applicant->contact_num = $contact_num;
             $applicant->alcontact = $alcontactAdd;
             $applicant->save();
@@ -223,9 +223,9 @@ public function viewApplication(Request $request){
             $user->status = $status;
             $user->OR_num = $OR_num;
             $user->date_apply = $date_apply;
-           
-            
-        
+
+
+
             $user->filenames='';
             $user->save();
             $user_id = $user->applicationId; // this give us the last inserted record id
@@ -248,7 +248,7 @@ public function viewApplication(Request $request){
             return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
         }
         return response()->json(['status'=>"success", 'user_id'=>$user_id, 'Fname'=>$Fname]);
-        
+
     }
     public function storeImage(Request $request)
     {
@@ -274,8 +274,8 @@ public function viewApplication(Request $request){
                 $name=$file->getClientOriginalName();
                // $imageName = strtotime(now()).rand(11111,99999).'.'.$img->getClientOriginalExtension();
                 $file->move($path.$Fname.$Lname.'/'.$type_application,$name);
-                $files[]=$name;     
-              
+                $files[]=$name;
+
                 }
     $path2=$Fname.$Lname.'/'.$type_application;
 
@@ -316,12 +316,12 @@ public function viewApplication(Request $request){
         return response()->json(['status'=>"success",'imgdata'=>$files,'userid'=>$userid]);
         }
     }
-   
+
 
 
     public function filesUpload(Request $request){
         // $files=$request->file('filenames');
-     
+
 $files=[];
       $files=$request->file('filenames');
     foreach($files as $file){
@@ -329,12 +329,12 @@ $files=[];
                 $file->move(public_path('files'),$name);
                 $files[]=$name;
             }
- 
-      
+
+
 
     }
 
-    // file system 
+    // file system
 
     public function fetch_file(Request $request){
         $Fname = $request->Fname;
@@ -342,7 +342,7 @@ $files=[];
         $admin = $request->admin;
         $applicationId = $request->applicationId;
         $path=$Fname.$Lname;
-    
+
     $folderGet= folderUpload::where('applicationId','=',$applicationId)
         ->whereNull('parentId')
         // ->whereRaw('folderId  = parentId')
@@ -351,18 +351,18 @@ $files=[];
         foreach($folderGet as $folder)
         $folderId=$folder['folderId'];
     }
-     
+
 
     $folderFetch= folderUpload::where('applicationId','=',$applicationId)
         ->where('parentId','=',$folderId)
         ->orderBy('folderId','desc')
         ->get();
-     
+
      $fileUpload= application::find($applicationId)->fileUpload;
-       
+
        // $folder =array_filter(glob('files/'.$path.'/*'),'is_dir');
 
-       $output="<table class='table folderItem'> 
+       $output="<table class='table folderItem'>
         <tr>
             <th> Name
             </th>
@@ -381,19 +381,19 @@ $files=[];
           if($name['folderName']!=$path){
             $output .='
             <tr class="file-folder " id='.$name['folderId'].' name="'.$name['folderName'].'" >
-               
+
                 <td>
-                            <div class="folder"> 
+                            <div class="folder">
                             <span><i class="fa fa-folder"></i></span>
                             '.$name["folderName"].'
-                      
+
                              </div>
-                             <input type="text" 
+                             <input type="text"
                                value="'.$name["folderName"].'"   id="folderNameOld" style="display:none">
-                               <input type="text"  class="renameFolder2" 
+                               <input type="text"  class="renameFolder2"
                                value="'.$name["folderName"].'"  id='.$name['folderId'].' style="display:none">
-                      
-                  
+
+
                 </td>
                  <td>--
                 </td>
@@ -401,25 +401,25 @@ $files=[];
                 </td>
                 <td>'.$name['lastModified'] .'
                 </td>
-               
+
             </tr>
             ';
                $parentId =$name["parentId"];
          }
-       
+
         }
 
      }
      else{
-        $output .='<tr>   
+        $output .='<tr>
                 <td >This folder is empty.
                 </td>
         </tr>';
      }
-     
-        
+
+
        return response()->json(['status'=>200,'data'=>$output,'folderFetch'=>$folderFetch, 'parentId'=>$parentId,'folderId'=>$folderId]);
-     
+
     }
     function FileSizeConvert($bytes)
 {
@@ -472,14 +472,14 @@ $files=[];
 
      $path=$path.$rootFolder;
 
-     
+
          $fileFetch= folderUpload::find($folderId)->fileUpload;
          $parentFolder=folderUpload::where('folderId','=',$folderId)->get();
          $folderFetch=folderUpload::where('parentId','=',$folderId)->get();
-     
-       
 
-         $output="<table class='table folderItem' > 
+
+
+         $output="<table class='table folderItem' >
         <tr>
             <th>Name
             </th>
@@ -493,21 +493,21 @@ $files=[];
             </th>
         </tr>
              ";
-         
+
                 if($folderFetch->count()>0){
                  foreach($folderFetch as $file){
                      if($file['folderName']!=$path){
 
-                 $output.='<tr  class="file-folder" name="'.$file['folderName'].'" id='.$file['folderId'].' ">   
-                        <td > <div class="folder"> 
+                 $output.='<tr  class="file-folder" name="'.$file['folderName'].'" id='.$file['folderId'].' ">
+                        <td > <div class="folder">
                             <span><i class="fa fa-folder"></i></span>
                             '.$file["folderName"].'
-                         
+
                              </div>
                               <input type="text" class="folderNameOld"
                                value="'.$file["folderName"].'"    id='.$file['folderId'].' style="display:none">
-                                <input type="text" 
-                                class="renameFolder2" 
+                                <input type="text"
+                                class="renameFolder2"
                                value="'.$file["folderName"].'"  id='.$file['folderId'].' style="display:none">
                         </td>
                         <td> --
@@ -520,13 +520,13 @@ $files=[];
                 </td>
                 </tr>';
                 }
-               
+
               }
              }
              if($parentFolder->count()>0){
                 foreach($parentFolder as $folder){
                  $folderParentId =$folder['folderId'];
-               
+
                 $folderName =$folder['folderName'];
                  }
              }
@@ -534,10 +534,10 @@ $files=[];
                  foreach($fileFetch as $file){
                     $i=$path.$file['filename'];
                  $fileSize = filesize($i);
-                 $output.='<tr class="file-item">   
+                 $output.='<tr class="file-item">
                         <td >'.pathinfo($file["filename"], PATHINFO_FILENAME).'
                         </td>
-                     
+
                         <td>'.self::FileSizeConvert($fileSize).'
                         </td>
                         <td>'.pathinfo($file["filename"], PATHINFO_EXTENSION).'
@@ -547,24 +547,24 @@ $files=[];
                         <td>'.$file['lastModified'].'
                         </td>
                 </tr>';
-                
+
 
               }
              }
              if($fileFetch->count()==0 && $folderFetch->count()==0 ){
 
-        $output .='<tr >   
+        $output .='<tr >
                 <td colspan="5" style="  text-align: center;">This folder is empty.
                 </td>
         </tr>';
-    
+
              }
 
-             
-             
+
+
 
             return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId,'folderName'=>$folderName,'folderId'=>$folderId]);
-     
+
     }
     public function addDescription(Request $request){
         $admin=$request->admin;
@@ -579,7 +579,7 @@ $files=[];
         $description->description=$description2;
         $description->folderId=$folderId;
         $description->modifiedBy=$admin;
-        $description->save(); 
+        $description->save();
 
 
     return response()->json(['status'=>200]);
@@ -592,7 +592,7 @@ $files=[];
         $applicationId=$request->applicationId;
         $path= public_path().'/files/';
 
-     
+
 
     $rootFolder=folderUpload::tree($folderId,$applicationId);
     $path=$path.$rootFolder;
@@ -601,10 +601,10 @@ $files=[];
      if(is_dir( $path)){
         rename(dirname($path).'/'.$oldpath,dirname($path).'/'.$folderName );
      }
-        
+
    $renameFolder= folderUpload::find($folderId);
    $renameFolder->folderName=$folderName;
-   $renameFolder->lastModified=date("F j, Y, g:i a"); 
+   $renameFolder->lastModified=date("F j, Y, g:i a");
    $renameFolder->save();
    $folderNameOld= $renameFolder->folderName;
 
@@ -639,7 +639,7 @@ public function viewFolderDetails(Request $request){
                         $description=$activity['description'];
                       }
                 }
-      
+
 
         }
              $output.='</ul></div></div>';
@@ -649,34 +649,34 @@ public function viewFolderDetails(Request $request){
     return response()->json(['status'=>200,'folderDetails'=>$folderDetails,'output'=>$output,'description'=>$description]);
 }
 
-function custom_copy($src, $dst) { 
-  
+function custom_copy($src, $dst) {
+
     // open the source directory
-    $dir = opendir($src); 
-  
+    $dir = opendir($src);
+
     // Make the destination directory if not exist
-    @mkdir($dst); 
-  
+    @mkdir($dst);
+
     // Loop through the files in source directory
-    while( $file = readdir($dir) ) { 
-  
-        if (( $file != '.' ) && ( $file != '..' )) { 
-            if ( is_dir($src . '/' . $file) ) 
-            { 
-  
+    while( $file = readdir($dir) ) {
+
+        if (( $file != '.' ) && ( $file != '..' )) {
+            if ( is_dir($src . '/' . $file) )
+            {
+
                 // Recursively calling custom copy function
-                // for sub directory 
-                self::custom_copy($src . '/' . $file, $dst . '/' . $file); 
-  
-            } 
-            else { 
-                copy($src . '/' . $file, $dst . '/' . $file); 
-            } 
-        } 
-    } 
-  
+                // for sub directory
+                self::custom_copy($src . '/' . $file, $dst . '/' . $file);
+
+            }
+            else {
+                copy($src . '/' . $file, $dst . '/' . $file);
+            }
+        }
+    }
+
     closedir($dir);
-} 
+}
 public function moveFolder(Request $request){
 $ids=$request->ids;
 $slotNumber=$request->slotNumber;
@@ -706,7 +706,7 @@ $slotNumber=$request->slotNumber;
       return response()->json(['code'=>200,'path'=>$path2]);
 
 }
- 
+
 public function moveToFolder(Request $request){
     $folderId=$request->folderId;
     $applicationId=$request->applicationId;
@@ -724,17 +724,17 @@ public function moveToFolder(Request $request){
     $getAncestor=folderUpload::where('folderId',$parentId)->get();
     $output='';
     $folderName="";
-    $button=''; 
+    $button='';
 
- 
+
      foreach($folders as $folder){
-      
+
         if($folder['folderId']==$folderId ||$folder['folderId']==$selected){
             $output .= "<div class='col-md-12 moveFolderToClass2 moveFolderDisabled' data-toggle='tooltip' data-placement='bottom' title='Cannot move folder ".$folder['folderName']." on to itself' >
                 <div class='col-md-2'><i class='fa fa-folder'></i> </div>
                   <div class='col-md-8'> ".$folder['folderName']."  </div>
-                 
-               
+
+
                 </div>";
             $selectedParentId=$folder['parentId'];
             $button .="<button class='btn btn-default moveButton' style='float:right;' disabled='' data-toggle='tooltip' data-placement='bottom' title='Item is already in this folder' id=".$folder['parentId'].">Move</button>";
@@ -743,7 +743,7 @@ public function moveToFolder(Request $request){
                 <div class='col-md-2'><i class='fa fa-folder'></i> </div>
                   <div class='col-md-8 '> ".$folder['folderName']."  </div>
                  <div class='col-md-2 moveFolderView' id=".$folder['folderId']." style='display:none' data-toggle='tooltip' data-placement='bottom' title='Go to  ".$folder['folderName']."'> <i class='fa fa-chevron-right moveFolderViewIcon' id=".$folder['folderId']."></i></div>
-               
+
                 </div>";
 
         }
@@ -789,10 +789,10 @@ public function moveFolderToSelected(Request $request){
          $path= public_path().'/files/';
          $output="";
          $folderName="";
-  
+
          $folderFetch=folderUpload::where('parentId','=',$folderId)->orderBy('folderName','ASC')->get();
          $parentId=folderUpload::where('folderId','=',$folderId)->get();
-        
+
         if($folderFetch->count()>0){
                  foreach($folderFetch as $folder){
 
@@ -802,9 +802,9 @@ public function moveFolderToSelected(Request $request){
                   <div class='col-md-8'> ".$folder['folderName']."  </div>
                    <input type='text' value='".$folder['parentId']."' class='selectedParentId2'>
                   </div>
-               
+
                 </div>";
-                
+
            }else{
              $output .= "<div class='col-md-12 moveFolderToClass' id=".$folder['folderId']." >
                 <div class='col-md-2'><i class='fa fa-folder'></i> </div>
@@ -812,12 +812,12 @@ public function moveFolderToSelected(Request $request){
                   <div class='col-md-2 moveFolderView' id=".$folder['folderId']." style='display:none' data-toggle='tooltip' data-placement='bottom' title='Go to  ".$folder['folderName']."'> <i class='fa fa-chevron-right moveFolderViewIcon' id=".$folder['folderId']."></i>
                   <input type='text' value='".$folder['parentId']."' class='selectedParentId2'>
                   </div>
-               
-                </div>"; 
-               
+
+                </div>";
+
              }
-               
-               
+
+
               }
               foreach($parentId as $parentFolderId){
 
@@ -826,13 +826,13 @@ public function moveFolderToSelected(Request $request){
                                      $folderName = 'Files';
                              }else{
                                $folderName = $parentFolderId['folderName'];
-                            } 
+                            }
                        if($parentFolderId['parentId'] ==null){
                               $folderParentId =$parentFolderId['folderId'];
 
                         }
-                       
-                     
+
+
               }
              }else{
                  $output="<div><center><h6>This folder is empty.</h6></center></div>";
@@ -874,23 +874,23 @@ public function addFolder(Request $request ){
         $folderUpload->folderName=$folderName;
         $folderUpload->parentId=$parentId;
         $folderUpload->uploader=$admin;
-        
+
         $folderUpload->lastModified=date("F j, Y, g:i a");
         $folderUpload->created=date("F j, Y, g:i a");
         $folderUpload->save();
         $folderId= $folderUpload->folderId;
          mkdir($path);
          return response()->json(['status'=>200,'parentId'=> $parentId ,'folderId'=>$folderId]);
-           
+
         }else{
                 $error="Folder Already Exist";
                  return response()->json(['error'=>$error]);
         };
-       
+
     }
 
 public function addFile(Request $request){
-   
+
 
         $parentFolderId2 =$request->parentFolderId2;
         $applicationId =$request->applicationId;
@@ -903,15 +903,15 @@ public function addFile(Request $request){
 
             $rootFolder=folderUpload::tree($parentFolderId2,$applicationId);
              $path=$path.$rootFolder;
-         
- 
- 
+
+
+
         foreach($img as $file){
                 $name=$file->getClientOriginalName();
                 $file->move($path,$name);
-                $files[]=$name;     
+                $files[]=$name;
                 }
-   
+
       foreach($files as $name){
                  $filesUpload= new  fileUpload;
                 $filesUpload->applicationId=$userid;
@@ -928,17 +928,17 @@ public function addFile(Request $request){
 public function archieve_application(Request $req){
     $accountId=$req->accountId;
     $query= application::find($accountId)->delete();
-   
+
       if($query){
              return response()->json([
                 'status'=>1,
-                'msg'=>'data archived' 
+                'msg'=>'data archived'
              ]);
            }else
            {
              return response()->json([
                 'status'=>0,
-                'msg'=>'something went wrong!' 
+                'msg'=>'something went wrong!'
              ]);
            }
 }
@@ -949,16 +949,16 @@ public function restore_application(Request $request){
  if($query){
           return response()->json([
              'status'=>1,
-             'msg'=>'data undone' 
+             'msg'=>'data undone'
           ]);
         }else
         {
           return response()->json([
              'status'=>0,
-             'msg'=>'something went wrong!' 
+             'msg'=>'something went wrong!'
           ]);
         }
- 
+
 }
 
 public function view_inspection_report(Request $request){

@@ -52,7 +52,7 @@
      .legend-group .legend-body h4.FSIC_OCCU:hover{
      color: #AFD8F8;
     }
-   
+
      .legend-group .legend-body h4.FSIC_new:hover{
      color: #4DA74D;
     }
@@ -71,31 +71,31 @@
 }
   </style>
  <div class="right_col" role="main" >
-   
+
     <div class="">
         <div class="page-title">
             <div class="title_left">
               <a class="btn btn-default" href="{{ route('application') }}"><i class="fa fa-arrow-left">  Back</i></a>
             </div>
-            
-           
+
+
           </div>
         <div class="col-md-12 body_content">
 
           <div class="row">
 
                     <h3>Add Application</h3>
-                 
-                    <hr class="separate col-md-12" > 
-                    
+
+                    <hr class="separate col-md-12" >
+
 
                   </div>
-                  
-                          
+
+
                                 <br />
                                 <form class="form-horizontal form-label-left" id="add_application">
                                     <div class="form-group row ">
-                                        <h2><strong>Applicant Details</strong></h2> 
+                                        <h2><strong>Applicant Details</strong></h2>
                                     </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">First Name</label>
@@ -122,7 +122,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row ">
-                                      <h5> Address</h5> 
+                                      <h5> Address</h5>
                                   </div>
                                   <div class="form-group row ">
                                     <label class="control-label col-md-3 col-sm-3 ">Purok</label>
@@ -143,13 +143,13 @@
                                 </div>
                             </div>
                                     <div class="form-group row ">
-                                      <h2><strong>Business Details</strong></h2> 
+                                      <h2><strong>Business Details</strong></h2>
                                   </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Type of Application</label>
                                         <div class="col-md-9 col-sm-9 ">
                                             <select class="select_status form-control" id="type_application" name="type_application" >
-                                                <option value="Fire Safety Inspection Certificate">Fire Safety Inspection Certificate</option>
+                                                <option value="Fire Safety Inspection Certificate" >Fire Safety Inspection Certificate</option>
                                                 <option value="Fire Safery Evaluation Clearance">Fire Safery Evaluation Clearance</option>
                                                 <option value="Fire Safety Inspection Certificate for Business">Fire Safety Inspection Certificate for Business</option>
                                                 <option value="Fire Safety Inspection Certificate for Occupancy">Fire Safety Inspection Certificate for Occupancy</option>
@@ -175,7 +175,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row ">
-                                      <h5> Address</h5> 
+                                      <h5> Address</h5>
                                   </div>
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Purok</label>
@@ -196,7 +196,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group row ">
-                                    <h2><strong>Application Requirements</strong></h2> 
+                                    <h2><strong>Application Requirements</strong></h2>
                                 </div>
                                 <div class="form-group row ">
                                   <label class="control-label col-md-3 col-sm-3 "></label>
@@ -204,12 +204,12 @@
                                       <input type="file" class="form-control" name="file[]" readonly multiple>
                                   </div>
                               </div>
-                                  
-                                    
-                      
+
+
+
                                     <div class="form-group" style="float: right">
 										<button type="submit" class="btn btn-success" ><i class="fa fa-edit "></i>  Add </button>
-                                        
+
                                     </div>
                                 </form>
 
@@ -222,8 +222,8 @@
 
 
 
-</div>  
-       
+</div>
+
      </div>
  </div>
 
@@ -234,7 +234,7 @@
                       headers: {
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                       }
- 
+
   })
 
   $('#add_application').on('submit',function(e){
@@ -247,7 +247,7 @@
             background: 'rgb(0,0,0,.9)',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
-            
+
           confirmButtonText: 'Yes',
           customClass : {
               title: 'swal2-title',
@@ -272,7 +272,7 @@
                   background: 'rgb(0,0,0,.9)',
                   customClass : {
                       title: 'swal2-title'
-                  }, 
+                  },
               background: 'rgb(0,0,0,.9)',
               confirmButtonColor: '#1ABB9C',
               confirmButtonText: 'login',
@@ -288,4 +288,4 @@
   })
 </script>
 
-  @endsection 
+  @endsection
