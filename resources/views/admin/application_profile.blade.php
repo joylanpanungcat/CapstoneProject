@@ -807,7 +807,7 @@ height: 40%;
                          <div class="col-md-12">
                               {{-- <hr class="separate"> --}}
                                 <div class="x_title">
-                                    <h2>Business Information  <small></small></h2>
+                                    <h2>Applicant and Business Information  <small></small></h2>
 
 
                                     <div class="clearfix"></div>

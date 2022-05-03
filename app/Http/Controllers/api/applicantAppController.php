@@ -112,19 +112,21 @@ public function addApplication(Request $request){
     $application->save();
     $applicationId= $application->applicationId;
 
+    $address2 = new address;
+    $address2->applicationId= $applicationId;
+    $address2->purok=$businessPurok;
+    $address2->barangay=$businessBarangay;
+    $address2->city=$businessCity;
+    $address2->save();
+
     $address = new address;
-    $address->applicationId= $applicationId;
+    $address->applicantId= $applicantId;
     $address->purok=$applicantPurok;
     $address->barangay=$applicantBarangay;
     $address->city=$applicantCity;
     $address->save();
 
-    $address2 = new address;
-    $address2->applicantId= $applicantId;
-    $address2->purok=$businessPurok;
-    $address2->barangay=$businessBarangay;
-    $address2->city=$businessCity;
-    $address2->save();
+
 
     $folder= new folderUpload;
     $folder->applicationId= $applicationId;
@@ -160,5 +162,28 @@ public function addApplication(Request $request){
     return response()->json([
         'msg'=>'Application Successfully Added'
     ]);
+}
+
+public function getApplication(Request $request){
+    $accountId = $request->user()->accountId;
+    $data2 = application::
+    join('address','address.applicationId','=','application.applicationId')
+    ->select('address.purok','address.barangay','address.city','application.*')->where('application.accountId',$accountId )->get();
+    return $data2;
+}
+
+public function viewApplication(Request $request){
+    $accountId = $request->accountId;
+    $applicationId = $request->applicationId;
+    $data = application::
+    join('address','address.applicantId','=','application.applicantId')
+    ->join('applicant','applicant.applicantId','=','application.applicantId')
+    ->select('address.purok','address.barangay','address.city','application.*','applicant.*')->where('application.accountId',$accountId )
+    ->where('application.applicationId',$applicationId)->get();
+
+    for($i =0 ; $i<$data->count(); $i++){
+        $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
+    }
+    return $data;
 }
 }

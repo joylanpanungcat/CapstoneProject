@@ -30,6 +30,8 @@ Route::prefix('/user')->group(function(){
           Route::get('getUser', [loginController::class,'user']);
           Route::post('updateUser', [applicantAppController::class,'updateUser']);
           Route::post('addApplication', [applicantAppController::class,'addApplication']);
+          Route::get('getApplication', [applicantAppController::class,'getApplication']);
+          Route::post('viewApplication', [applicantAppController::class,'viewApplication']);
           Route::get('logout', [loginController::class,'logout']);
 
       });
