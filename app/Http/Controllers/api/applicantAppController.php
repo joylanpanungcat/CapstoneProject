@@ -126,8 +126,6 @@ public function addApplication(Request $request){
     $address->city=$applicantCity;
     $address->save();
 
-
-
     $folder= new folderUpload;
     $folder->applicationId= $applicationId;
     $folder->folderName= $Fname.$Lname;
@@ -185,5 +183,66 @@ public function viewApplication(Request $request){
         $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
     }
     return $data;
+}
+public function searchApplication(Request $request){
+    $data = application::
+    join('address','address.applicationId','=','application.applicationId')
+    ->where('type_application','LIKE','%'.$request->typeApplication.'%')
+    ->select('address.purok','address.barangay','address.city','application.*')->where('application.accountId',$request->accountId )->get();
+    return $data;
+}
+public function updateApplication(Request $request){
+    $Fname = $request->data[0]['Fname'];
+    $Lname = $request->data[0]['Lname'];
+    $Mname = $request->data[0]['Mname'];
+    $accountId = $request->data[0]['accountId'];
+    $applicantId = $request->data[0]['applicantId'];
+    $applicationId = $request->data[0]['applicationId'];
+    $barangay = $request->data[0]['barangay'];
+    $business_name = $request->data[0]['business_name'];
+    $city = $request->data[0]['city'];
+    $contact_num = $request->data[0]['contact_num'];
+    $nature_business = $request->data[0]['nature_business'];
+    $purok = $request->data[0]['purok'];
+    $type_application = $request->data[0]['type_application'];
+    $businessAddressPurok = $request->data[0]['businessAddress'][0]['purok'];
+    $businessAddressBarangay = $request->data[0]['businessAddress'][0]['barangay'];
+    $businessAddressCity = $request->data[0]['businessAddress'][0]['city'];
+
+    $type_occupancy = $request->data[0]['type_occupancy'];
+
+
+    $updateApplicant = applicant::where('applicantId',$applicantId)->update([
+        'Fname'=>$Fname,
+        'Lname'=>$Lname,
+        'Mname'=>$Mname,
+        'contact_num'=>$contact_num,
+    ]);
+    $updateAddress = address::where('applicantId',$applicantId)->update([
+        'purok'=>$purok,
+        'barangay'=>$barangay,
+        'city'=>$city,
+    ]);
+    $updateApplication = application::where('applicationId',$applicationId)->update([
+        'type_application'=>$type_application,
+        'type_occupancy'=>$type_occupancy,
+        'nature_business'=>$nature_business,
+        'business_name'=>$business_name,
+    ]);
+    $updateAddressBus = address::where('applicationId',$applicationId)->update([
+        'purok'=>$businessAddressPurok,
+        'barangay'=>$businessAddressBarangay,
+        'city'=>$businessAddressCity,
+    ]);
+
+      if($updateApplicant || $updateAddress || $updateApplication || $updateAddressBus){
+        return response()->json([
+            'msg'=>'Application Successfully Updated'
+        ]);
+      }else{
+        return response()->json([
+            'msg'=>'No Changes'
+        ]);
+      }
 }
 }
