@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\applicant_account;
 use App\Models\address;
@@ -244,5 +245,19 @@ public function updateApplication(Request $request){
             'msg'=>'No Changes'
         ]);
       }
+}
+public function deleteApplication(Request $request){
+    $applicationId=  $request->data;
+    $applicantId=  $request->data2;
+    $deleteApplication = application::where('applicationId',$applicationId)->delete();
+    $deleteAddress = address::where('applicationId',$applicationId)
+    ->orWhere('applicantId',$applicantId)->delete();
+    $deleteApplicant = applicant::where('applicantId',$applicantId)->delete();
+
+    if($deleteAddress || $deleteApplicant || $deleteApplication){
+        return response()->json([
+            'msg'=>'Application Successfully Deleted'
+        ]);
+    }
 }
 }
