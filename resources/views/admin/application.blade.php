@@ -202,7 +202,9 @@ overflow: auto;
   position: absolute;
 }
 
-
+#msform input{
+    color: red;
+}
 
   </style>
  <div class="right_col" role="main" >
