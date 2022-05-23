@@ -203,7 +203,7 @@ overflow: auto;
 }
 
 #msform input{
-    color: red;
+    color: black;
 }
 
   </style>
