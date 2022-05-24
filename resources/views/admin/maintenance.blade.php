@@ -207,6 +207,19 @@ position: absolute;
     overflow-y: auto;
 }
 
+#add_main_modal #defaultfees {
+  background-color:#17A2B8;
+  color: white;
+}
+
+#add_main_modal #exampleModalLabel {
+  color: white;
+}
+
+#add_other_modal #otherfees {
+  background-color:#17A2B8;
+  color: white;
+}
 </style>
  <div class="right_col" role="main" >
     <div class="">
@@ -427,8 +440,8 @@ position: absolute;
               <div class="modal fade" id="add_main_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Add Default Fees</h5>
+                    <div class="modal-header" id="defaultfees">
+                      <h5 class="modal-title" id="exampleModalLabel">ADD DEFAULT FEES</h5>
                     </div>
                     <div class="modal-body">
                       <div class="x_panel">
@@ -478,8 +491,8 @@ position: absolute;
               <div class="modal fade" id="add_other_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Add Other Fees</h5>
+                    <div class="modal-header" id="otherfees">
+                      <h5 class="modal-title" id="exampleModalLabel">ADD OTHER FEES</h5>
                     </div>
                     <div class="modal-body">
                       <div class="x_panel">
