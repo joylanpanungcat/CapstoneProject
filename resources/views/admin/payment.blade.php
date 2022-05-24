@@ -2,7 +2,7 @@
 @section('title','Payment ')
 @section('content')
 <style type="text/css">
-    table tbody tr td input{
+    table tbody tr td input {
       border: none;
       background-color: transparent;
       padding: 5px;
@@ -193,6 +193,12 @@ letter-spacing: 1px;
 .swal2-title {
   color: #FFF;
 }
+
+#search_applicant {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 20px;
+  padding-left: 0.5em;
+}
 </style>
 
 <body class="nav-md" id="main" >
@@ -225,7 +231,7 @@ letter-spacing: 1px;
                   <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                      <div class="btn-group mr-2  " role="group" aria-label="First group">
           
-                                <input type="text" name="" placeholder="Full name" id="search_applicant">
+                                <input type="text" name="" placeholder="Search.." id="search_applicant">
  
                        <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
                        

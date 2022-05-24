@@ -212,6 +212,18 @@ letter-spacing: 1px;
 .swal2-title {
   color: #FFF;
 }
+
+#search_applicant {
+   font-family: 'Times New Roman', Times, serif;
+  font-size: 20px;
+  padding-left: 0.5em;
+}
+
+#search_fee {
+   font-family: 'Times New Roman', Times, serif;
+  font-size: 15px;
+  padding-left: 0.5em;
+}
   </style>
 
 
@@ -237,7 +249,7 @@ letter-spacing: 1px;
                                     <br />
                  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2  " role="group" aria-label="First group">
-                        <input type="text" name="" placeholder="Full name" id="search_applicant">
+                        <input type="text" name="" placeholder="Search.." id="search_applicant">
                       <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
                     </div>
                   <button class="btn btn-default add_fees_button"><i class="fa fa-plus fa-lg"  ></i> Add Fees</button>
@@ -374,11 +386,11 @@ letter-spacing: 1px;
     <div class="modal-dialog modal-md modal_assessment">
       <div class="modal-content modal-lg">
         <div class="modal-header">
-          <h4 class="modal-title" id="ModalTitle">Fees</h4>
+          <h4 class="modal-title" id="ModalTitle">FEES</h4>
          
           <div class="btn-group mr-2  " role="group" aria-label="First group">
             
-                               <input type="text" name="" placeholder="search fee" id="search_fee">
+                               <input type="text" name="" placeholder="Search fees.." id="search_fee">
                       <button type="button" class="btn btn-secondary " id="search_fee_form"><i class="fa fa-search"></i></button>
                       
       
