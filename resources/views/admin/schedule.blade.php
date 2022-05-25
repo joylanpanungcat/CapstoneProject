@@ -99,6 +99,12 @@ button.close-modal:hover{
     overflow: scroll;
 }
 
+#search_applicant {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  padding-left: 0.5em;
+
+}
 /* .actionButton {
 
   width: 10px;

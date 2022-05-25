@@ -206,7 +206,28 @@ overflow: auto;
     color: black;
 }
 
+#msform .barcolor{
+color: white;
+}
+#msform #account{
+  color: white;
+}
+
+ .addApplication .modal-body {
+  background-color: #2A3F54;
+}
+.card h2 strong{
+  
+  color: #1ABB9C;
+    font-size: 40px;
+}
+
+.addApplication .card {
+background-color:#2A3F54;
+}
+
   </style>
+
  <div class="right_col" role="main" >
     <div class="">
         <div class="page-title">
@@ -307,7 +328,7 @@ overflow: auto;
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <div class="modal-body">
+                          <div class="modal-body" style="background: #2A3F54;">
                             <div id="showModalUpdate"></div>
                             <form method="post" id="editForm">
                                <h5> Applicant Information</h5>
@@ -417,7 +438,7 @@ overflow: auto;
           <div class="modal-dialog modal-xl addApplication" >
             <div class="modal-content">
 
-                          <div class="modal-body">
+                          <div class="modal-body"  id="formcol">
                               {{-- <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" class="">
                               <span >&times;</span>
                             </button> --}}
@@ -432,7 +453,7 @@ overflow: auto;
        {{--  <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2"> --}}
         <div class="col-md-10 text-center ">
             <div class="card">
-                <h2><strong>Add Application</strong></h2>
+                <h2><strong >ADD APPLICATION</strong></h2>
                 {{-- <p>Fill all the inputs correctly </p> --}}
                 <div class="row">
                     <div class="col-md-12 mx-0 input-form" >
@@ -441,10 +462,10 @@ overflow: auto;
                             <!-- progressbar -->
 
                             <ul id="progressbar">
-                                <li class="active" id="account"><strong>Applicant</strong></li>
-                                <li id="personal"><strong>Business</strong></li>
-                                <li id="payment"><strong>Requirements</strong></li>
-                                <li id="confirm"><strong>Preview</strong></li>
+                                <li class="active" id="account" ><strong>Applicant</strong></li>
+                                <li id="personal" class="barcolor"><strong>Business</strong></li>
+                                <li id="payment" class="barcolor"><strong>Requirements</strong></li>
+                                <li id="confirm" class="barcolor"><strong>Preview</strong></li>
                             </ul> <!-- fieldsets -->
                             <fieldset  class="fieldset">
                                 <div class="form-card col-md-12">
