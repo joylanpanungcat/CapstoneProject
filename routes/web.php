@@ -53,13 +53,13 @@ Route::group(['middleware'=>['accessPage']],function(){
 // Route::get("dashboard",[verifyController::class,"dashboard"]);
     Route::view('DashboardAdmin','admin/Dashboard')->name('DashboardAdmin');
     Route::get('fetch_dashboard',[verifyController::class,'fetch_dashboard'])->name('fetch_dashboard');
-        //emergency 
+        //emergency
     Route::get('fetch_emergency',[verifyController::class,'fetch_emergency'])->name('fetch_emergency');
     Route::view('emergency_page','admin/emergency_page')->name('emergency_page');
     Route::get('emergency_view',[verifyController::class, 'emergency_view'])->name('emergency_view');
     Route::get('get_emergency',[verifyController::class,'get_emergency'])->name('get_emergency');
     Route::post('view_emergency',[verifyController::class,'view_emergency'])->name('view_emergency');
-   
+
     Route::get("account",[applicantController::class,"account"]);
     Route::get("accountFetch",[applicantController::class,"accountFetch"])->name('accountFetch');
     Route::get("logoutAdmin",[verifyController::class,"logout"])->name('logoutAdmin');
@@ -67,11 +67,11 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('loginApplicant',[applicantController::class,'loginApplicant']);
     Route::post('getApplicantDetails',[applicantController::class,"getApplicantDetails"])->name('get.appplicant.details');
     Route::post('updateApplicant',[applicantController::class,"updateApplicant"])->name('update.appplicant');
-  
+
     Route::get('applicant_profile/{id}',[applicantController::class,'viewApplicant'])->name('applicant_profile');
     //fallback
     // Route::view('fallback','admin.fallback')->name('fallback');
-   
+
     // Applicant Profile
    Route::post('applicant_profile',[applicantController::class,'applicationRecord'])->name('application.record');
    Route::post('update_info',[applicantController::class,'update_info'])->name('update_info');
@@ -79,23 +79,24 @@ Route::group(['middleware'=>['accessPage']],function(){
    Route::post('update_business_info',[applicantController::class,'update_business_info'])->name('update_business_info');
    Route::post('set_schedule',[applicantController::class,'set_schedule'])->name('set_schedule');
    Route::post('payment_view',[applicantController::class,'payment_view'])->name('payment_view');
-   
-   
+
+
    //application
    Route::view('admin/application','admin/application')->name('applicationAdmin');
    Route::post('/multi-uploads',[applicationController::class,'filesUpload'])->name('filesUpload');
    Route::get('/applicationFetch',[applicationController::class,'applicationFetch'])->name('applicationFetch');
     Route::get('admin/application_profile/{id}',[applicationController::class,'viewApplication'])->name('application_profile');
     Route::post('/storeData',[applicationController::class,'storeData'])->name('storeData');
- 
+
     Route::post('/storeimgae',[applicationController::class,'storeImage'])->name('storeimgae');
     Route::post('/archieve_application',[applicationController::class,'archieve_application'])->name('archieve_application');
     Route::post('restore_application',[applicationController::class,'restore_application'])->name('restore_application');
     Route::post('view_inspection_report',[applicationController::class,'view_inspection_report'])->name('view_inspection_report');
     Route::post('verify_inspection_report',[applicationController::class,'verify_inspection_report'])->name('verify_inspection_report');
     Route::post('print_certificate',[applicationController::class,'print_certificate'])->name('print_certificate');
-    
-    //Map 
+    Route::get('applicationUpdateStatus',[applicationController::class,'applicationUpdateStatus'])->name('applicationUpdateStatus');
+
+    //Map
     Route::view('map','admin/map')->name('map');
     Route::get('fetch_application_map',[mapController::class,'fetch_application_map'])->name('fetch_application_map');
     //
@@ -112,7 +113,7 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('search_scheduel',[scheduleController::class,'search_scheduel'])->name('search_scheduel');
     Route::post('select_schedule',[scheduleController::class,'select_schedule'])->name('select_schedule');
     Route::post('add_schedule_action',[scheduleController::class,'add_schedule_action'])->name('add_schedule_action');
-    
+
     //assessment
     Route::view('assessment','admin/assessment')->name('assessment');
     Route::post('load_fees',[feesController::class,'load_fees'])->name('load_fees');
@@ -126,9 +127,9 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('search_assessment',[feesController::class,'search_assessment'])->name('search_assessment');
     Route::post('select_assessment',[feesController::class,'select_assessment'])->name('select_assessment');
     Route::post('save_payment',[feesController::class,'save_payment'])->name('save_payment');
-    
-    
-    
+
+
+
  //archive
  Route::post('swalert',[applicantController::class,'swalert'])->name('swalert');
  Route::view('account','admin/account')->name('account');
@@ -196,7 +197,7 @@ Route::post('moveFolderToSelected',[applicationController::class,"moveFolderToSe
 
 Route::post('moveViewParentFolderId',[applicationController::class,"moveViewParentFolderId"])->name('moveViewParentFolderId');
 
-//list 
+//list
 
 Route::view('approved_application','admin/approved_application')->name('approved_application');
 Route::view('rejected_application','admin/rejected_application')->name('rejected_application');
@@ -212,7 +213,7 @@ Route::view('fsic_occupancy_report','admin/fsic_occupancy_report')->name('fsic_o
 Route::view('fsic_business_report','admin/fsic_business_report')->name('fsic_business_report');
 Route::view('fsec_report','admin/fsec_report')->name('fsec_report');
 
-//certificate 
+//certificate
 Route::view('certificate','admin/certificate')->name('certificate');
 });
 
@@ -223,7 +224,7 @@ Route::group(['middleware'=>['accessPageApplicant']],function(){
     Route::view('dashboard','applicant.Dashboard')->name('Dashboard');
     Route::get("logout",[verifyController::class,"logoutApplicant"])->name('logout');
     // register
-    
+
     //application
     Route::view('application','applicant.application')->name('application');
     Route::get('fetch_application',[fetchController::class,'fetch_application'])->name('fetch_application');
@@ -231,12 +232,12 @@ Route::group(['middleware'=>['accessPageApplicant']],function(){
     Route::post('add_appllication_action',[applicationControllerApplicant::class,'add_appllication_action'])->name('add_appllication_action');
     Route::post('update_application',[applicationControllerApplicant::class,'update_application'])->name('update_application');
     Route::post('delete_application',[applicationControllerApplicant::class,'delete_application'])->name('delete_application');
-    
+
     //profile
     Route::get('profile',[fetchController::class,'profile_fetch'])->name('profile');
     Route::post('update_profile',[applicationControllerApplicant::class,'update_profile'])->name('update_profile');
     Route::get('application/view/{id}',[applicationControllerApplicant::class,'view_application'])->name('view_application');
-  
+
     //dashboard
     Route::get('Dashboard_fetch',[fetchController::class,'Dashboard_fetch'])->name('Dashboard_fetch');
     // Route::get('Dashboard_fetch',[fetchController::class,'Dashboard_fetch'])->name('Dashboard_fetch');
@@ -246,7 +247,7 @@ Route::group(['middleware'=>['accessPageApplicant']],function(){
     Route::get('fetch_renewal',[fetchController::class,'fetch_renewal'])->name('fetch_renewal');
     Route::get('renewal/view/{id}',[applicationControllerApplicant::class,'view_renewal'])->name('view_application');
     Route::post('send_emergency',[applicationControllerApplicant::class,'send_emergency'])->name('send_emergency');
-});     
+});
 
 //inspector Middleware
 Route::group(['middleware'=>['accessPageInspector']],function(){
@@ -257,18 +258,18 @@ Route::group(['middleware'=>['accessPageInspector']],function(){
     Route::get('Dashboard_fetch_Inspector',[inspectionController::class,'Dashboard_fetch'])->name('Dashboard_fetch_Inspector');
     //for inspection
         Route::view('for_inspection','inspector/for_inspection')->name('for_inspection');
-        Route::get('fetch_inspection',[inspectionController::class,'fetch_inspection'])->name('fetch_inspection'); 
+        Route::get('fetch_inspection',[inspectionController::class,'fetch_inspection'])->name('fetch_inspection');
     //application profile
     Route::get('/application_profile_inspector/{id}',[applicationControllerInspector::class,'viewApplication'])->name('application_profile');
     Route::post('inspect_application_record',[applicationControllerInspector::class,'inspect_application_record'])->name('inspect_application_record');
     // inspection history
     Route::view('inspection_history','inspector/inspection_history')->name('inspection_history');
-    Route::get('fetch_history_application',[inspectionController::class,'fetch_history_application'])->name('fetch_history_application'); 
+    Route::get('fetch_history_application',[inspectionController::class,'fetch_history_application'])->name('fetch_history_application');
     Route::get('/inspection_history/application/{id}',[applicationControllerInspector::class,'inspection_history_view']);
 
     //inspected application
     Route::view('inspected_application','inspector/inspected_application')->name('inspected_application');
-    Route::get('fetch_inspected_application',[inspectionController::class,'fetch_inspected_application'])->name('fetch_inspected_application'); 
+    Route::get('fetch_inspected_application',[inspectionController::class,'fetch_inspected_application'])->name('fetch_inspected_application');
     Route::get('/inspected/application/{id}',[applicationControllerInspector::class,'inspection_inspected_view']);
     Route::post('update_inspected_application',[applicationControllerInspector::class,'update_inspected_application'])->name('update_inspected_application');
     Route::get('application_profile_inspector/inspect/{id}',[applicationControllerInspector::class,'profile_inspect']);

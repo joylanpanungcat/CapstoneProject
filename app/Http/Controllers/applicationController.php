@@ -18,6 +18,7 @@ use App\Models\defaultFee;
 
 // use Storage;
 use DataTables;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\validator;
 class applicationController extends Controller
@@ -1025,8 +1026,28 @@ public function print_certificate(Request $request){
     'marshal'=>$marshal,
     'chief'=>$chief,
   ]);
+}
+public function applicationUpdateStatus(){
+    $data = application::get();
+   foreach($data as $item){
+       $date= $item['date_approved'];
+       if($date !== null){
+            $year = Carbon::createFromFormat('Y-m-d', $date)->format('Y');
+            $year2 = Carbon::now()->subMonth(11)->format('Y');
+            if($year == $year2){
+                $month = Carbon::createFromFormat('Y-m-d', $date)->format('m');
+                $now = Carbon::now()->subMonth(11)->format('m');
+                if((intval($now)-intval($month))==1){
+                    $applicationId = $item['applicationId'];
+                    $data2= application::where('applicationId',$applicationId);
+                    $data2->update([
+                        'status'=>'renewal'
+                    ]);
 
+                }
+            }
+        }
 
-
+   }
 }
 }

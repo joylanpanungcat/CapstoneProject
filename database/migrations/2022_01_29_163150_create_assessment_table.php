@@ -25,6 +25,7 @@ class CreateAssessmentTable extends Migration
             $table->string('payment_date')->nullable();
             $table->string('change')->nullable();
             $table->string('payment_status')->nullable();
+            $table->string('type_payment')->nullable();
             $table->timestamps();
         });
     }

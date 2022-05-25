@@ -42,9 +42,9 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
     {{-- sweet alert --}}
    <link rel="stylesheet" type="text/css" href="{{ asset('sweetalert2/sweetalert2.min.css') }}">
-   
+
     {{-- dropzone --}}
-<link rel="stylesheet" type="text/css" href="{{ asset('dropzone/min/dropzone.min.css') }}"> 
+<link rel="stylesheet" type="text/css" href="{{ asset('dropzone/min/dropzone.min.css') }}">
  <script type="text/javascript" src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
 
 {{-- wizard --}}
@@ -110,11 +110,11 @@
 
   }
   @keyframes blinkingText{
-    0%{     color: #white;   
+    0%{     color: #white;
           }
     49%{    color: #white;
     }
-    60%{    color: transparent; 
+    60%{    color: transparent;
     }
 
     100%{   color: #white;   }
@@ -159,11 +159,11 @@
   margin-left:5% ;
 }
 
-  </style>  
- 
+  </style>
+
   <div class="container body">
     <div class="main_container">
- 
+
     <div class="col-md-3 left_col menu_fixed">
   <div class="left_col scroll-view">
              <div class="navbar nav_title2" style="border: 0;">
@@ -189,26 +189,26 @@
                 <ul class="nav side-menu">
                   <li><a href="{{ route('DashboardAdmin') }}"><i class="fa fa-dashboard"></i> Dashboard </a>
                   </li>
-               
+
                   <li><a href="{{ route('map') }}"><i class="fa fa-map"></i> Susceptibility Map </a>
                   </li>
                   <li><a href="{{ route('applicationAdmin') }}" class="noti_app"><i class="fa fa-list-ol"></i> Application <span class="badge bg-danger" id="count_application"></span> </a>
                      <li><a href="{{ route('schedule') }}"><i class="fa fa-calendar"></i>Schedule List</a>
-                    
+
                   </li>
-                    
+
                   </li>
                   <li><a href="{{ route('renewal_application_main') }}"><i class="fa fa-refresh"></i> Renewal </a>
-                    
+
                   </li>
                    <li><a href="{{ route('payment') }}"><i class="fa fa-money"></i> Payment </a>
-                    
+
                   </li>
                   <li><a href="{{ route('assessment') }}"><i class="fa fa-credit-card"></i> Assessment </a>
-                    
+
                   </li>
                   <li><a href="{{ route('maintenance') }}"><i class="fa fa-wrench"></i> Maintenance </a>
-                    
+
                   </li>
                   <!--  <li><a><i class="fa fa-tasks"></i> Process </a>
                   </li> -->
@@ -216,26 +216,26 @@
                     <ul class="nav child_menu">
                       <li><a href="{{ route('account') }}" class="noti_applicant">Applicant<span class="badge bg-danger" id="count_applicant"></span></a></li>
                       <li><a href="{{ route('inspector') }}">Inspector</a></li>
-                      
+
                     </ul>
                   </li>
                     <li><a href="{{ route('emergency_page') }}" class="noti_em"><i class="fa fa-fire"></i>
                    Emergency<span class="badge bg-danger" id="count"></span> </a>
-                    
+
                   </li>
                   <li><a href="{{ route('archive') }}" class="noti_em"><i class="fa fa-archive"></i>
                    Archived<span class="badge bg-danger" id="count"></span> </a>
-                    
+
                   </li>
                    <li><a><i class="fa fa-file"></i> Reports <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a  href="{{ route('approved_application') }}" class="">Approved Application<span class="badge bg-danger" id="count_applicant"></span></a></li>
                       <li><a href="{{ route('rejected_application') }}">Reinspection Application</a></li>
                       <li><a href="{{ route('renewal_application') }}">Application for Renewal</a></li>
-                      
+
                     </ul>
                   </li>
-                
+
                    <li><a><i class="fa fa-print"></i> Print Certificate <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><span class="fa fa-chevron-down"></span><a>Fire Safety Inspection Certificate</a>
@@ -245,22 +245,22 @@
                           </ul>
                       </li>
                       <li><a href="{{ route('fsec_report') }}">Fire Safety Evaluation Clearance </a></li>
-                      
+
                     </ul>
                   </li>
-                
 
-                
+
+
                 </ul>
 
               </div>
-             
-           
+
+
           </div>
           </div>
             </div>
-       
-          
+
+
             <div class="top_nav">
                     <div class="nav_menu">
                         <div class="nav toggle">
@@ -269,8 +269,8 @@
                         <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
                           <li style="float:left">  <h4 class="bfp_panabo"><strong >BFP PANABO</strong></h4></li>
-                        
-          
+
+
                           <li class="nav-item dropdown open" style="padding-left: 15px;">
                             <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                               <img src="{{url('images/profile.jpg')}}" alt="">{{Session::get('adminID')['username']}}
@@ -285,7 +285,7 @@
                             <a class="dropdown-item"  href="{{ route('logoutAdmin') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                             </div>
                           </li>
-          
+
                           <li role="presentation" class="nav-item dropdown open">
                             <!-- <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                               <i class="fa fa-envelope-o"></i>
@@ -313,7 +313,7 @@
                                   </span>
                                   <span class="message">
                                                              Requirements for the Fire Safety Inspection Certificate.
-          
+
                                   </span>
                                 </a>
                               </li>
@@ -326,7 +326,7 @@
                                   </span>
                                   <span class="message">
                                                             Requirements for the Fire Safety Inspection Certificate.
-          
+
                                   </span>
                                 </a>
                               </li>
@@ -339,7 +339,7 @@
                                   </span>
                                   <span class="message">
                                                           Requirements for the Fire Safety Inspection Certificate.
-          
+
                                   </span>
                                 </a>
                               </li>
@@ -357,15 +357,15 @@
                       </nav>
                     </div>
                   </div>
-        
-      
-         @yield('content')       
-         @yield('content2')       
-  
-      
+
+
+         @yield('content')
+         @yield('content2')
+
+
   </div>
 
-</div>         
+</div>
 
    <!-- footer content -->
         <footer>
@@ -384,7 +384,7 @@
 
 {{-- jquery --}}
   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
-  
+
   {{-- jquery 3.6.0 --}}
   {{-- <script type="text/javascript" src="{{ asset('js/jquery/jquery-3.6.0.min.js') }}"></script> --}}
 
@@ -402,7 +402,7 @@
     <script type="text/javascript" src="{{url('js/bootstrap/bootstrap.bundle.min.js')}}"></script>
     {{-- datatable --}}
     <script type="text/javascript" src="{{ asset('datatable/js/dataTables.bootstrap4.min.js') }}"></script>
-   
+
 
     {{-- sweetaler 2 --}}
     <script type="text/javascript" src="{{ asset('sweetalert2/sweetalert2.min.js') }}"></script>
@@ -433,7 +433,7 @@
         url: '{{ route('fetch_emergency') }}',
         dataType: 'json',
         success:function(data){
-          
+
           if(data.dataCount > 0){
             Swal.fire({
               title:"FIRE EMERGENCY !!",
@@ -446,7 +446,7 @@
                     title: 'swal2-title'
                   },
                 allowOutsideClick: false,
-                  
+
                   confirmButtonColor: '#3085d6',
                   confirmButtonText:
                     '<i class="fa fa-arrow-right"></i> View Details',
@@ -454,20 +454,29 @@
                   cancelButtonText:
                     '<i class="fa fa-arrow-left"></i>Close',
                   cancelButtonAriaLabel: 'Thumbs down',
-            
+
                }).then((result) => {
                             window.location.href = "{{ route('emergency_view') }}";
                         });
           }
         }
       })
-      
-      
+
+
     }
     set_emergency();
-      setInterval(function(){ 
+      setInterval(function(){
         set_emergency();
-      }, 20000);
+        applicationUpdateStatus();
+      }, 10000);
+
+    function applicationUpdateStatus(){
+        $.ajax({
+            type: 'get',
+            url: '{{ route('applicationUpdateStatus') }}',
+            dataType: 'json',
+        })
+    };
 
   })
 </script>

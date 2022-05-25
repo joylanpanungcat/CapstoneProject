@@ -16,6 +16,7 @@ use App\Models\defaultFee;
 
 use DataTables;
 use Hash;
+use Carbon\Carbon;
 
 class applicantController extends Controller
 {
@@ -33,11 +34,11 @@ class applicantController extends Controller
                           ->addIndexColumn()
                           ->addColumn('actions', function($row){
                                   return "
-                                  
+
 
                                   <button type='button'  class='btn btn-defualt btn-xs actionButton sendArchive' id='".$row['accountId']."'><i class='fa fa-archive'></i></button>
                                   <button type='button' name='update' class='btn btn-defualt actionButton  btn-xs update' id='".$row['accountId']."' ><i class='fa fa-eye'></i></button>
-                            
+
                 <input type='hidden' id='account_id'  val='".$row['accountId']."'>
                 ";
                               })
@@ -45,7 +46,7 @@ class applicantController extends Controller
 
                           ->make(true);
     }
-    
+
     public function add(Request $request){
       $validator= Validator::make($request->all(),[
         'First_Name'=>'required',
@@ -103,7 +104,7 @@ class applicantController extends Controller
             'msg'=>"Applicant successfully added!"
         ]);
         }
-      
+
       }
     }
   public function loginApplicant(Request $request){
@@ -167,13 +168,13 @@ class applicantController extends Controller
         if($query){
           return response()->json([
              'status'=>1,
-             'msg'=>'Applicant account updated successfully!' 
+             'msg'=>'Applicant account updated successfully!'
           ]);
         }else
         {
           return response()->json([
              'status'=>0,
-             'msg'=>'Something went wrong!' 
+             'msg'=>'Something went wrong!'
           ]);
         }
       }
@@ -184,7 +185,7 @@ public function viewApplicant(Request $request){
       $account_details=applicant_account::find($account_id);
 
       return view('admin/applicant_profile')->with('account_details',$account_details);
- 
+
 }
 public function swalert(Request $request){
   $accountId=$request->accountId;
@@ -193,13 +194,13 @@ public function swalert(Request $request){
    if($query){
           return response()->json([
              'status'=>1,
-             'msg'=>'data archived' 
+             'msg'=>'data archived'
           ]);
         }else
         {
           return response()->json([
              'status'=>0,
-             'msg'=>'something went wrong!' 
+             'msg'=>'something went wrong!'
           ]);
         }
 }
@@ -209,16 +210,16 @@ public function restore(Request $request){
  if($query){
           return response()->json([
              'status'=>1,
-             'msg'=>'data undone' 
+             'msg'=>'data undone'
           ]);
         }else
         {
           return response()->json([
              'status'=>0,
-             'msg'=>'something went wrong!' 
+             'msg'=>'something went wrong!'
           ]);
         }
- 
+
 }
 public function update_info(Request $req){
   $id = $req->id;
@@ -233,7 +234,7 @@ public function update_info(Request $req){
 
 
   $applicant_account = applicant::find($id);
-  
+
   $applicant_account->update([
   "Fname"=>$Fname,
     "Lname"=>$Lname,
@@ -292,13 +293,13 @@ public function view_business_info(Request $request){
     'address_applicant'=>$address_applicant,
     'schedule'=>$schedule
   ]);
-  
+
 
 }
 public function update_business_info(Request $request){
  $applicationId = $request->applicationId_businessInfo;
  $applicantId = $request->applicant_businessInfo;
- 
+
 
         $application = application::where('applicationId',$applicationId);
         $application->update([
@@ -310,10 +311,21 @@ public function update_business_info(Request $request){
           'Bin' =>$request->Bin,
           'BP_num' => $request->BP_num,
           'OR_num' =>$request->OR_num,
-          'status' => $request->status,
-          'date_apply' =>$request->date_apply,
-          'remarks' => $request->remarks,
+        //   'status' => $request->status,
+        //   'date_apply' =>$request->date_apply,
+        //   'remarks' => $request->remarks,
         ]);
+        if($request->status === 'approved'){
+            $application->update([
+                'status' => $request->status,
+                'date_approved' => Carbon::now()->format('Y-m-d'),
+                'remarks' => 'Old'
+              ]);
+        }else{
+            $application->update([
+                'status' => $request->status,
+              ]);
+        }
 
         $applicant = applicant::where('applicantId',$applicantId);
         $applicant->update([

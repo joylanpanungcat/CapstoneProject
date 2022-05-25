@@ -1785,7 +1785,15 @@ height: 40%;
                         <label class="control-label ">Date Apply</label>
                     </div>
                         <div class="col-md-12">
-                            <input type="date" name="date_apply" class="form-control" id="date_apply">
+                            <input type="text" name="date_apply" class="form-control" id="date_apply" readonly>
+                          </div>
+                    </div>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-12">
+                        <label class="control-label ">Date Approved</label>
+                    </div>
+                        <div class="col-md-12">
+                            <input type="text" name="date_approved" class="form-control" id="date_approved" readonly>
                           </div>
                     </div>
                     <div class="form-group row col-md-3">
@@ -1793,7 +1801,7 @@ height: 40%;
                         <label class="control-label ">Remarks</label>
                     </div>
                         <div class="col-md-12">
-                            <select id="remarks"  class="form-control " name="remarks">
+                            <select id="remarks"  class="form-control " name="remarks" disabled>
                                 <option id="remarks"></option>
                                 <option value="Old">Old</option>
                                 <option value="New">New</option>
@@ -3241,7 +3249,14 @@ $('.business_info_button').on('click',function(e){
             $('#BP_num').val(value['BP_num']);
             $('#OR_num').val(value['OR_num']);
             $('#status').val(value['status']);
+            if(value['status']=='renewal' || value['status'] == 'approved'){
+                $('#status').append('<option value='+value['status']+' >'+value['status']+'</option>');
+                $('#status').val(value['status']);
+                $('#status').attr('disabled',true);
+
+            }
             $('#date_apply').val(value['date_apply']);
+            $('#date_approved').val(value['date_approved']);
             $('#remarks').val(value['remarks']);
             $('#Fname_Business').val(value['Fname']);
             $('#Lname_Business').val(value['Lname']);
@@ -3289,7 +3304,7 @@ $('#applicationAdd').on('submit',function(e){
         url:'{{ route('update_business_info') }}',
         data: new FormData(this),
         contentType: false,
-      processData: false,
+        processData: false,
         dataType:'json',
         success:function(data){
             toastr.success(data.msg);

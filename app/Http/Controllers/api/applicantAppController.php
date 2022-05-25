@@ -72,10 +72,10 @@ public function addApplication(Request $request){
     $businessPurok =$request->businessPurok;
     $businessBarangay =$request->businessBarangay;
     $businessCity =$request->businessCity;
-    $date_apply  = date('y-m-d');
+    $date_apply  = date('Y-m-d H:i:s');
     $status  = 'pending';
     $filenames  = '';
-    $remarks  = 'new';
+    $remarks  = 'New';
 
 
     if($request->file('files')){
