@@ -985,7 +985,7 @@ height: 40%;
                                                 <td>{{$application->payment_status}}
                                                 </td>
                                                 <input type="hidden" value="{{ $application->applicantId }}" id="view_payment_applicationId">
-                                        <td><button type='' name='view' class='btn btn-success view view_payment_info'
+                                        <td><button type='' name='view' class='btn btn-success view view_payment_history'
                                             id="{{$application->applicationId}}"><i class='fa fa-eye'></i></button>
                                                 </td>
                                             </tr>
@@ -1010,7 +1010,7 @@ height: 40%;
 
                                                 <td>'Not Paid'
                                                 </td>
-                                                    <td><a href="{{ route('assessment') }}" target="_blank" type='' name='view' class='btn btn-primary view'
+                                                    <td><a href="{{ route('assessmentSearch', ['name' => $assessment->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
                                             ><i class='fa fa-plus'></i></a>
                                                     </td>
 
@@ -1890,6 +1890,30 @@ height: 40%;
         </div>
       </div>
 
+      <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="payment_view_history_modal">
+        <div class="modal-dialog modal-xl view-modal-dialog">
+          <div class="modal-content view-modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title">Payment History</h5>
+                 <button type="button" class="close" data-dismiss="modal">x</button>
+             </div>
+             <div class="modal-body view-modal-body ">
+                <table class="table">
+                    <thead>
+                        <th>Type of Application</th>
+                        <th>Total Amount</th>
+                        <th>Date Paid</th>
+                        <th>Type of Payment</th>
+                        <th>Payment Status</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody id="payment_view_history_modal-body"></tbody>
+                </table>
+             </div>
+          </div>
+        </div>
+      </div>
+{{-- generate receipt modal  --}}
       <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="payment_view_modal">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
@@ -3380,8 +3404,24 @@ $('#set').on('click',function(e){
 
                 });
 });
-
-$('.view_payment_info').on('click',function(e){
+$('.view_payment_history').on('click',function(e){
+    e.preventDefault();
+    var applicationId  = $(this).attr('id');
+    $.ajax({
+        type: 'post',
+        url: '{{ route('view_payment_history') }}',
+        data:{
+            applicationId:applicationId
+        },
+        dataType: 'json',
+        success:function(data){
+            $('#payment_view_history_modal-body').html(data.output)
+            $('#payment_view_history_modal').modal('show');
+        }
+    })
+})
+//generate receipt
+$(document).on('click','.view_payment_info',function(e){
     e.preventDefault();
     var applicationId  = $(this).attr('id');
     var applicantId  = $('#view_payment_applicationId').val();
@@ -3396,22 +3436,18 @@ $('.view_payment_info').on('click',function(e){
         },
         dataType: 'json',
         success:function(data){
-    $('#payment_view_modal').modal('show');
-    $('#nature_payment_body').html(data.output);
+        $('#payment_view_modal').modal('show');
+        $('#nature_payment_body').html(data.output);
             $.each(data.data,function($key,$value){
-          $('#applicant_name_payment').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
-          $('#applicant_address').val($value['purok']+ ', ' +$value['barangay']+ ', '  + $value['city']);
-         ;
-          $('#total_amount_inwords').val($value['total_amount_words']);
-          $('#receipt_no').val($value['receipt_no']);
-          $('#assessmentId').val($value['assessmentId']);
-          $('#amount_paid').val($value['amount_paid']);
-          $('#date_paid').val($value['payment_date']);
-          $('#change').val($value['change']);
-
-
-
-
+                $('#applicant_name_payment').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
+                $('#applicant_address').val($value['purok']+ ', ' +$value['barangay']+ ', '  + $value['city']);
+                ;
+                $('#total_amount_inwords').val($value['total_amount_words']);
+                $('#receipt_no').val($value['receipt_no']);
+                $('#assessmentId').val($value['assessmentId']);
+                $('#amount_paid_payment').val($value['amount_paid']);
+                $('#date_paid').val($value['payment_date']);
+                $('#change').val($value['change']);
         });
         $.each(data.data3,function($key, $value){
           $('#defaultId').val($value['id']);

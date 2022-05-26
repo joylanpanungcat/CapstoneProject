@@ -204,7 +204,7 @@
                    <li><a href="{{ route('payment') }}"><i class="fa fa-money"></i> Payment </a>
 
                   </li>
-                  <li><a href="{{ route('assessment') }}"><i class="fa fa-credit-card"></i> Assessment </a>
+                  <li><a href="{{ route('assessmentSearch', ['name' => 'blank']) }}"><i class="fa fa-credit-card"></i> Assessment </a>
 
                   </li>
                   <li><a href="{{ route('maintenance') }}"><i class="fa fa-wrench"></i> Maintenance </a>

@@ -13,7 +13,7 @@
       }
       table tbody tr td input:hover{
         border: 1px solid #2A3F54;
-       
+
 
       }
       .title_right button{
@@ -37,7 +37,7 @@
     }
 .compose .compose-header .close {
   text-shadow: 0 1px 0 #ffffff;
-  line-height: .8; 
+  line-height: .8;
   color: #fff;
 }
 .compose-footer button{
@@ -50,7 +50,7 @@
 }
 .panel-default{
   padding: 20px;
-  
+
 }
 input[type=checkbox]
 {
@@ -68,12 +68,12 @@ input[type=checkbox]
 .total_body{
 margin-left: 80px;
 float: right;
-} 
+}
 .total_body2{
 margin-left: 120px;
 float: right;
 
-}           
+}
 .total{
 width: 200px;
 height: 30px;
@@ -89,7 +89,7 @@ height: 30px;
 .underline{
   border: none;
   border-bottom: 1px solid black;
-  width: 80%; 
+  width: 80%;
 }
 .total_amount_inwords{
   border: none;
@@ -116,7 +116,7 @@ height: 30px;
   padding: 10px;
   width: 400px;
 }
-.copy label b{  
+.copy label b{
 color: red;
  }
 .group2{
@@ -166,7 +166,7 @@ color: red;
 }
 .collapsible:hover{
   background-color: #d3d5d8db;
-} 
+}
 .custom_fee{
   border-bottom: 1px solid #000;
   width: 100%;
@@ -233,35 +233,36 @@ letter-spacing: 1px;
             <div class="title_left">
                 <h3>Assessment</h3>
             </div>
-            
+
 
         </div>
 
-          <hr class="separate2">             
-                    
+          <hr class="separate2">
+
         <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                       <div id="show2"></div>
-                    
+
                                 <div class="x_content">
                                     <br />
                  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2  " role="group" aria-label="First group">
-                        <input type="text" name="" placeholder="Search.." id="search_applicant">
+                        <input type="text" name="" placeholder="Search.." id="search_applicant"
+                        value="<?php if($Fname !=="blank") echo $Fname ?>">
                       <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
                     </div>
                   <button class="btn btn-default add_fees_button"><i class="fa fa-plus fa-lg"  ></i> Add Fees</button>
               </div>
-                        
-              
-                                    
-                
 
 
-              
-                     <br>    
+
+
+
+
+
+                     <br>
                      <div class="row">
                       <div class="col-md-12">
                           <div class="panel panel-default">
@@ -272,12 +273,12 @@ letter-spacing: 1px;
                     <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
                      <div class="panel-heading" style="display: none"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                     <div class="panel-body" id="panel-body">
-                      
+
                         <table class="table table-striped table-bordered" id="data"  style="width:100%;">
                               <thead>
                                 <tr>
                                   <!-- <th>Select</th> -->
-                                  
+
                                   <th>NATURE OF PAYMENT </th>
                                   {{-- <th>ACCOUNT CODE</th> --}}
                                   <th >TOTAL</th>
@@ -289,31 +290,31 @@ letter-spacing: 1px;
                                   <td></td>
                                   <td></td>
                                 </tr>
-                               
+
                                   </tbody>
                                   <thead>
                                       <td>TOTAL</td>
                                       <td><input type="number" id="total_amount" class="total_amount" readonly></td>
                                   </thead>
-                 
+
                                   </table>
                                   <h7 style="display: none"><b>TOTAL AMOUNT (IN WORDS):</b></h7>
-                                  <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords"  style="display: none">
+                                  <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords"   style="display: none" >
                                   <br><br><br>
-                                
+
                                 <div class="form-group group2"  style="display: none">
                                   <label>Official Receipt No: </label>
                                   <input type="text" name="" class="group1" id="receipt_no"><br>
                                   <input type="hidden" name="" class="group1" id="applicationId"><br>
 
-                                   
+
                                 <br>
                                    <br><br>
                                   <div class="">
                                     <label></label><br>
                                     <label></label><br>
                                     <label></label><br>
-                                    
+
                                   </div>
 
                                 </div>
@@ -329,31 +330,31 @@ letter-spacing: 1px;
                                 </div>
 
 
-                                 
-                                
+
+
 
                     </div>
                   </div>
                       </div>
-                     
+
                      </div>  <br>
                       <div class="row">
                                     <div class="col-md-6"></div>
                                     <div class="col-md-6 ">
                                       <form>
-                                  
-                                     
+
+
                                       <div class="button-group total_body2 ">
                                           <button type="button" class="btn  save_payment_button" id="save_payment_button" disabled><i class="fa fa-save" ></i>  Save</button>
                                           {{-- <button type="button" class="btn print_payment_button"  id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button> --}}
                                       </div>
                                       </form>
                                     </div>
-                                  </div>      
-                                        
-                 
+                                  </div>
 
-                                
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -366,13 +367,13 @@ letter-spacing: 1px;
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header payment_success">
-    
+
       <h4 class="modal-title" id="ModalTitle">Asssessment Successfully Saved!</h4>
 
-        
+
       </div>
       <!-- <div class="modal-body">
-    
+
       </div> -->
       <center>
 
@@ -387,19 +388,19 @@ letter-spacing: 1px;
       <div class="modal-content modal-lg">
         <div class="modal-header">
           <h4 class="modal-title" id="ModalTitle">FEES</h4>
-         
+
           <div class="btn-group mr-2  " role="group" aria-label="First group">
-            
+
                                <input type="text" name="" placeholder="Search fees.." id="search_fee">
                       <button type="button" class="btn btn-secondary " id="search_fee_form"><i class="fa fa-search"></i></button>
-                      
-      
+
+
                     </div>
-                  
+
 
         </div>
         <div class="modal-body">
-           
+
               <div class="row">
                 <table class="table table_assessment">
                   <thead>
@@ -409,42 +410,42 @@ letter-spacing: 1px;
                     </tr>
                      </thead>
                     <tbody class="tbody_fees" >
-                   
-                   
+
+
                   </tbody>
                   <tbody>
                     <tr >
                       <td ></td>
-                       <td  class="table_other_fees">  
-                        
+                       <td  class="table_other_fees">
+
                      </td>
                      </tr>
-                    
+
                   </tbody>
                   <tbody class="custom_fees"  >
-                    
-                   
+
+
                   </tbody>
-                   
-                     
-                  
-                 
+
+
+
+
                 </table>
               </div>
-        
+
       </div>
           <div class="modal-footer">
-                
+
             <button class="btn btn-dager" data-dismiss="modal" id="okModal"><i class="fa fa-arrow-left"> </i> Back</button>
             <button type="button" class="btn  additional_fees" ><i class="fa fa-credit-card" ></i>  Add fees</button>
-        
+
               </div>
     </div>
   </div>
 </div>
- 
+
  <!-- search applicant -->
-                               
+
 <div class="modal fade " id="search_modal" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-md">
       <div class="modal-content modal-md">
@@ -454,20 +455,20 @@ letter-spacing: 1px;
 
         </div>
         <div class="modal-body">
-          
+
               <div class="row">
                 <table class="table table-bordered">
                   <tbody class="tbody_search">
                   </tbody>
-                 
+
                 </table>
               </div>
                <center>
           <button class="btn btn-dager" data-dismiss="modal" id="okModal"><i class="fa fa-arrow-left"> </i> Back</button>
           <button type="button" class="btn  " id="select_applicant" style="background-color: #1ABB9C;color:#fff;"><i class="fa fa-credit-card" ></i>Continue</button>
-          
+
           </center>
-         
+
       </div>
     </div>
   </div>
@@ -491,27 +492,27 @@ letter-spacing: 1px;
               <label>Control Number</label>
               <input type="" name="" readonly="" class="form-control" value="07122021-0094">
             </div>
-           
+
             <!-- <div class="form-group">
               <label>Date Applied</label>
               <input type="" name="" readonly="" value="June 9 2021 13:03:56 am" class="form-control">
             </div> -->
-           
+
             <div class="form-group">
               <label>Total Payment</label>
               <input type="" name="" readonly="" value="600" class="form-control" id="total_payment">
             </div>
-          
+
            <input type="hidden" name="" id="application_id2" readonly="" class="form-control" >
        <input type="hidden" name="" id="status" readonly="" class="form-control" >
 
-         
-      
+
+
           <center>
           <button type="button" class="btn btn-dager" data-dismiss="modal" ><i class="fa fa-arrow-left"> </i> Back</button>
           <input type="hidden" name="" id="type_applicationDelete">
           <button type="button" class="btn btn-warning save_payment" data-dismiss="modal" id="save_payment"><i class="fa fa-save" ></i> Save Assessment</button>
-          
+
           </center>
           </form>
       </div>
@@ -521,7 +522,7 @@ letter-spacing: 1px;
 
 
 
-         
+
     <div class="modal fade " id="renew_success" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-sm">
       <div class="modal-content modal-sm">
@@ -529,17 +530,17 @@ letter-spacing: 1px;
           <h4 class="modal-title" id="ModalTitle">Successfully Applied for renewal</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-      
-      
+
+
           <center>
           <button class="btn btn-success" data-dismiss="modal" id="okModal"><i class="fa fa-check"> </i> Ok</button>
           <input type="hidden" name="" id="type_applicationDelete">
-         
-          
+
+
           </center>
       </div>
     </div>
-  </div>  
+  </div>
 
 <script>
       var coll = document.getElementsByClassName('collapsible');
@@ -566,7 +567,7 @@ letter-spacing: 1px;
             a.print();
         }
 </script>
-   
+
 <script type="text/javascript">
     $(document).ready(function(){
       var adminPass='{{Session::get('adminID')['password']}}';
@@ -578,7 +579,7 @@ letter-spacing: 1px;
     var count=0;
   load_fees();
     function load_fees(search = ''){
-      
+
       $.ajax({
         method:'post',
         url: "{{ route('load_fees') }}",
@@ -590,8 +591,8 @@ letter-spacing: 1px;
          $('.tbody_fees').html(data.data);
          $('.table_other_fees').html(data.others);
          $('.custom_fees').html(data.custom);
-         
-         
+
+
         }
       })
     }
@@ -611,7 +612,7 @@ letter-spacing: 1px;
 
     }
   });
- 
+
   $(document).on('click','.collapsible',function(e){
     e.preventDefault();
     $id = $(this).attr('id')
@@ -629,7 +630,7 @@ $(document).on('click','.collapsible3',function(e){
     content_id = '.content3';
     $(content_id).slideToggle('fast');
 });
-  
+
   $(document).on('click','#search',function(e){
         e.preventDefault();
     var search =$('#search_applicant').val();
@@ -673,6 +674,7 @@ $(document).on('click','.collapsible3',function(e){
           $('#nature_payment_body').html(data.output);
           $('#add_fees').modal('hide');
           $('#total_amount').val(data.total);
+          assessment_total(data.total);
           $('#save_payment_button').removeAttr('disabled');
         }
       })
@@ -681,15 +683,15 @@ $(document).on('click','.collapsible3',function(e){
       $('#add_fees').modal('hide');
 
     }
-   
+
   })
 
- 
+
 
    $(document).on('click','#select_applicant',function(e){
      e.preventDefault();
     var id= $('.optradio:checked').attr('id');
-    
+
     $.ajax({
       type: 'post',
       url:'{{ route('select_applicant_fetch') }}',
@@ -702,7 +704,7 @@ $(document).on('click','.collapsible3',function(e){
         $.each(data.data,function($key,$value){
           $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
           $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
-      
+
         });
         $.each(data.data2,function($key, $value){
           $('#authority_of').val($value['authority_of']);
@@ -711,19 +713,22 @@ $(document).on('click','.collapsible3',function(e){
         });
       }
     })
-  
+
    });
 
-   $(document).on('keyup','.assessment_total',function(e){
-     e.preventDefault();
-     var num = $(this).val();
-     var sum_value = 0;
-   
-     $('.assessment_total').each(function(){
-      sum_value += +$(this).val();
-      });
-      $('#total_amount').val(sum_value);
-      
+//    $(document).on('keyup','.assessment_total',function(e){
+    function assessment_total(sum_value){
+    //  e.preventDefault();
+    //  var num = $('.assessment_total').val();
+    //  var sum_value = 0;
+
+    //  $('.assessment_total').each(function(){
+    //   sum_value += $('.assessment_total').val();
+    //   console.log(sum_value);
+    //   });
+    //   $('#total_amount').val(sum_value);
+
+
      $.ajax({
        type: "POST",
        url: "{{ route('numberTowords') }}",
@@ -737,7 +742,7 @@ $(document).on('click','.collapsible3',function(e){
        }
      })
 
-   });
+   };
   $("#save_payment_button").on('click',function(e){
     e.preventDefault();
     var checkbox= $('.payment_checkbox:checked');
@@ -745,7 +750,7 @@ $(document).on('click','.collapsible3',function(e){
     var applicationId=$('#applicationId').val();
     var total_amount =$('#total_amount').val();
     var name = $('#applicant_name').val();
-    
+
    var total_amount_words = $('#total_amount_inwords').val();
     var receipt_no=$('#receipt_no').val();
     var defaultId= $('#defaultId').val();
@@ -757,9 +762,9 @@ $(document).on('click','.collapsible3',function(e){
             checkbox_value.push($(this).val());
           });
         }
-       
+
     if(name != ''){
-      
+
     Swal.fire({
          title:"Save Assessment",
          iconHtml: '<i class="fa fa-check"></i>',
@@ -772,7 +777,7 @@ $(document).on('click','.collapsible3',function(e){
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -783,7 +788,7 @@ $(document).on('click','.collapsible3',function(e){
              preConfirm: function(){
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -795,18 +800,18 @@ $(document).on('click','.collapsible3',function(e){
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -842,10 +847,10 @@ $(document).on('click','.collapsible3',function(e){
                              $('#fee_assessor').val('');
                              $('#search_applicant').val('');
                              $('#total_amount').val('');
-                             
+
                               }
                             });
-                         
+
                            })
                        }
                      },
@@ -864,7 +869,7 @@ $(document).on('click','.collapsible3',function(e){
                    center
                    no-repeat
                  `
-       
+
                });
     }
 
@@ -887,7 +892,7 @@ $(document).on('click','.collapsible3',function(e){
 
     }
     })
-    
+
   });
   $(document).on('change','.assessment_total',function(e){
     e.preventDefault();
@@ -906,7 +911,7 @@ $(document).on('click','.collapsible3',function(e){
 
     }
     })
-  })     
+  })
       })
   </script>
 

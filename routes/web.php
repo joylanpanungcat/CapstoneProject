@@ -95,6 +95,8 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('verify_inspection_report',[applicationController::class,'verify_inspection_report'])->name('verify_inspection_report');
     Route::post('print_certificate',[applicationController::class,'print_certificate'])->name('print_certificate');
     Route::get('applicationUpdateStatus',[applicationController::class,'applicationUpdateStatus'])->name('applicationUpdateStatus');
+    Route::post('view_payment_history',[applicationController::class,'view_payment_history'])->name('view_payment_history');
+
 
     //Map
     Route::view('map','admin/map')->name('map');
@@ -116,6 +118,7 @@ Route::group(['middleware'=>['accessPage']],function(){
 
     //assessment
     Route::view('assessment','admin/assessment')->name('assessment');
+    Route::get('assessmentSearch/{name}',[applicationController::class,'assessmentSearch'])->name('assessmentSearch');
     Route::post('load_fees',[feesController::class,'load_fees'])->name('load_fees');
     Route::post('search_applicant_fetch',[feesController::class,'search_applicant_fetch'])->name('search_applicant_fetch');
     Route::post('select_applicant_fetch',[feesController::class,'select_applicant_fetch'])->name('select_applicant_fetch');

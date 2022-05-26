@@ -133,6 +133,7 @@ public function viewApplication(Request $request){
         ->get();
 
         $assessment_no_payment = application::join('address','address.applicationId','=','application.applicationId')
+        ->join('applicant','applicant.applicantId','=','application.applicantId')
         ->where('application.applicantId',$applicantId)
         ->ORwhere('application.accountId','=',$accountId)
         ->get();
@@ -1049,5 +1050,32 @@ public function applicationUpdateStatus(){
         }
 
    }
+}
+public function assessmentSearch($name){
+    $Fname = $name;
+    return view('admin/assessment',compact('Fname'));
+}
+
+public function view_payment_history(Request $request){
+    $applicationId  =$request->applicationId;
+    $output = '';
+    $data= assessment::join('application','application.applicationId','=','assessment.applicationId')
+    ->where('application.applicationId',$applicationId)->get();
+
+    foreach($data as $data){
+        $output .='<tr>
+            <td>'.$data['type_application'].'</td>
+            <td>'.$data['total_amount'].'</td>
+            <td>'.$data['payment_date'].'</td>
+            <td>'.$data['type_payment'].'</td>
+            <td>'.$data['payment_status'].'</td>
+            <td><button type="button"  class="btn btn-success view_payment_info"
+            id='.$data['applicationId'].'>Generate Receipt</button></td>
+        </tr>';
+    }
+
+    return response()->json([
+        'output'=>$output
+    ]);
 }
 }

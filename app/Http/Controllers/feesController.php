@@ -9,6 +9,7 @@ use App\Models\defaultFee;
 use App\Models\assessment;
 use App\Models\subAssessment;
 use NumConvert;
+use Carbon\Carbon;
 class feesController extends Controller
 {
     //
@@ -31,7 +32,7 @@ class feesController extends Controller
         foreach($data as $item){
             $output .="<tr >
             <td ><input type='checkbox' name='optradio' class='payment_checkbox checkbox' value=".$item['fees_id']."></td>
-             <td>  
+             <td>
                <button type='button' class='collapsible'  id='".$item['fees_id']."' ><b>".$item['natureof_payment']."</b></button>
             <div class='content2".$item['fees_id']."'style='display:none;'>
                 <p>".$item['description']."</p>
@@ -39,39 +40,39 @@ class feesController extends Controller
             </td>
             </tr>";
         }
-     
-     
-    
+
+
+
         foreach($data2 as $item2){
-            $others .= "  
-          
+            $others .= "
+
             <div class='content' style='display:none;'>
               <table >
             <tr >
               <td ><input type='checkbox' name='optradio' class='payment_checkbox checkbox' value=".$item2['fees_id']."></td>
-               <td>  
+               <td>
                  <p>".$item2['natureof_payment']."
               </p>
-        
+
              </td>
-           </tr> 
+           </tr>
           </table>
           </div>";
         }
     //     if(count($data3)<1){
     //       $custom .="<tr><td></td>
-    //        <td>  
+    //        <td>
     //       <button type='button' class='collapsible collapsible3'><b>Custom Fee</b></button>
     //       <div class='content3' style='display:none;'>
     //        <input type='text' name='' class='custom_fee' placeholder='Nature of payment'>
-  
+
     //       </div>
-    //   </td> 
+    //   </td>
     //   </tr>";
     //     }else{
     //   foreach($data3 as $item3){
     //     $custom .=" <tr>
-    //     <td>  
+    //     <td>
     //     <button type='button' class='collapsible collapsible3'><b>Custom Fee</b></button>
     //     <div class='content3' style='display:none;'>
     //      <input type='text' name='' class='custom_fee' placeholder='Nature of payment'>
@@ -80,7 +81,7 @@ class feesController extends Controller
     // </td> </tr>";
     //   }
     // }
-    
+
 
         return response()->json([
            'data'=>$output,
@@ -91,7 +92,7 @@ class feesController extends Controller
   public function search_applicant_fetch(Request $req){
     $search = $req->search;
     $applicationId = 0;
-    
+
     $output = '';
 
     $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
@@ -115,7 +116,7 @@ class feesController extends Controller
         <td style='color:grey'>".$item['Fname']."  ".$item['Mname']."  ".$item['Lname']." ( ".$item['type_application']." ) </td>
          </tr>";
       }
-     
+
     }
    }
 
@@ -131,7 +132,7 @@ class feesController extends Controller
 
     $data=applicant::with('address')->where('applicantId',$id)->get();
     $data2=defaultFee::all();
-    
+
     return response()->json([
       'data'=>$data,
       'data2'=>$data2
@@ -144,7 +145,7 @@ class feesController extends Controller
     $ids = $req->checkbox_value;
     $output="";
     $total = 0;
-    
+
     $data = fee::whereIn('fees_id',$ids)->get();
     // <td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td>
     foreach($data as $item){
@@ -164,26 +165,26 @@ class feesController extends Controller
     $applicantid =$request->id;
     $applicationId =$request->applicationId;
     $total_amount_words =$request->total_amount_words;
-    $receipt_no =$request->receipt_no;
+    $receipt_no = Carbon::now()->format('Y-mdH').rand(1,100);
     $defaultId =$request->defaultId;
     $total_amount =$request->total_amount;
-    
-        $assessment = new assessment();
-        $assessment->applicantId=$applicantid;
-        $assessment->applicationId=$applicationId;
-        $assessment->total_amount_words=$total_amount_words;
-        $assessment->receipt_no=$receipt_no;
-        $assessment->defaultId=$defaultId;
-        $assessment->total_amount=$total_amount;
-        $assessment->save();
-        $assessmentId= $assessment->assessmentId;
-        
-        foreach($ids as $id){
-          $sub_assessment= new subAssessment();
-          $sub_assessment->assessmentId=$assessmentId;
-          $sub_assessment->fees_id = $id;
-          $sub_assessment->save();
-        }
+
+    $assessment = new assessment();
+    $assessment->applicantId=$applicantid;
+    $assessment->applicationId=$applicationId;
+    $assessment->total_amount_words=$total_amount_words;
+    $assessment->receipt_no=$receipt_no;
+    $assessment->defaultId=$defaultId;
+    $assessment->total_amount=$total_amount;
+    $assessment->save();
+    $assessmentId= $assessment->assessmentId;
+
+    foreach($ids as $id){
+        $sub_assessment= new subAssessment();
+        $sub_assessment->assessmentId=$assessmentId;
+        $sub_assessment->fees_id = $id;
+        $sub_assessment->save();
+    }
 
     if($assessment){
       return response()->json([
@@ -191,9 +192,9 @@ class feesController extends Controller
       ]);
     }
 
-    
+
   }
-    
+
 public function udpate_account_code(Request $request){
   $id =$request->id;
   $account_code=$request->account_code;
@@ -265,7 +266,7 @@ public function select_assessment(Request $req){
   //   $fees_id=$item['fees_id'];
   //   $list_fees= subAssessment::join('fees','fees.fees_id','=','sub_assessment.fees_id')
   //   ->where('sub_assessment.fees_id',$fees_id)->get();
-  // } 
+  // }
   // <td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' readonly='' /></td>
   foreach($data3 as $item){
     $output .= "<tr><td>".$item['natureof_payment']."</td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  readonly=''/></td></tr>
@@ -273,7 +274,7 @@ public function select_assessment(Request $req){
     $total_amount= $item['total_amount'];
   }
   $output.="<tr> <td></td><td></td> </tr>";
- 
+
   return response()->json([
     'data'=>$output,
     'data2'=>$data2,
@@ -283,22 +284,34 @@ public function select_assessment(Request $req){
   ]);
 }
 public function save_payment(Request $request){
-$assessmentId = $request->assessmentId;
-$amount_paid = $request->amount_paid;
-$change = $request->change;
-$date_paid = date('y-m-d');
+    $assessmentId = $request->assessmentId;
+    $type_payment = '';
+    $data = assessment::join('application','application.applicationId','=','assessment.applicationId')
+    ->where('assessment.assessmentId',$assessmentId)->get();
 
-$payment_status='paid';
-  $assessment =assessment::where('assessmentId',$assessmentId);
-  $assessment->update([
+    foreach($data as $data){
+        if($data['status'] !== 'renewal'){
+            $type_payment = 'application';
+        }else{
+            $type_payment = 'renewal';
+        }
+    }
+
+    $amount_paid = $request->amount_paid;
+    $change = $request->change;
+    $date_paid = date('y-m-d');
+    $payment_status='paid';
+    $assessment =assessment::where('assessmentId',$assessmentId);
+    $assessment->update([
     'amount_paid'=> $amount_paid,
     'payment_date'=> $date_paid,
     'payment_status'=> $payment_status,
+    'type_payment'=> $type_payment,
     'change'=> $change,
-  ]);
+    ]);
 
-  return response()->json([
+    return response()->json([
     'msg'=>'Payment Successfully Added!'
-  ]);
-}
+    ]);
+    }
 }
