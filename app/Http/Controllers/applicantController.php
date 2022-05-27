@@ -231,16 +231,13 @@ public function update_info(Request $req){
   $purok = $req->purok;
   $barangay = $req->barangay;
   $city = $req->city;
-
-
-  $applicant_account = applicant::find($id);
+  $applicant_account = applicant_account::where('accountId',$id);
 
   $applicant_account->update([
   "Fname"=>$Fname,
     "Lname"=>$Lname,
-    "Mname"=>$Mname,
     "contact_num"=>$contact_num,
-    "alcontact"=>$alcontact,
+    "alternative_num"=>$alcontact,
   ]);
 
 $address= address::where('applicantId',$id)->first();
@@ -419,5 +416,49 @@ public function index(){
   $data = applicant_account::get();
   return response()->json($data);
 }
+public function get_mobile_account(Request $request){
+    $name = $request->username;
+    if($name !== ''){
+        $data= applicant_account::where('Fname','LIKE','%'.$name.'%')
+        ->orWhere('Lname','LIKE','%'.$name.'%')
+        ->orWhere('username','LIKE','%'.$name.'%')
+        ->get();
+    }else{
+        $data = applicant_account::get();
+    }
+    $output = '';
+    $i = 1;
 
+   if($data->count()>0){
+    foreach($data as $item){
+        $output .= '<tr>
+            <td>'.$i++.'</td>
+            <td>'.$item['Fname'].'  '.$item['Lname'].'</td>
+            <td>'.$item['username'].'</td>
+            <td><button class="btn btn-success connect_mobile_account" id='.$item['accountId'].'>Connect</button></td>
+        </tr>';
+    }
+   }else{
+    $output .= '<tr>
+      <td colspan="4">No data found...<td>
+    </tr>';
+   }
+
+    return response()->json([
+        'output'=>$output
+    ]);
+}
+public function connect_mobile_account(Request $request){
+    $accountId = $request->accountId;
+    $applicationId = $request->applicationId;
+
+    $data = application::where('applicationId',$applicationId);
+    $data->update([
+        'accountId'=>$accountId
+    ]);
+
+    return response()->json([
+        'msg'=>'Account Successfully Connected'
+    ]);
+}
 }

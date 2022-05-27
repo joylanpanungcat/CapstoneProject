@@ -79,6 +79,8 @@ Route::group(['middleware'=>['accessPage']],function(){
    Route::post('update_business_info',[applicantController::class,'update_business_info'])->name('update_business_info');
    Route::post('set_schedule',[applicantController::class,'set_schedule'])->name('set_schedule');
    Route::post('payment_view',[applicantController::class,'payment_view'])->name('payment_view');
+   Route::get('get_mobile_account',[applicantController::class,'get_mobile_account'])->name('get_mobile_account');
+   Route::post('connect_mobile_account',[applicantController::class,'connect_mobile_account'])->name('connect_mobile_account');
 
 
    //application

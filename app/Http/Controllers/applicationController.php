@@ -14,6 +14,7 @@ use App\Models\assessment;
 use App\Models\subAssessment;
 use App\Models\inspection_details;
 use App\Models\defaultFee;
+use App\Models\applicant_account;
 
 
 // use Storage;
@@ -126,10 +127,12 @@ public function viewApplication(Request $request){
     ->ORwhere('application.accountId','=',$accountId)
     ->get();
 
-    $applicant_account = application::join('applicant_account','applicant_account.accountId','=','application.accountId')
-    ->join('address','address.applicantId','=','application.accountId')
-    ->where('application.accountId',$accountId)
+    $applicant_account = application::
+    join('address','address.applicantId','=','application.applicantId')
+    ->join('applicant_account','applicant_account.accountId','=','application.accountId')
+    ->where('application.applicationId',$applicationId2)
     ->get();
+
 
 
     $uploaded = application::join('address','address.applicationId','=','application.applicationId')
@@ -1088,4 +1091,5 @@ public function view_payment_history(Request $request){
         'output'=>$output
     ]);
 }
+
 }

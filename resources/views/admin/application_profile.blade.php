@@ -653,7 +653,26 @@ color: #000;
 width: 40%;
 height: 40%;
 }
-
+.add_mobile_account {
+    background-color: #446587;
+    color: #fff;
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+}
+.modal_assessment{
+  width: 600px;
+}
+.modal_assessment .modal-body{
+  height: 400px;
+  overflow-y: auto;
+  position: relative;
+}
+.modal_assessment .modal-footer{
+  margin: 0;
+  margin-left: auto;
+  position: relative;
+}
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -702,14 +721,9 @@ height: 40%;
                                     <div class="col-md-4"></div>
                                     <div class="col-md-8">
                                         <div id="showDetail"></div>
-
                                     </div>
 
-
-
                             <div class="col-md-4 img" style="margin-top: 3%;" >
-
-
 
                                 <img src="{{ asset('images/profile/')."/".rand(1,5).".jpg" }}" class="profile2">
                                 <h5 class="Applicant">
@@ -735,7 +749,7 @@ height: 40%;
                                     <div class="form-group">
                                         <label>First Name</label>
                                         <input type="hidden" name="" id="applicantId_info" class="form-control" value="{{ $accountId }}">
-                                        <input type="text" name="" id="Fname_info" class="form-control" value="{{ $Lname }}">
+                                        <input type="text" name="" id="Fname_info" class="form-control" value="{{ $Fname }}">
                                     </div>
                                   </div>
                                   <div class="col-md-4">
@@ -791,14 +805,18 @@ height: 40%;
                                      </div>
                                 </div>
                                    </form>
-                <br><br>
+                         <br><br>
                          </div>
                          @else
                          <div class="col-md-12">
                              <div class="container no_user">
                                  <center>
-                                    <img src="{{ asset('images/no_user.png') }}" alt="">
+                                    <img src="{{ asset('images/no_user.png') }}" alt=""><br>
+                                    <button class="add_mobile_account" id="add_mobile_account">Connect Mobile Account</button>
                                  </center>
+                                 <input type="hidden" value="<?php foreach($application as $applicationId){
+                                     echo $applicationId->applicationId;
+                                 } ?>" id="connect_mobile_applicationId">
 
                              </div>
                          </div>
@@ -1854,7 +1872,59 @@ height: 40%;
     </div>
 
 
+    <div class="modal fade " id="add_mobile_account_modal" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-md modal_assessment">
+          <div class="modal-content modal-lg">
+            <div class="modal-header">
+              <h4 class="modal-title" id="ModalTitle">Connect Account</h4>
 
+              <div class="btn-group mr-2  " role="group" aria-label="First group">
+                                   <input type="text" name="" placeholder="Search Account.." id="search_account_connect">
+                          <button type="button" class="btn btn-secondary " id="search_account_connect_button"><i class="fa fa-search"></i></button>
+                        </div>
+            </div>
+            <div class="modal-body">
+                  <div class="row">
+                    <table class="table table_assessment">
+                      <thead>
+                         <tr>
+                          <td>#</td>
+                          <td>Name</td>
+                          <td>Username</td>
+                          <td>Action</td>
+                        </tr>
+                         </thead>
+                        <tbody class="tbody_add_mobile_account_modal" >
+
+
+                      </tbody>
+                      <tbody>
+                        <tr >
+                          <td ></td>
+                           <td  class="table_other_fees">
+
+                         </td>
+                         </tr>
+
+                      </tbody>
+                      <tbody class="custom_fees"  >
+
+
+                      </tbody>
+
+
+
+
+                    </table>
+                  </div>
+
+          </div>
+              <div class="modal-footer">
+                <button class="btn btn-dager" data-dismiss="modal" id="okModal"><i class="fa fa-arrow-left"> </i> Back</button>
+               </div>
+        </div>
+      </div>
+    </div>
       <div class="modal fade" id="set_schedule_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -3322,8 +3392,83 @@ $('.business_info_button').on('click',function(e){
 
 
 });
+$('#add_mobile_account').on('click',function(e){
+    e.preventDefault();
+    get_mobile_account();
+    $('#add_mobile_account_modal').modal('show');
 
+});
+$('#search_account_connect').on('keyup',function(){
+    var name = $(this).val();
+    get_mobile_account(name);
+});
+function get_mobile_account(username =''){
+    $.ajax({
+        type: 'get',
+        url: '{{ route('get_mobile_account') }}',
+        data:{
+            username:username
+        },
+        success:function(data){
+            $('.tbody_add_mobile_account_modal').html(data.output);
+        }
+    })
+}
+$(document).on('click','.connect_mobile_account',function(e){
+    e.preventDefault();
+    var accountId = $(this).attr('id');
+    var applicationId= $('#connect_mobile_applicationId').val();
+    Swal.fire({
+         title:"Connect Mobile Account?",
+         iconHtml: '<i class="fa fa-check"></i>',
+         iconColor: '#42ba96',
+              showCancelButton: true,
+              showConfirmButton:true,
+              focusConfirm: false,
+              background: 'rgb(0,0,0,.9)',
+              customClass : {
+              title: 'swal2-title'
+            },
+           allowOutsideClick: false,
+             confirmButtonColor: '#3085d6',
+             confirmButtonText:
+               '<i class="fa fa-check"></i> Yes',
+             confirmButtonAriaLabel: 'Thumbs up, great!',
+             cancelButtonText:
+               '<i class="fa fa-arrow-left"></i>Close',
+             cancelButtonAriaLabel: 'Thumbs down',
+             preConfirm: function(){
+                 $.ajax({
+                     type: 'post',
+                     url: '{{ route('connect_mobile_account') }}',
+                     data:{
+                        accountId:accountId,
+                        applicationId:applicationId
+                     },
+                     dataType: 'json',
+                     success:function(data){
+                        Swal.fire({
+                            icon: 'success',
+                            title:'Account Successfully Connected',
+                            background: 'rgb(0,0,0,.9)',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText:
+                            '<i class="fa fa-check"></i> Continue',
+                            customClass : {
+                            title: 'swal2-title'
+                            },
+                            preConfirm: function(){
+                                location.reload();
+                            }
+                            })
+                     }
+                 })
 
+             },
+
+            });
+});
 $('#applicationAdd').on('submit',function(e){
     e.preventDefault();
     $.ajax({
