@@ -22,20 +22,18 @@ class CreateApplicationTable extends Migration
              $table->unsignedBigInteger('applicantId')->nullable();
     //          $table->foreign('applicantId')->references('applicantId')->on('applicant') ->onUpdate('cascade')
     //   ->onDelete('cascade');
-     
-      
+
+
             $table->unsignedBigInteger('accountId')->nullable();
     //          $table->foreign('accountId')->references('accountId')->on('applicant_account') ->onUpdate('cascade')
     //   ->onDelete('cascade');
-            
+
 
             $table->string('type_application') ->nullable();
             $table->string('control_number') ->nullable();
             $table->string('type_occupancy') ->nullable();
             $table->string('nature_business') ->nullable();
-          
             $table->string('business_name')->nullable();
-   
             $table->string('inpector_id')->nullable();
             $table->string('Bin')->nullable();
             $table->string('BP_num')->nullable();
@@ -48,7 +46,8 @@ class CreateApplicationTable extends Migration
             $table->string('filenames');
             $table->string('long')->nullable();
             $table->string('lat')->nullable();
-         
+            $table->string('passCode')->nullable();
+
             $table->timestamps();
         });
     }

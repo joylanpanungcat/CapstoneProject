@@ -170,7 +170,34 @@ public function getApplication(Request $request){
     ->select('address.purok','address.barangay','address.city','application.*')->where('application.accountId',$accountId )->get();
     return $data2;
 }
-
+public function getApplicationRenewal(Request $request){
+    $accountId = $request->accountId;
+    $data2 = application::
+    join('address','address.applicationId','=','application.applicationId')
+    ->select('address.purok','address.barangay','address.city','application.*')
+    ->where('application.accountId',$accountId )
+    ->where('application.status','=','renewal')
+    ->get();
+    return $data2;
+}
+public function checkApplication(Request $request){
+    $accountId = $request->accountId;
+    $data2 = application::
+    join('address','address.applicationId','=','application.applicationId')
+    ->select('address.purok','address.barangay','address.city','application.*')
+    ->where('application.accountId',$accountId )
+    // ->where('application.status','=','renewal')
+    ->get();
+    if($data2->count()>0){
+        return response()->json([
+            'code'=> 200
+        ]);
+    }else{
+        return response()->json([
+            'code'=> 401
+        ]);
+    }
+}
 public function viewApplication(Request $request){
     $accountId = $request->accountId;
     $applicationId = $request->applicationId;
@@ -258,6 +285,26 @@ public function deleteApplication(Request $request){
         return response()->json([
             'msg'=>'Application Successfully Deleted'
         ]);
+    }
+}
+
+public function connectAccount(Request $request){
+   $passCode=  $request->item;
+   $accountId=  $request->accountId;
+
+   $data = application::where('passCode',$passCode)->whereNull('accountId')->get();
+    if($data->count()>0){
+        $data2= application::where('passCode',$passCode)->whereNull('accountId');
+        $data2->update([
+           'accountId'=> $accountId
+        ]);
+        return response()->json([
+            'msg'=> 'Account Successfully Connected'
+        ]);
+    }else{
+        return response()->json([
+            'msg'=> 'Invalid Pass Code'
+        ],401);
     }
 }
 }

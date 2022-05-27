@@ -34,12 +34,9 @@ class applicantController extends Controller
                           ->addIndexColumn()
                           ->addColumn('actions', function($row){
                                   return "
-
-
                                   <button type='button'  class='btn btn-defualt btn-xs actionButton sendArchive' id='".$row['accountId']."'><i class='fa fa-archive'></i></button>
                                   <button type='button' name='update' class='btn btn-defualt actionButton  btn-xs update' id='".$row['accountId']."' ><i class='fa fa-eye'></i></button>
-
-                <input type='hidden' id='account_id'  val='".$row['accountId']."'>
+                               <input type='hidden' id='account_id'  val='".$row['accountId']."'>
                 ";
                               })
                              ->rawColumns(['actions'])
@@ -76,6 +73,15 @@ class applicantController extends Controller
         $account->date_register=$request->date_register;
         $account->image='null';
         $query =$account->save();
+        $accountId = $account->accountId;
+
+        $address = new address;
+        $address->accountId =$accountId;
+         $address->purok=$request->purok;
+         $address->barangay=$request->barangay;
+         $address->city=$request->city;
+         $address->save();
+
     //     $values=[
     //     "Fname"=>$request->input('Fname'),
     //     "Lname"=>$request->input('Lname'),
@@ -135,7 +141,8 @@ class applicantController extends Controller
     // get applicant detials
     public function getApplicantDetails(Request $request){
       $account_id= $request->account_id;
-      $accound_details=applicant_account::find($account_id);
+      $accound_details=applicant_account::where('accountId',$account_id)->get();
+
 
       return response()->json(['details'=>$accound_details]);
     }

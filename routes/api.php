@@ -31,10 +31,15 @@ Route::prefix('/user')->group(function(){
           Route::post('updateUser', [applicantAppController::class,'updateUser']);
           Route::post('addApplication', [applicantAppController::class,'addApplication']);
           Route::get('getApplication', [applicantAppController::class,'getApplication']);
+          Route::post('getApplicationRenewal', [applicantAppController::class,'getApplicationRenewal']);
+          Route::post('checkApplication', [applicantAppController::class,'checkApplication']);
+
           Route::post('viewApplication', [applicantAppController::class,'viewApplication']);
           Route::post('updateApplication', [applicantAppController::class,'updateApplication']);
           Route::post('deleteApplication', [applicantAppController::class,'deleteApplication']);
           Route::post('searchApplication', [applicantAppController::class,'searchApplication']);
+          Route::post('connectAccount', [applicantAppController::class,'connectAccount']);
+
           Route::get('logout', [loginController::class,'logout']);
 
       });

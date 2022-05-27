@@ -245,7 +245,7 @@ width: 10px !important;
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Applicant Account Sample</h3>
+                <h3>Applicant Account </h3>
             </div>
 
             <div class="title_right">
@@ -532,12 +532,15 @@ width: 10px !important;
                     // $('.update').find('form')[0].reset();
                     $('.update').find('span.error-text').text('');
                  $.post('<?= route('get.appplicant.details')  ?>', {account_id:account_id},function(data){
-                                $('#editFname').val(data.details.Fname);
-                                $('#editLname').val(data.details.Lname);
-                                $('#editUsername').val(data.details.username);
-                                $('#editPassword').val(data.details.password);
-                                $('#editAccount_id').val(data.details.accountId);
+                                console.log(data);
+                                $.each(data.details,function(key, value){
+                                    $('#editFname').val(value['Fname']);
+                                $('#editLname').val(value['Lname']);
+                                $('#editUsername').val(value['username']);
+                                $('#editPassword').val(value['password']);
+                                $('#editAccount_id').val(value['accountId']);
                                $('#ModalEdit').modal('show');
+                                })
               },'json');
                 });
       $(document).on('submit','#editForm',function(e){

@@ -20,6 +20,7 @@ use App\Models\applicant_account;
 // use Storage;
 use DataTables;
 use Carbon\Carbon;
+use Hash;
 
 use Illuminate\Support\Facades\validator;
 class applicationController extends Controller
@@ -210,6 +211,8 @@ public function viewApplication(Request $request){
         $contact_num=$request->contact_num;
         $alcontactAdd=$request->alcontactAdd;
         $middleAdd=$request->middleAdd;
+        $pass = Carbon::now()->format('Y-m-d H:i:s').rand(1,99);
+        $passCode= Hash::make($pass);
 
 
         try {
@@ -237,6 +240,7 @@ public function viewApplication(Request $request){
             $user->status = $status;
             $user->OR_num = $OR_num;
             $user->date_apply = $date_apply;
+            $user->passCode= $passCode;
 
 
 
