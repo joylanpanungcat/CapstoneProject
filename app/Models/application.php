@@ -29,12 +29,12 @@ class application extends Model
     public function folderUpload(){
         return $this->hasMany(folderUpload::class,'applicationId','applicationId');
     }
-    public function assessment(){
-        $this->hasOne(assessment::class,'applicationId','applicationId');
-    }
-   
-   
-  
+    // public function assessment(){
+    //     $this->hasOne(assessment::class,'applicationId','applicationId');
+    // }
+
+
+
     public function setFilenamesAttribute($value){
         $this->attributes['filenames']=json_encode($value);
     }

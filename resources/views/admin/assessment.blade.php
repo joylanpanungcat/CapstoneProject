@@ -302,10 +302,10 @@ letter-spacing: 1px;
                                   <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords"   style="display: none" >
                                   <br><br><br>
 
-                                <div class="form-group group2"  style="display: none">
+                                <div class="form-group group2" style="display: none" >
                                   <label>Official Receipt No: </label>
                                   <input type="text" name="" class="group1" id="receipt_no"><br>
-                                  <input type="hidden" name="" class="group1" id="applicationId"><br>
+                                  <input type="text" name="" class="group1" id="applicationId"><br>
 
 
                                 <br>
@@ -647,7 +647,6 @@ $(document).on('click','.collapsible3',function(e){
          dataType:'json',
          success:function(data){
            $('.tbody_search').html(data.output);
-           $('#applicationId').val(data.applicationId);
           $('#search_modal').modal('show');
          }
        })
@@ -691,6 +690,7 @@ $(document).on('click','.collapsible3',function(e){
    $(document).on('click','#select_applicant',function(e){
      e.preventDefault();
     var id= $('.optradio:checked').attr('id');
+    var applicationId = $('#applicationIdSelect').val();
 
     $.ajax({
       type: 'post',
@@ -701,6 +701,7 @@ $(document).on('click','.collapsible3',function(e){
       dataType: 'json',
       success:function(data){
         $('#search_modal').modal('hide');
+        $('#applicationId').val(applicationId);
         $.each(data.data,function($key,$value){
           $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
           $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);

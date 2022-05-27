@@ -104,55 +104,66 @@ public function viewApplication(Request $request){
 
     $account_id= $request->id;
     $applicantId= $request->id;
+    $applicationId2= $request->id;
 
     // $applicant = applicant::where('applicantId',$applicantId)->get();
 
     $output ='';
 
-        $account_details = applicant::find($account_id);
+    $account_details = applicant::find($account_id);
+    $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
+    ->where('application.applicantId',$applicationId2)->get();
 
-        $data =application::where('applicantId',$applicantId)->get();
 
-        foreach($data as $data){
-        $accountId =$data['accountId'];
+
+    // $data =application::where('applicantId',$applicantId)->get();
+
+    foreach($data as $data){
+    $accountId =$data['accountId'];
+    }
+    $application = application::join('address','address.applicationId','=','application.applicationId')
+    ->where('application.applicantId',$applicantId)
+    ->ORwhere('application.accountId','=',$accountId)
+    ->get();
+
+    $applicant_account = application::join('applicant_account','applicant_account.accountId','=','application.accountId')
+    ->join('address','address.applicantId','=','application.accountId')
+    ->where('application.accountId',$accountId)
+    ->get();
+
+
+    $uploaded = application::join('address','address.applicationId','=','application.applicationId')
+    ->where('application.applicantId',$applicantId)
+    ->ORwhere('application.accountId','=',$accountId)
+    ->get();
+
+
+
+
+
+    $applicantAdd=address::where('applicantId','=',$account_id)->first();
+    $applicationId=address::where('applicationId','=',$account_id)->first();
+
+    // $assessment =assessment::join('application','application.applicationId','=','assessment.applicationId')
+    // ->join('applicant','applicant.applicantId','=','application.applicantId')
+    // ->where('application.applicantId',$account_id)
+    // ->ORwhere('application.accountId','=',$accountId)
+    // ->get();
+
+    $assessment = application::
+     join('applicant','applicant.applicantId','=','application.applicantId')
+    ->where('application.applicationId',$applicationId2)->get();
+
+    if($assessment->count()>0){
+        foreach($assessment as $item){
+            $assessment[0]->assessment= assessment::where('applicationId',$item['applicationId'])->get();
         }
-        $application = application::join('address','address.applicationId','=','application.applicationId')
-        ->where('application.applicantId',$applicantId)
-        ->ORwhere('application.accountId','=',$accountId)
-        ->get();
+    }
 
-        $applicant_account = application::join('applicant_account','applicant_account.accountId','=','application.accountId')
-        ->join('address','address.applicantId','=','application.accountId')
-        ->where('application.accountId',$accountId)
-        ->get();
-
-
-        $uploaded = application::join('address','address.applicationId','=','application.applicationId')
-        ->where('application.applicantId',$applicantId)
-        ->ORwhere('application.accountId','=',$accountId)
-        ->get();
-
-        $assessment_no_payment = application::join('address','address.applicationId','=','application.applicationId')
-        ->join('applicant','applicant.applicantId','=','application.applicantId')
-        ->where('application.applicantId',$applicantId)
-        ->ORwhere('application.accountId','=',$accountId)
-        ->get();
-
-
-
-        $applicantAdd=address::where('applicantId','=',$account_id)->first();
-        $applicationId=address::where('applicationId','=',$account_id)->first();
-
-        $assessment =assessment::join('application','application.applicationId','=','assessment.applicationId')
-        ->join('applicant','applicant.applicantId','=','application.applicantId')
-        ->where('application.applicantId',$account_id)
-        ->ORwhere('application.accountId','=',$accountId)
-        ->get();
-
-      $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
-      ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
-      ->where('application.applicationId',$account_id)
-      ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
+    $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
+    ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+    ->where('application.applicationId',$account_id)
+    ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
 
     $certificate = assessment::join('application','application.applicationId','=','assessment.applicationId')
     ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
@@ -169,9 +180,7 @@ public function viewApplication(Request $request){
       // }
 
 
-       return view('admin/application_profile',compact('application','applicant_account','assessment_no_payment','account_details','assessment','applicantAdd','applicationId','inspection_details','certificate','uploaded'));
-
-
+       return view('admin/application_profile',compact('application','applicant_account','account_details','assessment','applicantAdd','applicationId','inspection_details','certificate','uploaded'));
 
 }
     public function storeData(Request $request) {
@@ -1060,7 +1069,8 @@ public function view_payment_history(Request $request){
     $applicationId  =$request->applicationId;
     $output = '';
     $data= assessment::join('application','application.applicationId','=','assessment.applicationId')
-    ->where('application.applicationId',$applicationId)->get();
+    ->where('application.applicationId',$applicationId)
+    ->where('assessment.payment_date','!=',null)->get();
 
     foreach($data as $data){
         $output .='<tr>

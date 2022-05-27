@@ -96,28 +96,56 @@ class feesController extends Controller
     $output = '';
 
     $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
-        ->with('assessment')
         ->where('Fname','LIKE','%'.$search.'%')->ORwhere('Lname','LIKE','%'.$search.'%')
         ->get();
-
+    foreach($data as $item){
+        $data[0]->assessment = assessment::where('applicationId',$item['applicationId'])->get();
+    }
    if($data->count()<1){
      $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
    }else{
-    foreach($data as $item){
-      $applicationId  = $item['applicationId'];
-      if($item['assessment']->count()<1){
-        $output .=  "<tr>
-        <td><input type='radio' name='optradio' class='optradio'  id=".$item['applicantId']."></td>
-        <td>".$item['Fname']."  ".$item['Mname']."  ".$item['Lname']." ( ".$item['type_application']." ) </td>
-         </tr>";
-      }else{
-        $output .=  "<tr>
-        <td></td>
-        <td style='color:grey'>".$item['Fname']."  ".$item['Mname']."  ".$item['Lname']." ( ".$item['type_application']." ) </td>
-         </tr>";
-      }
-
+    for($i = 0; $i< $data->count(); $i++){
+        if($data[0]->assessment->count()>0){
+          if($data[0]['status']!== 'renewal'){
+            for($j =0; $j < $data[0]->assessment->count();$j++){
+                if($data[0]->assessment[$j]['total_amount_words'] == ''){
+                    $output .=  "<tr>
+                    <td><input type='hidden' value=".$data[0]['applicationId']." id='applicationIdSelect' /></td>
+                    <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
+                    <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
+                    </tr>";
+                }else{
+                    $output .=  "<tr>
+                    <td></td>
+                    <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) </td>
+                    </tr>";
+                }
+            }
+          }else{
+            for($j =0; $j < $data[0]->assessment->count();$j++){
+                if($data[0]->assessment[$j]['total_amount_words'] == ''){
+                    $output .=  "<tr>
+                    <td><input type='hidden' value=".$data[0]['applicationId']." id='applicationIdSelect' /></td>
+                    <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
+                    <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
+                    </tr>";
+                }else{
+                    $output .=  "<tr>
+                    <td></td>
+                    <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]->assessment[$j]['type_paymentsearch_assessment']." </td>
+                    </tr>";
+                }
+            }
+          }
+        }else{
+            $output .=  "<tr>
+            <td><input type='hidden' value=".$data[0]['applicationId']." id='applicationIdSelect' /></td>
+            <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
+            <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
+            </tr>";
+        }
     }
+
    }
 
 
@@ -224,28 +252,43 @@ return response()->json([
 ]);
 }
 public function search_assessment(Request $request){
-  $name = $request->search;
+  $search = $request->search;
   $output ='';
+
   $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
-  ->with('assessment')
-  ->where('Fname','LIKE','%'.$name.'%')->ORwhere('Lname','LIKE','%'.$name.'%')
-  ->get();
-  if($data->count()<1){
-    $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
-  }else{
-   foreach($data as $item){
-    if($item['assessment']->count() > 0 ){
-      $output .=  "<tr>
-      <td><input type='radio' name='optradio' class='optradio'  id=".$item['applicantId']."></td>
-      <td>".$item['Fname']."  ".$item['Mname']."  ".$item['Lname']." </td>
-       </tr>";
+      ->where('Fname','LIKE','%'.$search.'%')->ORwhere('Lname','LIKE','%'.$search.'%')
+      ->get();
+    foreach($data as $item){
+        $data[0]->assessment = assessment::where('applicationId',$item['applicationId'])->get();
     }
-   }
-  }
-  return response()->json([
-    'output'=>$output,
-    'data'=>$data,
-  ]);
+    if($data->count()<1){
+    $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
+    }else{
+    for($i = 0; $i< $data->count(); $i++){
+
+      if($data[0]->assessment->count()>0){
+        for($j =0; $j <$data[0]->assessment->count();$j++){
+          if($data[0]->assessment[$j]['total_amount_words'] !== '' && $data[0]->assessment[$j]['payment_date'] !== null ){
+            $output .=  "<tr>
+            <td></td>
+            <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) </td>
+            </tr>";
+          }else{
+            $output .=  "<tr>
+            <input type='text' value=".$data[0]['applicationId']." />
+            <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
+            <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
+            </tr>";
+          }
+        }
+      }
+      return response()->json([
+        'output'=>$output,
+        'data'=>$data,
+      ]);
+
+    }
+ }
 }
 
 public function select_assessment(Request $req){
@@ -260,6 +303,7 @@ public function select_assessment(Request $req){
   ->join('sub_assessment','assessment.assessmentId','=','sub_assessment.assessmentId')
   ->join('fees','fees.fees_id','=','sub_assessment.fees_id')
   ->where('applicant.applicantId',$id)
+  ->whereNull('assessment.payment_date')
   ->get();
 
   // foreach ($data3 as $item){
@@ -299,7 +343,7 @@ public function save_payment(Request $request){
 
     $amount_paid = $request->amount_paid;
     $change = $request->change;
-    $date_paid = date('y-m-d');
+    $date_paid = Carbon::now()->format('Y-m-d');
     $payment_status='paid';
     $assessment =assessment::where('assessmentId',$assessmentId);
     $assessment->update([

@@ -956,6 +956,7 @@ height: 40%;
                                             <tr>
                                                 <th>#</th>
                                                 <th>Type of application</th>
+                                                <th>Application Status</th>
                                                 <th>Business Name</th>
                                                 <th>Address</th>
                                                     <th>Payment Status</th>
@@ -965,10 +966,14 @@ height: 40%;
                                           </thead>
                                           <tbody>
                                              @if ($assessment->count()>0)
+                                                @php
+                                                    $j=0;
+                                                @endphp
                                                @foreach ($assessment as $application)
 
                                             @php
                                                 $i=1;
+
                                             @endphp
 
                                             <tr>
@@ -977,45 +982,43 @@ height: 40%;
                                                 <td>
                                                     {{$application->type_application}}
                                                 </td>
+                                                <td>
+                                                    {{$application->status}}
+                                                </td>
                                                 <td>{{$application->business_name}}
                                                 </td>
                                                 <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
                                                 </td>
                                                 </td>
-                                                <td>{{$application->payment_status}}
+                                                <td>
+                                                    @if ( count($application->assessment) <1 || $application->status == 'renewal')
+                                                    Not Paid
+                                                    @else
+                                                    {{$application->assessment[0]['payment_status']}}
+                                                    @endif
                                                 </td>
                                                 <input type="hidden" value="{{ $application->applicantId }}" id="view_payment_applicationId">
-                                        <td><button type='' name='view' class='btn btn-success view view_payment_history'
-                                            id="{{$application->applicationId}}"><i class='fa fa-eye'></i></button>
+                                              <td>
+                                                @if (count($application->assessment) > 0 && $application->assessment[$j]['payment_date'] !== null)
+                                                    @php
+                                                    $j++;
+                                                    @endphp
+                                                <button type='' name='view' class='btn btn-success view view_payment_history'
+                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
+                                                </button>
+                                                @elseif ((count($application->assessment) > 0  &&  $application->status == 'renewal') && $application->assessment[$j]['payment_date'] == null)
+                                                <button type='' name='view' class='btn btn-success view view_payment_history'
+                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
+                                                </button>
+                                                <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
+                                                    ><i class='fa fa-plus'></i></a>
+                                                @else
+                                                <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
+                                                    ><i class='fa fa-plus'></i></a>
+                                                @endif
                                                 </td>
                                             </tr>
                                                  @endforeach
-
-                                            @else
-                                            @php
-                                            $i=1;
-                                        @endphp
-                                                 @foreach ($assessment_no_payment as $assessment)
-
-                                            <tr>
-                                                <td>{{$i++}}
-                                                </td>
-                                                <td>
-                                                    {{$assessment->type_application}}
-                                                </td>
-                                                <td>{{$assessment->business_name}}
-                                                </td>
-                                                <td>{{$assessment->purok}},{{$assessment->barangay}},{{$assessment->city}}
-                                                </td>
-
-                                                <td>'Not Paid'
-                                                </td>
-                                                    <td><a href="{{ route('assessmentSearch', ['name' => $assessment->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
-                                            ><i class='fa fa-plus'></i></a>
-                                                    </td>
-
-                                            </tr>
-                                            @endforeach
                                             @endif
                                           </tbody>
 
@@ -1125,7 +1128,7 @@ height: 40%;
                                             @php
                                             $i=1;
                                         @endphp
-                                                 @foreach ($assessment_no_payment as $assessment)
+                                                 {{-- @foreach ($assessment_no_payment as $assessment)
 
                                             <tr>
                                                 <td>{{$i++}}
@@ -1144,7 +1147,7 @@ height: 40%;
                                                     </td>
 
                                             </tr>
-                                            @endforeach
+                                            @endforeach --}}
                                             @endif
                                           </tbody>
 
