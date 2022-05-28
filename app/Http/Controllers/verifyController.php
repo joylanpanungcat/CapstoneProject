@@ -25,7 +25,7 @@ class verifyController extends Controller
         $admin=admin::where(['username'=>$req->username])->first();
        $applicant=applicant_account::where(['username'=>$req->username])->first();
        $inspector=inspector::where(['username'=>$req->username])->first();
-       
+
        if($admin){
             if($req->password===$admin['password']){
                 $req->session()->put('adminID',$admin);
@@ -54,7 +54,7 @@ class verifyController extends Controller
         return back()->with('error',"Invalid Inputs");
        }
     }
-    
+
     // public function dashboard(){
     //     $data=array();
     //     if(Session::has('adminID')){
@@ -62,7 +62,7 @@ class verifyController extends Controller
     //     }
     //     return view('Dashboard',compact('data'));
     // }
-   
+
     public function logout(){
         if(Session::has('adminID')){
             Session::pull('adminID');
@@ -75,7 +75,7 @@ class verifyController extends Controller
             return redirect('/');
         }
     }
-    
+
     public function logoutApplicant(){
         if(Session::has('accountId')){
             Session::pull('accountId');
@@ -87,7 +87,7 @@ class verifyController extends Controller
 
         $application = application::get();
         $applicationCount= count($application);
-        
+
         $approved = application::where('status','=','approved')->get();
         $approvedCount= count($approved);
 
@@ -107,11 +107,13 @@ class verifyController extends Controller
     }
 
     public function fetch_emergency(){
-      
-        $count = 0;
+        $count = 1;
+        $dataCount = 0;
         $data = emergency::where('count',$count)->get();
-        $dataCount = count($data);
 
+        if($data->count()>0){
+            $dataCount  = 1;
+        }
         return response()->json([
             'dataCount'=>$dataCount
         ]);
@@ -119,19 +121,18 @@ class verifyController extends Controller
     }
 
     public function emergency_view(Request $request){
-        $count = 0;
-        $count2 =1;
+        $count = 1;
+        $count2 =0;
         $data = emergency::where('count',$count);
         $data->update([
             'count'=>$count2
         ]);
 
         // return dd($data);
-
         return view('admin/emergency_page');
     }
 
-   
+
     public function get_emergency(Request $request){
         if(request()->ajax())
         {
@@ -150,10 +151,10 @@ class verifyController extends Controller
                 ->orderBy('application.applicationId','desc')
                 ->get();
             }
-        
+
     }
-       
-     
+
+
     return DataTables::of($data)
     // return DataTables::of($data)
     ->addIndexColumn()
@@ -163,15 +164,15 @@ class verifyController extends Controller
      ->addColumn('address', function($row){
         return $row['purok'].' '.$row['barangay'].'.  '.$row['city'];
        })
-    
+
     ->addColumn('actions', function($row){
-        return " <button type='button'  class='btn cancel_schedule actionButton' data-toggle='tooltip' data-placement='bottom' title='Archive' id='".$row['applicationId']."'><i class='fa fa-archive'></i></button>  
+        return " <button type='button'  class='btn cancel_schedule actionButton' data-toggle='tooltip' data-placement='bottom' title='Archive' id='".$row['applicationId']."'><i class='fa fa-archive'></i></button>
   <button type='button' name='viewApplicant' class='btn view_emergency actionButton'  data-toggle='tooltip' data-placement='bottom' title='View' id='".$row['applicationId']."'><i class='fa fa-eye'></i></button>
   ";
        })
        ->rawColumns(['actions'])
     ->make(true);
-    
+
   }
   public function view_emergency(Request $request){
       $applicationId = $request->applicationId;

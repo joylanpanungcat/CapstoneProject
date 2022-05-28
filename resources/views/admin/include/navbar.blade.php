@@ -433,7 +433,6 @@
         url: '{{ route('fetch_emergency') }}',
         dataType: 'json',
         success:function(data){
-
           if(data.dataCount > 0){
             Swal.fire({
               title:"FIRE EMERGENCY !!",
@@ -461,8 +460,6 @@
           }
         }
       })
-
-
     }
     set_emergency();
       setInterval(function(){

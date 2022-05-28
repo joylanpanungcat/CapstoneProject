@@ -11,6 +11,9 @@ use App\Models\applicant;
 use App\Models\application;
 use App\Models\folderUpload;
 use App\Models\fileUpload;
+use App\Models\emergency;
+
+use Carbon\Carbon;
 
 class applicantAppController extends Controller
 {
@@ -190,7 +193,8 @@ public function checkApplication(Request $request){
     ->get();
     if($data2->count()>0){
         return response()->json([
-            'code'=> 200
+            'code'=> 200,
+            'data'=>$data2
         ]);
     }else{
         return response()->json([
@@ -306,5 +310,26 @@ public function connectAccount(Request $request){
             'msg'=> 'Invalid Pass Code'
         ],401);
     }
+}
+public function sendEmergency(Request $request){
+   $accountId = $request->accountId;
+   $applicationId = $request->item['applicationId'];
+   $count= 1;
+
+   $data= emergency::where('application_id',$applicationId)
+   ->where('accountId',$accountId)->get();
+
+   if($data->count()>=0 && $data->count()<3){
+    $emergency = new emergency;
+    $emergency->application_id = $applicationId;
+    $emergency->accountId = $accountId;
+    $emergency->emergency_date = Carbon::now()->format('Y-m-d H:i:s');
+    $emergency->count = $count;
+    $emergency->save();
+
+    return response()->json([],200);
+   }else{
+       return response()->json([],401);
+   }
 }
 }

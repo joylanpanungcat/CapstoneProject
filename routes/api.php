@@ -33,6 +33,7 @@ Route::prefix('/user')->group(function(){
           Route::get('getApplication', [applicantAppController::class,'getApplication']);
           Route::post('getApplicationRenewal', [applicantAppController::class,'getApplicationRenewal']);
           Route::post('checkApplication', [applicantAppController::class,'checkApplication']);
+          Route::post('sendEmergency', [applicantAppController::class,'sendEmergency']);
 
           Route::post('viewApplication', [applicantAppController::class,'viewApplication']);
           Route::post('updateApplication', [applicantAppController::class,'updateApplication']);
