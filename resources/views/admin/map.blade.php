@@ -292,7 +292,7 @@ element.style {
 
    <script type="text/javascript">
 
-        L.mapquest.key = 'LAx0wIuGORRKAYko5EV2n17VGGARYcDv';
+        L.mapquest.key = 'qFoy4md7DfqXkUzLUvOn0yQHd8wdackb';
         var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
                 maxZoom: 20,
                 subdomains:['mt0','mt1','mt2','mt3'],

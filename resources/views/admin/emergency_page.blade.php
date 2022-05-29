@@ -1,8 +1,17 @@
 @extends('admin/include.navbar')
 @section('title','Emergency List')
 @section('content')
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+{{-- <link rel="stylesheet" href="{{ asset('css/leaflet/leaflet-1.7.1.css') }}"> --}}
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<link rel="stylesheet" href="{{ asset('css/leaflet/geocoder.css') }}" />
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script> --}}
+<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+<link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
   <style type="text/css">
 
       .title_right button{
@@ -691,6 +700,7 @@ element.style {
 </script>
 <script>
  $(document).ready(function(){
+L.mapquest.key = 'qFoy4md7DfqXkUzLUvOn0yQHd8wdackb';
 var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
     maxZoom: 20,
     subdomains:['mt0','mt1','mt2','mt3'],
@@ -713,20 +723,141 @@ $('#viewMapButton').on('click',function(e){
 })
 
 function showMap(){
-    var map = L.map('map', {
+    var map = L.mapquest.map('map', {
             center:[ 7.299101, 125.682612],
             layers: googleSat,
             zoom: 18
             });
 
- L.control.layers({
-                'Terrain': Terrain,
-                'GoogleSat':googleSat,
-                'osm':osm,
-            }).addTo(map);
+    L.control.layers({
+    'Terrain': Terrain,
+    'GoogleSat':googleSat,
+    'osm':osm,
+    'Dark':  L.mapquest.tileLayer('dark'),
+    }).addTo(map);
+    var myIcon = L.icon({
+    iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+    iconSize: [20, 29],
+    iconAnchor: [10, 29],
+    popupAnchor: [0, -29]
+    });
+    var bfp = L.marker([7.299101,125.682612],{icon: myIcon}).addTo(map);
+    L.mapquest.textMarker([7.299101,125.682612], {
+        text: 'BFP',
+        subtext: 'Beauro Of Fire Protection',
+        position: 'bottom',
+    }).addTo(map);
+
+var business_name = '';
+var address_map = '';
+var applicantName_map = '';
+var contactNumber_map = '';
+var alt_number = '';
+
+
+$(document).on('click','.item',function(e){
+    e.preventDefault();
+    var applicationId = $(this).attr('id');
+    var long2 = $('.long'+applicationId+'').val();
+    var lat2 =$('.lat'+applicationId+'').val();
+    var start_lat =7.299101;
+    var start_lng = 125.682612;
+
+
+    business_name =$('.business_name_map'+applicationId+'').val();
+    address_map =$('.address_map'+applicationId+'').val();
+    applicantName_map =$('.applicantName_map'+applicationId+'').val();
+    contactNumber_map =$('.contactNumber_map'+applicationId+'').val();
+    alt_number =$('.alt_number'+applicationId+'').val();
+
+    var directions = L.mapquest.directions();
+        directions.route({
+        locations: [
+            { latLng: { lat:start_lat , lng: start_lng} },
+            { latLng: { lat: lat2, lng:long2 } }
+        ],
+        options: {
+            timeOverage: 100,
+            maxRoutes: 3,
+        }
+        },createMap);
+
+        L.mapquest.textMarker([start_lat, start_lng], {
+            text: 'BFP',
+            subtext: 'Beauro Of Fire Protection',
+            position: 'bottom',
+
+        }).addTo(map);
+
+        var endText = L.mapquest.textMarker([lat2,long2], {
+            text: business_name,
+            subtext: 'Applicant',
+            position: 'right',
+
+        });
+        endText.addTo(map);
+
+})
+
+function createMap (err, response){
+var DirectionsLayerWithCustomMarkers = L.mapquest.DirectionsLayer.extend({
+createStartMarker: function(location, stopNumber) {
+var custom_icon;
+var popup = '<div class="custom-popup"><div class="header-custom-popup"><h5 style="font-size: 16px;color: #0044cc;">BUREAU OF FIRE PROTECTION</h5></div><div class="content-custom-popup">Category: Government <br>Province: Davao Del Norte <br> City: Panabo City <br> Phone: (084) 822 0160 <br> Address: Salvacion, Panabo City </div></div>';
+custom_icon = L.icon({
+    iconUrl: '{{ asset('map-icons/building-solid.png') }}',
+    iconSize: [20, 29],
+    iconAnchor: [10, 29],
+    popupAnchor: [0, -29]
+});
+return L.marker(location.latLng, {icon: custom_icon}).bindPopup(popup);
+},
+
+createWaypointMarker: function(location, stopNumber) {
+return L.marker(location.latLng, {});
+},
+
+createEndMarker: function(location, stopNumber) {
+var popup = '<div class="custom-popup"><div class="header-custom-popup"><h5 style="font-size: 16px;color: #0044cc;">'+business_name.toUpperCase()+'</h5></div><div class="content-custom-popup">Address: <b>'+address_map+'</b> <br> Applicant Name: <b>'+applicantName_map+'</b><br> Contact Number:<b>'+contactNumber_map+'</b><br> Alt Number: <b>'+alt_number+'</b></div></div>';
+return L.marker(location.latLng, {}).bindPopup(popup);
+}
+});
+
+var directionsLayer = new DirectionsLayerWithCustomMarkers({
+directionsResponse: response
+}).addTo(map);
+
+
+}
+}
+fetchApplication();
+function fetchApplication(business_name =''){
+$.ajax({
+    type:'get',
+    url:'{{ route('fetch_application_map') }}',
+    data:{
+    business_name:business_name
+    },
+    dataType: 'json',
+    success:function(data){
+    $('.content-list').html(data.output);
+    }
+
+});
 }
 
+$('#search').on('click',function(e){
+var business_name = $('#search_application').val();
+fetchApplication(business_name);
+});
 
+
+$('#search_application').on('keyup',function(e){
+var business_name = $(this).val();
+if(business_name ==''){
+    fetchApplication(business_name);
+}
+});
 
  });
 
