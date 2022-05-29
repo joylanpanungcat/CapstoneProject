@@ -217,7 +217,7 @@ color: white;
   background-color: #2A3F54;
 }
 .card h2 strong{
-  
+
   color: #1ABB9C;
     font-size: 40px;
 }

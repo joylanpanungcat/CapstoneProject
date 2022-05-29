@@ -1,9 +1,10 @@
 @extends('admin/include.navbar')
 @section('title','Emergency List')
 @section('content')
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
   <style type="text/css">
-    
+
       .title_right button{
         float: right;
       }
@@ -28,7 +29,7 @@
     width: 1200px;
 }
 button.close-modal{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -39,7 +40,7 @@ button.close-modal{
     padding: 2px;
 }
 button.close-modal:hover{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -75,10 +76,10 @@ button.close-modal:hover{
             border: 1px dashed #c0ccda;
             border-radius: 6px;
             cursor: pointer;
-            
+
         }
 
-       
+
         .dz-progress{
             display: none;
         }
@@ -103,8 +104,8 @@ button.close-modal:hover{
 
   width: 10px;
   height: 10px;
- 
-  
+
+
 } */
 /* .actionButton i {
   margin-top: -5px;
@@ -122,7 +123,7 @@ button.close-modal:hover{
   margin-left: -20px;
 }
 .actionButton:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -141,7 +142,7 @@ button.close-modal:hover{
   vertical-align: middle;
 }
 .addApplicantionTooltip:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -188,14 +189,14 @@ overflow: auto;
 }
 
 .dataTables_wrapper  .dataTables_paginate  .paginate_button.active .page-link{
- 
+
   background-color: #1ABB9C !important;
 
 }
 
 .addApplication .modal-content{
   height: 90vh;
-  
+
 }
 
 
@@ -210,6 +211,143 @@ overflow: auto;
   width: 10px !important;
 }
 
+.leaflet-bottom {
+  display: none;
+}
+.leaflet-touch .leaflet-control-geocoder-icon {
+    width: 38px;
+    height: 36px;
+}
+.leaflet-touch .leaflet-bar a {
+    width: 37px;
+    height: 36px;
+}
+.leaflet-left .leaflet-control {
+    margin-left: 4px;
+}
+#refreshButton{
+  position: absolute;
+    z-index: 500;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 16%;
+    border: 1px solid #b5aaaa;
+    left: 6px;
+    top: 9px;
+}
+
+#refreshButton i{
+  font-size: 20px;
+    color: #5d5555;
+}
+
+/* side nav */
+
+element.style {
+    width: 0px;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: 504;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    background-color: #fff;
+    box-shadow: 6px 1px 22px -7px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+#closeNav-button{
+  margin-top: 5px;
+    margin-left: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#closeNav-button i{
+  color: #060606;
+    font-size: 20px;
+}
+.header .btn-group {
+  padding-top: 45px;
+  margin-left: 5px;
+  margin-bottom: 14px;
+}
+.header .btn-group input{
+  width: 189px;
+}
+.sidenav .content-list .item{
+    width: 91%;
+    margin-top: 10px;
+    margin-left: 7px;
+    display: flex;
+    padding-top: 6px;
+    font-size: 28px;
+    border: 1px solid;
+    /* height: 39px; */
+    overflow: hidden;
+
+}
+
+
+.sidenav .content-list .item:hover{
+  background-color: #2A3F54;
+  opacity: 0.7;
+  color: #fff;
+  cursor: pointer;
+}
+.sidenav .content-list .item h5 {
+  width: 193px;
+    font-size: 17px;
+    padding-top: 2px;
+    padding-left: 6px;
+    line-height: 24px;
+}
+.sidenav .content-list{
+  overflow-x: hidden;
+    height: 348px;
+}
+.leaflet-div-icon{
+  background: none;
+  border: none
+
+}
+
+@media screen  and (max-width: 1920px){
+  .leaflet-left {
+    position: absolute;
+    bottom: 0;
+    right: 33px;
+    top: 80%;
+    left: 96%;
+}
+}
+@media screen  and (max-width: 1400px){
+  .leaflet-left {
+    position: absolute;
+    bottom: 0;
+    right: 33px;
+    top: 80%;
+    left: 95%;
+}
+}
+
   </style>
  <div class="right_col" role="main" >
     <div class="">
@@ -217,15 +355,18 @@ overflow: auto;
             <div class="title_left">
                 <h3>Emergency List </h3>
             </div>
+            <div class="title_right">
+                <button class="btn btn-success" id="viewMapButton" style="margin-top: 10px;">View Map</button>
+            </div>
 
-         
+
         </div>
-        
+
         <hr class="separate2">
-                    
-                    
+
+
         <div class="clearfix"></div>
-       
+
 
                     <div class="row">
                         <div class="col-md-4"></div>
@@ -246,15 +387,15 @@ overflow: auto;
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                       <div id="show2"></div>
-                           
+
                                 <div class="x_content">
                                     <br />
-                                   
-                                    <br><br>  
-                                       
+
+                                    <br><br>
+
                             <table class="table table-striped table-bordered " id="applicationData2" style="width: 100%"  >
                               <thead >
-                               
+
 
                                   <!-- <th>Select</th> -->
                                   <th> #</th>
@@ -263,14 +404,14 @@ overflow: auto;
                                   <th>Emergency Date</th>
                                   <th>Conctact Number</th>
                                   <th>ACTION</th>
-                                
 
-                                 
+
+
                               </thead>
-                              
+
                                   </table>
 
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -331,7 +472,7 @@ overflow: auto;
                                                 <div class="form-group row ">
                                                     <label class="control-label col-md-3 col-sm-3 ">Type Of Application</label>
                                                     <div class="col-md-9 col-sm-9 ">
-                                                    
+
                               <input type="hidden" class="form-control" placeholder="Default Input" id="applicationId" readonly>
                               <input type="text" class="form-control" placeholder="Default Input" id="type_application" readonly>
                                                     </div>
@@ -387,9 +528,9 @@ overflow: auto;
                                                         <input type="text" class="form-control" placeholder="Default Input" id="Lname" readonly >
                                                     </div>
                                                 </div>
-                            
-                            
-                         
+
+
+
                                             </form>
                                         </div>
                                     </div>
@@ -401,7 +542,40 @@ overflow: auto;
                 </div>
               </div>
               </div>
-            
+              <div id="viewMap" class="modal" >
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content ">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Map</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="mySidenav" class="sidenav">
+                                <div>
+                                  <div class="header">
+                                    <button class="btn " onclick="closeNav()" id="closeNav-button"><i class="fa fa-bars"></i></button>
+                                    <div class="btn-group mr-2  " role="group" aria-label="First group">
+                                      <input type="text" name="" placeholder="Business Name" id="search_application">
+                                    <button type="button" class="btn btn-secondary " id="search" ><i class="fa fa-search"></i></button>
+                                  </div>
+                                </div>
+                                <div class="content-list">
+                                </div>
+                                </div>
+                              </div>
+                              <div id="map" class="col-md-12" style="height:440px;">
+                                <button id="refreshButton" onclick="openNav()">
+                                    <i class="fa fa-solid fa-bars"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+<script>
+
+</script>
 <script>
   $(document).ready(function(){
     var adminPass='{{Session::get('adminID')['password']}}';
@@ -428,12 +602,12 @@ overflow: auto;
           ajax: {
             url:"{{ route('get_emergency') }}",
             data: {category:category,
-                   from_date:from_date, 
+                   from_date:from_date,
                   to_date:to_date
-            }  
-           
+            }
+
           },
-       
+
         columns:[
         {data:'DT_RowIndex',name:'DT_RowIndex', class: 'table_header'},
         {data:'business_name',name:'business_name'},
@@ -485,7 +659,7 @@ overflow: auto;
         dataType: 'json',
         success:function(data){
             $('#view_emergency').modal('show');
-        
+
             $.each(data.data,function(key,value){
                 $('#type_application').val(value['type_application']);
                 $('#control_number').val(value['control_number']);
@@ -503,12 +677,60 @@ overflow: auto;
         }
     })
 
-     
+
  })
 
-
   })
+  function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
+<script>
+ $(document).ready(function(){
+var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3'],
+});
+
+var Terrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}&',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    });
+var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+var panabo = L.tileLayer('https://editor.giscloud.com/rest/1/maps/1903414/render.iframe?bound=125.16038111816408,7.144658966796868,126.09833888183596,7.531240387695306&toolbar=true&popups=true&layerlist=true" frameborder="0"');
+
+$('#viewMapButton').on('click',function(e){
+    e.preventDefault();
+    $('#viewMap').modal('show');
+    showMap();
+})
+
+function showMap(){
+    var map = L.map('map', {
+            center:[ 7.299101, 125.682612],
+            layers: googleSat,
+            zoom: 18
+            });
+
+ L.control.layers({
+                'Terrain': Terrain,
+                'GoogleSat':googleSat,
+                'osm':osm,
+            }).addTo(map);
+}
+
+
+
+ });
+
+
 </script>
 
-  
-  @endsection 
+  @endsection

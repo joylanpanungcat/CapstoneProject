@@ -263,12 +263,12 @@ element.style {
                         </div>
                         </div>
                       </div>
-                    {{-- <div id="map" class="col-md-12" style="height:440px;">
+                    <div id="map" class="col-md-12" style="height:440px;">
                         <button id="refreshButton" onclick="openNav()">
                             <i class="fa fa-solid fa-bars"></i>
                         </button>
-                    </div> --}}
-                    <iframe src="https://editor.giscloud.com/rest/1/maps/1903414/render.iframe?bound=125.16038111816408,7.144658966796868,126.09833888183596,7.531240387695306&toolbar=true&popups=true&layerlist=true" width="100%" height="400" frameborder="0"></iframe>
+                    </div>
+                    {{-- <iframe src="https://editor.giscloud.com/rest/1/maps/1903414/render.iframe?bound=125.16038111816408,7.144658966796868,126.09833888183596,7.531240387695306&toolbar=true&popups=true&layerlist=true" width="100%" height="400" frameborder="0"></iframe> --}}
 
                     </div>
                   </div>

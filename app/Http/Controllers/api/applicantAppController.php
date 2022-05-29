@@ -189,7 +189,9 @@ public function checkApplication(Request $request){
     join('address','address.applicationId','=','application.applicationId')
     ->select('address.purok','address.barangay','address.city','application.*')
     ->where('application.accountId',$accountId )
-    // ->where('application.status','=','renewal')
+    ->where('application.status','=','renewal')
+    ->orWhere('application.status','=','approved')
+    ->orWhere('application.status','=','renewed')
     ->get();
     if($data2->count()>0){
         return response()->json([
