@@ -45,5 +45,16 @@ Route::prefix('/user')->group(function(){
 
       });
 });
+Route::prefix('/inspector')->group(function(){
+    Route::post('/login',[loginController::class,'loginInspector']);
+    Route::group([
+        'middleware' => 'auth:api'
+    ],function(){
+        Route::get('logout', [loginController::class,'logoutInspector']);
+        Route::post('getApplication', [applicantAppController::class,'getApplicationInspector']);
+        Route::post('viewApplication', [applicantAppController::class,'viewApplicationInspector']);
+        Route::post('inspectionReport', [applicantAppController::class,'inspectionReport']);
 
+    });
+});
 Route::apiResource('applicantAcountDetails',loginController::class);

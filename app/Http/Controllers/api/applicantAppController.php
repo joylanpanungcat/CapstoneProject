@@ -12,6 +12,8 @@ use App\Models\application;
 use App\Models\folderUpload;
 use App\Models\fileUpload;
 use App\Models\emergency;
+use App\Models\inspection_details;
+use App\Models\schedule;
 
 use Carbon\Carbon;
 
@@ -333,5 +335,76 @@ public function sendEmergency(Request $request){
    }else{
        return response()->json([],401);
    }
+}
+
+public function getApplicationInspector(Request $request){
+    $inspectorId = $request->inspectorId;
+    $data = application:: join('schedule','schedule.applicationId','=','application.applicationId')
+    ->join('applicant','applicant.applicantId','=','application.applicantId')
+    ->join('address','address.applicationId','=','application.applicationId')
+    ->where('schedule.inspectorId',$inspectorId)
+    ->where('schedule.inspected',null)
+    ->where('schedule.deleted_at',null)
+    ->get();
+    return $data;
+}
+public function viewApplicationInspector(Request $request){
+    $applicationId = $request->applicationId;
+    $data = application::
+    join('address','address.applicantId','=','application.applicantId')
+    ->join('applicant','applicant.applicantId','=','application.applicantId')
+    ->select('address.purok','address.barangay','address.city','application.*','applicant.*')
+    ->where('application.applicationId',$applicationId)->get();
+
+    for($i =0 ; $i<$data->count(); $i++){
+        $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
+    }
+    return $data;
+}
+public function inspectionReport(Request $request ){
+    $inspectorId= $request->inspectorId;
+    $applicationId= $request->applicationId;
+    $inspectionDetails= $request->item;
+    $inspected='true';
+    foreach($inspectionDetails as $item){
+        $inspection = new inspection_details;
+        $inspection->inspectorId =$inspectorId;
+        $inspection->applicationId =$applicationId;
+        $inspection->date_inspect =Carbon::now()->format('Y-m-d H:i:s');
+        $inspection->beams =$item['beams'];
+        $inspection->exterior =$item['exterior'];
+        $inspection->main_stair =$item['mainStair'];
+        $inspection->main_door =$item['mainDoor'];
+        $inspection->colums =$item['colums'];
+        $inspection->corridor_walls =$item['corridorWalls'];
+        $inspection->windows =$item['windows'];
+        $inspection->trussess =$item['trussess'];
+        $inspection->flooring =$item['flooring'];
+        $inspection->room_partitions =$item['roomPartitions'];
+        $inspection->ceiling =$item['ceiling'];
+        $inspection->roof =$item['roof'];
+        $inspection->sectional_occupancy =$item['sectionalOccupancy'];
+        $inspection->emergency_lights =$item['emergencyLights'];
+        $inspection->no_stinguisher =$item['noStinguisher'];
+        $inspection->fire_alarm =$item['fireAlarm'];
+        $inspection->location_panel =$item['locationPanel'];
+        $inspection->defects =$item['defects'];
+        $inspection->recommendation =$item['recommendation'];
+        $inspection->status=$item['status'];
+        $inspection->save();
+    }
+    $application = application::where('applicationId',$applicationId);
+    $application->update([
+        'inpector_id'=> $inspectorId
+    ]);
+
+    $schedule = schedule::where('inspectorId',$inspectorId)->where('applicationId',$applicationId);
+    $schedule->update([
+        'inspected'=>$inspected
+    ]);
+
+    return response()->json([
+        'msg'=>'Inspection Successfully Recorded'
+    ]);
 }
 }

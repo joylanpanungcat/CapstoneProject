@@ -52,7 +52,7 @@
      .legend-group .legend-body h4.FSIC_OCCU:hover{
      color: #AFD8F8;
     }
-   
+
      .legend-group .legend-body h4.FSIC_new:hover{
      color: #4DA74D;
     }
@@ -76,8 +76,8 @@
             <div class="title_left">
               <a class="btn btn-default" href="{{ route('for_inspection') }}"><i class="fa fa-arrow-left">  Back</i></a>
             </div>
-            
-           
+
+
           </div>
         <div class="col-md-12 body_content">
 
@@ -86,12 +86,12 @@
                   <div class="col-md-12">
                     <h2>Inspection Details</h2>
                   </div>
-                 
-                    <hr class="separate"> 
+
+                    <hr class="separate">
 
                   </div>
-                  
-                          
+
+
                                 <br />
                                 <form class="form-horizontal form-label-left">
                                     <div class="form-group row ">
@@ -179,7 +179,7 @@
                                     <div class="form-group row ">
                                         <h2><strong>Fire Protection Equipment</strong></h2>
                                     </div>
-                                    
+
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Emergency Lights Provide</label>
                                         <div class="col-md-9 col-sm-9 ">
@@ -216,7 +216,7 @@
                                             <textarea name="" id="recommendation" cols="30" rows="5"></textarea>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Status </label>
                                         <div class="col-md-9 col-sm-9 ">
@@ -224,10 +224,10 @@
                                         </div>
                                     </div>
                                             <input type="hidden" class="form-control" placeholder="Default Input" id="applicationId" value="{{ $applicationId }}">
-                                    
+
                                     <div class="form-group" style="float: right">
 										<button type="submit" class="btn btn-success" id="inspect_application_record"><i class="fa fa-info-circle "></i>  Inspect</button>
-                                        
+
                                     </div>
                                 </form>
 
@@ -240,8 +240,8 @@
 
 
 
-</div>  
-       
+</div>
+
      </div>
  </div>
 
@@ -253,7 +253,7 @@
                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                       }
                   });
- 
+
 
  $('#inspect_application_record').on('click',function(e){
      e.preventDefault();
@@ -336,7 +336,7 @@
                                   background: 'rgb(0,0,0,.9)',
                                   customClass : {
                                       title: 'swal2-title'
-                                  }, 
+                                  },
                               background: 'rgb(0,0,0,.9)',
                               confirmButtonColor: '#1ABB9C',
                               confirmButtonText: 'Done',
@@ -347,10 +347,10 @@
                        })
 
         },
-       
+
           });
  })
   })
 </script>
 
-  @endsection 
+  @endsection

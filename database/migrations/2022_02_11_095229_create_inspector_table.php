@@ -20,6 +20,7 @@ class CreateInspectorTable extends Migration
             $table->string('Position')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

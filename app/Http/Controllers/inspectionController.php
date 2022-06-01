@@ -35,25 +35,25 @@ class inspectionController extends Controller
                             <td><a type="button" name="viewApplicant" class="btn  actionButton" href="application_profile_inspector/'.$data['applicationId'].'" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a></td>
                         </tr>';
             }
-           
+
         }else{
             $output.='<tr><td colspan="4">No inspection schedule</td></tr>';
-          
+
         }
 
-      
-     
+
+
         return response()->json([
             'output'=>$output
         ]);
     }
-    
+
     public function fetch_inspected_application(){
         $inspectorId = session()->get('inspectorId')['inspectorId'];
         $output='';
         $count = 1;
         $verify= null;
-        
+
 
         // $data2= applicant::join('application','applicant.applicantId','=','application.applicantId')
         // ->join('applicant','applicant.applicantId','=','application.applicantId')
@@ -68,7 +68,7 @@ class inspectionController extends Controller
         ->where('schedule.inspectorId',$inspectorId)
         ->where('schedule.inspected','=','true')
         ->get();
- 
+
 
         if($data2->count()>0){
             foreach($data2 as $data){
@@ -79,14 +79,14 @@ class inspectionController extends Controller
                             <td><a type="button" name="viewApplicant" class="btn  actionButton" href="inspected/application/'.$data['applicationId'].'" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a></td>
                         </tr>';
             }
-           
+
         }else{
             $output.='<tr><td colspan="4">No inspected details</td></tr>';
 
         }
 
-      
-     
+
+
         return response()->json([
             'output'=>$output
         ]);
@@ -115,14 +115,14 @@ class inspectionController extends Controller
                             <td><a type="button" name="viewApplicant" class="btn  actionButton" href="inspection_history/application/'.$data['applicationId'].'" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a></td>
                         </tr>';
             }
-           
+
         }else{
             $output.='<tr><td colspan="4">No History Details</td></tr>';
 
         }
 
-      
-     
+
+
         return response()->json([
             'output'=>$output
         ]);
@@ -130,7 +130,7 @@ class inspectionController extends Controller
     public function Dashboard_fetch(){
         $inspectorId = session()->get('inspectorId')['inspectorId'];
         $verify ='true';
-        
+
         $data=schedule::where('inspectorId',$inspectorId)->where('inspected',null)->get();
         $dataCount=count($data);
 
@@ -154,7 +154,7 @@ public function profile_view(){
     $data = inspector::where('inspectorId',$inspectorId )->get();
 
     return view('inspector/profile',['data'=>$data]);
-    
+
 }
 public function update_inspector(Request $request){
     $inspectorId =$request->inspectorId;
@@ -178,5 +178,5 @@ public function update_inspector(Request $request){
     ]);
 }
 
-    
+
 }

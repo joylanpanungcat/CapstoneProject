@@ -32,12 +32,12 @@ class applicationControllerInspector extends Controller
         ->join('address','address.applicationId','application.applicationId')
         ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
         ->where('application.applicationId',$applicationId)
-    
+
         ->get();
 
 
         return view('inspector/application_inspected_profile',['data'=>$data]);
-        
+
     }
 
     public function inspection_history_view(Request $request){
@@ -48,13 +48,13 @@ class applicationControllerInspector extends Controller
         ->join('address','address.applicationId','application.applicationId')
         ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
         ->where('application.applicationId',$applicationId)
-    
+
         ->get();
 
 
         return view('application_history_profile',['data'=>$data]);
     }
-    
+
 
     public function inspect_application(Request $request){
         $applicationId =$request->id;
@@ -128,7 +128,7 @@ class applicationControllerInspector extends Controller
 
 
         return response()->json([
-            'msg'=>'Inspection Successfully Recorded'
+            'msg'=>'Inspection Recorded Successfully '
         ]);
 
 
