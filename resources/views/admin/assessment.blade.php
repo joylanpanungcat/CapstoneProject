@@ -855,21 +855,11 @@ $(document).on('click','.collapsible3',function(e){
                            })
                        }
                      },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
+
              });
 
              },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
+
 
                });
     }

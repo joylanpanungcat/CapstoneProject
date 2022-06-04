@@ -14,6 +14,7 @@ use App\Models\fileUpload;
 use App\Models\emergency;
 use App\Models\inspection_details;
 use App\Models\schedule;
+use App\Models\inspector;
 
 use Carbon\Carbon;
 
@@ -364,6 +365,8 @@ public function viewApplicationInspector(Request $request){
 public function inspectionReport(Request $request ){
     $inspectorId= $request->inspectorId;
     $applicationId= $request->applicationId;
+    $lat= $request->lat;
+    $long= $request->long;
     $inspectionDetails= $request->item;
     $inspected='true';
     foreach($inspectionDetails as $item){
@@ -395,7 +398,9 @@ public function inspectionReport(Request $request ){
     }
     $application = application::where('applicationId',$applicationId);
     $application->update([
-        'inpector_id'=> $inspectorId
+        'inpector_id'=> $inspectorId,
+        'lat'=>$lat,
+        'long'=>$long,
     ]);
 
     $schedule = schedule::where('inspectorId',$inspectorId)->where('applicationId',$applicationId);
@@ -406,5 +411,126 @@ public function inspectionReport(Request $request ){
     return response()->json([
         'msg'=>'Inspection Successfully Recorded'
     ]);
+}
+public function getInspectionHistory(Request $request){
+    $inspectorId = $request->inspectorId;
+    $data = application::
+    join('applicant','applicant.applicantId','=','application.applicantId')
+    ->join('address','address.applicationId','=','application.applicationId')
+    ->where('application.inpector_id',$inspectorId)
+    ->get();
+    return $data;
+}
+public function getInspectionHistoryDetails(Request $request)
+{
+    $applicationId = $request->applicationId;
+    $inspectorId = $request->inspectorId;
+    $data = application::join('inspection_details','application.applicationId','=','inspection_details.applicationId')
+    ->where('application.inpector_id',$inspectorId)
+    ->where('application.applicationId',$applicationId)->get();
+
+    return $data;
+}
+public function updateInspectionDetails(Request $request){
+    $beams = $request->item[0]['beams'];
+    $exterior = $request->item[0]['exterior'];
+    $main_stair = $request->item[0]['main_stair'];
+    $main_door = $request->item[0]['main_door'];
+    $colums = $request->item[0]['colums'];
+    $corridor_walls = $request->item[0]['corridor_walls'];
+    $windows = $request->item[0]['windows'];
+    $trussess = $request->item[0]['trussess'];
+    $room_partitions = $request->item[0]['room_partitions'];
+    $ceiling = $request->item[0]['ceiling'];
+    $roof = $request->item[0]['roof'];
+    $sectional_occupancy = $request->item[0]['sectional_occupancy'];
+    $emergency_lights = $request->item[0]['emergency_lights'];
+    $no_stinguisher = $request->item[0]['no_stinguisher'];
+    $fire_alarm = $request->item[0]['fire_alarm'];
+    $location_panel = $request->item[0]['location_panel'];
+    $defects = $request->item[0]['defects'];
+    $recommendation = $request->item[0]['recommendation'];
+    $status = $request->item[0]['status'];
+    $inspection_id = $request->item[0]['inspection_id'];
+
+    $data = inspection_details::where('inspection_id',$inspection_id);
+   $query= $data->update([
+        'beams'=> $beams,
+        'exterior'=> $exterior,
+        'main_stair'=> $main_stair,
+        'main_door'=> $main_door,
+        'colums'=> $colums,
+        'corridor_walls'=> $corridor_walls,
+        'windows'=> $windows,
+        'trussess'=> $trussess,
+        // 'flooring'=> $flooring,
+        'room_partitions'=> $room_partitions,
+        'ceiling'=> $ceiling,
+        'roof'=> $roof,
+        'sectional_occupancy'=> $sectional_occupancy,
+        'emergency_lights'=> $emergency_lights,
+        'no_stinguisher'=> $no_stinguisher,
+        'fire_alarm'=> $fire_alarm,
+        'location_panel'=> $location_panel,
+        'defects'=> $defects,
+        'recommendation'=> $recommendation,
+        'status'=> $status,
+    ]);
+if($query){
+    return response()->json([
+        'msg'=>'Inspection Updated'
+     ]);
+}else{
+    return response()->json([
+        'msg'=>'no changes'
+     ]);
+}
+
+}
+public function deleteInspectionDetails(Request $request){
+    $inspection_id = $request->inspectionId;
+    $applicationId = $request->applicationId;
+
+    $data= inspection_details::where('inspection_id',$inspection_id)->delete();
+    $data2 = schedule::where('applicationId',$applicationId);
+    $data2->update([
+        'inspected'=>null
+    ]);
+    return response()->json([
+        'msg'=>'Inspection Deleted'
+    ]);
+}
+public function getProfileInspector(Request $request){
+    $inspectorId= $request->inspectorId;
+    $data =inspector::where('inspectorId',$inspectorId )->get();
+
+    return response()->json($data);
+}
+public function updateInspectorProfile(Request $request){
+    $Fname=  $request->item['Fname'];
+    $Lname=  $request->item['Lname'];
+    $Position=  $request->item['Position'];
+    $username=  $request->item['username'];
+    $password=  $request->item['password'];
+    $inspectorId=  $request->item['inspectorId'];
+
+    $data= inspector::where('inspectorId',$inspectorId );
+  $query=  $data->update([
+        'Fname'=>$Fname,
+        'Lname'=>$Lname,
+        'Position'=>$Position,
+        'username'=>$username,
+        'password'=>$password,
+    ]);
+
+    if($query){
+        return response()->json([
+            'msg'=>'Successfully Updated'
+        ]);
+    }else{
+        return response()->json([
+            'msg'=>'No Changes'
+        ]);
+    }
 }
 }

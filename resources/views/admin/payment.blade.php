@@ -10,7 +10,7 @@
     }
     table tbody tr td input:hover{
       border: 3px solid #0687d6;
-     
+
 
     }
     .title_right button{
@@ -34,7 +34,7 @@
   }
 .compose .compose-header .close {
 text-shadow: 0 1px 0 #ffffff;
-line-height: .8; 
+line-height: .8;
 color: #fff;
 }
 .compose-footer button{
@@ -65,12 +65,12 @@ padding: 10px;
 .total_body{
 margin-left: 80px;
 float: right;
-} 
+}
 .total_body2{
 margin-left: 120px;
 float: right;
 
-}           
+}
 .total{
 width: 200px;
 height: 30px;
@@ -86,7 +86,7 @@ margin-top: 60px;
 .underline{
 border: none;
 border-bottom: 1px solid black;
-width: 80%; 
+width: 80%;
 }
 .total_amount_inwords{
 border: none;
@@ -109,7 +109,7 @@ border: 1px solid black;
 padding: 10px;
 width: 400px;
 }
-.copy label b{  
+.copy label b{
 color: red;
 }
 .group2{
@@ -159,7 +159,7 @@ color: #fff;
 }
 .collapsible:hover{
 background-color: #d3d5d8db;
-} 
+}
 .custom_fee{
 border-bottom: 1px solid #000;
 width: 100%;
@@ -204,49 +204,49 @@ letter-spacing: 1px;
 <body class="nav-md" id="main" >
 
 
-   
-     
- 
- 
+
+
+
+
   <div class="right_col" role="main" >
      <div class="">
          <div class="page-title">
              <div class="title_left">
                  <h3>Payment</h3>
              </div>
-             
- 
+
+
          </div>
- 
-           <hr class="separate2">             
-                     
+
+           <hr class="separate2">
+
          <div class="clearfix"></div>
                      <div class="row">
                          <div class="col-md-12 col-sm-12 ">
                              <div class="x_panel">
                                        <div id="show2"></div>
-                        
+
                                  <div class="x_content">
                                      <br />
                   <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                      <div class="btn-group mr-2  " role="group" aria-label="First group">
-          
+
                                 <input type="text" name="" placeholder="Search.." id="search_applicant">
- 
+
                        <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
-                       
-                    
+
+
                      </div>
-                
+
                </div>
-                         
-               
-                                     
-                 
- 
- 
-               
-                      <br>    
+
+
+
+
+
+
+
+                      <br>
                       <div class="row">
                        <div class="col-md-12">
                                <div class="title_payment">
@@ -254,18 +254,18 @@ letter-spacing: 1px;
                                </center>
                              </div><br><br>
                      <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
-                     
+
                       <div class="panel-heading" style="display: none"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                      <div class="panel-body" id="panel-body">
-                       
+
                          <table class="table table-striped table-bordered" id="data"  style="width:100%;">
                                <thead>
                                  <tr>
                                    <!-- <th>Select</th> -->
-                                   
+
                                    <th>NATURE OF PAYMENT </th>
                                    <th style="width: 250px">TOTAL</th>
- 
+
                                  </tr>
                                </thead>
                                <tbody id="nature_payment_body">
@@ -277,13 +277,13 @@ letter-spacing: 1px;
                                    <td>TOTAL</td>
                                    <td></td>
                                  </tr>
-                                   
+
                                    </tbody>
-                  
+
                                    </table>
                                    <div class="col-md-12">
                                      <div class="col-md-9"></div>
-                                     <div class="col-md-3"> 
+                                     <div class="col-md-3">
                                     <div class="form-group row ">
                                       <label class="control-label col-md-12 "> <strong>Payment</strong></label>
                                       <div class="col-md-12 ">
@@ -295,7 +295,7 @@ letter-spacing: 1px;
                                         <div class="col-md-12 ">
                                             <input type="number" class="form-control" placeholder="amount" id="amount" >
                                         <span id="error_payment" style="color:red"></span>
-                                          
+
                                           </div>
                                     </div>
                                     <div class="form-group row ">
@@ -309,7 +309,7 @@ letter-spacing: 1px;
                                    <h7 style="display: none"><b>TOTAL AMOUNT (IN WORDS):</b></h7>
                                    <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords"  style="display: none">
                                    <br><br><br>
-                                 
+
                                  <div class="form-group group2" style="display: none">
                                    <label>Offical Receipt No: </label>
                                    <input type="text" name="" class="group1" id="receipt_no"><br>
@@ -322,48 +322,48 @@ letter-spacing: 1px;
                                      <label><b>Original</b>/ (Applicant/Owner's Copy)</label><br>
                                      <label><b>Duplicate</b>/ (GSB/Collecting Agent copy)</label><br>
                                      <label><b>Triplicate</b>/ (BFP copy)</label><br>
-                                     
+
                                    </div>
- 
+
                                  </div>
- 
+
                                    <div class="form-group group2" style="float:right;margin-top: 30px;display: none">
                                      <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of"></span></h5>
                                      <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
-                                     
-                                     
+
+
                                      <input type="text" name="" class="authority_name" id='fee_assessor'>
                                     <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
- 
- 
+
+
                                  </div>
- 
- 
-                                  
-                                 
- 
+
+
+
+
+
                      </div>
                    </div>
                        </div>
-                      
+
                       </div>  <br>
                        <div class="row">
                                      <div class="col-md-6"></div>
                                      <div class="col-md-6 ">
                                        <form>
-                                   
-                                      
+
+
                                        <div class="button-group total_body2 ">
                                            <button type="button" class="btn btn-secondary save_payment_button" id="save_payment_button"  disabled><i class="fa fa-save" ></i>  Save</button>
                                            {{-- <button type="button" class="btn btn-secondary " data-dismiss="modal" id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button> --}}
                                        </div>
                                        </form>
                                      </div>
-                                   </div>      
-                                         
-                  
- 
-                                 
+                                   </div>
+
+
+
+
                                  </div>
                              </div>
                          </div>
@@ -374,16 +374,16 @@ letter-spacing: 1px;
    <div class="modal-dialog modal-dialog-centered" role="document">
      <div class="modal-content">
        <div class="modal-header payment_success">
-     
+
        <h4 class="modal-title" id="ModalTitle">Asssessment Successfully Saved!</h4>
- 
-         
+
+
        </div>
        <!-- <div class="modal-body">
-     
+
        </div> -->
        <center>
- 
+
          <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
  </center>
    </div>
@@ -398,34 +398,34 @@ letter-spacing: 1px;
 
       </div>
       <div class="modal-body">
-        
+
             <div class="row">
               <table class="table table-bordered">
                 <tbody class="tbody_search">
                 </tbody>
-               
+
               </table>
             </div>
              <center>
         <button class="btn btn-dager" data-dismiss="modal" id="okModal"><i class="fa fa-arrow-left"> </i> Back</button>
         <button type="button" class="btn  " id="select_applicant" style="background-color: #1ABB9C;color:#fff;"><i class="fa fa-credit-card" ></i>Continue</button>
-        
+
         </center>
-       
+
     </div>
   </div>
 </div>
 </div>
 
 
- 
-  
- 
-     
+
+
+
+
    <script type="text/javascript">
      var coll = document.getElementsByClassName("collapsible");
      var i;
- 
+
      for (i = 0; i < coll.length; i++) {
        coll[i].addEventListener("click", function() {
          this.classList.toggle("active");
@@ -437,21 +437,20 @@ letter-spacing: 1px;
          }
        });
      }
-   </script>   
+   </script>
  <script>
    $(document).ready(function(){
      $('#search').on('click',function(e){
-  
+
       $.ajaxSetup({
-                      headers: {
-                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                      }
-                  });
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
       var search =$('#search_applicant').val();
           if(search == ''){
           $('#search_applicant').focus();
           }else{
-        
           $.ajax({
             type:'post',
             url:'{{ route('search_assessment') }}',
@@ -472,16 +471,16 @@ letter-spacing: 1px;
        var amount = $(this).val();
        var total_amount = $('#total_amount').val();
        var change = 0;
-       
+
      if(total_amount != '' || total_amount != 0){
-  
+
       if(total_amount >= amount  ){
         $('#error_payment').html('Invalid inputs');
         $('.save_payment_button').attr('disabled','disabled');
         count = 1;
         $('#change').val('');
       }
-    
+
      if(amount >= total_amount){
       change = (amount -total_amount );
         $('#change').val(change);
@@ -494,16 +493,16 @@ letter-spacing: 1px;
       }
      }else{
       $('.save_payment_button').attr('disabled','disabled');
-    
+
      }
      })
-     
+
 
 
      $(document).on('click','#select_applicant',function(e){
      e.preventDefault();
     var id= $('.optradio:checked').attr('id');
-    
+
     $.ajax({
       type: 'post',
       url:'{{ route('select_assessment') }}',
@@ -528,10 +527,10 @@ letter-spacing: 1px;
           $('#authority_of').val($value['authority_of']);
           $('#fee_assessor').val($value['fee_assessor']);
         });
-        
+
       }
     })
-  
+
    });
    var adminPass='{{Session::get('adminID')['password']}}';
 
@@ -551,7 +550,7 @@ letter-spacing: 1px;
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -562,7 +561,7 @@ letter-spacing: 1px;
              preConfirm: function(){
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -574,18 +573,18 @@ letter-spacing: 1px;
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -593,7 +592,7 @@ letter-spacing: 1px;
                        }
                        if (value === adminPass) {
                            return new Promise(function (resolve){
-                             
+
                                $.ajax({
                                       type:'post',
                                       url: '{{ route('save_payment') }}',
@@ -626,27 +625,17 @@ letter-spacing: 1px;
                            })
                        }
                      },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
+
              });
 
              },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-       
+
+
                });
 
 
    })
    })
  </script>
- 
-@endsection 
+
+@endsection

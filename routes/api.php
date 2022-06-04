@@ -51,7 +51,13 @@ Route::prefix('/inspector')->group(function(){
         'middleware' => 'auth:api'
     ],function(){
         Route::get('logout', [loginController::class,'logoutInspector']);
+        Route::post('getProfile', [applicantAppController::class,'getProfileInspector']);
+        Route::post('updateInspectorProfile', [applicantAppController::class,'updateInspectorProfile']);
         Route::post('getApplication', [applicantAppController::class,'getApplicationInspector']);
+        Route::post('getInspectionHistory', [applicantAppController::class,'getInspectionHistory']);
+        Route::post('getInspectionHistoryDetails', [applicantAppController::class,'getInspectionHistoryDetails']);
+        Route::post('updateInspectionDetails', [applicantAppController::class,'updateInspectionDetails']);
+        Route::post('deleteInspectionDetails', [applicantAppController::class,'deleteInspectionDetails']);
         Route::post('viewApplication', [applicantAppController::class,'viewApplicationInspector']);
         Route::post('inspectionReport', [applicantAppController::class,'inspectionReport']);
 

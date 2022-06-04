@@ -92,9 +92,7 @@ class feesController extends Controller
   public function search_applicant_fetch(Request $req){
     $search = $req->search;
     $applicationId = 0;
-
     $output = '';
-
     $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
         ->where('Fname','LIKE','%'.$search.'%')->ORwhere('Lname','LIKE','%'.$search.'%')
         ->get();
@@ -123,7 +121,7 @@ class feesController extends Controller
             }
           }else{
             for($j =0; $j < $data[0]->assessment->count();$j++){
-                if($data[0]->assessment[$j]['total_amount_words'] == ''){
+                if($data[0]->assessment[$j]['type_payment'] == 'application'){
                     $output .=  "<tr>
                     <td><input type='hidden' value=".$data[0]['applicationId']." id='applicationIdSelect' /></td>
                     <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
@@ -265,7 +263,6 @@ public function search_assessment(Request $request){
     $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
     }else{
     for($i = 0; $i< $data->count(); $i++){
-
       if($data[0]->assessment->count()>0){
         for($j =0; $j <$data[0]->assessment->count();$j++){
           if($data[0]->assessment[$j]['total_amount_words'] !== '' && $data[0]->assessment[$j]['payment_date'] !== null ){
@@ -282,13 +279,12 @@ public function search_assessment(Request $request){
           }
         }
       }
-      return response()->json([
-        'output'=>$output,
-        'data'=>$data,
-      ]);
-
     }
  }
+ return response()->json([
+    'output'=>$output,
+    'data'=>$data,
+  ]);
 }
 
 public function select_assessment(Request $req){

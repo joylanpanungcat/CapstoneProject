@@ -1010,26 +1010,56 @@ height: 40%;
                                                 </td>
                                                 <td>
                                                     @if ( count($application->assessment) <1 || $application->status == 'renewal')
-                                                    Not Paid
+                                                        @if (count($application->assessment) > 0)
+                                                            @if ($application->assessment[0]['payment_status'])
+                                                            {{$application->assessment[0]['payment_status']}}
+                                                            @else
+                                                            Not Paid
+                                                            @endif
+                                                        @else
+                                                        Not Paid
+                                                        @endif
                                                     @else
                                                     {{$application->assessment[0]['payment_status']}}
                                                     @endif
                                                 </td>
                                                 <input type="hidden" value="{{ $application->applicantId }}" id="view_payment_applicationId">
                                               <td>
-                                                @if (count($application->assessment) > 0 && $application->assessment[$j]['payment_date'] !== null)
-                                                    @php
-                                                    $j++;
-                                                    @endphp
-                                                <button type='' name='view' class='btn btn-success view view_payment_history'
-                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
-                                                </button>
-                                                @elseif ((count($application->assessment) > 0  &&  $application->status == 'renewal') && $application->assessment[$j]['payment_date'] == null)
-                                                <button type='' name='view' class='btn btn-success view view_payment_history'
-                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
-                                                </button>
-                                                <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
-                                                    ><i class='fa fa-plus'></i></a>
+                                                @if (count($application->assessment) > 0)
+                                                        @if ($application->status == 'renewal')
+                                                            @if (count($application->assessment) > 1)
+                                                                <button type='' name='view' class='btn btn-success view view_payment_history'
+                                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
+                                                                </button>
+                                                            @else
+                                                                @if ($application->assessment[0]['type_payment'] =='renewal' )
+                                                                <button type='' name='view' class='btn btn-success view view_payment_history'
+                                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
+                                                                </button>
+                                                                @else
+                                                                <button type='' name='view' class='btn btn-success view view_payment_history'
+                                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
+                                                                </button>
+                                                                <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
+                                                                    ><i class='fa fa-plus'></i></a>
+                                                                @endif
+                                                            @endif
+                                                        @elseif ($application->status == 'renewed')
+                                                            <button type='' name='view' class='btn btn-success view view_payment_history'
+                                                            id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
+                                                            </button>
+                                                        @else
+                                                            @if ($application->assessment[0]['payment_status'] =='paid')
+                                                                <button type='' name='view' class='btn btn-success view view_payment_history'
+                                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
+                                                                </button>
+                                                            @else
+                                                            <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
+                                                                ><i class='fa fa-plus'></i></a>
+                                                            @endif
+                                                        @endif
+
+
                                                 @else
                                                 <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
                                                     ><i class='fa fa-plus'></i></a>
@@ -3677,7 +3707,6 @@ Swal.fire({
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -3687,78 +3716,21 @@ Swal.fire({
              cancelButtonAriaLabel: 'Thumbs down',
              preConfirm: function(){
               $('#inspection_modal').modal('hide');
-              Swal.fire({
-                input: 'password',
-
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-                           return new Promise(function (resolve){
-                            $.ajax({
-                              type:'post',
-                              url:'{{ route('verify_inspection_report') }}',
-                              data:{
+                       $.ajax({
+                            type:'post',
+                            url:'{{ route('verify_inspection_report') }}',
+                            data:{
                                 applicationId:applicationId,
-                              },
-                              dataType: 'json',
-                              success:function(data){
+                            },
+                            dataType: 'json',
+                            success:function(data){
                                 swal.close();
                                 toastr.success(data.msg);
-                              }
-                            })
-
-                           })
-                       }
-                     },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-             });
-
-             },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-
-               });
-
-
-
-
-
-});
+                            }
+                         })
+                        }
+            });
+        });
 
 $('.print_certificate').on('click',function(e){
   e.preventDefault();

@@ -187,7 +187,31 @@ element.style {
   border: none
 
 }
-
+.legend{
+    display: flex;
+    gap: 10px;
+}
+.lowRisk{
+    height: 20px !important;
+    width: 20px !important;
+    background: #FFDFDF !important;
+    border: none;
+}
+.mediumRisk{
+    height: 20px !important;
+    width: 20px !important;
+    background: #FF8C8C !important;
+    border: none;
+}
+.highRisk{
+    height: 20px !important;
+    width: 20px !important;
+    background: #FF1313 !important;
+    border: none;
+}
+.leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
+    display: none !important;
+}
 @media screen  and (max-width: 1920px){
   .leaflet-left {
     position: absolute;
@@ -229,7 +253,7 @@ element.style {
           </div>
         </div>
       </div>
-      <div class="">
+      {{-- <div class="">
         <div class="page-title">
           <div class="title_left">
               <h3>Susceptibility Map</h3>
@@ -238,10 +262,10 @@ element.style {
           {{-- <div class="title_right">
             <button class="btn btn-default" data-toggle="modal" data-target="#updateRecord"><i class="fa fa-edit fa-lg"  ></i>Update</button>
 
-          </div> --}}
+          </div>
       </div>
     <hr class="separate2">
-    </div>
+    </div> --}}
 
          <div class="clearfix"></div>
           <div class="row">
@@ -269,7 +293,16 @@ element.style {
                         </button>
                     </div> --}}
                     <iframe src="https://editor.giscloud.com/rest/1/maps/1903414/render.iframe?bound=125.16038111816408,7.144658966796868,126.09833888183596,7.531240387695306&toolbar=true&popups=true&layerlist=true" width="100%" height="400" frameborder="0"></iframe>
+                   <label for="">Legend</label>
+                    <div class="legend">
 
+                        <div class="lowRisk"></div>
+                        <h5>LOW RISK</h5>
+                        <div class="mediumRisk"></div>
+                        <h5>MEDIUM RISK</h5>
+                        <div class="highRisk"></div>
+                        <h5>HIGH RISK</h5>
+                    </div>
                     </div>
                   </div>
                 </div>
