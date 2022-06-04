@@ -922,8 +922,8 @@ height: 40%;
                                                   <th>#</th>
                                                   <th>Type of application</th>
                                                   <th>Date Applied</th>
-                                                  <th>Inspection Status</th>
-                                                      <th>Application Status</th>
+                                                  <th>Addess</th>
+                                                  <th>Application Status</th>
                                                   <th>Action</th>
 
                                               </tr>
@@ -933,8 +933,6 @@ height: 40%;
                                               @php
                                                   $i=1;
                                               @endphp
-
-
                                               <tr>
                                                   <td>{{$i++}}
                                                   </td>
@@ -943,19 +941,19 @@ height: 40%;
                                                   </td>
                                                   <td>{{$certificate->date_apply}}
                                                   </td>
-                                                  <td>{{$certificate->payment_status}}
+                                                  <td>{{$certificate->purok , $certificate->barangay , $certificate->city}}
                                                   </td>
                                                   <td>{{$certificate->status}}
                                                   </td>
+                                                    @if ($certificate->status == 'approved' || $certificate->status == 'renewal')
+                                                    <td> <button type="button" class="btn btn-success  print_certificate"  id="{{ $certificate->applicationId }}" ><i class="fa fa-print"   ></i> Print</button></td>
+                                                    @else
 
-                                           @if ($certificate->status != 'approved')
-                                             <td>Check payment and inspection details</td>
-                                             @else
-                                             <td>  <button type="button" class="btn btn-success  print_certificate"  id="{{ $certificate->applicationId }}" ><i class="fa fa-print"   ></i> Print</button>
-                                                      </td>
-                                           @endif
+                                                        <td>Check payment and inspection details</td>
 
-                                              </tr>
+
+                                                    @endif
+                                                   </tr>
                                               @endforeach
 
 
@@ -1147,8 +1145,6 @@ height: 40%;
                                             @php
                                                 $i=1;
                                             @endphp
-
-
                                             <tr>
                                                 <td>{{$i++}}
                                                 </td>
@@ -1164,38 +1160,33 @@ height: 40%;
                                                 <td>{{$inspection_details->status}}
                                                 </td>
                                                 <input type="hidden" value="{{ $inspection_details->applicantId }}" id="view_payment_applicationId">
-                                        <td><button type='' name='view' class='btn btn-success view view_inspection_report'
+                                          <td><button type='' name='view' class='btn btn-success view view_inspection_report'
                                             id="{{$inspection_details->applicationId}}"><i class='fa fa-eye'></i></button>
                                                 </td>
-
                                             </tr>
                                                  @endforeach
-
                                             @else
-
-                                            @php
-                                            $i=1;
-                                        @endphp
-                                                 {{-- @foreach ($assessment_no_payment as $assessment)
-
-                                            <tr>
-                                                <td>{{$i++}}
-                                                </td>
-                                                <td>
-                                                    {{$assessment->type_application}}
-                                                </td>
-                                                <td>N/A
-                                                </td>
-                                                <td>N/A
-                                                </td>
-
-                                                <td>'No Inspection Report'
-                                                </td>
-                                                    <td>No Inspection Report
+                                                @php
+                                                $i=1;
+                                                @endphp
+                                             @foreach ($assessment as $assessment)
+                                                <tr>
+                                                    <td>{{$i++}}
                                                     </td>
+                                                    <td>
+                                                        {{$assessment->type_application}}
+                                                    </td>
+                                                    <td>N/A
+                                                    </td>
+                                                    <td>N/A
+                                                    </td>
+                                                    <td>'No Inspection Report'
+                                                    </td>
+                                                     <td>No Inspection Report
+                                                        </td>
 
-                                            </tr>
-                                            @endforeach --}}
+                                                </tr>
+                                            @endforeach
                                             @endif
                                           </tbody>
 

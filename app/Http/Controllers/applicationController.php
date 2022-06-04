@@ -134,15 +134,10 @@ public function viewApplication(Request $request){
     ->where('application.applicationId',$applicationId2)
     ->get();
 
-
-
     $uploaded = application::join('address','address.applicationId','=','application.applicationId')
     ->where('application.applicantId',$applicantId)
     ->ORwhere('application.accountId','=',$accountId)
     ->get();
-
-
-
 
 
     $applicantAdd=address::where('applicantId','=',$account_id)->first();
@@ -169,10 +164,10 @@ public function viewApplication(Request $request){
     ->where('application.applicationId',$account_id)
     ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
 
-    $certificate = assessment::join('application','application.applicationId','=','assessment.applicationId')
-    ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
-    ->where('application.applicationId',$account_id)
-    ->get(['application.type_application','application.date_apply','inspection_details.status','assessment.payment_status','application.applicationId']);
+    $certificate = application::
+        join('address','address.applicationId','=','application.applicationId')
+        ->where('application.applicationId',$applicationId2)
+        ->get();
 
 
       // foreach ($assessment as $item){
