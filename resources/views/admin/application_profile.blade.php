@@ -3,54 +3,50 @@
 @section('title','applicant account')
 @section('content')
   <style type="text/css">
-   table tbody tr td input{
-        border: none;
-        background-color: transparent;
-        padding: 5px;
-        text-align: center;
-         font-size: 16px;
+table tbody tr td input{
+border: none;
+background-color: transparent;
+padding: 5px;
+    font-size: 16px;
+}
+table tbody tr td input:hover{
+border: 1px solid #2A3F54;
 
-
-      }
-      table tbody tr td input:hover{
-        border: 1px solid #2A3F54;
-
-
-      }
+}
 .profile2{
-    border-radius: 50%;
-    width: 50%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    }
-    .Applicant{
-    text-align: center;
-    margin-top: 20px;
+border-radius: 50%;
+width: 50%;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+.Applicant{
+/* text-align: center; */
+margin-top: 20px;
 }
 .personalInfo input{
-        border: none;
-        font-size: 14px;
-    padding: 0;
-    font-weight: bold;
-    letter-spacing: 5px;
-        margin-top: -10px;
+border: none;
+font-size: 14px;
+padding: 0;
+font-weight: bold;
+letter-spacing: 5px;
+margin-top: -10px;
     }
 .view{
 
-    outline: none !important;
-    box-shadow: none !important;
+outline: none !important;
+box-shadow: none !important;
 
 }
 .folder tr td{
-    height: 10px;
+height: 10px;
 
 }
 .folder a{
-    font-size: 14px;
-        margin-top: -15px;
-        height: 10px;
-        horizontal-align: middle;
+font-size: 14px;
+margin-top: -15px;
+height: 10px;
+horizontal-align: middle;
 }
 .folder a:hover{
     color: blue;
@@ -65,114 +61,114 @@ display: block;
 }
 
 .actionButton i {
-  margin-top: -5px;
-  margin-left: -5px;
-  height: 10px;
-   text-align: center;
+margin-top: -5px;
+margin-left: -5px;
+height: 10px;
+/* text-align: center; */
 
 }
 #fileParent,#path{
     font-size: 14px;
 }
 .addFiles{
-        padding: 5px;
-    background-color: #E9ECEF;
-    border: none;
-    font-size: 20px;
-    border-radius: 20%;
-    height: 30px;
-    /* text-align: center; */
-    object-fit: cover;
-    line-height: 1px;
+padding: 5px;
+background-color: #E9ECEF;
+border: none;
+font-size: 20px;
+border-radius: 20%;
+height: 30px;
+/* text-align: center; */
+object-fit: cover;
+line-height: 1px;
 }
-.dropzoneDragArea {
-            background-color: #fbfdff;
-            border: 1px dashed #c0ccda;
-            border-radius: 6px;
-            cursor: pointer;
-
-        }
-
-.dz-message{
-     flex-wrap: wrap;
-  align-content: center;
-}
- .dz-progress{
-            display: none;
-        }
 .dropzoneDragArea {
     background-color: #fbfdff;
     border: 1px dashed #c0ccda;
     border-radius: 6px;
     cursor: pointer;
-    height: 200px;
+
+}
+
+.dz-message{
+flex-wrap: wrap;
+align-content: center;
+}
+.dz-progress{
+display: none;
+}
+.dropzoneDragArea {
+background-color: #fbfdff;
+border: 1px dashed #c0ccda;
+border-radius: 6px;
+cursor: pointer;
+height: 200px;
 
 }
 .icon i{
-        font-size: 3em;
-    background-color: black;
-    height: 100px;
-    width: 100px;
-    text-align: center;
-    border-radius: 50%;
-    background-color: #696767;
-    color: #fff;
-    padding: 25px 20px;
+font-size: 3em;
+background-color: black;
+height: 100px;
+width: 100px;
+/* text-align: center; */
+border-radius: 50%;
+background-color: #696767;
+color: #fff;
+padding: 25px 20px;
 }
 
 
 .folderItem .file-item:hover,.folderItem .file-folder:hover{
-        background: #E8F0FE;
-        color: black;
-        box-shadow: 3px 3px #0000000f;
-    }
-.active2{
-    background-color: #E8F0FE;
-    color: #4285F4;
+background: #E8F0FE;
+color: black;
+box-shadow: 3px 3px #0000000f;
 }
-    .custom-menu {
-        z-index: 1000;
-        position: absolute;
-        background-color: #ffffff;
-        border: 1px solid #0000001c;
-        border-radius: 5px;
-        padding: 8px;
-        min-width: 13vw;
-         box-shadow: 5px 5px 5px  #888888;
+.active2{
+background-color: #E8F0FE;
+color: #4285F4;
+}
+.custom-menu {
+z-index: 1000;
+position: absolute;
+background-color: #ffffff;
+border: 1px solid #0000001c;
+border-radius: 5px;
+padding: 8px;
+min-width: 13vw;
+box-shadow: 5px 5px 5px  #888888;
 }
 
 a.custom-menu-list {
-    display: flex;
-    color: #4c4b4b;
-    font-weight: 600;
-    font-size: 1em;
-    padding: 10px;
-    width: 200px;
+display: flex;
+color: #4c4b4b;
+font-weight: 600;
+font-size: 1em;
+padding: 10px;
+width: 200px;
 
 }
 a.custom-menu-list i {
- font-size: 20px;
- margin-right: 10px;
+font-size: 20px;
+margin-right: 10px;
 }
 a.custom-menu-list:hover {
-    background: #80808024;
+background: #80808024;
 }
 hr.solid {
-  border-top: 1px solid #bbb;
+border-top: 1px solid #bbb;
 }
 
 .sidebar {
-    height: 100%;
-  width: 0; /* 0 width - change this with JavaScript */
-  position: absolute; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0;
-  right: 0;
-  background-color: #FFFFFF;
-  border-left: 1px solid;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px; /* Place content 60px from the top */
-  transition: 0.1s; /* 0.5 second transition effect to slide in the sidebar */
+height: 100%;
+width: 0; /* 0 width - change this with JavaScript */
+position: absolute; /* Stay in place */
+z-index: 1; /* Stay on top */
+top: 0;
+right: 0;
+background-color: #FFFFFF;
+border-left: 1px solid;
+overflow-x: hidden; /* Disable horizontal scroll */
+padding-top: 20px; /* Place content 60px from the top */
+transition: 0.1s; /* 0.5 second transition effect to slide in the sidebar */
 }
 
 #main {
@@ -209,7 +205,7 @@ margin-top: 49px;
 .tabs-nav a {
     padding: 10px;
     font-size: 14px;
-    text-align: center;
+    /* text-align: center; */
     width: 110px;
     padding-left: 20px;
 }
@@ -463,7 +459,7 @@ color: red;
 #authority_of, #fee_assessor{
 color: #2A3F54;
 text-transform: uppercase;
-text-align: center;
+/* text-align: center; */
 font-size: 22px;
 font-weight: bold;
 letter-spacing: 1px;
@@ -476,7 +472,7 @@ letter-spacing: 1px;
 }
 #total_amount{
   border: none;
-  text-align: center;
+  /* text-align: center; */
   font-weight: bold;
   color: #2A3F54;
   font-size: 16px;
@@ -521,10 +517,11 @@ display: inline-block;
     letter-spacing: 2px;
 
 }
-.certificate_content .top p, h2, input{
-    /* text-align: center; */
+.certificate_content .top {
+    text-align: center;
     background-color: none;
 }
+
 .certificate_content h2 {
     font-weight: bold;
     color: #2A3F54;
@@ -672,6 +669,9 @@ height: 40%;
   margin: 0;
   margin-left: auto;
   position: relative;
+}
+.panel-heading input {
+    /* text-align: justify !important; */
 }
 </style>
 <div class="right_col" role="main" >
@@ -1367,7 +1367,7 @@ height: 40%;
     <div id="Print_certificate" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content " id="print_content">
-            <div class="main-panel ">
+            <div class="main-panel " id="main-panel">
               <div class="row certificate_content" >
                   <div class=" col-md-12">
                       <div class="col-md-2">
@@ -1379,9 +1379,9 @@ height: 40%;
                               <br><strong>Department of the Interior and local Government</strong></p>
                               <h2 style="color:#2A3F54">BUREAU OF FIRE PROTECTION</h2>
                              <center>
-                              <input type="text" name="" id="" style="width:40%">
-                              <input type="text" name="" id=""  style="width:60%">
-                              <input type="text" name="" id=""  style="width:80%">
+                              <input type="text" class="top-input" name="" id="" style="width:40%">
+                              <input type="text" class="top-input" name="" id=""  style="width:60%">
+                              <input type="text" class="top-input"name="" id=""  style="width:80%">
                           </center>
                           </div><br><br>
                       </div>
@@ -1545,15 +1545,14 @@ height: 40%;
 
           </div>
           <div class="button_print_cert" >
-            <button type="button" class="btn btn-primary" onclick="printDiv()"><i class="fa fa-print"></i> Print</button>
+            <button type="button" class="btn btn-primary" id="printCertificate"><i class="fa fa-print"></i> Print</button>
             <button type="button" data-dismiss="modal" class="btn btn-default">close</button>
           </div>
           </div>
-
       </div>
+
   </div>
-
-
+  <div id="divhidden"></div>
     {{-- Add file --}}
        <div id="addFile" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
@@ -2019,22 +2018,22 @@ height: 40%;
 
                             <div class="x_content">
 
-                 <div class="row">
-                  <div class="col-md-12" id="receipt">
-                      <div class="panel panel-default">
-                          <div class="title_payment">
-                          <center><h5><strong>ORDER OF PAYMENT</strong></h5>
-                            <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
-                          </center>
-                        </div>
-                <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name_payment" name=""></span></h5></div>
+                    <div class="row">
+                    <div class="col-md-12" id="receipt">
+                        <div class="panel panel-default">
+                            <div class="title_payment">
+                            <center><h5><strong>ORDER OF PAYMENT</strong></h5>
+                                <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
+                            </center>
+                            </div>
+                        <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name_payment" name=""  ></span></h5></div>
 
-                 <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
-                <div class="panel-body" id="panel-body">
+                        <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""  ></span></h5></div>
+                        <div class="panel-body" id="panel-body">
 
-                    <table class="table table-striped table-bordered" id="data"  style="width:100%;">
-                          <thead>
-                            <tr>
+                            <table class="table table-striped table-bordered" id="data"  style="width:100%;">
+                                <thead>
+                                    <tr>
                               <!-- <th>Select</th> -->
 
                               <th>NATURE OF PAYMENT </th>
@@ -2092,11 +2091,6 @@ height: 40%;
 
 
                             </div>
-
-
-
-
-
                 </div>
               </div>
                   </div>
@@ -2105,20 +2099,12 @@ height: 40%;
                   <div class="row">
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6 ">
-                                  <form>
-
-
                                   <div class="button-group total_body2 ">
                                     <button type="button" class="btn btn-secondary " data-dismiss="modal" id="" style="display: inline-block;"  ><i class="fa fa-arrow-left" ></i>  Close</button>
-                                      <button type="button" class="btn btn-secondary save_payment_button" onclick="printDivPayment()"><i class="fa fa-print" ></i>  Print</button>
+                                      <button type="button" class="btn btn-secondary print_payment_button"  id="print_payment_button"><i class="fa fa-print" ></i>  Print</button>
                                   </div>
-                                  </form>
                                 </div>
                               </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -3367,7 +3353,7 @@ $('.business_info_button').on('click',function(e){
             $('#BP_num').val(value['BP_num']);
             $('#OR_num').val(value['OR_num']);
             $('#status').val(value['status']);
-            if(value['status']=='renewal' || value['status'] == 'approved'){
+            if(value['status']=='renewal' || value['status'] == 'approved' || value['status'] == 'renewed'){
                 $('#status').append('<option value='+value['status']+' >'+value['status']+'</option>');
                 $('#status').val(value['status']);
                 $('#status').attr('disabled',true);
@@ -3761,10 +3747,44 @@ $('.print_certificate').on('click',function(e){
 
 });
 
+$('#printCertificate').on('click',function(){
+    //download
+    // html2canvas(document.getElementById("print_content")).then(function (canvas) {
+    //                var anchorTag = document.createElement("a");
+    //                 document.body.appendChild(anchorTag);
+    //                 // document.getElementById("previewImg").appendChild(canvas);
+    //                 anchorTag.download = "filename.jpg";
+    //                 anchorTag.href = canvas.toDataURL();
+    //                 anchorTag.target = '_blank';
+    //                 anchorTag.click();
+    //             });
 
+            var element = $("#main-panel")[0];
+        html2canvas(element).then(function (canvas) {
+            var myImage = canvas.toDataURL("image/png");
+            var tmp = window.open("");
+            $(tmp.document.body)
+                .html("<img src=" + myImage + " alt=''>")
+                .ready(function () {
+                    tmp.focus();
+                    tmp.print();
+                })
+        })
 
-
-
+})
+$('#print_payment_button').on('click',function(){
+            var element = $("#receipt")[0];
+        html2canvas(element).then(function (canvas) {
+            var myImage = canvas.toDataURL("image/png");
+            var tmp = window.open("");
+            $(tmp.document.body)
+                .html("<img src=" + myImage + " alt=''>")
+                .ready(function () {
+                    tmp.focus();
+                    tmp.print();
+                })
+        })
+})
 
 
 

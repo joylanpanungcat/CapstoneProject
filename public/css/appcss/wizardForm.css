@@ -8,14 +8,14 @@
     background: white;
     border: 0 none;
     border-radius: 0px;
-    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2); */
     padding: 20px 40px 30px 40px;
     box-sizing: border-box;
     display: block;
-    height: 55vmin;
+    height: 50vmin;
     position: relative;
     overflow-y: auto;
-    
+
     /*position: relative*/
 
 }
@@ -29,7 +29,7 @@
     margin: 0;
     padding-bottom: 20px;
     /*position: relative*/
- 
+
 
 }
 
@@ -87,7 +87,7 @@
 }
 #msform .action-button-cancel {
     width: 100px;
-   
+
     font-weight: bold;
     color: #292b2c;
     border: 0 none;
@@ -106,7 +106,7 @@
 
 
 #msform .action-button {
-    
+
     background:  #2A3F54;
     font-weight: bold;
     color: white;
@@ -118,7 +118,7 @@
    width: 100px;
     float: right;
 
- 
+
 }
 
 #msform .action-button:hover,
@@ -139,7 +139,7 @@
    padding: 2px 2px;
     margin-top: 10px;
     float: right;
-    
+
 
 }
 #msform #submit {
@@ -179,7 +179,7 @@ select.list-dt:focus {
     z-index: 0;
     border: none;
     border-radius: 0.5rem;
-   
+
 }
 
 .fs-title {

@@ -162,6 +162,7 @@ Route::post("restoreFee",[archivedController::class,"restoreFee"])->name('restor
 Route::view('renewal_application_main','admin/renewal_application_main')->name('renewal_application_main');
 Route::get("renewalController",[renewalController::class,"renewal_application_fetch"])->name('renewalController');
 Route::post("view_renewal_application",[renewalController::class,"view_renewal_application"])->name('view_renewal_application');
+Route::post("application_notif",[renewalController::class,"application_notif"])->name('application_notif');
 Route::post("renew_application_action",[renewalController::class,"renew_application_action"])->name('renew_application_action');
 
 //inspector

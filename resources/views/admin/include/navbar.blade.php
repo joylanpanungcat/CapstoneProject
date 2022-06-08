@@ -54,6 +54,8 @@
 {{-- datapicker --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('js/datepicker/datetimepicker.css') }}">
 
+<link rel="stylesheet" href="{{ asset('js/nprogress/nprogress.css') }}">
+<link rel="stylesheet" href="{{ asset('js/print/print.css') }}">
 
 {{-- map --}}
 
@@ -403,7 +405,7 @@
     {{-- datatable --}}
     <script type="text/javascript" src="{{ asset('datatable/js/dataTables.bootstrap4.min.js') }}"></script>
 
-
+    <script src="{{ asset('js/nprogress/nprogress.js') }}"></script>
     {{-- sweetaler 2 --}}
     <script type="text/javascript" src="{{ asset('sweetalert2/sweetalert2.min.js') }}"></script>
 
@@ -425,6 +427,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
 
+<script src="{{ asset('js/print/print.min.js') }}"></script>
+<script src="{{ asset('js/print/html2canvas.min.js') }}"></script>
 <script>
   $(document).ready(function(){
     function set_emergency(view = ''){
@@ -465,6 +469,7 @@
       setInterval(function(){
         set_emergency();
         applicationUpdateStatus();
+        load_unseen_notification();
       }, 10000);
 
     function applicationUpdateStatus(){
@@ -474,6 +479,30 @@
             dataType: 'json',
         })
     };
+    $(document).on('click', '.noti_app', function(){
+    $('#count_application').html('');
+    load_unseen_notification('yes');
+    });
+    function load_unseen_notification(view = '')
+    {
+    $.ajax({
+    url:"{{ route('application_notif') }}",
+    type:"POST",
+    data:{view:view},
+    dataType:"json",
+    success:function(data)
+    {
+        // $('.dropdown-menu').html(data.notification);
+        if(data.unseen_notification > 0)
+        {
+        $('#count_application').html(data.unseen_notification);
+        }
+    }
+    });
+    }
+ load_unseen_notification();
+
+
 
   })
 </script>

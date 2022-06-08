@@ -1,7 +1,6 @@
 @extends('admin/include.navbar')
 @section('title','Application List')
 @section('content')
-
   <style type="text/css">
 
       .title_right button{
@@ -444,11 +443,9 @@ background-color:#2A3F54;
                             </button> --}}
                             <div class="panel panel-default addApplicationPanel">
                                     <div class="panel-body">
-
-
                             <div id="showModalUpdate"></div>
                             <!-- MultiStep Form -->
-<div class="container-fluid" id="grad1">
+<div class="container-fluid">
     <div class="row justify-content-center mt-0">
        {{--  <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2"> --}}
         <div class="col-md-10 text-center ">

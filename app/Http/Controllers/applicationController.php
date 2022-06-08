@@ -1043,6 +1043,7 @@ public function applicationUpdateStatus(){
     $data = application::get();
    foreach($data as $item){
        $date= $item['date_approved'];
+
        if($date !== null){
             $year = Carbon::createFromFormat('Y-m-d', $date)->format('Y');
             $year2 = Carbon::now()->subMonth(11)->format('Y');
@@ -1051,9 +1052,11 @@ public function applicationUpdateStatus(){
                 $now = Carbon::now()->subMonth(11)->format('m');
                 if((intval($now)-intval($month))==1){
                     $applicationId = $item['applicationId'];
+                    $due_date = Carbon::createFromFormat('Y-m-d', $date)->addYear()->format('Y-m-d');
                     $data2= application::where('applicationId',$applicationId);
                     $data2->update([
-                        'status'=>'renewal'
+                        'status'=>'renewal',
+                        'due_date'=> $due_date
                     ]);
 
                 }

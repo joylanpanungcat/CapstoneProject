@@ -79,6 +79,7 @@ public function addApplication(Request $request){
     $businessBarangay =$request->businessBarangay;
     $businessCity =$request->businessCity;
     $date_apply  = date('Y-m-d H:i:s');
+    $count= 1;
     $status  = 'pending';
     $filenames  = '';
     $remarks  = 'New';
@@ -113,6 +114,7 @@ public function addApplication(Request $request){
     $application->nature_business=$nature_business;
     $application->business_name=$business_name;
     $application->date_apply =$date_apply;
+    $application->count =$count;
     $application->status= $status;
     $application->filenames= $path2;
     $application->remarks= $remarks;

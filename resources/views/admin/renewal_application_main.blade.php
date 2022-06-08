@@ -3,7 +3,7 @@
 @section('content')
 
   <style type="text/css">
-    
+
       .title_right button{
         float: right;
       }
@@ -28,7 +28,7 @@
     width: 1200px;
 }
 button.close-modal{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -39,7 +39,7 @@ button.close-modal{
     padding: 2px;
 }
 button.close-modal:hover{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -75,10 +75,10 @@ button.close-modal:hover{
             border: 1px dashed #c0ccda;
             border-radius: 6px;
             cursor: pointer;
-            
+
         }
 
-       
+
         .dz-progress{
             display: none;
         }
@@ -103,8 +103,8 @@ button.close-modal:hover{
 
   width: 10px;
   height: 10px;
- 
-  
+
+
 } */
 /* .actionButton i {
   margin-top: -5px;
@@ -122,7 +122,7 @@ button.close-modal:hover{
   margin-left: -20px;
 }
 .actionButton:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -141,7 +141,7 @@ button.close-modal:hover{
   vertical-align: middle;
 }
 .addApplicantionTooltip:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -188,14 +188,14 @@ overflow: auto;
 }
 
 .dataTables_wrapper  .dataTables_paginate  .paginate_button.active .page-link{
- 
+
   background-color: #1ABB9C !important;
 
 }
 
 .addApplication .modal-content{
   height: 90vh;
-  
+
 }
 
 
@@ -218,19 +218,19 @@ overflow: auto;
                 <h3>Renewal </h3>
             </div>
 
-         
+
         </div>
         <hr class="separate2">
-                    
-                    
+
+
         <div class="clearfix"></div>
-       
+
 
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                       <div id="show2"></div>
-                           
+
                                 <div class="x_content">
                                     <br />
                                     <div class="col-md-4 sort_select">
@@ -243,7 +243,7 @@ overflow: auto;
                                           <option value="Fire Safety Inspection Certificate for Occupancy">FSIC for Occupancy</option>
                                       </select>
                                     </div>
-                              
+
                                     <div class="col-md-8">
                                       <div class="row input-daterange" style="float: right">
                                         <div class="">
@@ -259,25 +259,26 @@ overflow: auto;
                                     </div>
                                     </div>
                                     <br><br>   <br><br>
-                                       
+
                             <table class="table table-striped table-bordered " id="applicationData2" style="width: 100%"  >
                               <thead >
-                               
+
 
                                   <!-- <th>Select</th> -->
                                   <th>#</th>
-                                  <th>Control #</th>
                                   <th>Applicant's Name</th>
                                   <th>Type of Application</th>
                                   <th>Business Name</th>
                                   <th>Status</th>
+                                  <th>Date Approved</th>
+                                  <th>Due Date</th>
                                   <th>Action</th>
 
                               </thead>
-                              
+
                                   </table>
 
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -301,32 +302,32 @@ overflow: auto;
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">Payments</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="checkbox" value="" class="form-control checkbox" style="font-size: 10px" id="payment_checkbox"> 
+                        <input type="checkbox" value="" class="form-control checkbox" style="font-size: 10px" id="payment_checkbox">
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">Documents</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="checkbox" value="" class="form-control checkbox" style="font-size: 10px"> 
+                        <input type="checkbox" value="" class="form-control checkbox" style="font-size: 10px">
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="control-label col-md-3 col-sm-3 ">Inspection Report</label>
                       <div class="col-md-9 col-sm-9 ">
-                        <input type="checkbox" value="" class="form-control checkbox" style="font-size: 10px"> 
+                        <input type="checkbox" value="" class="form-control checkbox" style="font-size: 10px">
                       </div>
                     </div>
-                           
+
                    </div>
-                     
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-success" id="renew_submit"><i class="fa fa-refresh"></i> Renew</button>
                   </div>
                   </form>
 
-                    
+
                   </div>
               </div>
           </div>
@@ -352,20 +353,19 @@ overflow: auto;
         info:true,
         "ordering": false,
         'sorting':false,
-       
+
         'aLengthMenu':[[5,10,25,50,-1],[5,10,25,50,"All"]],
           scrollX:true,
           ajax: {
             url:"{{ route('renewalController') }}",
             data: {category:category,
-                   from_date:from_date, 
+                   from_date:from_date,
                   to_date:to_date
             }
           },
-       
+
         columns:[
         {data:'DT_RowIndex',name:'DT_RowIndex', class: 'table_header'},
-        {data:'date_apply',name:'date_apply'},
         {data:'name',name:'name'},
         {data:'type_application',name:'type_application'},
         {data:'nature_business',name:'nature_business'},
@@ -374,7 +374,13 @@ overflow: auto;
           render: function(data, type, row){
             return btn = '<span class="badge badge-warning" style="color:#00202">'+data+'</span>';
           }
-        
+
+        },
+        {data:'date_approved',name:'date_approved'},
+        {data:'due_date',name:'due_date',
+        render: function(data, type, row){
+            return btn = '<span class="badge badge-danger" style="color:#00202">'+data+'</span>';
+          }
         },
         {data:'actions',name:'actions'},
 
@@ -405,7 +411,7 @@ overflow: auto;
   }
  });
 
-  
+
  $('#refresh').click(function(){
   $('#from_date').val('');
   $('#to_date').val('');
@@ -431,7 +437,7 @@ overflow: auto;
 
       })
     $('#schedule_modal').modal('show');
-  
+
    }
     })
   });
@@ -454,13 +460,6 @@ overflow: auto;
               title: 'swal2-title'
             },
             allowOutsideClick: false,
-              backdrop: `
-              url("/images/logo2.png")
-                    rgb(9 9 26 / 73%)
-                    center
-                    no-repeat
-                  `,
-             
               cancelButtonAriaLabel: 'Thumbs down',
               cancelButtonText:
                 '<i class="fa fa-arrow-left"></i>Close',
@@ -472,7 +471,7 @@ overflow: auto;
                 $('#schedule_modal').modal('hide');
                 Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -484,18 +483,18 @@ overflow: auto;
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -518,27 +517,21 @@ overflow: auto;
                             $('#applicationData2').DataTable().destroy();
                         fetch_data();
                           }
-                          
+
                     })
                        }
                      },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
              });
-              
+
                 }
-             
-        
+
+
                 });
       }
-        
+
     });
   })
 </script>
 
-  
-  @endsection 
+
+  @endsection

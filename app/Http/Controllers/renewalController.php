@@ -22,7 +22,7 @@ class renewalController extends Controller
                      ->where('status','=','renewal')
                      ->orderBy('applicationId','desc')
                      ->get();
-                
+
          }
          elseif($request->from_date !='' && $request->category == '')
          {
@@ -46,7 +46,7 @@ class renewalController extends Controller
                 ->where('status','=','renewal')
                 ->get();
          }
-      
+
         }
         return DataTables::of($data)
         ->addIndexColumn()
@@ -56,13 +56,13 @@ class renewalController extends Controller
         ->addColumn('actions', function($row){
               return '
               <button type="button"  class="btn btn-defualt btn-xs view_renewal actionButton" id='.$row['applicationId'].'><i class="fa fa-refresh"></i></button>
-              <a type="button" name="viewApplicant" class="btn  actionButton" href="application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
+              <a type="button" name="viewApplicant" class="btn  actionButton" href="admin/application_profile/'.$row['applicationId'].'" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>
               ';
           })
           ->rawColumns(['actions'])
 
         ->make(true);
-        
+
       }
 
 public function view_renewal_application(Request $request){
@@ -76,18 +76,36 @@ public function view_renewal_application(Request $request){
 }
 public function renew_application_action(Request $request){
   $applicationId =$request->applicationId;
-  $status =$request->status;
-  $date = date('yy-mm-dd');
+//   $status =$request->status;
+$status = 'renewed';
+  $date = date('Y-m-d');
 
   $data = application::where('applicationId',$applicationId);
   $data->update([
     'status'=>$status,
-    'date_apply'=>$date
+    'date_approved'=>$date
   ]);
 
   return response()->json([
     'msg'=>'Successfully Renewed'
   ]);
 
+}
+public function application_notif(Request $request){
+$view = $request->view;
+if($view == ''){
+    $data = application::where('count',1)->count();
+    return response()->json([
+        'unseen_notification'=> $data
+    ]);
+}else{
+    $data2 = application::where('count',1);
+    $data2->update([
+        'count'=> 0
+    ]);
+    return response()->json([
+        'unseen_notification'=> 0
+    ]);
+}
 }
 }
