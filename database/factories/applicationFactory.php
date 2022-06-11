@@ -24,7 +24,7 @@ class applicationFactory extends Factory
         $datetime = $this->faker->dateTimeBetween('now','+11 months');
         $type_application = array('Fire Safety Inspection Certificate', 'Fire Safery Evaluation Clearance','Fire Safety Inspection Certificate for Business','Fire Safety Inspection Certificate for Occupancy');
         $rand_keys = $type_application[array_rand($type_application)];
-        
+
         $type_occupancy = array('Mercantile','Business');
         $rand_occupancy= $type_occupancy[array_rand($type_occupancy)];
 
@@ -32,14 +32,14 @@ class applicationFactory extends Factory
         $rand_nature= $nature_business[array_rand($nature_business)];
         $business_name = $this->faker->sentence(rand(5, 7));
 
-        $status = array('approved','pending','reinspection','renewal');
+        $status = array('pending');
         $rand_status= $status[array_rand($status)];
 
 
         $remarks = array('old','new');
         $rand_remarks = $remarks[array_rand($remarks)];
         return [
-               
+
             'type_application'=> $rand_keys,
             'control_number'=>$this->faker->phoneNumber(rand(5, 10)),
             'type_occupancy'=>$rand_occupancy,

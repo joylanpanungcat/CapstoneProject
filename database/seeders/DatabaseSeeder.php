@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             ])->each(function ($address){
                 address::factory(1)->create([
                     'applicantId'=>$address->applicantId,
-                    
+
                 ]);
             })->each(function($address){
                 address::factory(1)->create([
@@ -35,11 +35,11 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
         });
-    
 
 
 
- 
+
+
 
     }
 }

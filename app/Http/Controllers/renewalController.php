@@ -94,7 +94,7 @@ $status = 'renewed';
 public function application_notif(Request $request){
 $view = $request->view;
 if($view == ''){
-    $data = application::where('count',1)->count();
+    $data = application::where('count',1)->where('status','!=','renewal')->count();
     return response()->json([
         'unseen_notification'=> $data
     ]);
@@ -107,5 +107,23 @@ if($view == ''){
         'unseen_notification'=> 0
     ]);
 }
+}
+
+public function renewal_notif(Request $request){
+    $view = $request->view;
+    if($view == ''){
+        $data = application::where('count2',1)->where('status','=','renewal')->count();
+        return response()->json([
+            'unseen_notification'=> $data
+        ]);
+    }else{
+        $data2 = application::where('count2',1)->where('status','=','renewal');
+        $data2->update([
+            'count'=> 0
+        ]);
+        return response()->json([
+            'unseen_notification'=> 0
+        ]);
+    }
 }
 }

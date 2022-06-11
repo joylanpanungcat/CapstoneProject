@@ -1056,7 +1056,8 @@ public function applicationUpdateStatus(){
                     $data2= application::where('applicationId',$applicationId);
                     $data2->update([
                         'status'=>'renewal',
-                        'due_date'=> $due_date
+                        'due_date'=> $due_date,
+
                     ]);
 
                 }

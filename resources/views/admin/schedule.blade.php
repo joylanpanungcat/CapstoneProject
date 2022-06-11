@@ -3,7 +3,7 @@
 @section('content')
 
   <style type="text/css">
-    
+
       .title_right button{
         float: right;
       }
@@ -28,7 +28,7 @@
     width: 1200px;
 }
 button.close-modal{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -39,7 +39,7 @@ button.close-modal{
     padding: 2px;
 }
 button.close-modal:hover{
-       
+
  width: 40px;
     height: 40px;
     line-height: 40px;
@@ -75,10 +75,10 @@ button.close-modal:hover{
             border: 1px dashed #c0ccda;
             border-radius: 6px;
             cursor: pointer;
-            
+
         }
 
-       
+
         .dz-progress{
             display: none;
         }
@@ -109,8 +109,8 @@ button.close-modal:hover{
 
   width: 10px;
   height: 10px;
- 
-  
+
+
 } */
 /* .actionButton i {
   margin-top: -5px;
@@ -128,7 +128,7 @@ button.close-modal:hover{
   margin-left: -20px;
 }
 .actionButton:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -147,7 +147,7 @@ button.close-modal:hover{
   vertical-align: middle;
 }
 .addApplicantionTooltip:focus {
- 
+
     outline: none !important;
     box-shadow: none !important;
 }
@@ -194,14 +194,14 @@ overflow: auto;
 }
 
 .dataTables_wrapper  .dataTables_paginate  .paginate_button.active .page-link{
- 
+
   background-color: #1ABB9C !important;
 
 }
 
 .addApplication .modal-content{
   height: 90vh;
-  
+
 }
 
 
@@ -224,23 +224,23 @@ overflow: auto;
                 <h3>Schedule List </h3>
             </div>
             <div class="title_right">
-             
+
               <button class="btn btn-default addSchedule "  ><i class="fa fa-calendar fa-lg tags"  ></i></button>
           </div>
 
-         
+
         </div>
         <hr class="separate2">
-                    
-                    
+
+
         <div class="clearfix"></div>
-       
+
 
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                       <div id="show2"></div>
-                           
+
                                 <div class="x_content">
                                     <br />
                                     {{-- <div class="col-md-4 sort_select">
@@ -253,7 +253,7 @@ overflow: auto;
                                           <option value="FSIC for Occupancy">FSIC for Occupancy</option>
                                       </select>
                                     </div> --}}
-                              
+
                                     {{-- <div class="col-md-8">
                                       <div class="row input-daterange" style="float: right">
                                         <div class="">
@@ -268,11 +268,11 @@ overflow: auto;
                                         </div>
                                     </div>
                                     </div> --}}
-                                    <br><br>  
-                                       
+                                    <br><br>
+
                             <table class="table table-striped table-bordered " id="applicationData2" style="width: 100%"  >
                               <thead >
-                               
+
 
                                   <!-- <th>Select</th> -->
                                   <th> #</th>
@@ -281,13 +281,13 @@ overflow: auto;
                                   <th>ADDRESS</th>
                                   <th>DATE OF APPLICATION</th>
                                   <th>ACTION</th>
-                                
+
 
                               </thead>
-                              
+
                                   </table>
 
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -341,19 +341,19 @@ overflow: auto;
                     <div class="col-md-6">
                       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2  " role="group" aria-label="First group" style="float: right">
-             
+
                                    <input type="text" name="" placeholder="Full name" id="search_applicant">
-    
+
                           <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
-                          
-                       
+
+
                         </div>
-                   
-                  </div>   <br> 
-        
+
+                  </div>   <br>
+
                     </div>
                   <div class="form-group">
-                 
+
                    <table class="table">
                      <thead>
                        <th>#</th>
@@ -361,14 +361,14 @@ overflow: auto;
                        <th>Application</th>
                       </thead>
                       <tbody id="fetch_schedule_search">
-                       
+
 
                       </tbody>
                    </table>
                 </div>
                       <input type="hidden" name="" class="form-control" id="accountAccountId" readonly>
                   </div>
-                  
+
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-success" id="select_name"><i class="fa fa-check"> select</i></button>
@@ -384,17 +384,17 @@ overflow: auto;
                     <h5 class="modal-title" id="exampleModalLabel">Add Schedule</h5>
                   </div>
                   <div class="modal-body">
-                    
+
                   <div class="form-group">
                  <div class="form-group">
                    <label for="">Type of application</label>
                    <input type="text" name="" id="application_name_schedule" class="form-control" readonly>
                    <input type="hidden" name="" id="applicationId_schedule" class="form-control">
                    <input type="hidden" name="" id="applicantId_schedule" class="form-control">
-                   
+
                   </div>
                  <div class="form-group" id="select_inspector">
-                 
+
                 </div>
 
                 <div class="form-group">
@@ -404,7 +404,7 @@ overflow: auto;
                 </div>
                       <input type="hidden" name="" class="form-control" id="accountAccountId" readonly>
                   </div>
-                  
+
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-success" id="add_schedule"><i class="fa fa-check"> Add</i></button>
@@ -412,7 +412,7 @@ overflow: auto;
                 </div>
               </div>
             </div>
-            
+
 <script>
   $(document).ready(function(){
     var adminPass='{{Session::get('adminID')['password']}}';
@@ -426,7 +426,7 @@ overflow: auto;
           format:'yyyy-mm-dd',
           autoclose:true
         });
-       
+
      var dataTable= $('#applicationData2').DataTable({
         processing:true,
         info:true,
@@ -439,7 +439,7 @@ overflow: auto;
             data: {adminPass:adminPass
             }
           },
-       
+
         columns:[
         {data:'DT_RowIndex',name:'DT_RowIndex', class: 'table_header'},
         {data:'name',name:'name'},
@@ -465,7 +465,7 @@ $(document).on('click','.cancel_schedule',function(e){
              title: 'swal2-title'
            },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -476,7 +476,7 @@ $(document).on('click','.cancel_schedule',function(e){
              preConfirm: function(){
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -488,25 +488,25 @@ $(document).on('click','.cancel_schedule',function(e){
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
                          )
                        }
                        if (value === adminPass) {
-                             
+
                          $.ajax({
                            type: 'post',
                            url: '{{ route('cancel_schedule') }}',
@@ -536,14 +536,14 @@ $(document).on('click','.cancel_schedule',function(e){
                    center
                    no-repeat
                  `
-       
-               }) 
+
+               })
 
 });
  $(document).on('click','.view_schedule',function(e){
    e.preventDefault();
   var scheduleId = $(this).attr('id');
-  
+
     $.ajax({
       type: 'post',
       url: '{{ route('view_schedule') }}',
@@ -565,9 +565,9 @@ $(document).on('click','.cancel_schedule',function(e){
 
    })
       }
-      
+
     })
-  
+
  });
 
  $('#update_schedule').on('click',function(e){
@@ -584,7 +584,7 @@ $(document).on('click','.cancel_schedule',function(e){
               showConfirmButton:true,
               focusConfirm: false,
               background: 'rgb(0,0,0,.9)',
-              
+
               customClass : {
               title: 'swal2-title'
             },
@@ -617,7 +617,7 @@ $(document).on('click','.cancel_schedule',function(e){
                   })
 
              }
-             
+
                 });
  });
  $('.addSchedule').on('click',function(e){
@@ -626,7 +626,7 @@ $(document).on('click','.cancel_schedule',function(e){
     $('#modalSearch').modal('show');
  })
 
- 
+
 $('#search').on('click',function(e){
   e.preventDefault();
   var search_applicant = $('#search_applicant').val();
@@ -692,5 +692,5 @@ $('#add_schedule').on('click',function(e){
   })
 </script>
 
-  
-  @endsection 
+
+  @endsection

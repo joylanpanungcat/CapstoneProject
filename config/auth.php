@@ -40,9 +40,13 @@ return [
             'driver' => 'session',
             'provider' => 'applicant_account',
         ],
-        'api' => [
+        'api-inspector' => [
             'driver' => 'passport',
-            'provider' => 'applicant_account','inspector',
+            'provider' => 'inspector',
+        ],
+        'api-applicant' => [
+            'driver' => 'passport',
+            'provider' => 'applicant_account',
         ],
     ],
 
@@ -64,9 +68,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'inspector' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\inspector::class,
         ],
         'applicant_account' => [
             'driver' => 'eloquent',

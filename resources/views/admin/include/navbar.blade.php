@@ -13,8 +13,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title')</title>
      <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}">
+     <link rel="stylesheet" href="{{ asset('js/autocomplete/jquery-ui.css') }}">
+
 {{-- jquery --}}
   <script type="text/javascript" src="{{url('js/jquery/jquery.min.js')}}"></script>
+
     <!-- Bootstrap -->
 
 
@@ -50,7 +53,7 @@
 {{-- wizard --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('css/appcss/wizardForm.css') }}">
 {{-- jquery-ui --}}
-<link rel="stylesheet" type="text/css" href="{{ asset('js/jquery-ui/jquery-ui.min.css') }}">
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('js/jquery-ui/jquery-ui.min.css') }}"> --}}
 {{-- datapicker --}}
 <link rel="stylesheet" type="text/css" href="{{ asset('js/datepicker/datetimepicker.css') }}">
 
@@ -200,7 +203,7 @@
                   </li>
 
                   </li>
-                  <li><a href="{{ route('renewal_application_main') }}"><i class="fa fa-refresh"></i> Renewal </a>
+                  <li><a href="{{ route('renewal_application_main') }}" class="noti_renewal"><i class="fa fa-refresh"></i> Renewal  <span class="badge bg-danger" id="count_renewal"></span></a>
 
                   </li>
                    <li><a href="{{ route('payment') }}"><i class="fa fa-money"></i> Payment </a>
@@ -420,7 +423,8 @@
    <script type="text/javascript" src="{{url('toastr/toastr.min.js')}}"></script>
 
 {{-- jquery-ui --}}
-<script type="text/javascript" src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script> --}}
+<script src="{{ asset('js/autocomplete/jquery-ui.js') }}"></script>
 {{-- datepicker --}}
 {{-- <script src="{{ asset('js/datepicker/moment.min.js') }}"></script>
 <script src="{{ asset('js/datepicker/datetimepicker.min.js') }}"></script> --}}
@@ -470,6 +474,7 @@
         set_emergency();
         applicationUpdateStatus();
         load_unseen_notification();
+        load_unseen_renewal();
       }, 10000);
 
     function applicationUpdateStatus(){
@@ -502,7 +507,28 @@
     }
  load_unseen_notification();
 
-
+ function load_unseen_renewal(view = '')
+    {
+    $.ajax({
+    url:"{{ route('renewal_notif') }}",
+    type:"POST",
+    data:{view:view},
+    dataType:"json",
+    success:function(data)
+    {
+        // $('.dropdown-menu').html(data.notification);
+        if(data.unseen_notification > 0)
+        {
+        $('#count_renewal').html(data.unseen_notification);
+        }
+    }
+    });
+    }
+    load_unseen_renewal();
+    $(document).on('click', '.noti_renewal', function(){
+    $('#count_renewal').html('');
+    load_unseen_renewal('yes');
+    });
 
   })
 </script>

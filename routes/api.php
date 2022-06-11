@@ -25,7 +25,7 @@ Route::prefix('/user')->group(function(){
     Route::post('/register',[register::class,'register_applicant']);
 
     Route::group([
-        'middleware' => 'auth:api'
+        'middleware' => 'auth:api-applicant'
       ], function() {
           Route::get('getUser', [loginController::class,'user']);
           Route::post('updateUser', [applicantAppController::class,'updateUser']);
@@ -48,7 +48,7 @@ Route::prefix('/user')->group(function(){
 Route::prefix('/inspector')->group(function(){
     Route::post('/login',[loginController::class,'loginInspector']);
     Route::group([
-        'middleware' => 'auth:api'
+        'middleware' => 'auth:api-applicant'
     ],function(){
         Route::get('logout', [loginController::class,'logoutInspector']);
         Route::post('getProfile', [applicantAppController::class,'getProfileInspector']);

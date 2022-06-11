@@ -2,6 +2,7 @@
 @extends('admin/include.navbar')
 @section('title','applicant account')
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/inspectionReport.css') }}">
   <style type="text/css">
 table tbody tr td input{
 border: none;
@@ -2116,202 +2117,689 @@ height: 40%;
 
       <div id="inspection_modal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content ">
-                <div class="modal-header">
+            <div class="modal-content modal-header-inpsection-report ">
+                <div class="modal-header ">
                     <h5 class="modal-title">Inspection Report</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success print-inspection" >Print</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+                    </div>
                 </div>
                 <div class="modal-body">
-                  <form class="form-horizontal form-label-left">
-                    <div class="col-md-12">
-                    <div class="form-group row col-md-4">
-                        <label class="control-label">Type of Application</label>
-                        <div class=" ">
-                          <input type="text" class="form-control" placeholder="Default Input" id="type_application_inspection"  readonly>
-                          </div>
+                    <div class="page1">
+                        <div class="mainborder">
+
+                  <div class="topcontainer">
+                    <div class="leftcol" >
+                        <img src="{{ asset('images/dilg.png') }}" alt="Paris" class="logo">
                     </div>
-                    <div class="form-group row  col-md-4">
-                      <label class="control-label ">Inspector Name</label>
-                      <div class=" ">
-                        <input type="text" class="form-control" placeholder="Default Input" id="inspector_name"  readonly>
+                    <div class="midcol" >
+                            <ul class="headerinfo">
+                                <li>Republic of the Philippines</li>
+                                <li class="boldletter" style="font-size:9px;">Department of the Interior and Local Government</li>
+                                <li class="boldletter" style="font-size:9px;">Bureau of Fire Protection</li>
+                                <li class="smol">Regional Office XI</li>
+                                <li class="smol">Davao Del Norte Provincial Office</li>
+                                <li class="smol">Panabo City Fire Station</li>
+                                <li class="smol">Brgy. New Pandan, Panabo City</li>
+                                <li class="smol">Hotline # (084) 822-0160/ Email: stflorian_pcfo@yahoo.com.ph</li>
+                                <li class="smol">Globe: 09284587586/Smart: 09659334466</li>
+                            </ul>
+                    </div>
+                    <div class="rightcol" >
+                        <img src="{{ asset('images/logo.png') }}" alt="Paris" class="logo">
+                    </div>
+                    </div>
+
+                    <div class="personalinfo">
+                        <div>
+                            <ul class="person">
+                            <li>
+                            <form>
+                            <input type="text" value="" class="textboxinfo">
+                            </form>
+                            <label>(Name of Owner)</label> </li>
+
+                            <li>
+                            <form>
+                            <input type="text" value="" class="textboxinfo">
+                            </form>
+                            <label>(Name of Establishment)</label> </li>
+
+                            <li>
+                            <form>
+                            <input type="text" value="" class="textboxinfo">
+                            </form>
+                            <label>(Address)</label> </li>
+
+                        </ul>
                         </div>
-                  </div>
-                  <div class="form-group row col-md-4">
-                    <label class="control-label ">Date Inspected</label>
-                    <div class=" ">
-                      <input type="text" class="form-control" placeholder="Default Input" id="date_inspected" readonly >
-                      </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group row col-md-4">
-                  <label class="control-label  ">Inspection Status</label>
-                  <div class=" ">
-                    <input type="text" class="form-control" placeholder="Default Input" id="inspection_status" readonly>
+
+                        <div class="datecol">
+                            <form>
+                                <label class="date" >DATE</label>
+                                <input type="text" value="">
+                            </form>
+
+                        </div>
                     </div>
-              </div>
-              <div class="form-group row col-md-4">
-                <label class="control-label  ">Verify Inspection Report</label>
-                <div class="">
-                  <input type="text" class="form-control" placeholder="Default Input" id="verify_inspection" readonly>
+
+                    <div class="third">
+                        <form>
+                            <label for="" class="boldletter">SUBJECT: Inspection of</label>
+                            <input type="text" value="">
+                        </form>
+                        <div class="for-attn">
+                        <label style="padding-right:5px;">FOR</label>
+                        <label class="boldletter">:CITY FIRE MARSHAL</label> <br>
+                        <label>ATTN</label>
+                        <label class="space">:CHIEF, FIRE SAFETY ENFORCEMENT SECTION</label>
+                        </div>
+
+                    </div>
+
+                    <div class="fourth">
+                        <form>
+                            <label> <strong> REFERENCE: </strong> INSPECTION ORDER NO.</label>
+                            <input type="text" value="" style="width: 214px;">
+                        </form>
+
+                        <form>
+                            <label>DATE ISSUED</label>
+                            <input type="text" value="">
+                        </form>
+
+                        <form>
+                            <label>DATE OF INSPECTION:</label>
+                            <input type="text" value="" class="inspectiondate">
+                        </form>
+
+                    </div>
+                    <div class="nature-inspection">
+                        <label><strong>NATURE OF INSPECTION CONDUCTED: [ ] Check Appropriate Box </strong></label>
+                    </div>
+                    <div class="fifth">
+                        <div class="checkitems1">
+                            <ul class="checc">
+
+                             <li><label for="" class="container">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Building under construction
+                            </label></li>
+                             <li><label for="" class="container">
+                                <input type="checkbox" >
+                                <span class="checkmark"></span>
+                                Application for Occupancy Permit
+                            </label></li>
+                             <li><label for="" class="container">
+                                <input type="checkbox" >
+                                <span class="checkmark"></span>
+                                Application for Business Permit
+                            </label></li>
+                             <li><label for="" class="container">
+                                <input type="checkbox" >
+                                <span class="checkmark"></span>
+                                Others (Specify)
+                            </label>
+                            <input type="text" class="others"></li>
+
+                        </ul>
+                        </div>
+
+
+                        <div class="checkitems2">
+                            <ul class="checc">
+
+                             <li><label for="" class="container">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Periodic Inspection of Occupancy
+                            </label></li>
+                             <li><label for="" class="container">
+                                <input type="checkbox" >
+                                <span class="checkmark"></span>
+                                Verification Inspection of Compliance to NTCV
+                            </label></li>
+                             <li><label for="" class="container">
+                                <input type="checkbox" >
+                                <span class="checkmark"></span>
+                                Verification Inspection of Complaint Received </label></li>
+                        </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                    <div>
+                        <label class="occ-checklist">OCCUPANCY CHECKLIST</label>
+                    </div>
+                    <div>
+                        <label class="general-info">I.GENERAL INFORMATION</label>
+                    </div>
+
+                    <div class="generalinfo1">
+                        <ul class="generalinfo11">
+                            <li>
+                            <label for="" class="container">
+                            Name of Building
+                            </label>
+                            <input type="text" class="others" style="width:629px;"></li>
+
+                            <li>
+                            <label for="" class="container">
+                            Business Name
+                            </label>
+                            <input type="text" class="others" style="width:635px;"></li>
+
+                            <li>
+                            <label for="" class="container">
+                            Address
+                            </label>
+                            <input type="text" class="others" style="width:671px;"></li>
+
+                            <li>
+                            <label for="" class="container">
+                            Nature of Business
+                            </label>
+                            <input type="text" class="others"></li>
+                        </ul>
+                    </div>
+
+                    <div class="generalinfo2">
+                        <div>
+                            <ul class="generalinfo22">
+                                <li>
+                                <label>Name of Owner/Occupant</label>
+                                <input type="text">
+                                </li>
+
+                                <li>
+                                    <label>Name of Representative</label>
+                                    <input type="text">
+                                </li>
+                                </ul>
+                            </div>
+                        <div>
+                            <ul class="generalinfo22">
+                                <li>
+                                    <label>Contact No.</label>
+                                    <input type="text">
+                                </li>
+
+                                <li>
+                                    <label>Contact No.</label>
+                                    <input type="text">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="generalinfo3">
+                           <div>
+                        <ul class="generalinfo33">
+                            <li><label>No. of Storey <input type="text"></label>
+                                 </li>
+                            <li><label>Height of Bldg. <input type="text">(m)</label>
+                                </li>
+                            <li><label>Portion Occupied</label>
+                                <input type="text" style="width: 215px;"></li>
+                                <ul>
+                            </div>
+
+                            <div>
+                                <ul class="generalinfo33">
+
+                            <li><label>Area per flr. <input type="text" style="width:209px;">sqm</label>
+                                </li>
+
+                            <li><label>Total Flr. Area</label>
+                                <input type="text" style="width:40px;"></li>
+
+                                <div style="display: inline; position:relative; top:1px;">
+                            <li><input type="text" style="width:260px;">
+                                <span style="font-size: 11px;">sqm</span></li>
+                            </div>
+
+                        </ul>
+                    </div>
+
+                    </div>
+                         <div class="generalinfo4">
+                             <ul class="generalinfo44">
+                                 <li><label>Name of Fire Inusrance Co/Co-Insurer<input type="text" style="width: 215px;"></label> </li>
+                                 <li><label> Policy No.<input type="text"></label></li>
+                                 <li><label>Date Issued<input type="text"></label></li>
+                                 <li><label style="font-weight:bold; ">TYPE OF OCCUPANCY<input type="text" style="width: 400px;"></label></li>
+                             </ul>
+                         </div>
+                     </div>
+
+                     <div class="building-construction">
+                        <div><label style="font-weight: bold;">II.BUILDING CONSTRUCTION</label></div>
+                        <div class="buildconstruct">
+                            <div>
+                                <ul class="listcon">
+                                <li><label>Beams<input type="text" style="width:165px;"></label></li>
+                                <li><label>Exterior Walls<input type="text" style="width:131px;"></label></li>
+                                <li><label>Main Stair<input type="text"></label></li>
+                                <li><label>Main Door<input type="text"></label></li>
+
+                            </div>
+                            <div>
+                                <ul class="listcon">
+                                <li><label>Columns<input type="text"></label></li>
+                                <li><label>Corridor Walls<input type="text" style="width: 125px;"></label></li>
+                                <li><label>Windows<input type="text"></label></li>
+                                <li><label>Trusses<input type="text" style="width: 155px;"></label></li>
+                            </ul>
+                            </div>
+                            <div>
+                                <ul class="listcon">
+                                <li><label>Flooring<input type="text"></label></li>
+                                <li><label>Room Partitions<input type="text" style="width: 112px;"></label></li>
+                                <li><label>Ceiling<input type="text" style="width: 157px;"></label></li>
+                                <li><label>Roof<input type="text" style="width: 167px;"></label></li>
+                            </ul>
+                            </div>
+
+                        </div>
+
+                     </div>
+                        <div class="Sectional-Occupancy">
+                            <label style="font-weight:bold;">
+                            III. SECTIONAL OCCUPANCY (Note: Indicate specific usage of each floor, section or rooms)
+                            </label>
+                            <form>
+                                <textarea class="secoccup"></textarea>
+                            </form>
+                        </div>
+
+                        <div class="Classification">
+                            <div><label style="font-weight:bold;">IV.CLASSIFICATION</label></div>
+                            <label> Occupancy Classification</label>
+                            <div class="classi" style="display: inline-flex;">
+                                <ul class="listcon">
+                                    <li><label class="class1"><input class="check" type="checkbox" >A </label></li>
+                                    <li><label class="class2"><input class="check" type="checkbox" >B </label></li>
+                                    <li><label class="class3" ><input class="check" type="checkbox">C </label></li>
+                                </ul>
+
+                            </div>
+                            <div style="display: inline-flex; padding-left: 30px;">
+                                <label>Others</label> <input class="textclass" type="text" style="width: 300px;">
+                            </div>
+                            <div><label>Occupant Load: <input type="text">(Requirement: 2.8 sq. m per person for street level; 5.6 sq. m for upper floors and 9.3 sq. m. for
+                                offices, storage, and shipping and not open to the general public)</label>
+                                <div>
+                                <label>Any renovations
+                                    <input type="checkbox">Yes
+                                    <input type="checkbox">No
+                                </label>
+                                <label style="padding-left: 30px;">If yes, specify <input type="text"></label></div>
+                                <label>Underground:
+                                    <input type="checkbox">Yes
+                                    <input type="checkbox">No
+                                </label>
+                                <label style="padding-left: 40px;">Windowless:
+                                    <input type="checkbox">Yes
+                                    <input type="checkbox">No
+                                </label>
+                    </div>
+                        </div>
+
+                        <div class="Exit-details">
+                        <div style="font-weight:bold"><label> V. EXIT DETAILS</label></div>
+
+                        <ul class="listcon">
+                           <li><label>Capacity of Horizontal Exit (Corridor Hallway) <input type="text" style="width: 207px;"> (Requirement: 100 persons per unit of exit width per min)</label></li>
+                           <li><label>Capacity of Exit Stair: <input type="text" style="width: 300px;"> (Requirement: 60 persons per unit of exit width per min)</label></li>
+                            <li><label>No. of Exits <input type="text" style="width: 350px;"> Remote <input type="checkbox">Yes <input type="checkbox">No</label></li>
+                            <li><label>Minimum Requirement: No. of Exits: Two (2) units per floor</label></li>
+                           <li> <label>Location of Exit <input type="text" style="width: 600px;"></label></li>
+                            <li><label>Maximum Travel Distance Requirement from Farthest Room: 30.5 m without AFSS & 46m with AFSS</label></li>
+                            <li><label>Any Enclosure Provided <input type="checkbox">Yes <input type="checkbox">No <label style="padding-left: 100px;">Min of 2-hr fire rating-storey or mainborder,Min of 1hr, fire rung- less than 4-storey</label> </label></li>
+                        </ul>
+                        </ul>
+                        </div>
+
+                        <div class="Means-egress">
+                            <label style="font-weight:bold;">MEANS OF EGRESS</label>
+                            <div class="meancolumns">
+                                <div>
+                                <ul class="listcon">
+                                    <li>
+                                        <label>Ready accesible <span style="padding-left: 70px;"><input class="check" type="checkbox">Yes <input class="check" type="checkbox">No </span></label>
+                                    </li>
+                                    <li>
+                                        <label>Travel distance within limits? <span style="padding-left: 22px;"> <input class="check" type="checkbox">Yes <input class="check" type="checkbox">No </span></label>
+                                    </li>
+                                    <li>
+                                        <label>Adequate illumination <span style="padding-left: 50px;"> <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                    </li>
+                                    <li>
+                                        <label>Panic hardware operational? <span style="padding-left: 21px;"><input type="checkbox">Yes <input type="checkbox">No </span></label>
+                                    </li>
+                                    <li>
+                                        <label>Doors open easily <span style="padding-left: 64px;"><input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                    </li>
+                                    <li>
+                                        <label>Bldg w/Mezzanine <span style="padding-left: 63px;"><input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                    </li>
+                                    <li>
+                                        <label>Corridors & aisles of sufficient size <input type="checkbox">Yes <input type="checkbox">No </label>
+                                    </li>
+                                </ul>
+                            </div>
+                                <div>
+                                    <ul class="listcon">
+                                        <li>
+                                            <label>Obstructed <span style="padding-left: 90px;"> <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                        </li>
+                                        <li>
+                                            <label>Dead-ends within limits <span style="padding-left: 40px;">  <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                        </li>
+                                        <li>
+                                            <label>Proper rating of illummination <span style="padding-left: 15px;">  <input type="checkbox">Yes <input type="checkbox">No  </span></label>
+                                        </li>
+                                        <li>
+                                            <label>Door swing in the direction of exit <input type="checkbox">Yes <input type="checkbox">No  </label>
+                                        </li>
+                                        <li>
+                                            <label>Self-closure operational<span style="padding-left: 38px;"> <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                        </li>
+                                        <li>
+                                            <label>Mezzanine with proper exits <span style="padding-left: 22px;">  <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="footerlabel">
+                            <label>BFP-QSF-FSED-017 Rev. 01 (07.05.19) Page 1 of 2</label>
+                        </div>
+
+
+
+                        </div>
+                        <div class="mainborder2">
+
+                            <div class="Fire-Protection-Equipment">
+                                <div><label class="boldletter">VI. FIRE PROTECTION EQUIPMENT</label></div>
+                                <div>
+                                    <label>
+                                        a.) Emergency lights provided?
+                                        <span style="padding-right: 100px;"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        Illuminated exit signs provided?
+                                        <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        b.) No. of fire extinguisher
+                                        <span><input class="letterb" type="text"></span>
+                                        Type
+                                        <span><input class="letterb" type="text"></span>
+                                        Capacity
+                                        <span><input class="letterb" type="text"></span>
+                                        Accessible
+                                        <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <label>
+                                        c. Is bldg. equipped with fire alarm?
+                                        <span style="padding-right: 60px;"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        Detectors
+                                        <span><input type="checkbox">Yes <input type="checkbox">No</span>
+
+
+                                    </label>
+                                    <div >
+                                        <label style="padding-left: 9px;">
+                                        Location of control panel
+                                        <span style="padding-right: 37px;"><input type="text"></span>
+                                        Functional
+                                        <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                    </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                                <div class="Flammables">
+                                    <div><label class="boldletter">VII. FLAMMABLES </label></div>
+                                    <div style="padding-bottom:10px">
+                                        <label>
+                                            a.) Presence of hazardous materials
+                                            <span style="padding-right:100px"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                            Properly stored and handled
+                                            <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="flammable-group">
+
+                                    <div style="margin-top:8px;">
+                                        <ol style="line-height:22px;">
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ol>
+                                    </div>
+
+
+                                        <ul class="listcon" style="padding-right: 1px;">
+                                            <li>Kinds</li>
+                                            <li><input type="text"></li>
+                                            <li><input type="text"></li>
+                                            <li><input type="text"></li>
+                                        </ul>
+
+
+
+                                        <ul class="listcon" style="padding-left: 10px;">
+                                            <li>Container</li>
+                                            <li><input type="text"></li>
+                                            <li><input type="text"></li>
+                                            <li><input type="text"></li>
+                                        </ul>
+
+
+
+
+                                        <ul class="listcon" style="padding-left: 70px;">
+                                            <li>Volume</li>
+                                            <li><input type="text" style="width: 50px;"></li>
+                                            <li><input type="text" style="width: 50px;"></li>
+                                            <li><input type="text" style="width: 50px;"></li>
+                                        </ul>
+
+
+
+                                        <ul class="listcon" style="padding-left: 10px;">
+                                            <li>Location</li>
+                                            <li><input type="text" style="width: 200px;"></li>
+                                            <li><input type="text" style="width: 200px;"></li>
+                                            <li><input type="text" style="width: 200px;"></li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                     <form><label>Storage Permit for Flammables? Combustible Covered by BFP Permit? <input type="text" style="width:400px;"></label></form>
+                                     <form> <label>Clearance of Stocks from Ceiling <input type="text" style="width:554px"></label></form>
+                                     <form style="padding-left: 30px;"><label class="boldletter">Minimum Ceiling Clearance: 1.0mm for Flammable Liquids and 0.5 for Combustible Materials.</label></form>
+
+                                     <form> <label>
+                                        No smoking sign provided?
+                                        <span style="padding-right:100px"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        Is smoking permitted?
+                                        <span style="padding-right:100px"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                         Where?
+                                        <span ><input type="text"></span>
+                                    </label>
+                                </form>
+
+                                    <form>
+                                        <label>
+                                            b.) Oven/Stove used
+                                            <span><input style="width:200px;" type="text"></span>
+                                            Kind of Fuel
+                                            <span><input  style="width:347px;" type="text"></span>
+                                        </label>
+                                    </form>
+                                    <form>
+                                        <label>
+                                            Smoke hood?
+                                            <span><input style="width:155px;" type="text"></span>
+                                            Spark arrester
+                                            <span><input style="width:155px;" type="text"></span>
+                                            Partition construction
+                                            <span><input style="width:162px;" type="text"></span>
+                                        </label>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <div class="Operating-features">
+                                <div><label class="boldletter" style="position: relative; bottom: 10px;">VII. OPERATING FEATURES</label></div>
+
+                                <label>
+                                    Fire Safety Program (Under Supervision of the Chief Local Fire Service)
+                                    <span style="padding-left: 200px;" class="boldletter">Date</span>
+                                </label>
+                                 <form >
+                                     <label>
+                                     <ul class="listcon">
+                                         <li>Fire Brigade Organization?
+                                            <span style="padding-left: 350px;">
+                                                <input type="checkbox">Yes
+                                                <input type="checkbox">No
+                                                <label style="padding-left: 20px;"  >Date:<input type="text"></label>
+                                            </span>
+                                        </li>
+                                        <li>Fire Safety Seminar
+                                            <span style="padding-left: 410px;">
+                                                <input type="checkbox">Yes
+                                                <input type="checkbox">No
+                                                <label style="padding-left: 20px;">Date:<input type="text"></label>
+                                            </span>
+                                        </li>
+                                        <li>Employee trained in emergency procedures?
+                                            <span style="padding-left: 200px;">
+                                                <input type="checkbox">Yes
+                                                <input type="checkbox">No
+                                                <label style="padding-left: 20px;">Date:<input type="text"></label>
+                                            </span>
+                                        </li>
+                                        <li>Fire/Evacuation Drill
+                                            <span style="padding-left: 398px;">
+                                                <input type="checkbox">Yes
+                                                <input type="checkbox">No
+                                                <label style="padding-left: 20px;">Date:<input type="text"></label>
+                                            </span>
+                                        </li>
+
+                                     </ul>
+                                    </label>
+                                 </form>
+
+                            </div>
+
+                            <div class="defects-deficiencies">
+                                <div><label class="boldletter">IX. DEFECTS / EFECIENCIES NOTED DURING INSPECTION (Attached pictures, sketch and others)</label></div>
+                                <textarea class="messagetext"></textarea>
+                            </div>
+
+                            <div class="Recommendations">
+                                <div><label class="boldletter">X. RECOMMENDATIONS </label></div>
+                                <textarea class="messagetext"></textarea>
+                            </div>
+
+
+
+
+                            <div class="acknowledgement" >
+
+                                <div><label class="boldletter">ACKNOWLEDGED BY:</label></div>
+
+                                <div style="padding-top: 20px;">
+                                    <ul class="listcon">
+                                    <li>
+                                    <form style="padding-right: 300px;">
+                                    <input type="text" style="width: 215px; " >
+                                    </form>
+                                    <label>Signature over Printed Name of Owner/Representative</label> </li>
+
+                                    <li>
+                                    <form>
+                                    <input type="text" value="" style="width: 415px;"  >
+                                    </form>
+                                    <labels>Fire Safety Inspector/s</label> </li>
+
+
+
+                                </ul>
+                                </div>
+
+                                <div style="padding-top: 20px;">
+                                    <ul class="listcon">
+                                    <li>
+                                        <form style="padding-right: 300px;">
+                                        <input type="text" value="" style="width: 215px;" >
+                                        </form>
+                                        <label>Date & TIme</label> </li>
+
+                                    <li>
+                                    <form>
+                                    <input type="text" value="" style="width: 315px;" >
+                                    </form>
+                                    <label>Team Leader</label> </li>
+                                </ul>
+                                </div>
+
+                                <div style="padding-top: 50px; position: relative; left: 560px; padding-bottom: 50px;">
+                                    <label class="boldletter">RECOMMEND ISSUANCE OF FISC/NTC/NTCV:</label>
+                                    <form>
+                                        <input type="text" value="" style="width: 215px;" >
+                                        </form>
+                                        <label>Chief, Fire Safety Enforcement Section</label>
+                                </div>
+
+                                <div style="text-align: center; padding-top: 30px;">
+                                <label class="boldletter" >
+                                    PAALALA: "MAHIGPIT NA IPINAGBABAWAL NG PAMUNUAN NG BUREAU OF FIRE PROTECTION
+                                    SA MGA KAWANI NITO ANG MAGBENTA O MAGREKOMENDA NG ANUMANG BRAND NG FIRE
+                                    EXTINGUISHER"
+                                </label>
+                            </div>
+                                <div style="text-align: center;">
+                                    <h1>"FIRE SAFETY IS OUR MAIN CONCERN"</h1>
+                                </div>
+                                <div>
+
+                                </div>
+                            </div>
+                            <div style="padding-bottom: 310px;"></div>
+
+
+
+                        <div class="footerlabel">
+                            <label>BFP-QSF-FSED-017 Rev. 01 (07.05.19) Page 2 of 2</label>
+                        </div>
+
+                      </div>
+
+
                   </div>
-            </div>
-              </div>
-              <div class="col-md-12">
-                <h2><strong>Evaluation Report</strong></h2>
-              </div>
-              <div class="col-md-12">
-              <div class="form-group row col-md-4">
-                <label class="control-label  ">Beams</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Beams" value="" id="beams" readonly>
-                </div>
-            </div>
-            <div class="form-group row  col-md-4 ">
-                <label class="control-label  ">Exterior Walls</label>
-                <div class=" ">
-                    <input type="text" class="form-control" placeholder="Exterior Walls" value="" id="exterior" readonly>
-                </div>
-            </div>
-            <div class="form-group row col-md-4 ">
-                <label class="control-label ">Main Stair</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Main Stairs" value="" id="main_stair" readonly>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="form-group row col-md-4">
-                <label class="control-label ">Main Door</label>
-                <div class=" ">
-                    <input type="text" class="form-control" placeholder="Main Door" value="" id="main_door" readonly>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label  ">Columns</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Columns" value="" id="colums" readonly>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label  ">Corridor Walls</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Curridor Walls" value="" id="corridor_walls" readonly>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="form-group row col-md-4">
-                <label class="control-label ">Windows</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Default Input" value="" id="windows" readonly>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label  ">Trussess</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Trussess" value="" id="trussess" readonly>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label ">Flooring</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Flooring" value="" id="flooring" readonly>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-
-            <div class="form-group row col-md-4">
-                <label class="control-label  ">Room Partitions</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="room_partitions" value="" id="room_partitions" readonly>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label ">Ceiling</label>
-                <div class=" ">
-                    <input type="text" class="form-control" placeholder="Ceiling" value="" id="ceiling" readonly>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label">Roof</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Roof" value="" id="roof" readonly>
-                </div>
-            </div>
-          </div>
-
-            <div class="form-group row col-md-12">
-                <h2><strong>Fire Protection Equipment</strong></h2>
-            </div>
-            <div class="col-md-12">
-            <div class="form-group row col-md-4">
-                <label class="control-label  ">Emergency Lights Provide</label>
-                <div class="form-group col-md-12">
-                    <select name="" id="emergency_lights" class="form-control col-md-12" readonly><option value="yes">Yes</option><option value="no">No</option></select>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label ">Number of Fire Stinguisher</label>
-                <div class=" ">
-                    <input type="text" class="form-control" placeholder="No. Stinguisher" value="" id="no_stinguisher" readonly>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label col-md-12">Equiped with fire alarm? </label>
-                <div class=" ">
-                    <select name="" id="fire_alarm" class="form-control col-md-12" disabled><option value="yes">Yes</option><option value="no">No</option></select>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="form-group row col-md-4">
-                <label class="control-label ">Location of Control Panel</label>
-                <div class="">
-                    <input type="text" class="form-control" placeholder="Location of contorl panel" value="" id="location_panel" readonly>
-                </div>
-            </div>
-          </div>
-            <div class="col-md-12">
-              <div class="form-group row col-md-4">
-                  <label class="control-label ">Sectional Occupancy</label>
-                  <div class="">
-                     <textarea name="" id="sectional_occupancy" cols="30" rows="5" disabled></textarea>
-                  </div>
-              </div>
-
-            <div class="form-group row col-md-4">
-                <label class="control-label ">Defect</label>
-                <div class="">
-                    <textarea name="" id="defects" cols="30" rows="5" disabled></textarea>
-                </div>
-            </div>
-            <div class="form-group row col-md-4">
-                <label class="control-label  " disabled>Recommendation</label>
-                <div class=" ">
-                    <textarea name="" id="recommendation" cols="30" rows="5" disabled></textarea>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-
-          </div>
-
 
 
 
 
                     <div class="form-group" style="float: right" id="verify_button">
-
-                  </div>
-
-                    </form>
-
-
-
-
-
+                    </div>
 
                 </div>
 
@@ -3626,40 +4114,41 @@ $('.view_inspection_report').on('click',function(e){
     },
     dataType: 'json',
     success:function(data){
+
       $('#inspection_modal').modal('show');
 
-      $.each(data.data,function(key, value){
-        $('#type_application_inspection').val(value['type_application']);
-        $('#inspector_name').val(value['Fname'] + ' ' + value['Lname']);
-        $('#date_inspected').val(value['date_inspect']);
-        $('#inspection_status').val(value['status']);
-        $('#beams').val(value['beams']);
-     $('#exterior').val(value['exterior']);
-     $('#main_stair').val(value['main_stair']);
-    $('#main_door').val(value['main_door']);
-     $('#colums').val(value['colums']);
-    $('#corridor_walls').val(value['corridor_walls']);
-     $('#windows').val(value['windows']);
-     $('#trussess').val(value['trussess']);
-    $('#flooring').val(value['flooring']);
-     $('#room_partitions').val(value['room_partitions']);
-     $('#ceiling').val(value['ceiling']);
-     $('#roof').val(value['roof']);
-     $('#sectional_occupancy').val(value['sectional_occupancy']);
-     $('#emergency_lights').val(value['emergency_lights']);
-     $('#no_stinguisher').val(value['no_stinguisher']);
-    $('#fire_alarm').val(value['fire_alarm']);
-     $('#location_panel').val(value['location_panel']);
-     $('#defects').val(value['defects']);
-     $('#recommendation').val(value['recommendation']);
-        if(value['verify'] == null){
-          $('#verify_inspection').val('not verify');
-          $('#verify_button').html(' <button type="button" class="btn btn-success verify_inspection_button" id='+value['applicationId']+'><i class="fa fa-check"> </i> Verify</button>')
-        }else{
-          $('#verify_inspection').val('verified');
-          $('#verify_button').html('');
-        }
-      })
+    //   $.each(data.data,function(key, value){
+    //     $('#type_application_inspection').val(value['type_application']);
+    //     $('#inspector_name').val(value['Fname'] + ' ' + value['Lname']);
+    //     $('#date_inspected').val(value['date_inspect']);
+    //     $('#inspection_status').val(value['status']);
+    //     $('#beams').val(value['beams']);
+    //  $('#exterior').val(value['exterior']);
+    //  $('#main_stair').val(value['main_stair']);
+    // $('#main_door').val(value['main_door']);
+    //  $('#colums').val(value['colums']);
+    // $('#corridor_walls').val(value['corridor_walls']);
+    //  $('#windows').val(value['windows']);
+    //  $('#trussess').val(value['trussess']);
+    // $('#flooring').val(value['flooring']);
+    //  $('#room_partitions').val(value['room_partitions']);
+    //  $('#ceiling').val(value['ceiling']);
+    //  $('#roof').val(value['roof']);
+    //  $('#sectional_occupancy').val(value['sectional_occupancy']);
+    //  $('#emergency_lights').val(value['emergency_lights']);
+    //  $('#no_stinguisher').val(value['no_stinguisher']);
+    // $('#fire_alarm').val(value['fire_alarm']);
+    //  $('#location_panel').val(value['location_panel']);
+    //  $('#defects').val(value['defects']);
+    //  $('#recommendation').val(value['recommendation']);
+    //     if(value['verify'] == null){
+    //       $('#verify_inspection').val('not verify');
+    //       $('#verify_button').html(' <button type="button" class="btn btn-success verify_inspection_button" id='+value['applicationId']+'><i class="fa fa-check"> </i> Verify</button>')
+    //     }else{
+    //       $('#verify_inspection').val('verified');
+    //       $('#verify_button').html('');
+    //     }
+    //   })
 
     }
   })
@@ -3759,31 +4248,45 @@ $('#printCertificate').on('click',function(){
     //                 anchorTag.click();
     //             });
 
-            var element = $("#main-panel")[0];
+        var element = $("#main-panel")[0];
         html2canvas(element).then(function (canvas) {
-            var myImage = canvas.toDataURL("image/png");
-            var tmp = window.open("");
-            $(tmp.document.body)
-                .html("<img src=" + myImage + " alt=''>")
-                .ready(function () {
-                    tmp.focus();
-                    tmp.print();
-                })
+        var myImage = canvas.toDataURL("image/png");
+        var tmp = window.open("");
+        $(tmp.document.body)
+        .html("<img src=" + myImage + " alt=''>")
+        .ready(function () {
+            tmp.focus();
+            tmp.print();
+        })
         })
 
 })
 $('#print_payment_button').on('click',function(){
-            var element = $("#receipt")[0];
-        html2canvas(element).then(function (canvas) {
-            var myImage = canvas.toDataURL("image/png");
-            var tmp = window.open("");
-            $(tmp.document.body)
-                .html("<img src=" + myImage + " alt=''>")
-                .ready(function () {
-                    tmp.focus();
-                    tmp.print();
-                })
-        })
+    var element = $("#receipt")[0];
+    html2canvas(element).then(function (canvas) {
+    var myImage = canvas.toDataURL("image/png");
+    var tmp = window.open("");
+    $(tmp.document.body)
+    .html("<img src=" + myImage + " alt=''>")
+    .ready(function () {
+    tmp.focus();
+    tmp.print();
+    })
+    })
+});
+$('.print-inspection').on('click',function(e){
+    e.preventDefault();
+    var element = $(".page1")[0];
+    html2canvas(element).then(function (canvas) {
+    var myImage = canvas.toDataURL("image/png");
+    var tmp = window.open("");
+    $(tmp.document.body)
+    .html("<img src=" + myImage + " alt=''>").css('color','red')
+    .ready(function () {
+    tmp.focus();
+    tmp.print();
+    })
+    })
 })
 
 
