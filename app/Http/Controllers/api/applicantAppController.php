@@ -369,35 +369,119 @@ public function inspectionReport(Request $request ){
     $applicationId= $request->applicationId;
     $lat= $request->lat;
     $long= $request->long;
-    $inspectionDetails= $request->item;
+    $item= $request->item;
+return $item['under_construction'];
     $inspected='true';
-    foreach($inspectionDetails as $item){
         $inspection = new inspection_details;
         $inspection->inspectorId =$inspectorId;
         $inspection->applicationId =$applicationId;
         $inspection->date_inspect =Carbon::now()->format('Y-m-d H:i:s');
-        $inspection->beams =$item['beams'];
-        $inspection->exterior =$item['exterior'];
-        $inspection->main_stair =$item['mainStair'];
-        $inspection->main_door =$item['mainDoor'];
-        $inspection->colums =$item['colums'];
-        $inspection->corridor_walls =$item['corridorWalls'];
-        $inspection->windows =$item['windows'];
-        $inspection->trussess =$item['trussess'];
-        $inspection->flooring =$item['flooring'];
-        $inspection->room_partitions =$item['roomPartitions'];
-        $inspection->ceiling =$item['ceiling'];
-        $inspection->roof =$item['roof'];
-        $inspection->sectional_occupancy =$item['sectionalOccupancy'];
-        $inspection->emergency_lights =$item['emergencyLights'];
-        $inspection->no_stinguisher =$item['noStinguisher'];
-        $inspection->fire_alarm =$item['fireAlarm'];
-        $inspection->location_panel =$item['locationPanel'];
-        $inspection->defects =$item['defects'];
-        $inspection->recommendation =$item['recommendation'];
+        $inspection->unser_construction=$item['under_construction'];
+        $inspection->occupancy_permit=$item['occupancy_permit'];
+        $inspection->business_permit=$item['business_permit'];
+        $inspection->periodic_inspection=$item['periodic_inspection'];
+        $inspection->verification_inspection_compliance=$item['verification_inspection_compliance'];
+        $inspection->verification_inspection_complaint=$item['verification_inspection_complaint'];
+        $inspection->others_specify=$item['others_specify'];
+         //general information
+        $inspection->name_building=$item['name_building'];
+        $inspection->business_name=$item['business_name'];
+        $inspection->address=$item['address'];
+        $inspection->nature_business=$item['nature_business'];
+        $inspection->name_owner=$item['name_owner'];
+        $inspection->owner_contact_no=$item['owner_contact_no'];
+        $inspection->name_representative=$item['name_representative'];
+        $inspection->representative_no=$item['representative_no'];
+        $inspection->no_storey=$item['no_storey'];
+        $inspection->height_building=$item['height_building'];
+        $inspection->portion_occupied=$item['portion_occupied'];
+        $inspection->area_per_flr=$item['area_per_flr'];
+        $inspection->total_flr_area=$item['total_flr_area'];
+        $inspection->fire_insurance=$item['fire_insurance'];
+        $inspection->policy_no=$item['policy_no'];
+        $inspection->date_issued=$item['date_issued'];
+        $inspection->type_occupancy=$item['type_occupancy'];
+         //BUILDING CONSTRUCTION
+        $inspection->beams=$item['beams'];
+        $inspection->exterior=$item['exterior'];
+        $inspection->main_stair=$item['main_stair'];
+        $inspection->main_door=$item['main_door'];
+        $inspection->colums=$item['colums'];
+        $inspection->corridor_walls=$item['corridor_walls'];
+        $inspection->windows=$item['windows'];
+        $inspection->trussess=$item['trussess'];
+        $inspection->flooring=$item['flooring'];
+        $inspection->room_partitions=$item['room_partitions'];
+        $inspection->ceiling=$item['ceiling'];
+        $inspection->roof=$item['roof'];
+        $inspection->sectional_occupancy=$item['sectional_occupancy'];
+          //classification
+        $inspection->occupancy_classification=$item['occupancy_classification'];
+        $inspection->other_classification=$item['other_classification'];
+        $inspection->occupant_load=$item['occupant_load'];
+        $inspection->any_renoviation=$item['any_renoviation'];
+        $inspection->other_renoviation=$item['other_renoviation'];
+        $inspection->under_ground=$item['under_ground'];
+        $inspection->windowless=$item['windowless'];
+          //exit details
+        $inspection->horizontal_exit=$item['horizontal_exit'];
+        $inspection->capcity_exit_stair=$item['capcity_exit_stair'];
+        $inspection->no_exits=$item['no_exits'];
+        $inspection->remote=$item['remote'];
+        $inspection->location_exit=$item['location_exit'];
+        $inspection->enclosure_provided=$item['enclosure_provided'];
+          //means of egress
+        $inspection->ready_accessible=$item['ready_accessible'];
+        $inspection->travel_distance=$item['travel_distance'];
+        $inspection->adequete_illumination=$item['adequete_illumination'];
+        $inspection->panic_hardware=$item['panic_hardware'];
+        $inspection->doors_open_easily=$item['doors_open_easily'];
+        $inspection->bldg_with_mezzanine=$item['bldg_with_mezzanine'];
+        $inspection->corridors=$item['corridors'];
+        $inspection->obstructed=$item['obstructed'];
+        $inspection->dead_ends=$item['dead_ends'];
+        $inspection->proper_rating_illumination=$item['proper_rating_illumination'];
+        $inspection->door_swing=$item['door_swing'];
+        $inspection->self_closure=$item['self_closure'];
+        $inspection->mezzanne_with_proper_exit=$item['mezzanne_with_proper_exit'];
+          //fire protection equipement
+        $inspection->emergency_lights=$item['emergency_lights'];
+        $inspection->illuminated_signs=$item['illuminated_signs'];
+        $inspection->no_stinguisher=$item['no_stinguisher'];
+        $inspection->type=$item['type'];
+        $inspection->capacity=$item['capacity'];
+        $inspection->accessible=$item['accessible'];
+        $inspection->fire_alarm=$item['fire_alarm'];
+        $inspection->detectors=$item['detectors'];
+        $inspection->location_panel=$item['location_panel'];
+        $inspection->functional=$item['functional'];
+          //flammables
+        $inspection->hazardous_materials=$item['hazardous_materials'];
+        $inspection->store_handled=$item['store_handled'];
+        $inspection->bfp_permnit=$item['bfp_permnit'];
+        $inspection->stocks_ceiling=$item['stocks_ceiling'];
+        $inspection->sign_provide=$item['sign_provide'];
+        $inspection->smoking_permitted=$item['smoking_permitted'];
+        $inspection->smoking_where=$item['smoking_where'];
+        $inspection->stoved_used=$item['stoved_used'];
+        $inspection->kind_fuel=$item['kind_fuel'];
+        $inspection->smoke_hood=$item['smoke_hood'];
+        $inspection->spark_arrester=$item['spark_arrester'];
+        $inspection->partition_construction=$item['partition_construction'];
+        //operating features
+        $inspection->brigade_organization=$item['brigade_organization'];
+        $inspection->brigade_organization_date=$item['brigade_organization_date'];
+        $inspection->safety_seminar=$item['safety_seminar'];
+        $inspection->safety_seminar_date=$item['safety_seminar_date'];
+        $inspection->emergency_procedures=$item['emergency_procedures'];
+        $inspection->emergency_procedures_date=$item['emergency_procedures_date'];
+        $inspection->evacuation_drill=$item['evacuation_drill'];
+        $inspection->evacuation_drill_date=$item['evacuation_drill_date'];
+        $inspection->defects=$item['defects'];
+        $inspection->recommendation=$item['recommendation'];
         $inspection->status=$item['status'];
         $inspection->save();
-    }
+
     $application = application::where('applicationId',$applicationId);
     $application->update([
         'inpector_id'=> $inspectorId,

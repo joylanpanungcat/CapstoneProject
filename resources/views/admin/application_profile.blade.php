@@ -3975,6 +3975,7 @@ $('#applicationAdd').on('submit',function(e){
         dataType:'json',
         success:function(data){
             toastr.success(data.msg);
+            window.location.reload();
         }
     })
 
@@ -4009,12 +4010,6 @@ $('#set').on('click',function(e){
               title: 'swal2-title'
             },
             allowOutsideClick: false,
-              backdrop: `
-              url("/images/logo2.png")
-                    rgb(9 9 26 / 73%)
-                    center
-                    no-repeat
-                  `,
               cancelButtonAriaLabel: 'Thumbs down',
               cancelButtonText:
                 '<i class="fa fa-arrow-left"></i>Close',
