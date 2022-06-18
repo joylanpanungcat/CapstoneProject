@@ -201,8 +201,11 @@
                      <li><a href="{{ route('schedule') }}"><i class="fa fa-calendar"></i>Schedule List</a>
 
                   </li>
-
                   </li>
+                  <li><a href="{{ route('notification') }}" class="noti_em"><i class="fa fa-bell"></i>
+                    SMS/Push Notification<span class="badge bg-danger" id="count"></span> </a>
+
+                   </li>
                   <li><a href="{{ route('renewal_application_main') }}" class="noti_renewal"><i class="fa fa-refresh"></i> Renewal  <span class="badge bg-danger" id="count_renewal"></span></a>
 
                   </li>

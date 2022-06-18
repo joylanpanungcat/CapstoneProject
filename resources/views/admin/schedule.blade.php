@@ -474,40 +474,7 @@ $(document).on('click','.cancel_schedule',function(e){
                '<i class="fa fa-arrow-left"></i>Close',
              cancelButtonAriaLabel: 'Thumbs down',
              preConfirm: function(){
-              Swal.fire({
-                input: 'password',
-
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-
-                         $.ajax({
+                $.ajax({
                            type: 'post',
                            url: '{{ route('cancel_schedule') }}',
                            data:{
@@ -518,24 +485,9 @@ $(document).on('click','.cancel_schedule',function(e){
                              toastr.success(data.msg);
                              dataTable.ajax.reload();
                            }
-                         })
-                       }
-                     },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-             });
+                         });
+              },
 
-             },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
 
                })
 

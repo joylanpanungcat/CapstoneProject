@@ -24,6 +24,9 @@ use App\Http\Controllers\inspectionController;
 use App\Http\Controllers\applicationControllerInspector;
 use App\Http\Controllers\loginController;
 
+//notification
+use App\Http\Controllers\NotificationController;
+
 //Map
 
 use App\Http\Controllers\mapController;
@@ -219,6 +222,13 @@ Route::get('renewal_reports',[reportsController::class,'renewal_reports'])->name
 Route::view('fsic_occupancy_report','admin/fsic_occupancy_report')->name('fsic_occupancy_report');
 Route::view('fsic_business_report','admin/fsic_business_report')->name('fsic_business_report');
 Route::view('fsec_report','admin/fsec_report')->name('fsec_report');
+//notification
+Route::view('notification','admin/notification')->name('notification');
+Route::get('get_application_notification',[NotificationController::class,'get_application_notification' ])->name('get_application_notification');
+Route::post('get_sms_details',[NotificationController::class,'get_sms_details' ])->name('get_sms_details');
+Route::post('send_notification',[NotificationController::class,'send_notification' ]);
+Route::get('verify_phone',[NotificationController::class,'verify_phone' ]);
+Route::get('request_verify',[NotificationController::class,'request_verify' ]);
 
 //certificate
 Route::view('certificate','admin/certificate')->name('certificate');

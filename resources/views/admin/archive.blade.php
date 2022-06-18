@@ -3,7 +3,7 @@
 @section('title','Archived')
 @section('content')
 <style type="text/css">
-    
+
   .title_right button{
     float: right;
   }
@@ -28,7 +28,7 @@ background-color: transparent;
 width: 1200px;
 }
 button.close-modal{
-   
+
 width: 40px;
 height: 40px;
 line-height: 40px;
@@ -39,7 +39,7 @@ margin: 0 auto 10px auto;
 padding: 2px;
 }
 button.close-modal:hover{
-   
+
 width: 40px;
 height: 40px;
 line-height: 40px;
@@ -75,10 +75,10 @@ line-height: 1px;
         border: 1px dashed #c0ccda;
         border-radius: 6px;
         cursor: pointer;
-        
+
     }
 
-   
+
     .dz-progress{
         display: none;
     }
@@ -235,11 +235,11 @@ width: 10px !important;
             <h3>Archived </h3>
         </div>
 
-     
+
     </div>
     <hr class="separate2">
 
-                    
+
         <div class="clearfix"></div>
                  <div class="row">
                         <div class="col-md-12 col-sm-12 ">
@@ -248,11 +248,11 @@ width: 10px !important;
                                 <div class="x_title">
                                     <h2>Archived <small></small></h2>
 
-                                   
+
                                     <div class="clearfix"></div>
                                     <div id="show"></div>
                                 </div>
-                               
+
                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                           <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Application</a>
@@ -265,13 +265,13 @@ width: 10px !important;
                             </li>
                             <li role="presentation" class="active"><a href="#tab_content5" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Fees </a>
                             </li>
-                        
+
                         </ul>
-                         
+
                         <div id="myTabContent" class="tab-content">
                           <div role="tabpanel" class="tab-pane active " id="tab_content1" aria-labelledby="home-tab">
                             <div id='showDelete'></div>
-                         <div class='container'>   
+                         <div class='container'>
                            <div class="x_content">
                                     <br />
                                        <!--  <button type="button" name="delete_all" id="delete_all" class="btn  btn-xs"><i class="fa fa-user-times fa-lg"></i></button> -->
@@ -284,25 +284,25 @@ width: 10px !important;
                                      <th>Control #</th>
                                   <th>Business Name</th>
                                     <th >Action</th>
-                                   
+
                                 </tr>
                               </thead>
                               <tbody >
-                            
-                            
-                                  
-                                    
+
+
+
+
                                   </tbody>
-                 
+
                                   </table>
 
                         </div>
                         </div>
 
                              </div>
-                           
-                                  
-                              
+
+
+
                               <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                                 <div class="row">
                                   <div class="x_content">
@@ -321,8 +321,8 @@ width: 10px !important;
 
                                 </tr>
                               </thead>
-                              
-                 
+
+
                                   </table>
 
                         </div>
@@ -331,7 +331,7 @@ width: 10px !important;
 
                           {{-- content 3 --}}
                           <div role="tabpanel" class="tab-pane  " id="tab_content3" aria-labelledby="home-tab">
-                         <div class='container'>   
+                         <div class='container'>
                            <div class="x_content">
                                     <br />
                                        <!--  <button type="button" name="delete_all" id="delete_all" class="btn  btn-xs"><i class="fa fa-user-times fa-lg"></i></button> -->
@@ -344,16 +344,16 @@ width: 10px !important;
                                      <th>Username</th>
                                   <th>Password</th>
                                     <th >Action</th>
-                                   
+
                                 </tr>
                               </thead>
                               <tbody >
-                            
-                            
-                                  
-                                    
+
+
+
+
                                   </tbody>
-                 
+
                                   </table>
 
                         </div>
@@ -379,8 +379,6 @@ width: 10px !important;
 
                               </tr>
                             </thead>
-                            
-               
                                 </table>
 
                       </div>
@@ -405,8 +403,8 @@ width: 10px !important;
 
                         </tr>
                       </thead>
-                      
-         
+
+
                           </table>
 
                 </div>
@@ -414,11 +412,11 @@ width: 10px !important;
                 </div>
                         </div>
 
-                        
-                        
+
+
                                </div>
                               </div>
-       
+
         </div>
 
        </div>
@@ -453,7 +451,7 @@ width: 10px !important;
           </div>
                 <input type="hidden" name="" class="form-control" id="accountAccountId" readonly>
             </div>
-            
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-success" id="restore_account"><i class="fa fa-refresh"> Restore</i></button>
@@ -492,7 +490,7 @@ width: 10px !important;
           </div>
                 <input type="hidden" name="" class="form-control" id="inspectorId" readonly>
             </div>
-            
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-success" id="restore_inspector"><i class="fa fa-refresh"> Restore</i></button>
@@ -500,7 +498,7 @@ width: 10px !important;
           </div>
         </div>
       </div>
-      
+
       <div class="modal fade" id="modalViewApplication" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -516,7 +514,7 @@ width: 10px !important;
 										<div class="form-group row ">
 											<label class="control-label col-md-3 col-sm-3 ">Type Of Application</label>
 											<div class="col-md-9 col-sm-9 ">
-											
+
                       <input type="hidden" class="form-control" placeholder="Default Input" id="applicationId" readonly>
                       <input type="text" class="form-control" placeholder="Default Input" id="type_application" readonly>
 											</div>
@@ -557,7 +555,7 @@ width: 10px !important;
 												<input type="text" class="form-control" placeholder="Default Input" id="deleted_at" readonly>
 											</div>
 										</div>
-                 
+
 									</form>
 								</div>
 							</div>
@@ -600,7 +598,7 @@ width: 10px !important;
         ]
 
      });
-    
+
      var dataTable= $('#archiveData_account').DataTable({
         processing:true,
         info:true,
@@ -690,8 +688,8 @@ width: 10px !important;
         ]
 
      });
-     
-     
+
+
 
      $(document).on('click','.actionButton',function(e){
        e.preventDefault();
@@ -715,7 +713,7 @@ width: 10px !important;
           $('#accountAccountId').val(value['accountId']);
           $('#deleted_at_account').val(value['deleted_at']);
       })
-      
+
 
         }
       })
@@ -744,13 +742,13 @@ width: 10px !important;
           $('#inspectorId').val(value['inspectorId']);
           $('#deleted_at_inspector').val(value['deleted_at']);
       })
-      
+
         }
       })
 
      });
 
-     
+
      $(document).on('click','.restoreSchedule',function(e){
     e.preventDefault();
     var scheduleId = $(this).attr('id');
@@ -767,7 +765,7 @@ width: 10px !important;
              title: 'swal2-title'
            },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -777,39 +775,7 @@ width: 10px !important;
              cancelButtonAriaLabel: 'Thumbs down',
              preConfirm: function(){
            $('#modalViewAccount').modal('hide');
-              Swal.fire({
-                input: 'password',
-                
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-                    
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-                   
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-                       
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-                             $.ajax({
+                         $.ajax({
                                type: 'post',
                                url:'{{ route('restore_schedule') }}',
                                data:{
@@ -821,26 +787,8 @@ width: 10px !important;
                                  dataTableSchedule.ajax.reload();
                                }
                              })
-                        
-                       }
-                     },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-             });
-
-             },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-       
-               }) 
+                      },
+               })
 
   });
   $('#restore_account').on('click',function(e){
@@ -859,7 +807,7 @@ width: 10px !important;
              title: 'swal2-title'
            },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -871,7 +819,7 @@ width: 10px !important;
            $('#modalViewAccount').modal('hide');
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -883,18 +831,18 @@ width: 10px !important;
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -913,7 +861,7 @@ width: 10px !important;
                                  dataTable.ajax.reload();
                                }
                              })
-                        
+
                        }
                      },
                       backdrop: `
@@ -931,8 +879,8 @@ width: 10px !important;
                    center
                    no-repeat
                  `
-       
-               }) 
+
+               })
 
   });
 
@@ -979,7 +927,7 @@ $('#restore_application').on('click',function(e){
              title: 'swal2-title'
            },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -991,7 +939,7 @@ $('#restore_application').on('click',function(e){
            $('#modalViewApplication').modal('hide');
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -1003,18 +951,18 @@ $('#restore_application').on('click',function(e){
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -1033,7 +981,7 @@ $('#restore_application').on('click',function(e){
                                  dataTableApplication.ajax.reload();
                                }
                              })
-                        
+
                        }
                      },
                       backdrop: `
@@ -1051,8 +999,8 @@ $('#restore_application').on('click',function(e){
                    center
                    no-repeat
                  `
-       
-               }) 
+
+               })
 
 });
 
@@ -1072,7 +1020,7 @@ $('#restore_inspector').on('click',function(e){
              title: 'swal2-title'
            },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -1084,7 +1032,7 @@ $('#restore_inspector').on('click',function(e){
            $('#modal_inspector').modal('hide');
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -1096,18 +1044,18 @@ $('#restore_inspector').on('click',function(e){
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -1126,7 +1074,7 @@ $('#restore_inspector').on('click',function(e){
                                  dataTableInspector.ajax.reload();
                                }
                              })
-                        
+
                        }
                      },
                       backdrop: `
@@ -1144,9 +1092,9 @@ $('#restore_inspector').on('click',function(e){
                    center
                    no-repeat
                  `
-       
-               }) 
- 
+
+               })
+
 });
 $(document).on('click','.restoreFee',function(e){
   e.preventDefault();
@@ -1164,7 +1112,7 @@ var fees_id  = $(this).attr('id');
              title: 'swal2-title'
            },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -1176,7 +1124,7 @@ var fees_id  = $(this).attr('id');
            $('#modal_inspector').modal('hide');
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -1188,18 +1136,18 @@ var fees_id  = $(this).attr('id');
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -1218,7 +1166,7 @@ var fees_id  = $(this).attr('id');
                                  dataTableFees.ajax.reload();
                                }
                              })
-                        
+
                        }
                      },
                       backdrop: `
@@ -1236,14 +1184,14 @@ var fees_id  = $(this).attr('id');
                    center
                    no-repeat
                  `
-       
-               }) 
- 
+
+               })
+
 });
-  
+
 
   })
 </script>
 
 
-  @endsection 
+  @endsection
