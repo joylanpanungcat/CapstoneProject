@@ -2116,11 +2116,12 @@ height: 40%;
       </div>
 
       <div id="inspection_modal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content modal-header-inpsection-report ">
                 <div class="modal-header ">
                     <h5 class="modal-title">Inspection Report</h5>
                     <div class="btn-group">
+                        <div id="verify_button" style="margin-right: 10px"></div>
                         <button type="button" class="btn btn-success print-inspection" >Print</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
                     </div>
@@ -2211,7 +2212,7 @@ height: 40%;
 
                         <form>
                             <label>DATE OF INSPECTION:</label>
-                            <input type="text" value="" class="inspectiondate">
+                            <input type="text" value="" class="inspectiondate" id="date_inspect">
                         </form>
 
                     </div>
@@ -2223,17 +2224,17 @@ height: 40%;
                             <ul class="checc">
 
                              <li><label for="" class="container">
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
+                                <input type="checkbox" id="under_construction" >
+                                <span class="checkmark" ></span>
                                 Building under construction
                             </label></li>
                              <li><label for="" class="container">
-                                <input type="checkbox" >
+                                <input type="checkbox" id="occupancy_permit" >
                                 <span class="checkmark"></span>
                                 Application for Occupancy Permit
                             </label></li>
                              <li><label for="" class="container">
-                                <input type="checkbox" >
+                                <input type="checkbox" id="business_permit" >
                                 <span class="checkmark"></span>
                                 Application for Business Permit
                             </label></li>
@@ -2242,7 +2243,7 @@ height: 40%;
                                 <span class="checkmark"></span>
                                 Others (Specify)
                             </label>
-                            <input type="text" class="others"></li>
+                            <input type="text" class="others" id="others_specify"></li>
 
                         </ul>
                         </div>
@@ -2252,17 +2253,17 @@ height: 40%;
                             <ul class="checc">
 
                              <li><label for="" class="container">
-                                <input type="checkbox">
+                                <input type="checkbox" id="periodic_inspection">
                                 <span class="checkmark"></span>
                                 Periodic Inspection of Occupancy
                             </label></li>
                              <li><label for="" class="container">
-                                <input type="checkbox" >
+                                <input type="checkbox" id="verification_inspection_compliance" >
                                 <span class="checkmark"></span>
                                 Verification Inspection of Compliance to NTCV
                             </label></li>
                              <li><label for="" class="container">
-                                <input type="checkbox" >
+                                <input type="checkbox" id="verification_inspection_complaint" >
                                 <span class="checkmark"></span>
                                 Verification Inspection of Complaint Received </label></li>
                         </ul>
@@ -2283,25 +2284,25 @@ height: 40%;
                             <label for="" class="container">
                             Name of Building
                             </label>
-                            <input type="text" class="others" style="width:629px;"></li>
+                            <input type="text" class="others" style="width:629px;" id="name_building"></li>
 
                             <li>
                             <label for="" class="container">
                             Business Name
                             </label>
-                            <input type="text" class="others" style="width:635px;"></li>
+                            <input type="text" class="others" style="width:635px;" id="business_name_inspecton"></li>
 
                             <li>
                             <label for="" class="container">
                             Address
                             </label>
-                            <input type="text" class="others" style="width:671px;"></li>
+                            <input type="text" class="others" style="width:671px;" id="address"></li>
 
                             <li>
                             <label for="" class="container">
                             Nature of Business
                             </label>
-                            <input type="text" class="others"></li>
+                            <input type="text" class="others" id="nature_business_inspection"></li>
                         </ul>
                     </div>
 
@@ -2310,12 +2311,12 @@ height: 40%;
                             <ul class="generalinfo22">
                                 <li>
                                 <label>Name of Owner/Occupant</label>
-                                <input type="text">
+                                <input type="text" id="name_owner">
                                 </li>
 
                                 <li>
                                     <label>Name of Representative</label>
-                                    <input type="text">
+                                    <input type="text" id="name_representative">
                                 </li>
                                 </ul>
                             </div>
@@ -2323,12 +2324,12 @@ height: 40%;
                             <ul class="generalinfo22">
                                 <li>
                                     <label>Contact No.</label>
-                                    <input type="text">
+                                    <input type="text" id="owner_contact_no">
                                 </li>
 
                                 <li>
                                     <label>Contact No.</label>
-                                    <input type="text">
+                                    <input type="text" id="representative_no">
                                 </li>
                             </ul>
                         </div>
@@ -2336,26 +2337,26 @@ height: 40%;
                     <div class="generalinfo3">
                            <div>
                         <ul class="generalinfo33">
-                            <li><label>No. of Storey <input type="text"></label>
+                            <li><label>No. of Storey <input type="text" id="no_storey"></label>
                                  </li>
-                            <li><label>Height of Bldg. <input type="text">(m)</label>
+                            <li><label>Height of Bldg. <input type="text" id="height_building">(m)</label>
                                 </li>
                             <li><label>Portion Occupied</label>
-                                <input type="text" style="width: 215px;"></li>
+                                <input type="text" style="width: 215px;" id="portion_occupied"></li>
                                 <ul>
                             </div>
 
                             <div>
                                 <ul class="generalinfo33">
 
-                            <li><label>Area per flr. <input type="text" style="width:209px;">sqm</label>
+                            <li><label>Area per flr. <input type="text" style="width:209px;" id="area_per_flr">sqm</label>
                                 </li>
 
                             <li><label>Total Flr. Area</label>
-                                <input type="text" style="width:40px;"></li>
+                                <input type="text" style="width:40px;" id="total_flr_area"></li>
 
                                 <div style="display: inline; position:relative; top:1px;">
-                            <li><input type="text" style="width:260px;">
+                            <li><input type="text" style="width:260px;" id="fire_insurance">
                                 <span style="font-size: 11px;">sqm</span></li>
                             </div>
 
@@ -2366,9 +2367,9 @@ height: 40%;
                          <div class="generalinfo4">
                              <ul class="generalinfo44">
                                  <li><label>Name of Fire Inusrance Co/Co-Insurer<input type="text" style="width: 215px;"></label> </li>
-                                 <li><label> Policy No.<input type="text"></label></li>
-                                 <li><label>Date Issued<input type="text"></label></li>
-                                 <li><label style="font-weight:bold; ">TYPE OF OCCUPANCY<input type="text" style="width: 400px;"></label></li>
+                                 <li><label> Policy No.<input type="text" id="policy_no"></label></li>
+                                 <li><label>Date Issued<input type="text" id="date_issued"></label></li>
+                                 <li><label style="font-weight:bold; ">TYPE OF OCCUPANCY<input type="text" style="width: 400px;" id="type_occupancy"></label></li>
                              </ul>
                          </div>
                      </div>
@@ -2378,26 +2379,26 @@ height: 40%;
                         <div class="buildconstruct">
                             <div>
                                 <ul class="listcon">
-                                <li><label>Beams<input type="text" style="width:165px;"></label></li>
-                                <li><label>Exterior Walls<input type="text" style="width:131px;"></label></li>
-                                <li><label>Main Stair<input type="text"></label></li>
-                                <li><label>Main Door<input type="text"></label></li>
+                                <li><label>Beams<input type="text" style="width:165px;" id="beams"></label></li>
+                                <li><label>Exterior Walls<input type="text" style="width:131px;" id="exterior"></label></li>
+                                <li><label>Main Stair<input type="text" id="main_stair"></label></li>
+                                <li><label>Main Door<input type="text" id="main_door"></label></li>
 
                             </div>
                             <div>
                                 <ul class="listcon">
-                                <li><label>Columns<input type="text"></label></li>
-                                <li><label>Corridor Walls<input type="text" style="width: 125px;"></label></li>
-                                <li><label>Windows<input type="text"></label></li>
-                                <li><label>Trusses<input type="text" style="width: 155px;"></label></li>
+                                <li><label>Columns<input type="text" id="colums"></label></li>
+                                <li><label>Corridor Walls<input type="text" id="corridor_walls" style="width: 125px;"></label></li>
+                                <li><label>Windows<input type="text" id="windows"></label></li>
+                                <li><label>Trusses<input type="text" style="width: 155px;" id="trussess"></label></li>
                             </ul>
                             </div>
                             <div>
                                 <ul class="listcon">
-                                <li><label>Flooring<input type="text"></label></li>
-                                <li><label>Room Partitions<input type="text" style="width: 112px;"></label></li>
-                                <li><label>Ceiling<input type="text" style="width: 157px;"></label></li>
-                                <li><label>Roof<input type="text" style="width: 167px;"></label></li>
+                                <li><label>Flooring<input type="text" id="flooring"></label></li>
+                                <li><label>Room Partitions<input type="text" style="width: 112px;" id="room_partitions"></label></li>
+                                <li><label>Ceiling<input type="text" style="width: 157px;" id="ceiling"></label></li>
+                                <li><label>Roof<input type="text" style="width: 167px;" id="roof"></label></li>
                             </ul>
                             </div>
 
@@ -2409,7 +2410,7 @@ height: 40%;
                             III. SECTIONAL OCCUPANCY (Note: Indicate specific usage of each floor, section or rooms)
                             </label>
                             <form>
-                                <textarea class="secoccup"></textarea>
+                                <textarea class="secoccup" id="sectional_occupancy"></textarea>
                             </form>
                         </div>
 
@@ -4112,38 +4113,66 @@ $('.view_inspection_report').on('click',function(e){
 
       $('#inspection_modal').modal('show');
 
-    //   $.each(data.data,function(key, value){
-    //     $('#type_application_inspection').val(value['type_application']);
-    //     $('#inspector_name').val(value['Fname'] + ' ' + value['Lname']);
-    //     $('#date_inspected').val(value['date_inspect']);
-    //     $('#inspection_status').val(value['status']);
-    //     $('#beams').val(value['beams']);
-    //  $('#exterior').val(value['exterior']);
-    //  $('#main_stair').val(value['main_stair']);
-    // $('#main_door').val(value['main_door']);
-    //  $('#colums').val(value['colums']);
-    // $('#corridor_walls').val(value['corridor_walls']);
-    //  $('#windows').val(value['windows']);
-    //  $('#trussess').val(value['trussess']);
-    // $('#flooring').val(value['flooring']);
-    //  $('#room_partitions').val(value['room_partitions']);
-    //  $('#ceiling').val(value['ceiling']);
-    //  $('#roof').val(value['roof']);
-    //  $('#sectional_occupancy').val(value['sectional_occupancy']);
-    //  $('#emergency_lights').val(value['emergency_lights']);
-    //  $('#no_stinguisher').val(value['no_stinguisher']);
-    // $('#fire_alarm').val(value['fire_alarm']);
-    //  $('#location_panel').val(value['location_panel']);
-    //  $('#defects').val(value['defects']);
-    //  $('#recommendation').val(value['recommendation']);
-    //     if(value['verify'] == null){
-    //       $('#verify_inspection').val('not verify');
-    //       $('#verify_button').html(' <button type="button" class="btn btn-success verify_inspection_button" id='+value['applicationId']+'><i class="fa fa-check"> </i> Verify</button>')
-    //     }else{
-    //       $('#verify_inspection').val('verified');
-    //       $('#verify_button').html('');
-    //     }
-    //   })
+      $.each(data.data,function(key, value){
+        $('#date_inspect').val(value['date_inspect']);
+        if(value['under_construction'] ==='true'){
+            $('#under_construction').attr('checked','checked');
+        }
+        if(value['occupancy_permit'] ==='true'){
+            $('#occupancy_permit').attr('checked','checked');
+        }
+        if(value['business_permit'] ==='true'){
+            $('#business_permit').attr('checked','checked');
+        }
+        if(value['periodic_inspection'] ==='true'){
+            $('#periodic_inspection').attr('checked','checked');
+        }
+        if(value['verification_inspection_compliance'] ==='true'){
+            $('#verification_inspection_compliance').attr('checked','checked');
+        }
+        if(value['verification_inspection_complaint'] ==='true'){
+            $('#verification_inspection_complaint').attr('checked','checked');
+        }
+
+        $('#others_specify').val(value['others_specify']);
+        $('#name_building').val(value['name_building']);
+        $('#business_name_inspecton').val(value['business_name']);
+        $('#address').val(value['address']);
+        $('#nature_business_inspection').val(value['nature_business']);
+        $('#name_owner').val(value['name_owner']);
+        $('#owner_contact_no').val(value['owner_contact_no']);
+        $('#name_representative').val(value['name_representative']);
+        $('#representative_no').val(value['representative_no']);
+        $('#no_storey').val(value['no_storey']);
+        $('#height_building').val(value['height_building']);
+        $('#portion_occupied').val(value['portion_occupied']);
+        $('#area_per_flr').val(value['area_per_flr']);
+        $('#total_flr_area').val(value['total_flr_area']);
+        $('#fire_insurance').val(value['fire_insurance']);
+        $('#policy_no').val(value['policy_no']);
+        $('#date_issued').val(value['date_issued']);
+        $('#type_occupancy').val(value['type_occupancy']);
+        $('#beams').val(value['beams']);
+        $('#exterior').val(value['exterior']);
+        $('#main_stair').val(value['main_stair']);
+        $('#main_door').val(value['main_door']);
+        $('#colums').val(value['colums']);
+        $('#corridor_walls').val(value['corridor_walls']);
+        $('#windows').val(value['windows']);
+        $('#trussess').val(value['trussess']);
+        $('#flooring').val(value['flooring']);
+        $('#room_partitions').val(value['room_partitions']);
+        $('#ceiling').val(value['ceiling']);
+        $('#roof').val(value['roof']);
+        $('#sectional_occupancy').val(value['sectional_occupancy']);
+
+        if(value['verify'] == null){
+          $('#verify_button').html(' <button type="button" class="btn btn-warning verify_inspection_button" id='+value['applicationId']+' ><i class="fa fa-check"> </i> Verify</button>')
+        }else{
+            $('#verify_button').html(' <button type="button" class="btn btn-default " ><i class="fa fa-check"> </i> Verified</button>')
+
+        }
+      })
 
     }
   })

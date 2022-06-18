@@ -376,7 +376,7 @@ public function inspectionReport(Request $request ){
         $inspection->inspectorId =$inspectorId;
         $inspection->applicationId =$applicationId;
         $inspection->date_inspect =Carbon::now()->format('Y-m-d H:i:s');
-        $inspection->unser_construction=$request['under_construction'];
+        $inspection->under_construction=$request['under_construction'];
         $inspection->occupancy_permit=$request['occupancy_permit'];
         $inspection->business_permit=$request['business_permit'];
         $inspection->periodic_inspection=$request['periodic_inspection'];
@@ -525,7 +525,7 @@ foreach($item as $data){
     $inspection_id =  $data['inspection_id'];
         $inspection =  inspection_details::find($inspection_id);
         $inspection->date_inspect =Carbon::now()->format('Y-m-d H:i:s');
-        $inspection->unser_construction=$data['unser_construction'];
+        $inspection->under_construction=$data['under_construction'];
         $inspection->occupancy_permit=$data['occupancy_permit'];
         $inspection->business_permit=$data['business_permit'];
         $inspection->periodic_inspection=$data['periodic_inspection'];
