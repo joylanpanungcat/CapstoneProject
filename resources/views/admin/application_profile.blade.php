@@ -2419,30 +2419,30 @@ height: 40%;
                             <label> Occupancy Classification</label>
                             <div class="classi" style="display: inline-flex;">
                                 <ul class="listcon">
-                                    <li><label class="class1"><input class="check" type="checkbox" >A </label></li>
-                                    <li><label class="class2"><input class="check" type="checkbox" >B </label></li>
-                                    <li><label class="class3" ><input class="check" type="checkbox">C </label></li>
+                                    <li><label class="class1"><input class="check occupancy_classification" type="checkbox" value="A">A </label></li>
+                                    <li><label class="class2"><input class="check occupancy_classification" type="checkbox" value="B">B </label></li>
+                                    <li><label class="class3" ><input class="check occupancy_classification" type="checkbox" value="C">C </label></li>
                                 </ul>
 
                             </div>
                             <div style="display: inline-flex; padding-left: 30px;">
-                                <label>Others</label> <input class="textclass" type="text" style="width: 300px;">
+                                <label>Others</label> <input class="textclass" type="text" style="width: 300px;" id="other_classification">
                             </div>
-                            <div><label>Occupant Load: <input type="text">(Requirement: 2.8 sq. m per person for street level; 5.6 sq. m for upper floors and 9.3 sq. m. for
+                            <div><label>Occupant Load: <input type="text" id="occupant_load">(Requirement: 2.8 sq. m per person for street level; 5.6 sq. m for upper floors and 9.3 sq. m. for
                                 offices, storage, and shipping and not open to the general public)</label>
                                 <div>
                                 <label>Any renovations
-                                    <input type="checkbox">Yes
-                                    <input type="checkbox">No
+                                    <input type="checkbox" class="any_renoviation" value="Yes">Yes
+                                    <input type="checkbox" class="any_renoviation" value="No">No
                                 </label>
-                                <label style="padding-left: 30px;">If yes, specify <input type="text"></label></div>
+                                <label style="padding-left: 30px;">If yes, specify <input type="text" id="other_renoviation"></label></div>
                                 <label>Underground:
-                                    <input type="checkbox">Yes
-                                    <input type="checkbox">No
+                                    <input type="checkbox" class="under_ground" value="Yes">Yes
+                                    <input type="checkbox" class="under_ground" value="No">No
                                 </label>
                                 <label style="padding-left: 40px;">Windowless:
-                                    <input type="checkbox">Yes
-                                    <input type="checkbox">No
+                                    <input type="checkbox" class="windowless" value="Yes">Yes
+                                    <input type="checkbox" class="windowless" value="No">No
                                 </label>
                     </div>
                         </div>
@@ -2451,13 +2451,13 @@ height: 40%;
                         <div style="font-weight:bold"><label> V. EXIT DETAILS</label></div>
 
                         <ul class="listcon">
-                           <li><label>Capacity of Horizontal Exit (Corridor Hallway) <input type="text" style="width: 207px;"> (Requirement: 100 persons per unit of exit width per min)</label></li>
-                           <li><label>Capacity of Exit Stair: <input type="text" style="width: 300px;"> (Requirement: 60 persons per unit of exit width per min)</label></li>
-                            <li><label>No. of Exits <input type="text" style="width: 350px;"> Remote <input type="checkbox">Yes <input type="checkbox">No</label></li>
+                           <li><label>Capacity of Horizontal Exit (Corridor Hallway) <input type="text" style="width: 207px;" id="horizontal_exit"> (Requirement: 100 persons per unit of exit width per min)</label></li>
+                           <li><label>Capacity of Exit Stair: <input type="text" style="width: 300px;" id="capcity_exit_stair"> (Requirement: 60 persons per unit of exit width per min)</label></li>
+                            <li><label>No. of Exits <input type="text" style="width: 350px;" id="no_exits"> Remote <input type="checkbox" class="remote" value="Yes">Yes <input type="checkbox" class="remote" value="No">No</label></li>
                             <li><label>Minimum Requirement: No. of Exits: Two (2) units per floor</label></li>
-                           <li> <label>Location of Exit <input type="text" style="width: 600px;"></label></li>
+                           <li> <label>Location of Exit <input type="text" style="width: 600px;" id="location_exit"></label></li>
                             <li><label>Maximum Travel Distance Requirement from Farthest Room: 30.5 m without AFSS & 46m with AFSS</label></li>
-                            <li><label>Any Enclosure Provided <input type="checkbox">Yes <input type="checkbox">No <label style="padding-left: 100px;">Min of 2-hr fire rating-storey or mainborder,Min of 1hr, fire rung- less than 4-storey</label> </label></li>
+                            <li><label>Any Enclosure Provided <input type="checkbox" class="enclosure_provided" value="Yes">Yes <input type="checkbox" class="enclosure_provided" value="No">No <label style="padding-left: 100px;">Min of 2-hr fire rating-storey or mainborder,Min of 1hr, fire rung- less than 4-storey</label> </label></li>
                         </ul>
                         </ul>
                         </div>
@@ -2468,47 +2468,47 @@ height: 40%;
                                 <div>
                                 <ul class="listcon">
                                     <li>
-                                        <label>Ready accesible <span style="padding-left: 70px;"><input class="check" type="checkbox">Yes <input class="check" type="checkbox">No </span></label>
+                                        <label>Ready accesible <span style="padding-left: 70px;"><input class="check ready_accessible" type="checkbox" value="Ye">Yes <input class="check ready_accessible" type="checkbox" value="No">No </span></label>
                                     </li>
                                     <li>
-                                        <label>Travel distance within limits? <span style="padding-left: 22px;"> <input class="check" type="checkbox">Yes <input class="check" type="checkbox">No </span></label>
+                                        <label>Travel distance within limits? <span style="padding-left: 22px;"> <input class="check travel_distance" type="checkbox" value="Yes">Yes <input class="check travel_distance" type="checkbox" value="No">No </span></label>
                                     </li>
                                     <li>
-                                        <label>Adequate illumination <span style="padding-left: 50px;"> <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                        <label>Adequate illumination <span style="padding-left: 50px;"> <input type="checkbox" class="adequete_illumination" value="Yes">Yes <input type="checkbox" class="adequete_illumination" value="No">No </span> </label>
                                     </li>
                                     <li>
-                                        <label>Panic hardware operational? <span style="padding-left: 21px;"><input type="checkbox">Yes <input type="checkbox">No </span></label>
+                                        <label>Panic hardware operational? <span style="padding-left: 21px;"><input type="checkbox" class="panic_hardware" value="Yes">Yes <input type="checkbox" class="panic_hardware" value="No">No </span></label>
                                     </li>
                                     <li>
-                                        <label>Doors open easily <span style="padding-left: 64px;"><input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                        <label>Doors open easily <span style="padding-left: 64px;"><input type="checkbox" class="doors_open_easily" value="Yes">Yes <input type="checkbox" class="doors_open_easily" value="No">No </span> </label>
                                     </li>
                                     <li>
-                                        <label>Bldg w/Mezzanine <span style="padding-left: 63px;"><input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                        <label>Bldg w/Mezzanine <span style="padding-left: 63px;"><input type="checkbox" class="bldg_with_mezzanine" value="Yes">Yes <input type="checkbox" class="bldg_with_mezzanine" value="No">No </span> </label>
                                     </li>
                                     <li>
-                                        <label>Corridors & aisles of sufficient size <input type="checkbox">Yes <input type="checkbox">No </label>
+                                        <label>Corridors & aisles of sufficient size <input type="checkbox" class="corridors" value="Yes">Yes <input type="checkbox" class="corridors" value="Yes">No </label>
                                     </li>
                                 </ul>
                             </div>
                                 <div>
                                     <ul class="listcon">
                                         <li>
-                                            <label>Obstructed <span style="padding-left: 90px;"> <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                            <label>Obstructed <span style="padding-left: 90px;"> <input type="checkbox" class="obstructed" value="Yes">Yes <input type="checkbox" class="obstructed" value="No">No </span> </label>
                                         </li>
                                         <li>
-                                            <label>Dead-ends within limits <span style="padding-left: 40px;">  <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                            <label>Dead-ends within limits <span style="padding-left: 40px;">  <input type="checkbox" class="dead_ends" value="Yes">Yes <input type="checkbox" class="dead_ends" value="No">No </span> </label>
                                         </li>
                                         <li>
-                                            <label>Proper rating of illummination <span style="padding-left: 15px;">  <input type="checkbox">Yes <input type="checkbox">No  </span></label>
+                                            <label>Proper rating of illummination <span style="padding-left: 15px;">  <input type="checkbox" class="proper_rating_illumination" value="Yes">Yes <input type="checkbox" class="proper_rating_illumination" value="No">No  </span></label>
                                         </li>
                                         <li>
-                                            <label>Door swing in the direction of exit <input type="checkbox">Yes <input type="checkbox">No  </label>
+                                            <label>Door swing in the direction of exit <input type="checkbox" class="door_swing" value="Yes">Yes <input type="checkbox" class="door_swing" value="No">No  </label>
                                         </li>
                                         <li>
-                                            <label>Self-closure operational<span style="padding-left: 38px;"> <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                            <label>Self-closure operational<span style="padding-left: 38px;"> <input type="checkbox" class="self_closure" value="Yes">Yes <input type="checkbox" class="self_closure" value="No">No </span> </label>
                                         </li>
                                         <li>
-                                            <label>Mezzanine with proper exits <span style="padding-left: 22px;">  <input type="checkbox">Yes <input type="checkbox">No </span> </label>
+                                            <label>Mezzanine with proper exits <span style="padding-left: 22px;">  <input type="checkbox" class="mezzanne_with_proper_exit" value="Yes">Yes <input type="checkbox" class="mezzanne_with_proper_exit" value="No">No </span> </label>
                                         </li>
                                     </ul>
                                 </div>
@@ -2530,40 +2530,40 @@ height: 40%;
                                 <div>
                                     <label>
                                         a.) Emergency lights provided?
-                                        <span style="padding-right: 100px;"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        <span style="padding-right: 100px;"><input type="checkbox" class="emergency_lights" value="Yes">Yes <input type="checkbox" class="emergency_lights" value="No">No</span>
                                         Illuminated exit signs provided?
-                                        <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        <span><input type="checkbox" class="illuminated_signs" value="Yes">Yes <input type="checkbox" class="illuminated_signs" value="No">No</span>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
                                         b.) No. of fire extinguisher
-                                        <span><input class="letterb" type="text"></span>
+                                        <span><input class="letterb" type="text" id="no_stinguisher"></span>
                                         Type
-                                        <span><input class="letterb" type="text"></span>
+                                        <span><input class="letterb" type="text" id="type"></span>
                                         Capacity
-                                        <span><input class="letterb" type="text"></span>
+                                        <span><input class="letterb" type="text" id="capacity"></span>
                                         Accessible
-                                        <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        <span><input type="checkbox" class="accessible" value="Yes">Yes <input type="checkbox" class="accessible" value="No">No</span>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
                                         c. Is bldg. equipped with fire alarm?
-                                        <span style="padding-right: 60px;"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        <span style="padding-right: 60px;"><input type="checkbox" class="fire_alarm" value="Yes">Yes <input type="checkbox" class="fire_alarm" value="No">No</span>
                                         Detectors
-                                        <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        <span><input type="checkbox" class="detectors" value="Yes">Yes <input type="checkbox" class="detectors" value="No"  >No</span>
 
 
                                     </label>
                                     <div >
                                         <label style="padding-left: 9px;">
                                         Location of control panel
-                                        <span style="padding-right: 37px;"><input type="text"></span>
+                                        <span style="padding-right: 37px;"><input type="text" id="location_panel"></span>
                                         Functional
-                                        <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        <span><input type="checkbox" class="functional" value="Yes">Yes <input type="checkbox" class="functional" value="No">No</span>
                                     </label>
                                     </div>
                                 </div>
@@ -2575,9 +2575,9 @@ height: 40%;
                                     <div style="padding-bottom:10px">
                                         <label>
                                             a.) Presence of hazardous materials
-                                            <span style="padding-right:100px"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                            <span style="padding-right:100px"><input type="checkbox" class="hazardous_materials" value="Yes">Yes <input type="checkbox" class="hazardous_materials" value="No">No</span>
                                             Properly stored and handled
-                                            <span><input type="checkbox">Yes <input type="checkbox">No</span>
+                                            <span><input type="checkbox" class="store_handled" value="Yes">Yes <input type="checkbox" class="store_handled" value="No">No</span>
                                         </label>
                                     </div>
 
@@ -2629,36 +2629,36 @@ height: 40%;
                                     </div>
 
                                     <div>
-                                     <form><label>Storage Permit for Flammables? Combustible Covered by BFP Permit? <input type="text" style="width:400px;"></label></form>
-                                     <form> <label>Clearance of Stocks from Ceiling <input type="text" style="width:554px"></label></form>
+                                     <form><label>Storage Permit for Flammables? Combustible Covered by BFP Permit? <input type="text" style="width:400px;" id="bfp_permnit"></label></form>
+                                     <form> <label>Clearance of Stocks from Ceiling <input type="text" style="width:554px" id="stocks_ceiling"></label></form>
                                      <form style="padding-left: 30px;"><label class="boldletter">Minimum Ceiling Clearance: 1.0mm for Flammable Liquids and 0.5 for Combustible Materials.</label></form>
 
                                      <form> <label>
                                         No smoking sign provided?
-                                        <span style="padding-right:100px"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        <span style="padding-right:100px"><input type="checkbox" class="sign_provide" value="Yes">Yes <input type="checkbox" class="sign_provide" value="No">No</span>
                                         Is smoking permitted?
-                                        <span style="padding-right:100px"><input type="checkbox">Yes <input type="checkbox">No</span>
+                                        <span style="padding-right:100px"><input type="checkbox" class="smoking_permitted" value="Yes">Yes <input type="checkbox" class="smoking_permitted" value="No">No</span>
                                          Where?
-                                        <span ><input type="text"></span>
+                                        <span ><input type="text" id="smoking_where"></span>
                                     </label>
                                 </form>
 
                                     <form>
                                         <label>
                                             b.) Oven/Stove used
-                                            <span><input style="width:200px;" type="text"></span>
+                                            <span><input style="width:200px;" id="stoved_used" type="text"></span>
                                             Kind of Fuel
-                                            <span><input  style="width:347px;" type="text"></span>
+                                            <span><input  style="width:347px;" id="kind_fuel" type="text"></span>
                                         </label>
                                     </form>
                                     <form>
                                         <label>
                                             Smoke hood?
-                                            <span><input style="width:155px;" type="text"></span>
+                                            <span><input style="width:155px;" id="smoke_hood" type="text"></span>
                                             Spark arrester
-                                            <span><input style="width:155px;" type="text"></span>
+                                            <span><input style="width:155px;" type="text" id="spark_arrester"></span>
                                             Partition construction
-                                            <span><input style="width:162px;" type="text"></span>
+                                            <span><input style="width:162px;" type="text" id="partition_construction"></span>
                                         </label>
                                     </form>
                                 </div>
@@ -2676,30 +2676,30 @@ height: 40%;
                                      <ul class="listcon">
                                          <li>Fire Brigade Organization?
                                             <span style="padding-left: 350px;">
-                                                <input type="checkbox">Yes
-                                                <input type="checkbox">No
-                                                <label style="padding-left: 20px;"  >Date:<input type="text"></label>
+                                                <input type="checkbox" class="brigade_organization" value="Yes">Yes
+                                                <input type="checkbox" class="brigade_organization" value="No">No
+                                                <label style="padding-left: 20px;"  >Date:<input type="text" id="brigade_organization_date"></label>
                                             </span>
                                         </li>
                                         <li>Fire Safety Seminar
                                             <span style="padding-left: 410px;">
-                                                <input type="checkbox">Yes
-                                                <input type="checkbox">No
-                                                <label style="padding-left: 20px;">Date:<input type="text"></label>
+                                                <input type="checkbox" class="safety_seminar" value="Yes">Yes
+                                                <input type="checkbox" class="safety_seminar" value="No">No
+                                                <label style="padding-left: 20px;">Date:<input type="text" id="safety_seminar_date"></label>
                                             </span>
                                         </li>
                                         <li>Employee trained in emergency procedures?
                                             <span style="padding-left: 200px;">
-                                                <input type="checkbox">Yes
-                                                <input type="checkbox">No
-                                                <label style="padding-left: 20px;">Date:<input type="text"></label>
+                                                <input type="checkbox" class="emergency_procedures" value="Yes">Yes
+                                                <input type="checkbox" class="emergency_procedures" value="No">No
+                                                <label style="padding-left: 20px;">Date:<input type="text" id="emergency_procedures_date"></label>
                                             </span>
                                         </li>
                                         <li>Fire/Evacuation Drill
                                             <span style="padding-left: 398px;">
-                                                <input type="checkbox">Yes
-                                                <input type="checkbox">No
-                                                <label style="padding-left: 20px;">Date:<input type="text"></label>
+                                                <input type="checkbox" class="evacuation_drill" value="Yes" >Yes
+                                                <input type="checkbox" class="evacuation_drill" value="No" >No
+                                                <label style="padding-left: 20px;">Date:<input type="text" id="evacuation_drill_date"></label>
                                             </span>
                                         </li>
 
@@ -2711,12 +2711,12 @@ height: 40%;
 
                             <div class="defects-deficiencies">
                                 <div><label class="boldletter">IX. DEFECTS / EFECIENCIES NOTED DURING INSPECTION (Attached pictures, sketch and others)</label></div>
-                                <textarea class="messagetext"></textarea>
+                                <textarea class="messagetext" id="defects"></textarea>
                             </div>
 
                             <div class="Recommendations">
                                 <div><label class="boldletter">X. RECOMMENDATIONS </label></div>
-                                <textarea class="messagetext"></textarea>
+                                <textarea class="messagetext" id="recommendation"></textarea>
                             </div>
 
 
@@ -4165,6 +4165,199 @@ $('.view_inspection_report').on('click',function(e){
         $('#ceiling').val(value['ceiling']);
         $('#roof').val(value['roof']);
         $('#sectional_occupancy').val(value['sectional_occupancy']);
+       $('.occupancy_classification').each(function(){
+            if($(this).attr('value') === value['occupancy_classification']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#other_classification').val(value['other_classification'])
+       $('#occupant_load').val(value['occupant_load'])
+       $('.any_renoviation').each(function(){
+            if($(this).attr('value') === value['any_renoviation']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#other_renoviation').val(value['other_renoviation'])
+       $('.under_ground').each(function(){
+            if($(this).attr('value') === value['under_ground']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.windowless').each(function(){
+            if($(this).attr('value') === value['windowless']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#horizontal_exit').val(value['horizontal_exit'])
+       $('#capcity_exit_stair').val(value['capcity_exit_stair'])
+       $('#no_exits').val(value['no_exits'])
+       $('.remote').each(function(){
+            if($(this).attr('value') === value['remote']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#location_exit').val(value['location_exit'])
+
+       $('.enclosure_provided').each(function(){
+            if($(this).attr('value') === value['enclosure_provided']){
+                $(this).attr('checked','checked');
+            }
+       })
+
+       $('.ready_accessible').each(function(){
+            if($(this).attr('value') === value['ready_accessible']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.travel_distance').each(function(){
+            if($(this).attr('value') === value['travel_distance']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.adequete_illumination').each(function(){
+            if($(this).attr('value') === value['adequete_illumination']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.panic_hardware').each(function(){
+            if($(this).attr('value') === value['panic_hardware']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.doors_open_easily').each(function(){
+            if($(this).attr('value') === value['doors_open_easily']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.bldg_with_mezzanine').each(function(){
+            if($(this).attr('value') === value['bldg_with_mezzanine']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.corridors').each(function(){
+            if($(this).attr('value') === value['corridors']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.obstructed').each(function(){
+            if($(this).attr('value') === value['obstructed']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.dead_ends').each(function(){
+            if($(this).attr('value') === value['dead_ends']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.proper_rating_illumination').each(function(){
+            if($(this).attr('value') === value['proper_rating_illumination']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.door_swing').each(function(){
+            if($(this).attr('value') === value['door_swing']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.self_closure').each(function(){
+            if($(this).attr('value') === value['self_closure']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.mezzanne_with_proper_exit').each(function(){
+            if($(this).attr('value') === value['mezzanne_with_proper_exit']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.emergency_lights').each(function(){
+            if($(this).attr('value') === value['emergency_lights']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.illuminated_signs').each(function(){
+            if($(this).attr('value') === value['illuminated_signs']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#no_stinguisher').val(value['no_stinguisher'])
+       $('#type').val(value['type'])
+       $('#capacity').val(value['capacity'])
+       $('.accessible').each(function(){
+            if($(this).attr('value') === value['accessible']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.fire_alarm').each(function(){
+            if($(this).attr('value') === value['fire_alarm']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.detectors').each(function(){
+            if($(this).attr('value') === value['detectors']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#location_panel').val(value['location_panel'])
+       $('.functional').each(function(){
+            if($(this).attr('value') === value['functional']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.hazardous_materials').each(function(){
+            if($(this).attr('value') === value['hazardous_materials']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.store_handled').each(function(){
+            if($(this).attr('value') === value['store_handled']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#bfp_permnit').val(value['bfp_permnit'])
+       $('#stocks_ceiling').val(value['stocks_ceiling'])
+       $('.sign_provide').each(function(){
+            if($(this).attr('value') === value['sign_provide']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('.smoking_permitted').each(function(){
+            if($(this).attr('value') === value['smoking_permitted']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#smoking_where').val(value['smoking_where'])
+       $('#stoved_used').val(value['stoved_used'])
+       $('#kind_fuel').val(value['kind_fuel'])
+       $('#smoke_hood').val(value['smoke_hood'])
+       $('#spark_arrester').val(value['spark_arrester'])
+       $('#partition_construction').val(value['partition_construction'])
+       $('.brigade_organization').each(function(){
+            if($(this).attr('value') === value['brigade_organization']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#brigade_organization_date').val(value['brigade_organization_date'])
+       $('.safety_seminar').each(function(){
+            if($(this).attr('value') === value['safety_seminar']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#safety_seminar_date').val(value['safety_seminar_date'])
+       $('.emergency_procedures').each(function(){
+            if($(this).attr('value') === value['emergency_procedures']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#emergency_procedures_date').val(value['emergency_procedures_date'])
+       $('.evacuation_drill').each(function(){
+            if($(this).attr('value') === value['evacuation_drill']){
+                $(this).attr('checked','checked');
+            }
+       })
+       $('#evacuation_drill_date').val(value['evacuation_drill_date'])
+       $('#defects').val(value['defects'])
+       $('#recommendation').val(value['recommendation'])
+
 
         if(value['verify'] == null){
           $('#verify_button').html(' <button type="button" class="btn btn-warning verify_inspection_button" id='+value['applicationId']+' ><i class="fa fa-check"> </i> Verify</button>')
