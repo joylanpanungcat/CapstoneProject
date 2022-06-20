@@ -546,7 +546,7 @@ element.style {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-success" id="view Map"><i class="fa fa-map"> View Map</i></button>
+                                    <button type="button" class="btn btn-success view_map" ><i class="fa fa-map"> View Map</i></button>
                                 </div>
                 </div>
               </div>
@@ -679,6 +679,7 @@ element.style {
                 $('#Fname').val(value['Fname']);
                 $('#Mname').val(value['Mname']);
                 $('#Lname').val(value['Lname']);
+                $('.view_map').attr('id',value['applicationId']);
 
             })
 
@@ -720,6 +721,25 @@ $('#viewMapButton').on('click',function(e){
     e.preventDefault();
     $('#viewMap').modal('show');
     showMap();
+});
+$('.view_map').on('click',function(e){
+    var applicationId = $(this).attr('id');
+    $.ajax({
+        type: 'post',
+        url: '{{ route('view_map_get_details') }}',
+        data:{
+            applicationId:applicationId
+        },
+        dataType: 'json',
+        success:function(data){
+            $.each(data.data, function(key, value){
+               $('#search_application').val(value['business_name']);
+            })
+            $('#view_emergency').modal('hide');
+            $('#viewMap').modal('show');
+        }
+    })
+
 })
 
 function showMap(){

@@ -187,7 +187,13 @@ class verifyController extends Controller
         'data'=>$data
     ]);
   }
+public function view_map_get_details(Request $request){
+    $data = application::where('applicationId', $request->applicationId)->get();
 
+    return response()->json([
+        'data'=>$data
+    ]);
+}
   public function return_fallback(){
       return redirect()->back();
   }

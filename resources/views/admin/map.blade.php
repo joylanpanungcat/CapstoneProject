@@ -25,9 +25,14 @@ crossorigin=""></script>
 
 
     }
-    .title_right button{
-      float: right;
-    }
+.page-title .title_right {
+width: 100%;
+float: left;
+display: block;
+}
+.title_right a{
+    float: right;
+}
     .modal input:hover{
        border: 3px solid #0687d6;
     }
@@ -253,19 +258,19 @@ element.style {
           </div>
         </div>
       </div>
-      {{-- <div class="">
+      <div class="">
         <div class="page-title">
-          <div class="title_left">
+          {{-- <div class="title_left">
               <h3>Susceptibility Map</h3>
-          </div>
+          </div> --}}
 
-          {{-- <div class="title_right">
-            <button class="btn btn-default" data-toggle="modal" data-target="#updateRecord"><i class="fa fa-edit fa-lg"  ></i>Update</button>
+         <div class="title_right">
+            <a type="button" href="https://editor.giscloud.com/map/1903414/p06_ddn_municit_pdens2?badlogin=yes" target="_blank" class="btn btn-success" ><i class="fa fa-edit fa-lg"  ></i>Update</a>
 
           </div>
       </div>
-    <hr class="separate2">
-    </div> --}}
+    {{-- <hr class="separate2"> --}}
+    </div>
 
          <div class="clearfix"></div>
           <div class="row">

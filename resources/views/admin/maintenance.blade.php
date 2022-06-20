@@ -3,7 +3,7 @@
 @section('content')
 
 <style type="text/css">
-    
+
     .title_right button{
       float: right;
     }
@@ -25,7 +25,7 @@ color: #FFF;
   width: 1200px;
 }
 button.close-modal{
-     
+
 width: 40px;
   height: 40px;
   line-height: 40px;
@@ -36,7 +36,7 @@ width: 40px;
   padding: 2px;
 }
 button.close-modal:hover{
-     
+
 width: 40px;
   height: 40px;
   line-height: 40px;
@@ -72,10 +72,10 @@ width: 40px;
           border: 1px dashed #c0ccda;
           border-radius: 6px;
           cursor: pointer;
-          
+
       }
 
-     
+
       .dz-progress{
           display: none;
       }
@@ -228,18 +228,18 @@ position: absolute;
                 <h3>Maintenance </h3>
             </div>
 
-         
+
         </div>
         <hr class="separate2">
-                    
-                    
+
+
         <div class="clearfix"></div>
-       
+
 
                     <div class="row">
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel ">
-                           
+
                                 <div class="x_content ">
                                     <div class="col-md-6 ">
                                         <div class="x_panel panel_default">
@@ -247,13 +247,13 @@ position: absolute;
                                                 <h2>Default Fees</h2>
                                                 <ul class="nav navbar-right panel_toolbox" style="float: right">
                                 <button type="button"  class="btn btn-defualt btn-xs actionButton add_main_fee" ><i class="fa fa-plus"></i></button>
-                                                    
+
                                                 </ul>
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="x_content" id="content">
-                                                   
-            
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -263,13 +263,13 @@ position: absolute;
                                                 <h2>Other Fees</h2>
                                                 <ul class="nav navbar-right panel_toolbox" style="float: right">
                                                     <button type="button"  class="btn btn-defualt btn-xs actionButton add_other_fees" ><i class="fa fa-plus"></i></button>
-                                                                        
+
                                                                     </ul>
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="x_content" id="content2">
-                                                   
-            
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -277,18 +277,18 @@ position: absolute;
                                         <div class="x_panel panel_default">
                                             <div class="x_title">
                                                 <h2>Authority</h2>
-                                              
+
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="x_content" id="content3">
-                                                   
-            
+
+
                                             </div>
                                         </div>
                                     </div>
-                              
 
-                                
+
+
                                 </div>
                             </div>
                         </div>
@@ -306,11 +306,11 @@ position: absolute;
                                         <div class="x_content">
                                             <br />
                                             <form class="form-horizontal form-label-left">
-        
+
                                                 <div class="form-group row ">
                                                     <label class="control-label col-md-3 col-sm-3 ">Nature of Payment</label>
                                                     <div class="col-md-9 col-sm-9 ">
-                                                    
+
                               <input type="hidden" class="form-control" placeholder="Default Input" id="fees_id" >
                               <input type="text" class="form-control" placeholder="Default Input" id="natureof_payment" >
                                                     </div>
@@ -333,7 +333,7 @@ position: absolute;
                                                         <textarea name="" id="description" cols="50" rows="10" style="width: 100%"></textarea>
                                                     </div>
                                                 </div>
-                         
+
                                             </form>
                                         </div>
                                     </div>
@@ -357,11 +357,11 @@ position: absolute;
                                         <div class="x_content">
                                             <br />
                                             <form class="form-horizontal form-label-left">
-        
+
                                                 <div class="form-group row ">
                                                     <label class="control-label col-md-3 col-sm-3 ">Nature of Payment</label>
                                                     <div class="col-md-9 col-sm-9 ">
-                                                    
+
                               <input type="hidden" class="form-control" placeholder="Default Input" id="fees_id_other" >
                               <input type="text" class="form-control" placeholder="Default Input" id="natureof_payment_other" >
                                                     </div>
@@ -384,7 +384,7 @@ position: absolute;
                                                         <textarea name="" id="description_other" cols="50" rows="10" style="width: 100%"></textarea>
                                                     </div>
                                                 </div>
-                         
+
                                             </form>
                                         </div>
                                     </div>
@@ -395,8 +395,8 @@ position: absolute;
                   </div>
                 </div>
               </div>
-              </div>   
-              
+              </div>
+
               <div class="modal fade" id="authority_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -408,11 +408,11 @@ position: absolute;
                                         <div class="x_content">
                                             <br />
                                             <form class="form-horizontal form-label-left">
-        
+
                                                 <div class="form-group row ">
                                                     <label class="control-label col-md-3 col-sm-3 ">Marshal</label>
                                                     <div class="col-md-9 col-sm-9 ">
-                                                    
+
                               <input type="hidden" class="form-control" placeholder="Default Input" id="authorityId" >
                               <input type="text" class="form-control" placeholder="Default Input" id="authority_of" >
                                                     </div>
@@ -423,8 +423,8 @@ position: absolute;
                                                         <input type="text" class="form-control" placeholder="Default Input" id="fee_assessor" >
                                                     </div>
                                                 </div>
-                            
-                         
+
+
                                             </form>
                                         </div>
                                     </div>
@@ -435,7 +435,7 @@ position: absolute;
                   </div>
                 </div>
               </div>
-              </div> 
+              </div>
 
               <div class="modal fade" id="add_main_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -448,11 +448,11 @@ position: absolute;
                                         <div class="x_content">
                                             <br />
                                             <form class="form-horizontal form-label-left">
-        
+
                                                 <div class="form-group row ">
                                                     <label class="control-label col-md-3 col-sm-3 ">Nature of Payment</label>
                                                     <div class="col-md-9 col-sm-9 ">
-                                                    
+
                               <input type="hidden" class="form-control" placeholder="Default Input" id="fees_id_add" >
                               <input type="text" class="form-control" placeholder="Default Input" id="natureof_payment_add" >
                                                     </div>
@@ -475,7 +475,7 @@ position: absolute;
                                                         <textarea name="" id="description_add" cols="50" rows="10" style="width: 100%"></textarea>
                                                     </div>
                                                 </div>
-                         
+
                                             </form>
                                         </div>
                                     </div>
@@ -486,7 +486,7 @@ position: absolute;
                   </div>
                 </div>
               </div>
-              </div>  
+              </div>
 
               <div class="modal fade" id="add_other_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -499,11 +499,11 @@ position: absolute;
                                         <div class="x_content">
                                             <br />
                                             <form class="form-horizontal form-label-left">
-        
+
                                                 <div class="form-group row ">
                                                     <label class="control-label col-md-3 col-sm-3 ">Nature of Payment</label>
                                                     <div class="col-md-9 col-sm-9 ">
-                                                    
+
                               <input type="hidden" class="form-control" placeholder="Default Input" id="fees_id_add_other" >
                               <input type="text" class="form-control" placeholder="Default Input" id="natureof_payment_add_other" >
                                                     </div>
@@ -526,7 +526,7 @@ position: absolute;
                                                         <textarea name="" id="description_add_other" cols="50" rows="10" style="width: 100%"></textarea>
                                                     </div>
                                                 </div>
-                         
+
                                             </form>
                                         </div>
                                     </div>
@@ -537,9 +537,9 @@ position: absolute;
                   </div>
                 </div>
               </div>
-              </div>  
+              </div>
 
-                
+
 <script>
     $(document).ready(function(){
    var adminPass='{{Session::get('adminID')['password']}}';
@@ -565,7 +565,7 @@ function fetch(){
   $(document).on('click','.default_fee',function(e){
     e.preventDefault();
     var fees_id = $(this).attr('id');
-   
+
     $.ajax({
         type:'post',
         url:'{{ route('view_main_fees') }}',
@@ -608,7 +608,7 @@ $('#Update_Defaul_fees').on('click',function(e){
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -618,40 +618,7 @@ $('#Update_Defaul_fees').on('click',function(e){
              cancelButtonAriaLabel: 'Thumbs down',
              preConfirm: function(){
                 $('#Default_fees_modal').modal('hide');
-              Swal.fire({
-                input: 'password',
-                
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-                    
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-                   
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-                       
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-                           return new Promise(function (resolve){
-                             $.ajax({
+                $.ajax({
                                  type:'post',
                                  url:'{{ route('update_main_fees') }}',
                                  data:{
@@ -669,27 +636,12 @@ $('#Update_Defaul_fees').on('click',function(e){
                                      fetch()
                                  }
                              })
-                           })
-                       }
-                     },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-             });
 
              },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-       
+
+
                });
-   
+
 });
 
 $(document).on('click','.other_fees',function(e){
@@ -739,7 +691,7 @@ $('#Update__other_fees').on('click',function(e){
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -751,7 +703,7 @@ $('#Update__other_fees').on('click',function(e){
                 $('#other_fees_modal').modal('hide');
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -763,18 +715,18 @@ $('#Update__other_fees').on('click',function(e){
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -818,14 +770,14 @@ $('#Update__other_fees').on('click',function(e){
                    center
                    no-repeat
                  `
-       
+
                });
-   
+
 });
 
 $(document).on('click','.authority_view',function(e){
     e.preventDefault();
-    
+
     var id = $(this).attr('id');
     fetch();
 
@@ -847,7 +799,7 @@ $(document).on('click','.authority_view',function(e){
         }
     })
   }
-   
+
 
 });
 
@@ -856,7 +808,7 @@ $('#update_authority').on('click',function(e){
     var id =$('#authorityId').val();
     var authority_of =  $('#authority_of').val();
     var fee_assessor =  $('#fee_assessor').val();
-   
+
 
     Swal.fire({
          title:"Save Payment",
@@ -870,7 +822,7 @@ $('#update_authority').on('click',function(e){
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -880,40 +832,7 @@ $('#update_authority').on('click',function(e){
              cancelButtonAriaLabel: 'Thumbs down',
              preConfirm: function(){
                 $('#authority_modal').modal('hide');
-              Swal.fire({
-                input: 'password',
-                
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-                    
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-                   
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-                       
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-                           return new Promise(function (resolve){
-                             $.ajax({
+                $.ajax({
                                  type:'post',
                                  url:'{{ route('update_authority') }}',
                                  data:{
@@ -929,27 +848,10 @@ $('#update_authority').on('click',function(e){
                                      fetch();
                                  }
                              })
-                           })
-                       }
-                     },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-             });
-
              },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-       
+
                });
-   
+
 });
 $('.add_main_fee').on('click',function(e){
     e.preventDefault();
@@ -975,7 +877,7 @@ $('#add_main_fee_action').on('click',function(e){
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -987,7 +889,7 @@ $('#add_main_fee_action').on('click',function(e){
                 $('#add_main_modal').modal('hide');
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -999,18 +901,18 @@ $('#add_main_fee_action').on('click',function(e){
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -1053,9 +955,9 @@ $('#add_main_fee_action').on('click',function(e){
                    center
                    no-repeat
                  `
-       
+
                });
-   
+
 });
 
 $('.add_other_fees').on('click',function(e){
@@ -1083,7 +985,7 @@ $('#add_other_fee_action').on('click',function(e){
               title: 'swal2-title'
             },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -1095,7 +997,7 @@ $('#add_other_fee_action').on('click',function(e){
                 $('#add_other_modal').modal('hide');
               Swal.fire({
                 input: 'password',
-                
+
                  inputPlaceholder: 'Enter your password',
                 titleFontColor:'red',
                  iconHtml: '<i class="fa fa-lock"></i>',
@@ -1107,18 +1009,18 @@ $('#add_other_fee_action').on('click',function(e){
                      title: 'swal2-title'
                    },
                    allowOutsideClick: false,
-                    
+
                      confirmButtonColor: '#3085d6',
                      confirmButtonText:
                        '<i class="fa fa-check"></i> Confirm',
-                   
+
                      cancelButtonText:
                        '<i class="fa fa-arrow-left"></i>Cancel',
                        customClass: {
                            validationMessage: 'my-validation-message'
                          },
                    preConfirm: (value) => {
-                       
+
                        if (value !== adminPass) {
                          Swal.showValidationMessage(
                            'incorrect password'
@@ -1161,9 +1063,9 @@ $('#add_other_fee_action').on('click',function(e){
                    center
                    no-repeat
                  `
-       
+
                });
-   
+
 });
 
 $(document).on('click','.other_fees_delete',function(e){
@@ -1182,7 +1084,7 @@ $(document).on('click','.other_fees_delete',function(e){
              title: 'swal2-title'
            },
            allowOutsideClick: false,
-            
+
              confirmButtonColor: '#3085d6',
              confirmButtonText:
                '<i class="fa fa-check"></i> Yes',
@@ -1191,39 +1093,7 @@ $(document).on('click','.other_fees_delete',function(e){
                '<i class="fa fa-arrow-left"></i>Close',
              cancelButtonAriaLabel: 'Thumbs down',
              preConfirm: function(){
-              Swal.fire({
-                input: 'password',
-                
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-                    
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-                   
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-                       
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-                         $.ajax({
+                $.ajax({
                            type: 'post',
                            url: '{{ route('delete_fees') }}',
                            data:{
@@ -1235,30 +1105,15 @@ $(document).on('click','.other_fees_delete',function(e){
                              fetch();
                            }
                          })
-                       }
-                     },
-                      backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-             });
 
              },
-              backdrop: `
-             url("/images/logo2.png")
-                   rgb(9 9 26 / 73%)
-                   center
-                   no-repeat
-                 `
-       
-               }) 
+
+               })
 
 });
     })
 </script>
 
 
-  
-  @endsection 
+
+  @endsection

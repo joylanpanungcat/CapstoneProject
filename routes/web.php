@@ -62,6 +62,7 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::get('emergency_view',[verifyController::class, 'emergency_view'])->name('emergency_view');
     Route::get('get_emergency',[verifyController::class,'get_emergency'])->name('get_emergency');
     Route::post('view_emergency',[verifyController::class,'view_emergency'])->name('view_emergency');
+    Route::post('view_map_get_details',[verifyController::class,'view_map_get_details'])->name('view_map_get_details');
 
     Route::get("account",[applicantController::class,"account"]);
     Route::get("accountFetch",[applicantController::class,"accountFetch"])->name('accountFetch');

@@ -3976,11 +3976,14 @@ $('#applicationAdd').on('submit',function(e){
         dataType:'json',
         success:function(data){
             toastr.success(data.msg);
-            window.location.reload();
+            window.setTimeout(loadWindow, 2000);
         }
     })
 
 });
+var loadWindow =function (){
+    window.location.reload();
+}
 
 $(document).on('click','#setSchedule',function(e){
     e.preventDefault();

@@ -194,9 +194,17 @@ public function checkApplication(Request $request){
     join('address','address.applicationId','=','application.applicationId')
     ->select('address.purok','address.barangay','address.city','application.*')
     ->where('application.accountId',$accountId )
-    ->where('application.status','=','renewal')
-    ->orWhere('application.status','=','approved')
-    ->orWhere('application.status','=','renewed')
+    ->where(function($query)
+    {
+        $query->select('*')
+              ->from('application')
+                ->where('application.status','=','renewal')
+                ->orWhere('application.status','=','approved')
+                ->orWhere('application.status','=','renewed');
+    })
+    // ->where('application.status','=','renewal')
+    // ->orWhere('application.status','=','approved')
+    // ->orWhere('application.status','=','renewed')
     ->get();
     if($data2->count()>0){
         return response()->json([
@@ -687,5 +695,22 @@ public function updateInspectorProfile(Request $request){
             'msg'=>'No Changes'
         ]);
     }
+}
+public function searchApplicationForInspection(Request $request){
+    $inspectorId = $request->inspectorId;
+    $data = application:: join('schedule','schedule.applicationId','=','application.applicationId')
+    ->join('applicant','applicant.applicantId','=','application.applicantId')
+    ->join('address','address.applicationId','=','application.applicationId')
+    ->where('application.type_application','LIKE','%'.$request->typeApplication.'%')
+    ->where('schedule.inspectorId',$inspectorId)
+    ->where('schedule.inspected',null)
+    ->where('schedule.deleted_at',null)
+    ->get();
+    return $data;
+}
+public function searchApplicationInspectionHistory(Request $request){
+    $data = application::where('type_application','LIKE','%'.$request->typeApplication)
+            ->where('inpector_id',$request->inspectorId)->get();
+    return $data;
 }
 }

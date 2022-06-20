@@ -311,7 +311,7 @@ public function update_business_info(Request $request){
           'control_number' => $request->control_number,
           'type_occupancy' => $request->type_occupancy,
           'nature_business' =>$request->nature_business,
-          'business_name' => $request->type_occupancy,
+          'business_name' => $request->business_name,
           'Bin' =>$request->Bin,
           'BP_num' => $request->BP_num,
           'OR_num' =>$request->OR_num,
@@ -334,7 +334,7 @@ public function update_business_info(Request $request){
         $applicant = applicant::where('applicantId',$applicantId);
         $applicant->update([
           'Fname'=>$request->Fname_Business,
-          'Lname'=>$request->Fname_Business,
+          'Lname'=>$request->Lname_Business,
           'Mname'=>$request->Mname_Business,
           'contact_num'=>$request->contact_num_Business,
           'alcontact'=>$request->alcontact_business,
