@@ -235,7 +235,7 @@
                    Archived<span class="badge bg-danger" id="count"></span> </a>
 
                   </li>
-                   <li><a><i class="fa fa-file"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                   {{-- <li><a><i class="fa fa-file"></i> Reports <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a  href="{{ route('approved_application') }}" class="">Approved Application<span class="badge bg-danger" id="count_applicant"></span></a></li>
                       <li><a href="{{ route('rejected_application') }}">Reinspection Application</a></li>
@@ -255,7 +255,7 @@
                       <li><a href="{{ route('fsec_report') }}">Fire Safety Evaluation Clearance </a></li>
 
                     </ul>
-                  </li>
+                  </li> --}}
 
 
 

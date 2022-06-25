@@ -27,6 +27,7 @@ use App\Http\Controllers\loginController;
 //notification
 use App\Http\Controllers\NotificationController;
 
+use App\Http\Controllers\dashboardController;
 //Map
 
 use App\Http\Controllers\mapController;
@@ -55,6 +56,7 @@ Route::get('return_fallback',[Fallback::class,'return_fallback'])->name('return_
 Route::group(['middleware'=>['accessPage']],function(){
 // Route::get("dashboard",[verifyController::class,"dashboard"]);
     Route::view('DashboardAdmin','admin/Dashboard')->name('DashboardAdmin');
+    Route::get('getDashboard',[dashboardController::class,'dashboard'])->name('getDashboard');
     Route::get('fetch_dashboard',[verifyController::class,'fetch_dashboard'])->name('fetch_dashboard');
         //emergency
     Route::get('fetch_emergency',[verifyController::class,'fetch_emergency'])->name('fetch_emergency');

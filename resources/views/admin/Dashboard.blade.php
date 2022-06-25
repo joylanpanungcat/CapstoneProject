@@ -52,7 +52,7 @@
      .legend-group .legend-body h4.FSIC_OCCU:hover{
      color: #AFD8F8;
     }
-   
+
      .legend-group .legend-body h4.FSIC_new:hover{
      color: #4DA74D;
     }
@@ -74,7 +74,7 @@
 
           <div class="row">
 
-                     
+
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
              <div class="tile-stats">
                <div class="icon"><i class="fa fa-tasks"></i>
@@ -104,7 +104,7 @@
                <h3><a href="{{ route('rejected_application') }}">Reinspection </a></h3>
                <p>Denied  or status for reinspection</p>
              </div>
-           </div> 
+           </div>
            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
              <div class="tile-stats">
                <div class="icon"><i class="fa fa-refresh"></i>
@@ -121,34 +121,47 @@
    <div class="col-md-12">
      <div class="x_panel">
        <div class="x_title">
-         <h2>Annual Application Summary </h2>
-          <ul class="nav navbar-right panel_toolbox">
+         <h2>Statistical Report</h2>
+         <div class="row input-daterange" style="float: right">
+            <div class="">
+                <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" readonly  style="margin-right:10px;"/>
+            </div>
+            <div class="">
+                <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />
+            </div>
+            <div class="">
+                <button type="button" name="filter" id="filter" class="btn " style="background-color: #1ABB9C;color:#FFF"><i class="fa fa-check"></i></button>
+                <button type="button" name="refresh" id="refresh" class="btn btn-default"><i class="fa fa-refresh"></i></button>
+            </div>
+        </div>
+          {{-- <ul class="nav navbar-right panel_toolbox">
                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                  </li>
-                 
-               </ul>
-         
+
+               </ul> --}}
+
          <div class="clearfix"></div>
        </div>
        <div class="x_content">
-         <div class="col-md-9 col-sm-12 ">
-           <div style="height:400px">
-             <div id="chart" ></div>
-           </div>
-         
+     <center>
+        <div class="col-md-12 col-sm-12 ">
+            <div style="height:400px">
+              {{-- <div id="chart" ></div> --}}
+              <canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+            </div>
+          </div>
+     </center>
 
-         </div>
-
-
+{{--
          <div class="col-md-3  ">
-          
+
                <h2>Legend</h2>
-              
+
                <hr class="separate2">
-             
+
              <div class="legend-group">
                  <div class="legend-group FSEC">
-                 
+
                    <div class="legend-body">
                    <span class="legend-color FSEC"></span>
 
@@ -156,32 +169,32 @@
                    </div>
                  </div>
                  <div class="legend-group">
-               
+
                    <div class="legend-body">
                    <span class="legend-color FSIC_OCCU"></span>
 
                      <h4 class="FSIC_OCCU">Fire Safety Inspection Certificate for Occupancy</h4>
                    </div>
                  </div>
-                 
+
 
                  <div class="legend-group">
-               
+
                    <div class="legend-body">
                     <span class="legend-color FSIC_new" ></span>
                     <h4 class="FSIC_new">FSIC for New Business</h4>
                    </div>
-                   
+
                  </div>
                  <div class="legend-grou2">
-                  
+
                    <div class="legend-body">
                    <span class="legend-color FSIC_Business"></span>
                      <h4 class="FSIC_Business">Fire Safety Inspection Certificate for Business Renewal</h4>
                    </div>
                  </div>
                </div>
-           </div>
+           </div> --}}
 
            </div>
          </div>
@@ -194,73 +207,80 @@
 
 
 
-</div>  
-       
+</div>
+
      </div>
  </div>
+ <script
+ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+ </script>
+<script>
+$(document).ready(function(){
 
- <script type="text/javascript">
 
-  Morris.Line({
-    element: 'chart',
-    
-    data: [
-      { month: '2021-01', FSEC: 3 },
-      { month: '2021-01', renew: 1 },
-      { month: '2021-01', FSIC_B: 3 },
-      { month: '2021-01', FSIC_OCCU: 4},
-      { month: '2021-02', FSEC: 6},
-      { month: '2021-02', renew: 4},
-      { month: '2021-02', FSIC_B: 4},
-      { month: '2021-02', FSIC_OCCU: 3},
-      { month: '2021-03', FSEC: 7},
-      { month: '2021-03', renew: 2},
-      { month: '2021-03', FSIC_B: 1},
-      { month: '2021-03', FSIC_OCCU: 4},
-      { month: '2021-04', FSEC: 3},
-      { month: '2021-04', renew: 4},
-      { month: '2021-04', FSIC_B: 2},
-      { month: '2021-04', FSIC_OCCU: 6},
-      { month: '2021-05', FSEC: 2},
-      { month: '2021-05', renew: 2},
-      { month: '2021-05', FSIC_B: 2},
-      { month: '2021-05', FSIC_OCCU: 2},
-      { month: '2021-06', FSEC: 5},
-      { month: '2021-06', renew: 2},
-      { month: '2021-06', FSIC_B: 2},
-      { month: '2021-06', FSIC_OCCU: 3},
-      { month: '2021-07', FSEC: 6 },
-      { month: '2021-07', renew: 3 },
-      { month: '2021-07', FSIC_B: 3},
-      { month: '2021-07', FSIC_OCCU: 4 },
-      { month: '2021-08', FSEC: 4 },
-      { month: '2021-08', renew: 3 },
-      { month: '2021-08', FSIC_B: 2},
-      { month: '2021-08', FSIC_OCCU: 3 },
-      { month: '2021-09', FSEC: 7 },
-      { month: '2021-09', renew: 3 },
-      { month: '2021-09', FSIC_B: 6},
-      { month: '2021-09', FSIC_OCCU: 5 },
-      { month: '2021-10', FSEC: 3},
-      { month: '2021-10', renew: 4},
-      { month: '2021-10', FSIC_B: 5},
-      { month: '2021-10', FSIC_OCCU: 3},
-      { month: '2021-11', FSEC: 2 },
-      { month: '2021-11', renew: 5 },
-      { month: '2021-11', FSIC_B: 4},
-      { month: '2021-11', FSIC_OCCU: 5 },
-      { month: '2021-12', FSEC: 8},
-      { month: '2021-12', renew: 4},
-      { month: '2021-12', FSIC_B: 3},
-      { month: '2021-12', FSIC_OCCU: 6}
-    ],
-    xkey: 'month',
-    ykeys: ['renew','FSEC','FSIC_B','FSIC_OCCU'],
-    hideHover: 'auto',
-    lineWidth: '4px',
-    labels: ['Business Renewal','FSEC','FSIC for Business','FSIC for Occupancy']
-  });
-    </script>
+$('.input-daterange').datepicker({
+      todayBtn:'linked',
+      format:'yyyy-mm-dd',
+      autoclose:true
+    });
+})
+$('#filter').click(function(){
+  var from_date = $('#from_date').val();
+  var to_date = $('#to_date').val();
+  var category_id = $('#category_filter').val();
+  if(from_date != '' &&  to_date != '')
+  {
+   fetch_data(from_date, to_date);
+  }
+  else
+  {
+   alert('Both Date is required');
+  }
+ });
+ $('#refresh').click(function(){
+  $('#from_date').val('');
+  $('#to_date').val('');
+  fetch_data('','');
+ });
+
+ fetch_data();
+function fetch_data( from_date = '', to_date = '')
+{
+    $.ajax({
+    type: 'get',
+    url:'{{ 'getDashboard' }}',
+    data:{
+    from_date:from_date,
+    to_date:to_date
+    },
+    dataType: 'json',
+    success:function(data){
+
+    var yValues = [ data.countApproved,  data.countRejected,data.countRenewal ];
+    var barColors = ["#2A3F54","#AFD8F8","#1ABB9C"];
+    new Chart("myChart", {
+    type: "doughnut",
+    data: {
+    labels: data.labels,
+    datasets: [{
+    backgroundColor: barColors,
+    data: yValues,
+    }]
+    },
+    options: {
+    title: {
+    display: true,
+    position: 'top',
+    text: "Staticstical Report from: June To: August 2022"
+    }
+    },
+    });
+    }
+})
+}
+
+
+</script>
      <script>
       $(document).ready(function(){
         fetch()
@@ -274,16 +294,17 @@
                     $('#approvedCount').html(data.approvedCount);
                     $('#reinspectionCount').html(data.reinspectionCount);
                     $('#renewalCount').html(data.renewalCount);
-         
+
                   }
-  
+
               })
           }
+
       })
-  </script>  
-  
-     
+  </script>
 
 
 
-  @endsection 
+
+
+  @endsection

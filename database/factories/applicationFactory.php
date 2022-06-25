@@ -32,7 +32,7 @@ class applicationFactory extends Factory
         $rand_nature= $nature_business[array_rand($nature_business)];
         $business_name = $this->faker->sentence(rand(5, 7));
 
-        $status = array('approved','reinspection');
+        $status = array('approved','reinspection','rejected','renewal');
         $rand_status= $status[array_rand($status)];
 
 
