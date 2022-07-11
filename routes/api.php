@@ -57,8 +57,10 @@ Route::prefix('/inspector')->group(function(){
         Route::post('getInspectionHistory', [applicantAppController::class,'getInspectionHistory']);
         Route::post('getReinspection', [applicantAppController::class,'getReinspection']);
         Route::post('getNoticeToComply', [applicantAppController::class,'getNoticeToComply']);
+        Route::post('getInspectionDetails', [applicantAppController::class,'getInspectionDetails']);
         Route::post('getComplied', [applicantAppController::class,'getComplied']);
         Route::post('compliedAction', [applicantAppController::class,'compliedAction']);
+        Route::post('removeComplied', [applicantAppController::class,'removeComplied']);
         Route::post('getInspectionHistoryDetails', [applicantAppController::class,'getInspectionHistoryDetails']);
         Route::post('updateInspectionDetails', [applicantAppController::class,'updateInspectionDetails']);
         Route::post('deleteInspectionDetails', [applicantAppController::class,'deleteInspectionDetails']);

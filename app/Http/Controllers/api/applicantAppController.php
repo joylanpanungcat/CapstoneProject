@@ -569,7 +569,15 @@ public function getNoticeToComply(Request $request){
     $inspectorId = $request->inspectorId;
 
     $data = notice::join('defects','defects.notice_id','=','notice.notice_id')
-    ->where('notice.inspection_id',$inspection_id)->get();
+    ->where('notice.inspection_id',$inspection_id)
+    ->where('defects.status','=','uncomplied')->get();
+    return $data;
+}
+public function getInspectionDetails(Request $request){
+    $inspection_id  = $request->inspectionId;
+    $inspectorId = $request->inspectorId;
+
+    $data = inspection_details::where('inspection_id',$inspection_id)->get();
     return $data;
 }
 public function getComplied(Request $request){
@@ -578,11 +586,29 @@ public function getComplied(Request $request){
     $data = notice::join('defects','defects.notice_id','=','notice.notice_id')
     ->where('notice.inspection_id',$inspection_id)
     ->where('defects.status','=','complied')->get();
+
     return $data;
 }
 public function compliedAction(Request $request){
     $defect_id  = $request->defectId;
 
+    $data = defects::where('defect_id',$defect_id);
+    $data->update([
+        'status'=>'complied'
+    ]);
+    return response()->json([
+        'msg'=>'complied'
+    ],200);
+}
+public function removeComplied(Request $request){
+    $defect_id  = $request->defectId;
+    $data = defects::where('defect_id',$defect_id);
+    $data->update([
+        'status'=>'uncomplied'
+    ]);
+    return response()->json([
+        'msg'=>'uncomplied'
+    ],200);
 }
 public function getInspectionHistoryDetails(Request $request)
 {
@@ -782,4 +808,5 @@ public function searchApplicationInspectionHistory(Request $request){
             ->where('inpector_id',$request->inspectorId)->get();
     return $data;
 }
+
 }
