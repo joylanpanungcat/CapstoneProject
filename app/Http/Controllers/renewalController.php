@@ -99,7 +99,7 @@ if($view == ''){
         'unseen_notification'=> $data
     ]);
 }else{
-    $data2 = application::where('count',1);
+    $data2 = application::where('count',1)->where('status','!=','renewal');
     $data2->update([
         'count'=> 0
     ]);
@@ -119,7 +119,7 @@ public function renewal_notif(Request $request){
     }else{
         $data2 = application::where('count2',1)->where('status','=','renewal');
         $data2->update([
-            'count'=> 0
+            'count2'=> 0
         ]);
         return response()->json([
             'unseen_notification'=> 0

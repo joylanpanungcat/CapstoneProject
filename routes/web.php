@@ -138,6 +138,7 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('search_assessment',[feesController::class,'search_assessment'])->name('search_assessment');
     Route::post('select_assessment',[feesController::class,'select_assessment'])->name('select_assessment');
     Route::post('save_payment',[feesController::class,'save_payment'])->name('save_payment');
+    Route::post('deleteAssessment',[feesController::class,'deleteAssessment'])->name('deleteAssessment');
 
 
 
@@ -235,6 +236,9 @@ Route::get('request_verify',[NotificationController::class,'request_verify' ]);
 
 //certificate
 Route::view('certificate','admin/certificate')->name('certificate');
+
+//autocomplete search
+Route::get('getApplicant',[applicantController::class,'getApplicant'])->name('getApplicant');
 });
 
 //applicant Middleware

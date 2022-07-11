@@ -465,7 +465,26 @@ letter-spacing: 1px;
           })
           }
      });
-
+     var availableTags = [];
+getData();
+function getData(){
+    $.ajax({
+        url:"{{ route('getApplicant') }}",
+        type:'get',
+        dataType: 'json',
+        success:function(data){
+           $.each(data.data, function($key , $value){
+                availableTags.push($value['Fname']+' '+$value['Lname']);
+           });
+        }
+    })
+}
+  loadSuggest();
+    function loadSuggest(){
+    $( "#search_applicant" ).autocomplete({
+        source: availableTags
+    });
+    }
      $('#amount').keyup(function(e){
        e.preventDefault();
        var amount = $(this).val();

@@ -270,7 +270,7 @@ letter-spacing: 1px;
                               <center><h5><strong>ASSESSMENT FEE</strong></h5>
                               </center><br><br>
                             </div>
-                    <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name=""></span></h5></div>
+                    <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name="" readonly></span></h5></div>
                      <div class="panel-heading" style="display: none"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                     <div class="panel-body" id="panel-body">
 
@@ -596,6 +596,26 @@ letter-spacing: 1px;
         }
       })
     }
+    var availableTags = [];
+getData();
+function getData(){
+    $.ajax({
+        url:"{{ route('getApplicant') }}",
+        type:'get',
+        dataType: 'json',
+        success:function(data){
+           $.each(data.data, function($key , $value){
+                availableTags.push($value['Fname']+' '+$value['Lname']);
+           });
+        }
+    })
+}
+  loadSuggest();
+    function loadSuggest(){
+    $( "#search_applicant" ).autocomplete({
+        source: availableTags
+    });
+    }
     $('.add_fees_button').on('click',function(e){
     e.preventDefault();
     $('#add_fees').modal('show');
@@ -787,40 +807,7 @@ $(document).on('click','.collapsible3',function(e){
                '<i class="fa fa-arrow-left"></i>Close',
              cancelButtonAriaLabel: 'Thumbs down',
              preConfirm: function(){
-              Swal.fire({
-                input: 'password',
-
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-                           return new Promise(function (resolve){
-                            $.ajax({
+                $.ajax({
                               type: 'post',
                               url: '{{ route('save_assessment') }}',
                               data:{
@@ -852,12 +839,6 @@ $(document).on('click','.collapsible3',function(e){
                               }
                             });
 
-                           })
-                       }
-                     },
-
-             });
-
              },
 
 
@@ -865,7 +846,46 @@ $(document).on('click','.collapsible3',function(e){
     }
 
   });
+$(document).on('click','.deleteAssessment',function(e){
+    var assessmentId = $(this).attr('id');
+    Swal.fire({
+        title:"Delete Assessment",
+        icon: 'warning',
+        // iconHtml: '<i class="fa fa-check"></i>',
+        // iconColor: '#42ba96',
+        showCancelButton: true,
+        showConfirmButton:true,
+        focusConfirm: false,
+        background: 'rgb(0,0,0,.9)',
+        customClass : {
+        title: 'swal2-title'
+            },
+        allowOutsideClick: false,
 
+        confirmButtonColor: '#3085d6',
+        confirmButtonText:
+        '<i class="fa fa-check"></i> Yes',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+        cancelButtonText:
+        '<i class="fa fa-arrow-left"></i>Close',
+        cancelButtonAriaLabel: 'Thumbs down',
+        preConfirm: function(){
+            $.ajax({
+                type:'post',
+                url: '{{ route('deleteAssessment') }}',
+                data:{
+                    assessmentId :assessmentId
+                },
+                dataType: 'json',
+                success:function(data){
+                    toastr.success(data.msg);
+                    $('#search_modal').modal('hide');
+                }
+            })
+        },
+        });
+
+})
   $(document).on('change','.assessment_input',function(e){
     e.preventDefault();
     var account_code =$(this).val();

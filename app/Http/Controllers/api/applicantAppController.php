@@ -15,6 +15,8 @@ use App\Models\emergency;
 use App\Models\inspection_details;
 use App\Models\schedule;
 use App\Models\inspector;
+use App\Models\notice;
+use App\Models\defects;
 
 use Carbon\Carbon;
 
@@ -369,6 +371,7 @@ public function viewApplicationInspector(Request $request){
 
     for($i =0 ; $i<$data->count(); $i++){
         $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
+        $data[0]->noticeToComply = inspection_details::where('applicationId',$applicationId)->get();
     }
     return $data;
 }
@@ -378,6 +381,9 @@ public function inspectionReport(Request $request ){
     $lat= $request->lat;
     $long= $request->long;
     $item= $request->item;
+    $noticeToComply= $request->noticeToComply;
+    $notice_array = json_decode($noticeToComply,true);
+
 
     $inspected='true';
         $inspection = new inspection_details;
@@ -489,6 +495,7 @@ public function inspectionReport(Request $request ){
         $inspection->recommendation=$request['recommendation'];
         $inspection->status=$request['status'];
         $inspection->save();
+        $inspection_id = $inspection->inspection_id;
 
     $application = application::where('applicationId',$applicationId);
     $application->update([
@@ -502,6 +509,34 @@ public function inspectionReport(Request $request ){
         'inspected'=>$inspected
     ]);
 
+    if(count($notice_array)> 0 ){
+        $addNotice = new notice;
+        $addNotice->inspection_id =$inspection_id;
+        $addNotice->inspector_id =$inspectorId;
+        $addNotice->date =Carbon::now()->format('Y-m-d H:i:s');
+        $addNotice->save();
+        $notice_id =$addNotice->notice_id;
+
+        $applicationData = application::where('applicationId',$applicationId);
+        $applicationData->update([
+            'status'=>'reinspection'
+        ]);
+
+        for($i = 0 ; $i< count($notice_array); $i++){
+
+            $dataDefects = new defects;
+            $dataDefects->notice_id = $notice_id;
+            $dataDefects->defects =  $notice_array[$i]['defects'];
+            $dataDefects->grace_period = $notice_array[$i]['gracePeriod'];
+            $dataDefects->save();
+        }
+    return response()->json([
+        'msg'=>'Inspection Successfully Recorded',
+        'code'=>201
+    ]);
+
+    }
+
     return response()->json([
         'msg'=>'Inspection Successfully Recorded'
     ]);
@@ -511,9 +546,43 @@ public function getInspectionHistory(Request $request){
     $data = application::
     join('applicant','applicant.applicantId','=','application.applicantId')
     ->join('address','address.applicationId','=','application.applicationId')
+    ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
     ->where('application.inpector_id',$inspectorId)
+    ->where('inspection_details.status','=','approved')
     ->get();
     return $data;
+}
+public function getReinspection(Request $request){
+    $inspectorId = $request->inspectorId;
+    $data = application::
+    join('applicant','applicant.applicantId','=','application.applicantId')
+    ->join('address','address.applicationId','=','application.applicationId')
+    ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+    ->join('notice','notice.inspection_id','=','inspection_details.inspection_id')
+    ->where('application.inpector_id',$inspectorId)
+    ->where('inspection_details.status','=','reinspection')
+    ->get();
+    return $data;
+}
+public function getNoticeToComply(Request $request){
+    $inspection_id  = $request->inspectionId;
+    $inspectorId = $request->inspectorId;
+
+    $data = notice::join('defects','defects.notice_id','=','notice.notice_id')
+    ->where('notice.inspection_id',$inspection_id)->get();
+    return $data;
+}
+public function getComplied(Request $request){
+    $inspection_id  = $request->inspectionId;
+    $inspectorId = $request->inspectorId;
+    $data = notice::join('defects','defects.notice_id','=','notice.notice_id')
+    ->where('notice.inspection_id',$inspection_id)
+    ->where('defects.status','=','complied')->get();
+    return $data;
+}
+public function compliedAction(Request $request){
+    $defect_id  = $request->defectId;
+
 }
 public function getInspectionHistoryDetails(Request $request)
 {

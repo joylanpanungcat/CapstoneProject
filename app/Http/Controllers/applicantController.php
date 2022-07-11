@@ -468,4 +468,11 @@ public function connect_mobile_account(Request $request){
         'msg'=>'Account Successfully Connected'
     ]);
 }
+public function getApplicant(){
+
+    $data = applicant::get();
+    return response()->json([
+        'data'=>$data
+    ]);
+}
 }

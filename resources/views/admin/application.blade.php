@@ -790,10 +790,10 @@ background-color:#2A3F54;
                         <div class="col-md-6"> <label>OR Number:</label></div>
                          <strong><Label id="OR_numPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
                      </div>
-                       <div class="col-md-6">
+                       {{-- <div class="col-md-6">
                          <div class="col-md-6"><label>Date Applied</label></div>
                          <strong><Label id="date_applyPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>
-                     </div>
+                     </div> --}}
                      <div class="col-md-6">
                          <div class="col-md-6"><label>Purok</label></div>
                          <strong><Label id="purokAddBusPrev" style="color: #2A3F54;    font-size: 14px;"></Label></strong>

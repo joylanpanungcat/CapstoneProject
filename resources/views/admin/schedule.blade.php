@@ -340,7 +340,7 @@ overflow: auto;
                     <div class="col-md-6"></div>
                     <div class="col-md-6">
                       <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group mr-2  " role="group" aria-label="First group" style="float: right">
+                        <div class="btn-group mr-2 search_applicaintDiv " role="group" aria-label="First group" style="float: right">
 
                                    <input type="text" name="" placeholder="Full name" id="search_applicant">
 
@@ -449,6 +449,29 @@ overflow: auto;
         {data:'actions',name:'actions'},
         ]
      });
+
+     var availableTags = [];
+getData();
+function getData(){
+    $.ajax({
+        url:"{{ route('getApplicant') }}",
+        type:'get',
+        dataType: 'json',
+        success:function(data){
+           $.each(data.data, function($key , $value){
+                availableTags.push($value['Fname']+' '+$value['Lname']);
+           });
+        }
+    })
+}
+  loadSuggest();
+    function loadSuggest(){
+    $( "#search_applicant" ).autocomplete({
+        source: availableTags,
+
+    });
+}
+$( "#search_applicant" ).autocomplete( "option", "appendTo", ".search_applicaintDiv" );
 $(document).on('click','.cancel_schedule',function(e){
   e.preventDefault();
   var scheduleId = $(this).attr('id');

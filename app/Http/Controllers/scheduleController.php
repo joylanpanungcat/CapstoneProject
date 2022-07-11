@@ -18,17 +18,17 @@ class scheduleController extends Controller
 {
     //
     public function scheduleList(Request $request){
-     
+
 
             $data = schedule::join('application','application.applicationId','=','schedule.applicationId')
                 ->join('applicant','applicant.applicantId','=','schedule.applicantId')
-                ->join('address','address.applicantId','applicant.applicantId') 
+                ->join('address','address.applicantId','applicant.applicantId')
                 ->orderBy('schedule.applicantId','desc')
                 ->whereNull('schedule.inspected')
                 ->whereNull('schedule.deleted_at')
                 ->get();
-           
-         
+
+
         return DataTables::of($data)
         // return DataTables::of($data)
         ->addIndexColumn()
@@ -38,15 +38,15 @@ class scheduleController extends Controller
          ->addColumn('address', function($row){
             return $row['purok'].' '.$row['barangay'].'.  '.$row['city'];
            })
-        
+
         ->addColumn('actions', function($row){
-            return " <button type='button'  class='btn cancel_schedule actionButton' data-toggle='tooltip' data-placement='bottom' title='Archive' id='".$row['scheduleId']."'><i class='fa fa-archive'></i></button>  
+            return " <button type='button'  class='btn cancel_schedule actionButton' data-toggle='tooltip' data-placement='bottom' title='Archive' id='".$row['scheduleId']."'><i class='fa fa-archive'></i></button>
       <button type='button' name='viewApplicant' class='btn view_schedule actionButton'  data-toggle='tooltip' data-placement='bottom' title='View' id='".$row['scheduleId']."'><i class='fa fa-eye'></i></button>
       ";
            })
            ->rawColumns(['actions'])
         ->make(true);
-        
+
       }
     public function cancel_schedule(Request $request){
         $scheduleId = $request->scheduleId;
@@ -55,13 +55,13 @@ class scheduleController extends Controller
         if($query){
             return response()->json([
                'status'=>1,
-               'msg'=>'Schedule Canceled' 
+               'msg'=>'Schedule Canceled'
             ]);
           }else
           {
             return response()->json([
                'status'=>0,
-               'msg'=>'something went wrong!' 
+               'msg'=>'something went wrong!'
             ]);
           }
 
@@ -71,7 +71,7 @@ public function view_schedule(Request $request){
 
     $data = schedule::join('application','application.applicationId','=','schedule.applicationId')
     ->join('applicant','applicant.applicantId','=','schedule.applicantId')
-    ->join('address','address.applicantId','applicant.applicantId') 
+    ->join('address','address.applicantId','applicant.applicantId')
     ->where('schedule.scheduleId',$scheduleId)
     ->get();
 
@@ -100,20 +100,38 @@ public function update_schedule(Request $request){
 }
 
 public function search_scheduel(Request $req){
-    $name = $req->search_applicant;
+    // $name = $req->search_applicant;
     $output = '';
 
-       $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
-    ->whereNotIn('application.applicationId',schedule::get(['applicationId'])->toArray())
-    ->where('applicant.Fname','LIKE','%'.$name.'%')
-    // ->ORwhere('applicant.Lname','LIKE','%'.$name.'%')
-    ->get();
+    $name = $req->search_applicant;
+    $finalname= preg_replace('/\s+/', '', $name);
+    $nameRequest =strtolower($finalname);
+
+    $getdata = applicant::get();
+
+    foreach($getdata as $item){
+        $name2 = $item['Fname'].$item['Lname'];
+        $finalname2=  preg_replace('/\s+/', '', $name2);
+        $nameData =strtolower($finalname2);
+
+        $Fname = $item['Fname'];
+        $Lname = $item['Lname'];
+        if( $nameRequest  === $nameData){
+            $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
+            ->whereNotIn('application.applicationId',schedule::get(['applicationId'])->toArray())
+            ->where('Fname',$Fname)->where('Lname',$Lname)
+            // ->ORwhere('applicant.Lname','LIKE','%'.$name.'%')
+            ->get();
+          }
+    }
+
 
     if($data->count()> 0)
     foreach($data as $data){
-        $output .= " 
+        $output .= "
         <tr>
-        <td><input type='radio' class='form-control' id='select_search' value=".$data['applicationId']." ></td>
+        <td><input type='radio' class='form-control' id='select_search' value=".$data['applicationId']." style='position: relative;
+        top: -9px;' ></td>
         <td>".$data['Fname']." ".$data['Lname']."</td>
         <td>".$data['type_application']."</td>
       </tr>";
@@ -162,7 +180,7 @@ public function add_schedule_action(Request $request){
     $inspectorId = $request->inspectorId;
     $date_inspection = $request->date_inspection;
     $applicantId = $request->applicantId;
-   
+
    $schedule = new schedule;
    $schedule->applicationId = $applicationId;
    $schedule->inspectorId = $inspectorId;

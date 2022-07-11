@@ -93,15 +93,34 @@ class feesController extends Controller
     $search = $req->search;
     $applicationId = 0;
     $output = '';
-    $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
-        ->where('Fname','LIKE','%'.$search.'%')->ORwhere('Lname','LIKE','%'.$search.'%')
-        ->get();
-    foreach($data as $item){
-        $data[0]->assessment = assessment::where('applicationId',$item['applicationId'])->get();
+    $name = $req->search;
+    $finalname= preg_replace('/\s+/', '', $name);
+    $nameRequest =strtolower($finalname);
+
+    $getdata = applicant::get();
+
+    foreach($getdata as $item){
+        $name2 = $item['Fname'].$item['Lname'];
+        $finalname2=  preg_replace('/\s+/', '', $name2);
+        $nameData =strtolower($finalname2);
+
+        $Fname = $item['Fname'];
+        $Lname = $item['Lname'];
+        if( $nameRequest  === $nameData){
+            $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
+            ->where('Fname',$Fname)->where('Lname',$Lname)
+            ->get();
+
+
+          }
+
     }
    if($data->count()<1){
      $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
    }else{
+    foreach($data as $data2){
+        $data[0]->assessment = assessment::where('applicationId',$data2['applicationId'])->get();
+    }
     for($i = 0; $i< $data->count(); $i++){
         if($data[0]->assessment->count()>0){
           if($data[0]['status']!== 'renewal'){
@@ -113,10 +132,18 @@ class feesController extends Controller
                     <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
                     </tr>";
                 }else{
-                    $output .=  "<tr>
-                    <td></td>
-                    <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) </td>
-                    </tr>";
+                    if($data[0]->assessment[0]['payment_status'] !==null){
+                        $output .=  "<tr>
+                        <td></td>
+                        <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) <badge class='badge badge-success badge-sm'>paid</badge> </td>
+                        </tr>";
+                    }else{
+                        $output .=  "<tr>
+                        <td></td>
+                        <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) <button class='btn btn-danger btn-sm deleteAssessment' id=".$data[0]->assessment[$j]['assessmentId'].">Delete</button<</td>
+                        </tr>";
+                    }
+
                 }
             }
           }else{
@@ -130,7 +157,7 @@ class feesController extends Controller
                 }else{
                     $output .=  "<tr>
                     <td></td>
-                    <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]->assessment[$j]['type_paymentsearch_assessment']." </td>
+                    <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]->assessment[$j]['type_payment']." </td>
                     </tr>";
                 }
             }
@@ -252,10 +279,25 @@ return response()->json([
 public function search_assessment(Request $request){
   $search = $request->search;
   $output ='';
+  $name = $request->search;
+  $finalname= preg_replace('/\s+/', '', $name);
+  $nameRequest =strtolower($finalname);
+  $getdata = applicant::get();
 
-  $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
-      ->where('Fname','LIKE','%'.$search.'%')->ORwhere('Lname','LIKE','%'.$search.'%')
-      ->get();
+
+      foreach($getdata as $item){
+        $name2 = $item['Fname'].$item['Lname'];
+        $finalname2=  preg_replace('/\s+/', '', $name2);
+        $nameData =strtolower($finalname2);
+
+        $Fname = $item['Fname'];
+        $Lname = $item['Lname'];
+        if( $nameRequest  === $nameData){
+            $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
+            ->where('Fname',$Fname)->where('Lname',$Lname)
+            ->get();
+          }
+    }
     foreach($data as $item){
         $data[0]->assessment = assessment::where('applicationId',$item['applicationId'])->get();
     }
@@ -268,7 +310,7 @@ public function search_assessment(Request $request){
           if($data[0]->assessment[$j]['total_amount_words'] !== '' && $data[0]->assessment[$j]['payment_date'] !== null ){
             $output .=  "<tr>
             <td></td>
-            <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) </td>
+            <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) <badge class='badge badge-success badge-sm'>paid</badge> </td>
             </tr>";
           }else{
             $output .=  "<tr>
@@ -353,5 +395,12 @@ public function save_payment(Request $request){
     return response()->json([
     'msg'=>'Payment Successfully Added!'
     ]);
+    }
+    public function deleteAssessment(Request $request){
+        $data = assessment::where('assessmentId',$request->assessmentId)->delete();
+        return response()->json([
+            'msg'=>'Assessment Successfully Deleted'
+        ]);
+
     }
 }

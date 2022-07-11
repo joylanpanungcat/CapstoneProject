@@ -529,9 +529,10 @@
     }
     load_unseen_renewal();
     $(document).on('click', '.noti_renewal', function(){
+         load_unseen_renewal('yes');
     $('#count_renewal').html('');
-    load_unseen_renewal('yes');
     });
+
 
   })
 </script>
