@@ -65,6 +65,7 @@ Route::prefix('/inspector')->group(function(){
         Route::post('updateInspectionDetails', [applicantAppController::class,'updateInspectionDetails']);
         Route::post('deleteInspectionDetails', [applicantAppController::class,'deleteInspectionDetails']);
         Route::post('viewApplication', [applicantAppController::class,'viewApplicationInspector']);
+        Route::post('addNoticeToCorrect', [applicantAppController::class,'addNoticeToCorrect']);
         Route::post('inspectionReport', [applicantAppController::class,'inspectionReport']);
         Route::post('searchApplicationForInspection', [applicantAppController::class,'searchApplicationForInspection']);
         Route::post('searchApplicationInspectionHistory', [applicantAppController::class,'searchApplicationInspectionHistory']);

@@ -375,6 +375,40 @@ public function viewApplicationInspector(Request $request){
     }
     return $data;
 }
+public function addNoticeToCorrect(Request $request){
+    $inspectorId= $request->inspectorId;
+    $inspection_id = $request->inspectionId;
+    $noticeToCorrect= $request->noticeToCorrect;
+    $notice_array = json_decode($noticeToCorrect,true);
+
+    if(count($notice_array)> 0 ){
+        $addNotice = new noticeToCorrect;
+        $addNotice->inspection_id =$inspection_id;
+        $addNotice->date =Carbon::now()->format('Y-m-d H:i:s');
+        $addNotice->save();
+        $notice_id =$addNotice->notice_id;
+
+        $applicationData = application::where('applicationId',$applicationId);
+        $applicationData->update([
+            'status'=>'reinspection'
+        ]);
+
+        for($i = 0 ; $i< count($notice_array); $i++){
+
+            $dataDefects = new toCorrectDefects;
+            $dataDefects->notice_id = $notice_id;
+            $dataDefects->defects =  $notice_array[$i]['defects'];
+            $dataDefects->grace_period = $notice_array[$i]['gracePeriod'];
+            $dataDefects->save();
+        }
+        return response()->json([
+            'msg'=>'notice to comply updated successfully',
+            'code'=>200
+        ]);
+
+    }
+
+}
 public function inspectionReport(Request $request ){
     $inspectorId= $request->inspectorId;
     $applicationId= $request->applicationId;
