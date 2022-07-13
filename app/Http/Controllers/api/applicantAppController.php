@@ -17,6 +17,9 @@ use App\Models\schedule;
 use App\Models\inspector;
 use App\Models\notice;
 use App\Models\defects;
+use App\Models\noticeToCorrect;
+use App\Models\toCorrectDefects;
+
 
 use Carbon\Carbon;
 
@@ -230,6 +233,7 @@ public function viewApplication(Request $request){
 
     for($i =0 ; $i<$data->count(); $i++){
         $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
+
     }
     return $data;
 }
@@ -372,6 +376,8 @@ public function viewApplicationInspector(Request $request){
     for($i =0 ; $i<$data->count(); $i++){
         $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
         $data[0]->noticeToComply = inspection_details::where('applicationId',$applicationId)->get();
+        $data[0]->noticeToCorrect = noticeToCorrect::join('inspection_details','inspection_details.inspection_id','=','notice_to_correct.inspection_id')
+        ->where('inspection_details.applicationId','=',$applicationId)->get();
     }
     return $data;
 }
@@ -388,11 +394,6 @@ public function addNoticeToCorrect(Request $request){
         $addNotice->save();
         $notice_id =$addNotice->notice_id;
 
-        $applicationData = application::where('applicationId',$applicationId);
-        $applicationData->update([
-            'status'=>'reinspection'
-        ]);
-
         for($i = 0 ; $i< count($notice_array); $i++){
 
             $dataDefects = new toCorrectDefects;
@@ -408,6 +409,32 @@ public function addNoticeToCorrect(Request $request){
 
     }
 
+}
+public function updateNoticeToComplyApproved(Request $request ){
+    $inspection_id = $request->inspectionId;
+    $status = $request->status;
+
+    $data = inspection_details::where('inspection_id',$inspection_id);
+    $data->update([
+        'status'=>$status
+    ]);
+    return response()->json([
+        'msg'=>'notice to comply updated successfully',
+        'code'=>200
+    ]);
+}
+public function updateCorrectViolation(Request $request ){
+    $inspection_id = $request->inspectionId;
+    $status = $request->status;
+
+    $data = inspection_details::where('inspection_id',$inspection_id);
+    $data->update([
+        'status'=>$status
+    ]);
+    return response()->json([
+        'msg'=>'notice to comply updated successfully',
+        'code'=>200
+    ]);
 }
 public function inspectionReport(Request $request ){
     $inspectorId= $request->inspectorId;
@@ -598,31 +625,56 @@ public function getReinspection(Request $request){
     ->get();
     return $data;
 }
-public function getNoticeToComply(Request $request){
-    $inspection_id  = $request->inspectionId;
-    $inspectorId = $request->inspectorId;
+// public function getNoticeToComply(Request $request){
+//     $inspection_id  = $request->inspectionId;
+//     $inspectorId = $request->inspectorId;
 
-    $data = notice::join('defects','defects.notice_id','=','notice.notice_id')
-    ->where('notice.inspection_id',$inspection_id)
-    ->where('defects.status','=','uncomplied')->get();
-    return $data;
-}
+//     $data = notice::join('defects','defects.notice_id','=','notice.notice_id')
+//     ->where('notice.inspection_id',$inspection_id)
+//     ->where('defects.status','=','uncomplied')->get();
+//     return $data;
+// }
 public function getInspectionDetails(Request $request){
     $inspection_id  = $request->inspectionId;
     $inspectorId = $request->inspectorId;
 
     $data = inspection_details::where('inspection_id',$inspection_id)->get();
+    foreach($data as $item){
+        $data[0]->noticeToComply = notice::join('defects','defects.notice_id','=','notice.notice_id')
+                                            ->where('notice.inspection_id',$inspection_id)
+                                            ->where('defects.status','=','uncomplied')->get();
+        $data[0]->complied =  notice::join('defects','defects.notice_id','=','notice.notice_id')
+        ->where('notice.inspection_id',$inspection_id)
+        ->where('defects.status','=','complied')->get();
+        $data[0]->noticeToCorrect = NoticeToCorrect::join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+                                    ->where('notice_to_correct.inspection_id',$inspection_id)->where('to_correct_defects.status','=','uncomplied')->get();
+        $data[0]->correctViolation = NoticeToCorrect::join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+        ->where('notice_to_correct.inspection_id',$inspection_id)->where('to_correct_defects.status','=','complied')->get();
+    }
     return $data;
 }
-public function getComplied(Request $request){
+public function getCorrectViolation(Request $request){
     $inspection_id  = $request->inspectionId;
     $inspectorId = $request->inspectorId;
-    $data = notice::join('defects','defects.notice_id','=','notice.notice_id')
-    ->where('notice.inspection_id',$inspection_id)
-    ->where('defects.status','=','complied')->get();
 
+    $data = inspection_details::where('inspection_id',$inspection_id)->get();
+    foreach($data as $item){
+        $data[0]->noticeToCorrect = NoticeToCorrect::join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+                                    ->where('notice_to_correct.inspection_id',$inspection_id)->where('to_correct_defects.status','=','uncomplied')->get();
+        $data[0]->correctViolation = NoticeToCorrect::join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+        ->where('notice_to_correct.inspection_id',$inspection_id)->where('to_correct_defects.status','=','complied')->get();
+    }
     return $data;
 }
+// public function getComplied(Request $request){
+//     $inspection_id  = $request->inspectionId;
+//     $inspectorId = $request->inspectorId;
+//     $data = notice::join('defects','defects.notice_id','=','notice.notice_id')
+//     ->where('notice.inspection_id',$inspection_id)
+//     ->where('defects.status','=','complied')->get();
+
+//     return $data;
+// }
 public function compliedAction(Request $request){
     $defect_id  = $request->defectId;
 
@@ -634,9 +686,30 @@ public function compliedAction(Request $request){
         'msg'=>'complied'
     ],200);
 }
+public function compliedCorrectViolation(Request $request){
+    $defect_id  = $request->defectId;
+
+    $data = toCorrectDefects::where('defect_id',$defect_id);
+    $data->update([
+        'status'=>'complied'
+    ]);
+    return response()->json([
+        'msg'=>'complied'
+    ],200);
+}
 public function removeComplied(Request $request){
     $defect_id  = $request->defectId;
     $data = defects::where('defect_id',$defect_id);
+    $data->update([
+        'status'=>'uncomplied'
+    ]);
+    return response()->json([
+        'msg'=>'uncomplied'
+    ],200);
+}
+public function removeCorrectViolation(Request $request){
+    $defect_id  = $request->defectId;
+    $data = toCorrectDefects::where('defect_id',$defect_id);
     $data->update([
         'status'=>'uncomplied'
     ]);
