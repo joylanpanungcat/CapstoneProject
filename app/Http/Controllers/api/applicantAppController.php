@@ -381,6 +381,23 @@ public function viewApplicationInspector(Request $request){
     }
     return $data;
 }
+public function viewRejectedInspection(Request $request){
+    $applicationId = $request->applicationId;
+    $data = application::
+    join('address','address.applicantId','=','application.applicantId')
+    ->join('applicant','applicant.applicantId','=','application.applicantId')
+    ->select('address.purok','address.barangay','address.city','application.*','applicant.*')
+    ->where('application.applicationId',$applicationId)->get();
+
+    for($i =0 ; $i<$data->count(); $i++){
+        $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
+        $data[0]->noticeToComply = inspection_details::where('applicationId',$applicationId)->get();
+        $data[0]->noticeToCorrect = noticeToCorrect::join('inspection_details','inspection_details.inspection_id','=','notice_to_correct.inspection_id')
+        ->where('inspection_details.applicationId','=',$applicationId)->get();
+    }
+    return $data;
+}
+
 public function addNoticeToCorrect(Request $request){
     $inspectorId= $request->inspectorId;
     $inspection_id = $request->inspectionId;
@@ -610,9 +627,23 @@ public function getInspectionHistory(Request $request){
     ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
     ->where('application.inpector_id',$inspectorId)
     ->where('inspection_details.status','=','approved')
+    ->orderBy('application.applicationId','desc')
     ->get();
     return $data;
 }
+public function getRejectedInspection(Request $request){
+    $inspectorId = $request->inspectorId;
+    $data = application::
+    join('applicant','applicant.applicantId','=','application.applicantId')
+    ->join('address','address.applicationId','=','application.applicationId')
+    ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+    ->where('application.inpector_id',$inspectorId)
+    ->where('inspection_details.status','=','rejected')
+    ->orderBy('application.applicationId','desc')
+    ->get();
+    return $data;
+}
+
 public function getReinspection(Request $request){
     $inspectorId = $request->inspectorId;
     $data = application::
@@ -646,10 +677,26 @@ public function getInspectionDetails(Request $request){
         $data[0]->complied =  notice::join('defects','defects.notice_id','=','notice.notice_id')
         ->where('notice.inspection_id',$inspection_id)
         ->where('defects.status','=','complied')->get();
+
         $data[0]->noticeToCorrect = NoticeToCorrect::join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
                                     ->where('notice_to_correct.inspection_id',$inspection_id)->where('to_correct_defects.status','=','uncomplied')->get();
         $data[0]->correctViolation = NoticeToCorrect::join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
         ->where('notice_to_correct.inspection_id',$inspection_id)->where('to_correct_defects.status','=','complied')->get();
+        $data[0]->setcorrectViolation = NoticeToCorrect::join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+        ->where('notice_to_correct.inspection_id',$inspection_id)->get();
+    }
+    return $data;
+}
+public function getNoticeToComplyApproved(Request $request){
+    $inspection_id  = $request->inspectionId;
+    $inspectorId = $request->inspectorId;
+    $data = notice::where('inspection_id',$inspection_id)->get();
+
+    foreach($data as $item){
+        $data[0]->uncomplied=  notice::join('defects','defects.notice_id','=','notice.notice_id')
+        ->where('notice.inspection_id',$inspection_id)->where('defects.status','=','uncomplied')->get();
+        $data[0]->complied=  notice::join('defects','defects.notice_id','=','notice.notice_id')
+        ->where('notice.inspection_id',$inspection_id)->where('defects.status','!=','uncomplied')->get();
     }
     return $data;
 }
@@ -723,7 +770,8 @@ public function getInspectionHistoryDetails(Request $request)
     $inspectorId = $request->inspectorId;
     $data = application::join('inspection_details','application.applicationId','=','inspection_details.applicationId')
     ->where('application.inpector_id',$inspectorId)
-    ->where('application.applicationId',$applicationId)->get();
+    ->where('application.applicationId',$applicationId)
+    ->get();
 
     return $data;
 }

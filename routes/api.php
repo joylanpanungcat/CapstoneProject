@@ -55,9 +55,12 @@ Route::prefix('/inspector')->group(function(){
         Route::post('updateInspectorProfile', [applicantAppController::class,'updateInspectorProfile']);
         Route::post('getApplication', [applicantAppController::class,'getApplicationInspector']);
         Route::post('getInspectionHistory', [applicantAppController::class,'getInspectionHistory']);
+        Route::post('getRejectedInspection', [applicantAppController::class,'getRejectedInspection']);
         Route::post('getReinspection', [applicantAppController::class,'getReinspection']);
         // Route::post('getNoticeToComply', [applicantAppController::class,'getNoticeToComply']);
         Route::post('getInspectionDetails', [applicantAppController::class,'getInspectionDetails']);
+        Route::post('getNoticeToComplyApproved', [applicantAppController::class,'getNoticeToComplyApproved']);
+
         Route::post('getCorrectViolation', [applicantAppController::class,'getCorrectViolation']);
         // Route::post('getComplied', [applicantAppController::class,'getComplied']);
         Route::post('compliedAction', [applicantAppController::class,'compliedAction']);
@@ -68,6 +71,7 @@ Route::prefix('/inspector')->group(function(){
         Route::post('updateInspectionDetails', [applicantAppController::class,'updateInspectionDetails']);
         Route::post('deleteInspectionDetails', [applicantAppController::class,'deleteInspectionDetails']);
         Route::post('viewApplication', [applicantAppController::class,'viewApplicationInspector']);
+        Route::post('viewRejectedInspection', [applicantAppController::class,'viewRejectedInspection']);
         Route::post('addNoticeToCorrect', [applicantAppController::class,'addNoticeToCorrect']);
         Route::post('updateNoticeToComplyApproved', [applicantAppController::class,'updateNoticeToComplyApproved']);
         Route::post('updateCorrectViolation', [applicantAppController::class,'updateCorrectViolation']);
