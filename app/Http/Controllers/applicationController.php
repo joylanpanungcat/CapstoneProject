@@ -123,10 +123,24 @@ public function viewApplication(Request $request){
     foreach($data as $data){
     $accountId =$data['accountId'];
     }
-    $application = application::join('address','address.applicationId','=','application.applicationId')
-    ->where('application.applicantId',$applicantId)
-    ->ORwhere('application.accountId','=',$accountId)
+    $application = application::
+    // join('address','address.applicationId','=','application.applicationId')
+    where('application.applicantId',$applicantId)
+    // ->ORwhere('application.accountId','=',$accountId)
     ->get();
+
+    foreach($application as $item){
+        if($item['accountId']===null){
+            $application = application::join('address','address.applicationId','=','application.applicationId')
+            ->where('application.applicantId',$applicantId)
+            // ->ORwhere('application.accountId','=',$accountId)
+            ->get();
+        }else{
+            $application = application::join('address','address.applicationId','=','application.applicationId')
+            ->where('application.accountId','=',$item['accountId'])
+            ->get();
+        }
+    }
 
     $applicant_account = application::
     join('address','address.applicantId','=','application.applicantId')
@@ -134,10 +148,18 @@ public function viewApplication(Request $request){
     ->where('application.applicationId',$applicationId2)
     ->get();
 
-    $uploaded = application::join('address','address.applicationId','=','application.applicationId')
-    ->where('application.applicantId',$applicantId)
-    ->ORwhere('application.accountId','=',$accountId)
-    ->get();
+    $uploaded = application::where('applicantId',$applicantId)->get();
+    foreach ($uploaded as $uploadedItem){
+        if($uploadedItem['accountId'] === null){
+            $uploaded = application::join('address','address.applicationId','=','application.applicationId')
+            ->where('application.applicantId',$applicantId)
+            ->get();
+        }else{
+            $uploaded = application::join('address','address.applicationId','=','application.applicationId')
+            ->where('application.accountId','=',$uploadedItem['accountId'])
+            ->get();
+        }
+    }
 
 
     $applicantAdd=address::where('applicantId','=',$account_id)->first();
@@ -149,34 +171,69 @@ public function viewApplication(Request $request){
     // ->ORwhere('application.accountId','=',$accountId)
     // ->get();
 
-    $assessment = application::
+     $assessment = application::
      join('applicant','applicant.applicantId','=','application.applicantId')
     ->where('application.applicationId',$applicationId2)->get();
 
     if($assessment->count()>0){
-        foreach($assessment as $item){
-            $assessment[0]->assessment= assessment::where('applicationId',$item['applicationId'])->get();
+        foreach($assessment as $assessmentItem){
+            if($assessmentItem['accountId'] === null){
+                   $assessment[0]->assessment = application::join('assessment','assessment.applicationId','=','application.applicationId')
+                                            ->join('applicant','applicant.applicantId','=','application.applicantId')
+                                            ->where('application.applicationId',$applicationId2)->get();
+                // $assessment[0]->assessment= assessment::where('applicationId',$item['applicationId'])->get();
+            }else{
+                 $assessment[0]->assessment = application::join('assessment','assessment.applicationId','=','application.applicationId')
+                 -> join('applicant','applicant.applicantId','=','application.applicantId')
+                ->where('application.accountId',$assessmentItem['accountId'])->get();
+            }
         }
     }
+      $inspection_details = application::where('application.applicationId',$applicationId2)->get();
+   if($inspection_details->count()>0){
+    foreach($inspection_details as $inspection_detailsItem){
+        if($inspection_detailsItem['accountId'] === null){
 
-    $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
-    ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
-    ->where('application.applicationId',$account_id)
-    ->get(['inspector.Fname','inspector.Lname','application.type_application','application.business_name','inspection_details.status','inspection_details.date_inspect','application.applicationId']);
+            if($inspection_detailsItem['inpector_id'] ===null){
+                $inspection_details[0]->inspection_details = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+                ->join('inspector','inspector.inspectorId','=','application.inpector_id')
+                  ->where('application.applicationId',$applicationId2)->get();
+             }else{
+                $inspection_details[0]->inspection_details = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+                ->join('inspector','inspector.inspectorId','=','application.inpector_id')
+                ->where('application.applicationId',$applicationId2)->get();
+             }
+        }else{
+            if($inspection_detailsItem['inpector_id'] ===null){
+                  $inspection_details[0]->inspection_details = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+                  ->join('inspector','inspector.inspectorId','=','application.inpector_id')
+                ->where('application.accountId',$inspection_detailsItem['accountId'])->get();
+            }else{
+                $inspection_details[0]->inspection_details = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+                ->join('inspector','inspector.inspectorId','=','application.inpector_id')->where('application.accountId',$inspection_detailsItem['accountId'])->get();
+            }
+        }
+    }
+}
 
-    $certificate = application::
+
+$certificate = application::
+where('application.applicantId',$applicantId)
+->get();
+
+foreach($certificate as $item){
+    if($item['accountId']===null){
+        $certificate = application::
         join('address','address.applicationId','=','application.applicationId')
         ->where('application.applicationId',$applicationId2)
         ->get();
-
-
-      // foreach ($assessment as $item){
-      //   $fees_id=$item['fees_id'];
-      // }
-      // $list_fees= subAssessment::join('fees','fees.fees_id','=','sub_assessment.fees_id')->where('sub_assessment.fees_id',$fees_id)->get();
-      // foreach($list_fees as $item){
-      //   $output .= "<tr><td>".$item['natureof_payment']."</td><td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' /></td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  /></td></tr>";
-      // }
+    }else{
+        $certificate = application::
+            join('address','address.applicationId','=','application.applicationId')
+            ->where('application.accountId','=',$item['accountId'])
+            ->get();
+    }
+}
 
 
        return view('admin/application_profile',compact('application','applicant_account','account_details','assessment','applicantAdd','applicationId','inspection_details','certificate','uploaded'));
@@ -256,6 +313,15 @@ public function viewApplication(Request $request){
             $address2->barangay = $barangayBus;
             $address2->city = $cityBus;
              $address2->save();
+
+            $assessment = new assessment;
+            $assessment->applicationId = $user_id;
+            $assessment->save();
+
+            $inspection_details = new inspection_details;
+            $inspection_details->applicationId = $user_id;
+            $inspection_details->save();
+
         }
         catch (\Exception $e) {
             return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);

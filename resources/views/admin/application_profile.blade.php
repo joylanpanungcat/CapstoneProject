@@ -930,10 +930,10 @@ height: 40%;
                                               </tr>
                                             </thead>
                                             <tbody>
-                                               @foreach ($certificate as $certificate)
-                                              @php
-                                                  $i=1;
+                                                @php
+                                                $i=1;
                                               @endphp
+                                               @foreach ($certificate as $certificate)
                                               <tr>
                                                   <td>{{$i++}}
                                                   </td>
@@ -975,97 +975,40 @@ height: 40%;
                                                 <th>Type of application</th>
                                                 <th>Application Status</th>
                                                 <th>Business Name</th>
-                                                <th>Address</th>
-                                                    <th>Payment Status</th>
+                                                  <th>Payment Status</th>
                                                 <th>Action</th>
 
                                             </tr>
                                           </thead>
                                           <tbody>
-                                             @if ($assessment->count()>0)
-                                                @php
-                                                    $j=0;
-                                                @endphp
-                                               @foreach ($assessment as $application)
-
+                                            @if (count($assessment)>0)
                                             @php
-                                                $i=1;
-
+                                                    $i=1;
                                             @endphp
-
-                                            <tr>
-                                                <td>{{$i++}}
-                                                </td>
+                                            @foreach ($assessment[0]->assessment as $assessmentData)
+                                                <tr>
+                                                 <td>{{ $i++ }}</td>
+                                                <td>{{ $assessmentData['type_application'] }}</td>
+                                                <td>{{ $assessmentData['status'] }}</td>
+                                                <td>{{ $assessmentData['business_name'] }}</td>
+                                                <td>@if( $assessmentData['payment_status'] === null)
+                                                    unpaid
+                                                 @else
+                                                    {{ $assessmentData['payment_status']; }}
+                                                 @endif</td>
                                                 <td>
-                                                    {{$application->type_application}}
-                                                </td>
-                                                <td>
-                                                    {{$application->status}}
-                                                </td>
-                                                <td>{{$application->business_name}}
-                                                </td>
-                                                <td>{{$applicationId->purok}},{{$applicationId->barangay}},{{$applicationId->city}}
-                                                </td>
-                                                </td>
-                                                <td>
-                                                    @if ( count($application->assessment) <1 || $application->status == 'renewal')
-                                                        @if (count($application->assessment) > 0)
-                                                            @if ($application->assessment[0]['payment_status'])
-                                                            {{$application->assessment[0]['payment_status']}}
-                                                            @else
-                                                            Not Paid
-                                                            @endif
-                                                        @else
-                                                        Not Paid
-                                                        @endif
+                                                    @if ($assessmentData['payment_status'] === null)
+                                                    <a href="{{ route('assessmentSearch', ['name' => $assessmentData['Fname'].' '.$assessmentData['Lname']]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
+                                                        ><i class='fa fa-plus'></i></a>
                                                     @else
-                                                    {{$application->assessment[0]['payment_status']}}
+                                                    <button type='' name='view' class='btn btn-success view view_payment_history'
+                                                    id="{{$assessmentData['applicationId']}}"><i class='fa fa-eye'></i>
+                                                    </button>
                                                     @endif
-                                                </td>
-                                                <input type="hidden" value="{{ $application->applicantId }}" id="view_payment_applicationId">
-                                              <td>
-                                                @if (count($application->assessment) > 0)
-                                                        @if ($application->status == 'renewal')
-                                                            @if (count($application->assessment) > 1)
-                                                                <button type='' name='view' class='btn btn-success view view_payment_history'
-                                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
-                                                                </button>
-                                                            @else
-                                                                @if ($application->assessment[0]['type_payment'] =='renewal' )
-                                                                <button type='' name='view' class='btn btn-success view view_payment_history'
-                                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
-                                                                </button>
-                                                                @else
-                                                                <button type='' name='view' class='btn btn-success view view_payment_history'
-                                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
-                                                                </button>
-                                                                <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
-                                                                    ><i class='fa fa-plus'></i></a>
-                                                                @endif
-                                                            @endif
-                                                        @elseif ($application->status == 'renewed')
-                                                            <button type='' name='view' class='btn btn-success view view_payment_history'
-                                                            id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
-                                                            </button>
-                                                        @else
-                                                            @if ($application->assessment[0]['payment_status'] =='paid')
-                                                                <button type='' name='view' class='btn btn-success view view_payment_history'
-                                                                id="{{$application->applicationId}}"><i class='fa fa-eye'></i>
-                                                                </button>
-                                                            @else
-                                                            <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
-                                                                ><i class='fa fa-plus'></i></a>
-                                                            @endif
-                                                        @endif
-
-
-                                                @else
-                                                <a href="{{ route('assessmentSearch', ['name' => $application->Fname]) }}" target="_blank" type='' name='view' class='btn btn-primary view'
-                                                    ><i class='fa fa-plus'></i></a>
-                                                @endif
-                                                </td>
-                                            </tr>
-                                                 @endforeach
+                                              </td>
+                                                 </tr>
+                                            @endforeach
+                                            @else
                                             @endif
                                           </tbody>
 
@@ -1131,7 +1074,7 @@ height: 40%;
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Type of application</th>
+                                                <th>Business Name</th>
                                                 <th>Inspector Name</th>
                                                 <th>Date inspected</th>
                                                 <th>Inspection Status</th>
@@ -1140,29 +1083,47 @@ height: 40%;
                                             </tr>
                                           </thead>
                                           <tbody>
-                                             @if ($inspection_details->count()>0)
-                                               @foreach ($inspection_details as $inspection_details)
-
                                             @php
-                                                $i=1;
+                                            $i=1;
                                             @endphp
+                                             @if ($inspection_details->count()>0)
+                                               @foreach ($inspection_details[0]->inspection_details as $inspection_detailsItem)
                                             <tr>
                                                 <td>{{$i++}}
                                                 </td>
                                                 <td>
-                                                    {{$inspection_details->type_application}}
+                                                    {{$inspection_details[0]->business_name}}
                                                 </td>
 
-                                                <td>{{$inspection_details->Fname}},{{$inspection_details->Lname}}
+                                                <td>@if ($inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status']!== null)
+                                                    {{ $inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['Fname'] }}
+                                                    ,{{ $inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['Lname'] }}
+                                                    @else
+                                                    N/A
+                                                    @endif
                                                 </td>
-                                                <td>{{$inspection_details->date_inspect}}
+                                                <td>@if($inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status']!== null)
+                                                    {{ $inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['date_inspect'] }}
+                                                    @else
+                                                    N/A
+                                                @endif
                                                 </td>
                                                 </td>
-                                                <td>{{$inspection_details->status}}
+                                                <td>@if ($inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status']!== null)
+                                                        {{ $inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status'] }}
+                                                    @else
+                                                  N/A
+                                                @endif
                                                 </td>
-                                                <input type="hidden" value="{{ $inspection_details->applicantId }}" id="view_payment_applicationId">
-                                          <td><button type='' name='view' class='btn btn-success view view_inspection_report'
-                                            id="{{$inspection_details->applicationId}}"><i class='fa fa-eye'></i></button>
+                                                <td>
+                                                @if ($inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status']!== null)
+                                                <input type="hidden" value="{{ $inspection_details[0]->applicantId }}" id="view_payment_applicationId">
+                                                <button type='' name='view' class='btn btn-success view view_inspection_report'
+                                                  id="{{$inspection_details[0]->applicationId}}"><i class='fa fa-eye'></i></button>
+                                                @else
+                                                Set schedule to inspection
+                                                @endif
+
                                                 </td>
                                             </tr>
                                                  @endforeach

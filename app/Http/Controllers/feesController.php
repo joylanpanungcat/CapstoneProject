@@ -110,10 +110,7 @@ class feesController extends Controller
             $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
             ->where('Fname',$Fname)->where('Lname',$Lname)
             ->get();
-
-
           }
-
     }
    if($data->count()<1){
      $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
@@ -222,19 +219,20 @@ class feesController extends Controller
     $defaultId =$request->defaultId;
     $total_amount =$request->total_amount;
 
-    $assessment = new assessment();
-    $assessment->applicantId=$applicantid;
-    $assessment->applicationId=$applicationId;
-    $assessment->total_amount_words=$total_amount_words;
-    $assessment->receipt_no=$receipt_no;
-    $assessment->defaultId=$defaultId;
-    $assessment->total_amount=$total_amount;
-    $assessment->save();
-    $assessmentId= $assessment->assessmentId;
+    $assessment =  assessment::where('applicationId',$applicationId);
+    $assessment->update([
+        'applicantId'=>$applicantid,
+        'applicationId'=>$applicationId,
+        'total_amount_words'=>$total_amount_words,
+        'receipt_no'=>$receipt_no,
+        'defaultId'=>$defaultId,
+        'total_amount'=>$total_amount,
+    ]);
 
+ $assessmentId= assessment::select('assessmentId')->where('applicationId',$applicationId)->first();
     foreach($ids as $id){
         $sub_assessment= new subAssessment();
-        $sub_assessment->assessmentId=$assessmentId;
+        $sub_assessment->assessmentId=$assessmentId['assessmentId'];
         $sub_assessment->fees_id = $id;
         $sub_assessment->save();
     }
@@ -397,7 +395,14 @@ public function save_payment(Request $request){
     ]);
     }
     public function deleteAssessment(Request $request){
-        $data = assessment::where('assessmentId',$request->assessmentId)->delete();
+        $data = assessment::where('assessmentId',$request->assessmentId);
+        $data->update([
+            'applicantId'=> null,
+            'total_amount'=> null,
+            'total_amount_words'=> null,
+            'receipt_no'=> null,
+            'defaultId'=> null,
+        ]);
         return response()->json([
             'msg'=>'Assessment Successfully Deleted'
         ]);

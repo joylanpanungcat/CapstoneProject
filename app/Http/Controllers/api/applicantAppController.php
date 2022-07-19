@@ -19,6 +19,8 @@ use App\Models\notice;
 use App\Models\defects;
 use App\Models\noticeToCorrect;
 use App\Models\toCorrectDefects;
+use App\Models\assessment;
+
 
 
 use Carbon\Carbon;
@@ -150,6 +152,13 @@ public function addApplication(Request $request){
     $folder->save();
     $folderParent = $folder->folderId;
 
+    $assessment = new assessment;
+    $assessment->applicationId = $applicationId;
+    $assessment->save();
+
+    $inspection_details = new inspection_details;
+    $inspection_details->applicationId = $applicationId;
+    $inspection_details->save();
 
     $folder2= new folderUpload;
     $folder2->applicationId= $applicationId;
@@ -375,7 +384,8 @@ public function viewApplicationInspector(Request $request){
 
     for($i =0 ; $i<$data->count(); $i++){
         $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
-        $data[0]->noticeToComply = inspection_details::where('applicationId',$applicationId)->get();
+        $data[0]->noticeToComply =  notice::join('inspection_details','inspection_details.inspection_id','=','notice.inspection_id')
+        ->where('inspection_details.applicationId','=',$applicationId)->get();
         $data[0]->noticeToCorrect = noticeToCorrect::join('inspection_details','inspection_details.inspection_id','=','notice_to_correct.inspection_id')
         ->where('inspection_details.applicationId','=',$applicationId)->get();
     }
@@ -464,116 +474,117 @@ public function inspectionReport(Request $request ){
 
 
     $inspected='true';
-        $inspection = new inspection_details;
-        $inspection->inspectorId =$inspectorId;
-        $inspection->applicationId =$applicationId;
-        $inspection->date_inspect =Carbon::now()->format('Y-m-d H:i:s');
-        $inspection->under_construction=$request['under_construction'];
-        $inspection->occupancy_permit=$request['occupancy_permit'];
-        $inspection->business_permit=$request['business_permit'];
-        $inspection->periodic_inspection=$request['periodic_inspection'];
-        $inspection->verification_inspection_compliance=$request['verification_inspection_compliance'];
-        $inspection->verification_inspection_complaint=$request['verification_inspection_complaint'];
-        $inspection->others_specify=$request['others_specify'];
-        //general information
-        $inspection->name_building=$request['name_building'];
-        $inspection->business_name=$request['business_name'];
-        $inspection->address=$request['address'];
-        $inspection->nature_business=$request['nature_business'];
-        $inspection->name_owner=$request['name_owner'];
-        $inspection->owner_contact_no=$request['owner_contact_no'];
-        $inspection->name_representative=$request['name_representative'];
-        $inspection->representative_no=$request['representative_no'];
-        $inspection->no_storey=$request['no_storey'];
-        $inspection->height_building=$request['height_building'];
-        $inspection->portion_occupied=$request['portion_occupied'];
-        $inspection->area_per_flr=$request['area_per_flr'];
-        $inspection->total_flr_area=$request['total_flr_area'];
-        $inspection->fire_insurance=$request['fire_insurance'];
-        $inspection->policy_no=$request['policy_no'];
-        $inspection->date_issued=$request['date_issued'];
-        $inspection->type_occupancy=$request['type_occupancy'];
-         //BUILDING CONSTRUCTION
-        $inspection->beams=$request['beams'];
-        $inspection->exterior=$request['exterior'];
-        $inspection->main_stair=$request['main_stair'];
-        $inspection->main_door=$request['main_door'];
-        $inspection->colums=$request['colums'];
-        $inspection->corridor_walls=$request['corridor_walls'];
-        $inspection->windows=$request['windows'];
-        $inspection->trussess=$request['trussess'];
-        $inspection->flooring=$request['flooring'];
-        $inspection->room_partitions=$request['room_partitions'];
-        $inspection->ceiling=$request['ceiling'];
-        $inspection->roof=$request['roof'];
-        $inspection->sectional_occupancy=$request['sectional_occupancy'];
-          //classification
-        $inspection->occupancy_classification=$request['occupancy_classification'];
-        $inspection->other_classification=$request['other_classification'];
-        $inspection->occupant_load=$request['occupant_load'];
-        $inspection->any_renoviation=$request['any_renoviation'];
-        $inspection->other_renoviation=$request['other_renoviation'];
-        $inspection->under_ground=$request['under_ground'];
-        $inspection->windowless=$request['windowless'];
-          //exit details
-        $inspection->horizontal_exit=$request['horizontal_exit'];
-        $inspection->capcity_exit_stair=$request['capcity_exit_stair'];
-        $inspection->no_exits=$request['no_exits'];
-        $inspection->remote=$request['remote'];
-        $inspection->location_exit=$request['location_exit'];
-        $inspection->enclosure_provided=$request['enclosure_provided'];
-          //means of egress
-        $inspection->ready_accessible=$request['ready_accessible'];
-        $inspection->travel_distance=$request['travel_distance'];
-        $inspection->adequete_illumination=$request['adequete_illumination'];
-        $inspection->panic_hardware=$request['panic_hardware'];
-        $inspection->doors_open_easily=$request['doors_open_easily'];
-        $inspection->bldg_with_mezzanine=$request['bldg_with_mezzanine'];
-        $inspection->corridors=$request['corridors'];
-        $inspection->obstructed=$request['obstructed'];
-        $inspection->dead_ends=$request['dead_ends'];
-        $inspection->proper_rating_illumination=$request['proper_rating_illumination'];
-        $inspection->door_swing=$request['door_swing'];
-        $inspection->self_closure=$request['self_closure'];
-        $inspection->mezzanne_with_proper_exit=$request['mezzanne_with_proper_exit'];
-          //fire protection equipement
-        $inspection->emergency_lights=$request['emergency_lights'];
-        $inspection->illuminated_signs=$request['illuminated_signs'];
-        $inspection->no_stinguisher=$request['no_stinguisher'];
-        $inspection->type=$request['type'];
-        $inspection->capacity=$request['capacity'];
-        $inspection->accessible=$request['accessible'];
-        $inspection->fire_alarm=$request['fire_alarm'];
-        $inspection->detectors=$request['detectors'];
-        $inspection->location_panel=$request['location_panel'];
-        $inspection->functional=$request['functional'];
-          //flammables
-        $inspection->hazardous_materials=$request['hazardous_materials'];
-        $inspection->store_handled=$request['store_handled'];
-        $inspection->bfp_permnit=$request['bfp_permnit'];
-        $inspection->stocks_ceiling=$request['stocks_ceiling'];
-        $inspection->sign_provide=$request['sign_provide'];
-        $inspection->smoking_permitted=$request['smoking_permitted'];
-        $inspection->smoking_where=$request['smoking_where'];
-        $inspection->stoved_used=$request['stoved_used'];
-        $inspection->kind_fuel=$request['kind_fuel'];
-        $inspection->smoke_hood=$request['smoke_hood'];
-        $inspection->spark_arrester=$request['spark_arrester'];
-        $inspection->partition_construction=$request['partition_construction'];
-        //operating features
-        $inspection->brigade_organization=$request['brigade_organization'];
-        $inspection->brigade_organization_date=$request['brigade_organization_date'];
-        $inspection->safety_seminar=$request['safety_seminar'];
-        $inspection->safety_seminar_date=$request['safety_seminar_date'];
-        $inspection->emergency_procedures=$request['emergency_procedures'];
-        $inspection->emergency_procedures_date=$request['emergency_procedures_date'];
-        $inspection->evacuation_drill=$request['evacuation_drill'];
-        $inspection->evacuation_drill_date=$request['evacuation_drill_date'];
-        $inspection->defects=$request['defects'];
-        $inspection->recommendation=$request['recommendation'];
-        $inspection->status=$request['status'];
-        $inspection->save();
-        $inspection_id = $inspection->inspection_id;
+        $inspection =  inspection_details::where('applicationId',$applicationId);
+        $inspection->update([
+            'inspectorId' => $inspectorId,
+            'date_inspect' =>Carbon::now()->format('Y-m-d H:i:s'),
+            'under_construction'=>$request['under_construction'],
+            'occupancy_permit'=>$request['occupancy_permit'],
+            'business_permit'=>$request['business_permit'],
+            'periodic_inspection'=>$request['periodic_inspection'],
+            'verification_inspection_compliance'=>$request['verification_inspection_compliance'],
+            'verification_inspection_complaint'=>$request['verification_inspection_complaint'],
+            'others_specify'=>$request['others_specify'],
+            //general information
+            'name_building'=>$request['name_building'],
+            'business_name'=>$request['business_name'],
+            'address'=>$request['address'],
+            'nature_business'=>$request['nature_business'],
+            'name_owner'=>$request['name_owner'],
+            'owner_contact_no'=>$request['owner_contact_no'],
+            'name_representative'=>$request['name_representative'],
+            'representative_no'=>$request['representative_no'],
+            'no_storey'=>$request['no_storey'],
+            'height_building'=>$request['height_building'],
+            'portion_occupied'=>$request['portion_occupied'],
+            'area_per_flr'=>$request['area_per_flr'],
+            'total_flr_area'=>$request['total_flr_area'],
+            'fire_insurance'=>$request['fire_insurance'],
+            'policy_no'=>$request['policy_no'],
+            'date_issued'=>$request['date_issued'],
+            'type_occupancy'=>$request['type_occupancy'],
+             //BUILDING CONSTRUCTION
+            'beams'=>$request['beams'],
+            'exterior'=>$request['exterior'],
+            'main_stair'=>$request['main_stair'],
+            'main_door'=>$request['main_door'],
+            'colums'=>$request['colums'],
+            'corridor_walls'=>$request['corridor_walls'],
+            'windows'=>$request['windows'],
+            'trussess'=>$request['trussess'],
+            'flooring'=>$request['flooring'],
+            'room_partitions'=>$request['room_partitions'],
+            'ceiling'=>$request['ceiling'],
+            'roof'=>$request['roof'],
+            'sectional_occupancy'=>$request['sectional_occupancy'],
+              //classification
+            'occupancy_classification'=>$request['occupancy_classification'],
+            'other_classification'=>$request['other_classification'],
+            'occupant_load'=>$request['occupant_load'],
+            'any_renoviation'=>$request['any_renoviation'],
+            'other_renoviation'=>$request['other_renoviation'],
+            'under_ground'=>$request['under_ground'],
+            'windowless'=>$request['windowless'],
+              //exit details
+            'horizontal_exit'=>$request['horizontal_exit'],
+            'capcity_exit_stair'=>$request['capcity_exit_stair'],
+            'no_exits'=>$request['no_exits'],
+            'remote'=>$request['remote'],
+            'location_exit'=>$request['location_exit'],
+            'enclosure_provided'=>$request['enclosure_provided'],
+              //means of egress
+            'ready_accessible'=>$request['ready_accessible'],
+            'travel_distance'=>$request['travel_distance'],
+            'adequete_illumination'=>$request['adequete_illumination'],
+            'panic_hardware'=>$request['panic_hardware'],
+            'doors_open_easily'=>$request['doors_open_easily'],
+            'bldg_with_mezzanine'=>$request['bldg_with_mezzanine'],
+            'corridors'=>$request['corridors'],
+            'obstructed'=>$request['obstructed'],
+            'dead_ends'=>$request['dead_ends'],
+            'proper_rating_illumination'=>$request['proper_rating_illumination'],
+            'door_swing'=>$request['door_swing'],
+            'self_closure'=>$request['self_closure'],
+            'mezzanne_with_proper_exit'=>$request['mezzanne_with_proper_exit'],
+              //fire protection equipement
+            'emergency_lights'=>$request['emergency_lights'],
+            'illuminated_signs'=>$request['illuminated_signs'],
+            'no_stinguisher'=>$request['no_stinguisher'],
+            'type'=>$request['type'],
+            'capacity'=>$request['capacity'],
+            'accessible'=>$request['accessible'],
+            'fire_alarm'=>$request['fire_alarm'],
+            'detectors'=>$request['detectors'],
+            'location_panel'=>$request['location_panel'],
+            'functional'=>$request['functional'],
+              //flammables
+            'hazardous_materials'=>$request['hazardous_materials'],
+            'store_handled'=>$request['store_handled'],
+            'bfp_permnit'=>$request['bfp_permnit'],
+            'stocks_ceiling'=>$request['stocks_ceiling'],
+            'sign_provide'=>$request['sign_provide'],
+            'smoking_permitted'=>$request['smoking_permitted'],
+            'smoking_where'=>$request['smoking_where'],
+            'stoved_used'=>$request['stoved_used'],
+            'kind_fuel'=>$request['kind_fuel'],
+            'smoke_hood'=>$request['smoke_hood'],
+            'spark_arrester'=>$request['spark_arrester'],
+            'partition_construction'=>$request['partition_construction'],
+            //operating features
+            'brigade_organization'=>$request['brigade_organization'],
+            'brigade_organization_date'=>$request['brigade_organization_date'],
+            'safety_seminar'=>$request['safety_seminar'],
+            'safety_seminar_date'=>$request['safety_seminar_date'],
+            'emergency_procedures'=>$request['emergency_procedures'],
+            'emergency_procedures_date'=>$request['emergency_procedures_date'],
+            'evacuation_drill'=>$request['evacuation_drill'],
+            'evacuation_drill_date'=>$request['evacuation_drill_date'],
+            'defects'=>$request['defects'],
+            'recommendation'=>$request['recommendation'],
+            'status'=>$request['status'],
+        ]);
+        $inspection_id =  inspection_details::select('inspection_id')->where('applicationId',$applicationId)->first();
+
 
     $application = application::where('applicationId',$applicationId);
     $application->update([
@@ -589,7 +600,7 @@ public function inspectionReport(Request $request ){
 
     if(count($notice_array)> 0 ){
         $addNotice = new notice;
-        $addNotice->inspection_id =$inspection_id;
+        $addNotice->inspection_id =$inspection_id['inspection_id'];
         $addNotice->inspector_id =$inspectorId;
         $addNotice->date =Carbon::now()->format('Y-m-d H:i:s');
         $addNotice->save();
