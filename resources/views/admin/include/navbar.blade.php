@@ -163,7 +163,14 @@
   width: 80%;
   margin-left:5% ;
 }
+.badgeNotif {
+        position: relative;
+        top: -20px;
+        background-color: red;
 
+        color: #fff;
+        border-radius: 50%;
+       }
   </style>
 
   <div class="container body">
@@ -197,7 +204,7 @@
 
                   <li><a href="{{ route('map') }}"><i class="fa fa-map"></i> Susceptibility Map </a>
                   </li>
-                  <li><a href="{{ route('applicationAdmin') }}" class="noti_app"><i class="fa fa-list-ol"></i> Application <span class="badge bg-danger" id="count_application"></span> </a>
+                  <li><a href="{{ route('applicationAdmin') }}" class="noti_app"><i class="fa fa-list-ol"></i> Application <span class="badge bg-danger badgeNotif" id="count_application"></span> </a>
                      <li><a href="{{ route('schedule') }}"><i class="fa fa-calendar"></i>Schedule List</a>
 
                   </li>
@@ -206,7 +213,7 @@
                     SMS/Push Notification<span class="badge bg-danger" id="count"></span> </a>
 
                    </li>
-                  <li><a href="{{ route('renewal_application_main') }}" class="noti_renewal"><i class="fa fa-refresh"></i> Renewal  <span class="badge bg-danger" id="count_renewal"></span></a>
+                  <li><a href="{{ route('renewal_application_main') }}" class="noti_renewal"><i class="fa fa-refresh"></i> Renewal  <span class="badge bg-danger badgeNotif" id="count_renewal"></span></a>
 
                   </li>
                    <li><a href="{{ route('payment') }}"><i class="fa fa-money"></i> Payment </a>
@@ -222,17 +229,17 @@
                   </li> -->
                   <li><a><i class="fa fa-users"></i> Account <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ route('account') }}" class="noti_applicant">Applicant<span class="badge bg-danger" id="count_applicant"></span></a></li>
+                      <li><a href="{{ route('account') }}" class="noti_applicant">Applicant<span class="badge bg-danger badgeNotif" id="count_applicant"></span></a></li>
                       <li><a href="{{ route('inspector') }}">Inspector</a></li>
 
                     </ul>
                   </li>
                     <li><a href="{{ route('emergency_page') }}" class="noti_em"><i class="fa fa-fire"></i>
-                   Emergency<span class="badge bg-danger" id="count"></span> </a>
+                   Emergency<span class="badge bg-danger badgeNotif" id="count"></span> </a>
 
                   </li>
                   <li><a href="{{ route('archive') }}" class="noti_em"><i class="fa fa-archive"></i>
-                   Archived<span class="badge bg-danger" id="count"></span> </a>
+                   Archived<span class="badge bg-danger badgeNotif" id="count"></span> </a>
 
                   </li>
                    {{-- <li><a><i class="fa fa-file"></i> Reports <span class="fa fa-chevron-down"></span></a>

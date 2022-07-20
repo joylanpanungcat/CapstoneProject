@@ -127,18 +127,18 @@ public function viewApplication(Request $request){
     // join('address','address.applicationId','=','application.applicationId')
     where('application.applicantId',$applicantId)
     // ->ORwhere('application.accountId','=',$accountId)
-    ->get();
+  ->get();
 
     foreach($application as $item){
         if($item['accountId']===null){
             $application = application::join('address','address.applicationId','=','application.applicationId')
             ->where('application.applicantId',$applicantId)
             // ->ORwhere('application.accountId','=',$accountId)
-            ->get();
+            ->orderBy('application.applicationId','desc')->get();
         }else{
             $application = application::join('address','address.applicationId','=','application.applicationId')
             ->where('application.accountId','=',$item['accountId'])
-            ->get();
+            ->orderBy('application.applicationId','desc')->get();
         }
     }
 
@@ -153,11 +153,11 @@ public function viewApplication(Request $request){
         if($uploadedItem['accountId'] === null){
             $uploaded = application::join('address','address.applicationId','=','application.applicationId')
             ->where('application.applicantId',$applicantId)
-            ->get();
+            ->orderBy('application.applicationId','desc')->get();
         }else{
             $uploaded = application::join('address','address.applicationId','=','application.applicationId')
             ->where('application.accountId','=',$uploadedItem['accountId'])
-            ->get();
+            ->orderBy('application.applicationId','desc')->get();
         }
     }
 
@@ -180,16 +180,17 @@ public function viewApplication(Request $request){
             if($assessmentItem['accountId'] === null){
                    $assessment[0]->assessment = application::join('assessment','assessment.applicationId','=','application.applicationId')
                                             ->join('applicant','applicant.applicantId','=','application.applicantId')
-                                            ->where('application.applicationId',$applicationId2)->get();
+                                            ->where('application.applicationId',$applicationId2)->orderBy('application.applicationId','desc')->get();
                 // $assessment[0]->assessment= assessment::where('applicationId',$item['applicationId'])->get();
             }else{
                  $assessment[0]->assessment = application::join('assessment','assessment.applicationId','=','application.applicationId')
                  -> join('applicant','applicant.applicantId','=','application.applicantId')
-                ->where('application.accountId',$assessmentItem['accountId'])->get();
+                ->where('application.accountId',$assessmentItem['accountId'])
+                ->orderBy('application.applicationId','desc')->get();
             }
         }
     }
-      $inspection_details = application::where('application.applicationId',$applicationId2)->get();
+        $inspection_details = application::where('applicationId',$applicationId2)->get();
    if($inspection_details->count()>0){
     foreach($inspection_details as $inspection_detailsItem){
         if($inspection_detailsItem['accountId'] === null){
@@ -197,20 +198,24 @@ public function viewApplication(Request $request){
             if($inspection_detailsItem['inpector_id'] ===null){
                 $inspection_details[0]->inspection_details = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
                 ->join('inspector','inspector.inspectorId','=','application.inpector_id')
-                  ->where('application.applicationId',$applicationId2)->get();
+                  ->where('application.applicationId',$applicationId2)
+                  ->orderBy('application.applicationId','desc')->get();
              }else{
                 $inspection_details[0]->inspection_details = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
                 ->join('inspector','inspector.inspectorId','=','application.inpector_id')
-                ->where('application.applicationId',$applicationId2)->get();
+                ->where('application.applicationId',$applicationId2)
+                ->orderBy('application.applicationId','desc')->get();
              }
         }else{
             if($inspection_detailsItem['inpector_id'] ===null){
-                  $inspection_details[0]->inspection_details = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+                     $inspection_details[0]->inspection_details = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
                   ->join('inspector','inspector.inspectorId','=','application.inpector_id')
-                ->where('application.accountId',$inspection_detailsItem['accountId'])->get();
+                ->where('application.accountId',$inspection_detailsItem['accountId'])
+                ->orderBy('application.applicationId','desc')->get();
             }else{
-                $inspection_details[0]->inspection_details = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
-                ->join('inspector','inspector.inspectorId','=','application.inpector_id')->where('application.accountId',$inspection_detailsItem['accountId'])->get();
+                $inspection_details[0]->inspection_details = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
+                ->join('inspector','inspector.inspectorId','=','application.inpector_id')
+                ->orderBy('application.applicationId','desc')->where('application.inpector_id',$inspection_detailsItem['inpector_id'])->get();
             }
         }
     }
@@ -226,15 +231,14 @@ foreach($certificate as $item){
         $certificate = application::
         join('address','address.applicationId','=','application.applicationId')
         ->where('application.applicationId',$applicationId2)
-        ->get();
+        ->orderBy('application.applicationId','desc')->get();
     }else{
         $certificate = application::
             join('address','address.applicationId','=','application.applicationId')
             ->where('application.accountId','=',$item['accountId'])
-            ->get();
+            ->orderBy('application.applicationId','desc')->get();
     }
 }
-
 
        return view('admin/application_profile',compact('application','applicant_account','account_details','assessment','applicantAdd','applicationId','inspection_details','certificate','uploaded'));
 

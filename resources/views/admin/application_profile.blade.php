@@ -297,14 +297,7 @@ margin-top: 49px;
          box-shadow: 2px 2px 2px  #888888;
          color: #4285F4;
 }
- .badge {
-        position: relative;
-        top: -20px;
-        background-color: red;
 
-        color: #fff;
-        border-radius: 50%;
-       }
 .dragStart{
     opacity: 0.2;
 }
@@ -893,7 +886,17 @@ height: 40%;
                                         </td>
                                         <td>{{$application->date_apply}}
                                         </td>
-                                        <td>{{$application->status}}
+                                        <td>@if ($application->status === 'pending')
+                                            <div class="badge badge-info">{{ $application->status }}</div>
+                                            @elseif ($application->status === 'approved')
+                                            <div class="badge badge-success">{{ $application->status }}</div>
+                                            @elseif ($application->status === 'reinspection')
+                                            <div class="badge badge-warning">{{ $application->status }}</div>
+                                            @elseif ($application->status === 'forinspection')
+                                            <div class="badge badge-primary">{{ $application->status }}</div>
+                                            @elseif ($application->status === 'rejected')
+                                            <div class="badge badge-danger">{{ $application->status }}</div>
+                                        @endif
                                         </td>
 
                                  <td><button type='button'  class='btn btn-defualt business_info_button' id="{{ $application->applicationId }}"
@@ -942,10 +945,20 @@ height: 40%;
                                                   </td>
                                                   <td>{{$certificate->date_apply}}
                                                   </td>
-                                                  <td>{{$certificate->purok , $certificate->barangay , $certificate->city}}
+                                                  <td>{{$certificate->purok}},{{  $certificate->barangay }},{{ $certificate->city }}
                                                   </td>
-                                                  <td>{{$certificate->status}}
-                                                  </td>
+                                                  <td>@if ($application->status === 'pending')
+                                                    <div class="badge badge-info">{{ $certificate->status }}</div>
+                                                    @elseif ($certificate->status === 'approved')
+                                                    <div class="badge badge-success">{{ $certificate->status }}</div>
+                                                    @elseif ($certificate->status === 'reinspection')
+                                                    <div class="badge badge-warning">{{ $certificate->status }}</div>
+                                                    @elseif ($certificate->status === 'forinspection')
+                                                    <div class="badge badge-primary">{{ $certificate->status }}</div>
+                                                    @elseif ($certificate->status === 'rejected')
+                                                    <div class="badge badge-danger">{{ $certificate->status }}</div>
+                                                @endif
+                                                </td>
                                                     @if ($certificate->status == 'approved' || $certificate->status == 'renewal')
                                                     <td> <button type="button" class="btn btn-success  print_certificate"  id="{{ $certificate->applicationId }}" ><i class="fa fa-print"   ></i> Print</button></td>
                                                     @else
@@ -992,9 +1005,9 @@ height: 40%;
                                                 <td>{{ $assessmentData['status'] }}</td>
                                                 <td>{{ $assessmentData['business_name'] }}</td>
                                                 <td>@if( $assessmentData['payment_status'] === null)
-                                                    unpaid
+                                                    <div class="badge badge-danger">unpaid</div>
                                                  @else
-                                                    {{ $assessmentData['payment_status']; }}
+                                                    <div class='badge badge-success'>{{ $assessmentData['payment_status']; }}</div>
                                                  @endif</td>
                                                 <td>
                                                     @if ($assessmentData['payment_status'] === null)
@@ -1051,7 +1064,17 @@ height: 40%;
                                         </td>
                                         <td>{{$uploaded->date_apply}}
                                         </td>
-                                        <td>{{$uploaded->status}}
+                                        <td>@if ($uploaded->status === 'pending')
+                                            <div class="badge badge-info">{{ $uploaded->status }}</div>
+                                            @elseif ($uploaded->status === 'approved')
+                                            <div class="badge badge-success">{{ $uploaded->status }}</div>
+                                            @elseif ($uploaded->status === 'reinspection')
+                                            <div class="badge badge-warning">{{ $uploaded->status }}</div>
+                                            @elseif ($uploaded->status === 'forinspection')
+                                            <div class="badge badge-primary">{{ $uploaded->status }}</div>
+                                            @elseif ($uploaded->status === 'rejected')
+                                            <div class="badge badge-danger">{{ $uploaded->status }}</div>
+                                        @endif
                                         </td>
                                          <td>    <button  class="btn viewDocuments view" data-toggle="modal"><i class="fa fa-eye"></i></button>
                                         </td>
@@ -1077,7 +1100,7 @@ height: 40%;
                                                 <th>Business Name</th>
                                                 <th>Inspector Name</th>
                                                 <th>Date inspected</th>
-                                                <th>Inspection Status</th>
+                                                <th>Application Status</th>
                                                 <th>Action</th>
 
                                             </tr>
@@ -1085,6 +1108,8 @@ height: 40%;
                                           <tbody>
                                             @php
                                             $i=1;
+                                            $index= 0;
+
                                             @endphp
                                              @if ($inspection_details->count()>0)
                                                @foreach ($inspection_details[0]->inspection_details as $inspection_detailsItem)
@@ -1092,31 +1117,47 @@ height: 40%;
                                                 <td>{{$i++}}
                                                 </td>
                                                 <td>
-                                                    {{$inspection_details[0]->business_name}}
+                                                    @if ($inspection_details[0]->inspection_details[$index]['status']!== null)
+                                                    {{ $inspection_details[0]->inspection_details[$index]['business_name'] }}
+                                                    @else
+                                                     {{$inspection_details[0]->business_name}}
+                                                    @endif
+
                                                 </td>
 
-                                                <td>@if ($inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status']!== null)
-                                                    {{ $inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['Fname'] }}
-                                                    ,{{ $inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['Lname'] }}
+                                                <td>@if ($inspection_details[0]->inspection_details[$index]['status']!== null)
+                                                    {{ $inspection_details[0]->inspection_details[$index]['Fname'] }}
+                                                    ,{{ $inspection_details[0]->inspection_details[$index]['Lname'] }}
                                                     @else
                                                     N/A
                                                     @endif
                                                 </td>
-                                                <td>@if($inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status']!== null)
-                                                    {{ $inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['date_inspect'] }}
+                                                <td>@if($inspection_details[0]->inspection_details[$index]['status']!== null)
+                                                    {{ $inspection_details[0]->inspection_details[$index]['date_inspect'] }}
                                                     @else
                                                     N/A
                                                 @endif
                                                 </td>
                                                 </td>
-                                                <td>@if ($inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status']!== null)
-                                                        {{ $inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status'] }}
+                                                <td>@if ($inspection_details[0]->inspection_details[$index]['status']!== null)
+                                                        @if ($inspection_details[0]->inspection_details[$index]['status'] === 'pending')
+                                                            <div class="badge badge-info"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
+                                                            @elseif ($inspection_details[0]->inspection_details[$index]['status'] === 'approved')
+                                                            <div class="badge badge-success"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
+                                                            @elseif ($inspection_details[0]->inspection_details[$index]['status'] === 'reinspection')
+                                                            <div class="badge badge-warning"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
+                                                            @elseif ($inspection_details[0]->inspection_details[$index]['status'] === 'forinspection')
+                                                            <div class="badge badge-primary"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
+                                                            @elseif ($inspection_details[0]->inspection_details[$index]['status'] === 'rejected')
+                                                            <div class="badge badge-danger"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
+                                                        @endif
+
                                                     @else
                                                   N/A
                                                 @endif
                                                 </td>
                                                 <td>
-                                                @if ($inspection_details[0]->inspection_details[count($inspection_details[0]->inspection_details)-1]['status']!== null)
+                                                @if ($inspection_details[0]->inspection_details[$index]['status']!== null)
                                                 <input type="hidden" value="{{ $inspection_details[0]->applicantId }}" id="view_payment_applicationId">
                                                 <button type='' name='view' class='btn btn-success view view_inspection_report'
                                                   id="{{$inspection_details[0]->applicationId}}"><i class='fa fa-eye'></i></button>
@@ -1126,6 +1167,9 @@ height: 40%;
 
                                                 </td>
                                             </tr>
+                                            @php
+                                                $index++;
+                                            @endphp
                                                  @endforeach
                                             @else
                                                 @php
@@ -1780,6 +1824,7 @@ height: 40%;
                                 <option value="pending">peding</option>
                                 <option value="approved">approved</option>
                                 <option value="reinspection">reinspection</option>
+                                <option value="rejected">rejected</option>
                             </select>
                           </div>
                     </div>
