@@ -308,6 +308,8 @@ letter-spacing: 1px;
                                    </div>
                                    <h7 style="display: none"><b>TOTAL AMOUNT (IN WORDS):</b></h7>
                                    <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords"  style="display: none">
+                                   <input type="text" name="" class="type_payment" id="type_payment"  style="display: none">
+
                                    <br><br><br>
 
                                  <div class="form-group group2" style="display: none">
@@ -448,6 +450,7 @@ letter-spacing: 1px;
                 }
             });
       var search =$('#search_applicant').val();
+
           if(search == ''){
           $('#search_applicant').focus();
           }else{
@@ -521,15 +524,18 @@ function getData(){
      $(document).on('click','#select_applicant',function(e){
      e.preventDefault();
     var id= $('.optradio:checked').attr('id');
-
+    var type_payment =$('.optradio:checked').val();
+console.log(type_payment);
     $.ajax({
       type: 'post',
       url:'{{ route('select_assessment') }}',
       data:{
-        id:id
+        id:id,
+        type_payment:type_payment
       },
       dataType: 'json',
       success:function(data){
+        $('#type_payment').val(type_payment);
         $('#search_modal').modal('hide');
         $('#nature_payment_body').html(data.data);
         $('#total_amount').val(data.total_amount);
@@ -557,6 +563,7 @@ function getData(){
      var assessmentId=   $('#assessmentId').val();
      var amount_paid=   $('#amount').val();
      var change=   $('#change').val();
+     var type_payment=   $('#type_payment').val();
      Swal.fire({
          title:"Save Payment",
          iconHtml: '<i class="fa fa-check"></i>',
@@ -619,6 +626,7 @@ function getData(){
                                         assessmentId:assessmentId,
                                         change:change,
                                         amount_paid:amount_paid,
+                                        type_payment:type_payment
                                       },
                                       dataType: 'json',
                                       success:function(data){
@@ -627,6 +635,7 @@ function getData(){
                                         $('.payment_checkbox').prop( "checked", false );
                                       $('.optradio').prop( "checked", false );
                                       $('#total_amount_inwords').val('');
+                                      $('#assessmentType').val('');
                                       $('#receipt_no').val('');
                                     $('#defaultId').val('');
                                     $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");

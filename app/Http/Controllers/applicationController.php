@@ -15,7 +15,7 @@ use App\Models\subAssessment;
 use App\Models\inspection_details;
 use App\Models\defaultFee;
 use App\Models\applicant_account;
-
+use DB;
 
 // use Storage;
 use DataTables;
@@ -180,7 +180,8 @@ public function viewApplication(Request $request){
             if($assessmentItem['accountId'] === null){
                    $assessment[0]->assessment = application::join('assessment','assessment.applicationId','=','application.applicationId')
                                             ->join('applicant','applicant.applicantId','=','application.applicantId')
-                                            ->where('application.applicationId',$applicationId2)->orderBy('application.applicationId','desc')->get();
+                                            ->where('application.applicationId',$applicationId2)->orderBy('application.applicationId','desc')
+                                            ->limit(1)->get();
                 // $assessment[0]->assessment= assessment::where('applicationId',$item['applicationId'])->get();
             }else{
                  $assessment[0]->assessment = application::join('assessment','assessment.applicationId','=','application.applicationId')
@@ -190,7 +191,8 @@ public function viewApplication(Request $request){
             }
         }
     }
-        $inspection_details = application::where('applicationId',$applicationId2)->get();
+
+ $inspection_details = application::where('applicationId',$applicationId2)->get();
    if($inspection_details->count()>0){
     foreach($inspection_details as $inspection_detailsItem){
         if($inspection_detailsItem['accountId'] === null){
@@ -209,13 +211,29 @@ public function viewApplication(Request $request){
         }else{
             if($inspection_detailsItem['inpector_id'] ===null){
                      $inspection_details[0]->inspection_details = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
-                  ->join('inspector','inspector.inspectorId','=','application.inpector_id')
-                ->where('application.accountId',$inspection_detailsItem['accountId'])
-                ->orderBy('application.applicationId','desc')->get();
+                    ->join('inspector','inspector.inspectorId','=','application.inpector_id')
+                    ->where('application.accountId',$inspection_detailsItem['accountId'])
+                    ->orderBy('application.applicationId','desc')->get();
+
+
             }else{
                 $inspection_details[0]->inspection_details = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
                 ->join('inspector','inspector.inspectorId','=','application.inpector_id')
                 ->orderBy('application.applicationId','desc')->where('application.inpector_id',$inspection_detailsItem['inpector_id'])->get();
+
+                 $inspection_details[0]->notice = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
+                ->join('notice','notice.inspection_id','=','inspection_details.inspection_id')
+                ->join('defects','defects.notice_id','=','notice.notice_id')
+                ->select(DB::raw('notice.*' ),DB::raw('defects.*' )  )
+                ->where('application.accountId',$inspection_detailsItem['accountId'])
+                ->orderBy('application.applicationId','desc')->get();
+
+                $inspection_details[0]->noticeToCorrect = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
+                ->join('notice_to_correct','notice_to_correct.inspection_id','=','inspection_details.inspection_id')
+                ->join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+                ->select(DB::raw('notice_to_correct.*' ),DB::raw('to_correct_defects.*' )  )
+                ->where('application.accountId',$inspection_detailsItem['accountId'])
+                ->orderBy('application.applicationId','desc')->get();
             }
         }
     }
@@ -320,6 +338,7 @@ foreach($certificate as $item){
 
             $assessment = new assessment;
             $assessment->applicationId = $user_id;
+            $assessment->type_payment = 'application';
             $assessment->save();
 
             $inspection_details = new inspection_details;
@@ -1046,14 +1065,27 @@ public function restore_application(Request $request){
 
 public function view_inspection_report(Request $request){
   $applicationId =$request->applicationId;
-
-  $inspection_details = application::join('inspector','inspector.inspectorId','=','application.inpector_id')
-  ->join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+  $output = '';
+  $inspection_details = inspection_details::
+  join('application','application.applicationId','=','inspection_details.applicationId')
+  ->join('inspector','inspector.inspectorId','=','application.inpector_id')
   ->where('application.applicationId',$applicationId)
   ->get();
 
+  foreach($inspection_details as $data ){
+    $output .="<tr>
+        <td>".$data['business_name']."</td>
+        <td>".$data['Fname'].' '.$data['Lname']."</td>
+        <td>".$data['date_inspect']."</td>
+        <td>".$data['date_inspect']."</td>
+        <td>".$data['status']."</td>
+        <td><button type='' name='view' class='btn btn-success view_inspection_report_single '
+        id=".$data['applicationId']."><i class='fa fa-eye'></i></button></td>
+    </tr>";
+  }
+
   return response()->json([
-    'data'=>$inspection_details
+    'output'=>$output
   ]);
 
 

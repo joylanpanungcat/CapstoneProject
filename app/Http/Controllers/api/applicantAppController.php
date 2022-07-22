@@ -916,9 +916,18 @@ public function deleteInspectionDetails(Request $request){
     $applicationId = $request->applicationId;
 
     $data= inspection_details::where('inspection_id',$inspection_id)->delete();
+
+    $item = new inspection_details;
+    $item->applicationId = $applicationId;
+    $item->save();
+
     $data2 = schedule::where('applicationId',$applicationId);
     $data2->update([
         'inspected'=>null
+    ]);
+    $data3 = application::where('applicationId',$applicationId);
+    $data3->update([
+        'inpector_id'=> null
     ]);
     return response()->json([
         'msg'=>'Inspection Deleted'

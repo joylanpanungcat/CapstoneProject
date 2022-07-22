@@ -321,6 +321,7 @@ letter-spacing: 1px;
 
                                   <div class="form-group group2" style="float:right;margin-top: 30px;display: none"  >
                                     <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of" readonly style="width: 400px"></span></h5>
+                                    <input type="hidden" name="" id="assessmentType">
                                     <label style="margin-left:45%">(Name of City/Municipal Fire Marshal)</label><br><br><br>
                                     <input type="text" name="" class="authority_name" id="fee_assessor" readonly>
                                     <input type="hidden" id="defaultId">
@@ -462,6 +463,7 @@ letter-spacing: 1px;
                   </tbody>
 
                 </table>
+                <div class="tbody_searchSelect"></div>
               </div>
                <center>
           <button class="btn btn-dager" data-dismiss="modal" id="okModal"><i class="fa fa-arrow-left"> </i> Back</button>
@@ -667,6 +669,7 @@ $(document).on('click','.collapsible3',function(e){
          dataType:'json',
          success:function(data){
            $('.tbody_search').html(data.output);
+           $('.tbody_searchSelect').html(data.output2);
           $('#search_modal').modal('show');
          }
        })
@@ -711,6 +714,7 @@ $(document).on('click','.collapsible3',function(e){
      e.preventDefault();
     var id= $('.optradio:checked').attr('id');
     var applicationId = $('#applicationIdSelect').val();
+    var assessmentType = $('.assessmentType:checked').val();
 
     $.ajax({
       type: 'post',
@@ -722,6 +726,7 @@ $(document).on('click','.collapsible3',function(e){
       success:function(data){
         $('#search_modal').modal('hide');
         $('#applicationId').val(applicationId);
+        $('#assessmentType').val(assessmentType);
         $.each(data.data,function($key,$value){
           $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
           $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
@@ -771,12 +776,10 @@ $(document).on('click','.collapsible3',function(e){
     var applicationId=$('#applicationId').val();
     var total_amount =$('#total_amount').val();
     var name = $('#applicant_name').val();
-
+    var assessmentType = $('#assessmentType').val();
    var total_amount_words = $('#total_amount_inwords').val();
     var receipt_no=$('#receipt_no').val();
     var defaultId= $('#defaultId').val();
-
-
         if(checkbox.length>0){
           var checkbox_value=[];
           $(checkbox).each(function(){
@@ -817,24 +820,29 @@ $(document).on('click','.collapsible3',function(e){
                                 applicationId:applicationId,
                                 receipt_no:receipt_no,
                                 defaultId:defaultId,
-                                checkbox_value:checkbox_value
+                                checkbox_value:checkbox_value,
+                                assessmentType:assessmentType
                               },
                               dataType:'json',
                               success:function(data){
-                                swal.close();
-                              toastr.success(data.msg);
-                              $('.payment_checkbox').prop( "checked", false );
-                              $('.optradio').prop( "checked", false );
-                              $('#total_amount_inwords').val('');
-                              $('#receipt_no').val('');
-                             $('#defaultId').val('');
-                             $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
-                             $('#applicant_name').val('');
-                            $('#applicant_address').val('');
-                            $('#authority_of').val('');
-                             $('#fee_assessor').val('');
-                             $('#search_applicant').val('');
-                             $('#total_amount').val('');
+                                if(data.code !== 400){
+                                            swal.close();
+                                    toastr.success(data.msg);
+                                    $('.payment_checkbox').prop( "checked", false );
+                                    $('.optradio').prop( "checked", false );
+                                    $('#total_amount_inwords').val('');
+                                    $('#receipt_no').val('');
+                                    $('#defaultId').val('');
+                                    $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
+                                    $('#applicant_name').val('');
+                                    $('#applicant_address').val('');
+                                    $('#authority_of').val('');
+                                    $('#fee_assessor').val('');
+                                    $('#search_applicant').val('');
+                                    $('#total_amount').val('');
+                                }else{
+                                    toastr.error(data.msg);
+                                }
 
                               }
                             });

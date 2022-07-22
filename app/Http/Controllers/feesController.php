@@ -93,6 +93,7 @@ class feesController extends Controller
     $search = $req->search;
     $applicationId = 0;
     $output = '';
+    $output2 = '';
     $name = $req->search;
     $finalname= preg_replace('/\s+/', '', $name);
     $nameRequest =strtolower($finalname);
@@ -115,57 +116,21 @@ class feesController extends Controller
    if($data->count()<1){
      $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
    }else{
-    foreach($data as $data2){
-        $data[0]->assessment = assessment::where('applicationId',$data2['applicationId'])->get();
-    }
-    for($i = 0; $i< $data->count(); $i++){
-        if($data[0]->assessment->count()>0){
-          if($data[0]['status']!== 'renewal'){
-            for($j =0; $j < $data[0]->assessment->count();$j++){
-                if($data[0]->assessment[$j]['total_amount_words'] == ''){
-                    $output .=  "<tr>
-                    <td><input type='hidden' value=".$data[0]['applicationId']." id='applicationIdSelect' /></td>
-                    <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
-                    <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
-                    </tr>";
-                }else{
-                    if($data[0]->assessment[0]['payment_status'] !==null){
-                        $output .=  "<tr>
-                        <td></td>
-                        <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) <badge class='badge badge-success badge-sm'>paid</badge> </td>
-                        </tr>";
-                    }else{
-                        $output .=  "<tr>
-                        <td></td>
-                        <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) <button class='btn btn-danger btn-sm deleteAssessment' id=".$data[0]->assessment[$j]['assessmentId'].">Delete</button<</td>
-                        </tr>";
-                    }
-
-                }
-            }
-          }else{
-            for($j =0; $j < $data[0]->assessment->count();$j++){
-                if($data[0]->assessment[$j]['type_payment'] == 'application'){
-                    $output .=  "<tr>
-                    <td><input type='hidden' value=".$data[0]['applicationId']." id='applicationIdSelect' /></td>
-                    <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
-                    <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
-                    </tr>";
-                }else{
-                    $output .=  "<tr>
-                    <td></td>
-                    <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]->assessment[$j]['type_payment']." </td>
-                    </tr>";
-                }
-            }
-          }
-        }else{
-            $output .=  "<tr>
-            <td><input type='hidden' value=".$data[0]['applicationId']." id='applicationIdSelect' /></td>
-            <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
-            <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
-            </tr>";
-        }
+    foreach($data as $data){
+        $output .=  "<tr>
+        <input type='hidden' value=".$data['applicationId']." id='applicationIdSelect' />
+        <td><input type='radio' name='optradio' class='optradio'  id=".$data['applicantId']."></td>
+        <td>".$data['Fname']."  ".$data['Mname']."  ".$data['Lname']." ( ".$data['type_application']." )  </td>
+        </tr>";
+        $output2 .= "<div><h5>Type of Assessment:</h5></div>
+        <div class='row'>
+            <div class='col col-md-12'>
+                <div class='col-sm-6'><span><input type='radio' name='assessmentType' class='assessmentType' value='print certificate'></span> print certificate</div>
+                <div class='col-sm-6'><span><input type='radio' name='assessmentType' class='assessmentType' value='fines and pinalties '></span>fines and pinalties </div>
+                <div class='col-sm-6'><span><input type='radio' name='assessmentType' class='assessmentType' value='application'></span>application </div>
+                <div class='col-sm-6'><span><input type='radio' name='assessmentType' class='assessmentType' value='renewal'></span>renewal </div>
+            </div>
+        </div>";
     }
 
    }
@@ -173,6 +138,7 @@ class feesController extends Controller
 
     return response()->json([
       'output'=>$output,
+      'output2'=>$output2,
       'applicationId'=>$applicationId
     ]);
 
@@ -212,27 +178,61 @@ class feesController extends Controller
   }
   public function save_assessment(Request $request){
     $ids = $request->checkbox_value;
-    $applicantid =$request->id;
+    $applicantId =$request->id;
     $applicationId =$request->applicationId;
     $total_amount_words =$request->total_amount_words;
     $receipt_no = Carbon::now()->format('Y-mdH').rand(1,100);
     $defaultId =$request->defaultId;
     $total_amount =$request->total_amount;
+    $type_payment = $request->assessmentType;
+    $assessment =  assessment::where('applicationId',$applicationId)->get();
+    $addAssessment = false;
+    if(count($assessment)>0){
+        foreach($assessment as $assessmentItem){
+            if($type_payment==='application'){
+                if($assessmentItem['payment_status']===null && $assessmentItem['total_amount_words'] ===null){
+                    $assessment2 =  assessment::where('applicationId',$applicationId);
+                    $assessment2->update([
+                        'applicantId'=>$applicantId,
+                        'applicationId'=>$applicationId,
+                        'total_amount_words'=>$total_amount_words,
+                        'receipt_no'=>$receipt_no,
+                        'defaultId'=>$defaultId,
+                        'total_amount'=>$total_amount,
+                        'type_payment'=>$type_payment
+                    ]);
+                    $assessmentIdData= assessment::select('assessmentId')->where('applicationId',$applicationId)->first();
+                    $assessmentId = $assessmentIdData['assessmentId'];
+                }else{
+                    return response()->json([
+                        'code'=>400,
+                        'msg'=>'Application fee already assess'
+                    ]);
+                }
 
-    $assessment =  assessment::where('applicationId',$applicationId);
-    $assessment->update([
-        'applicantId'=>$applicantid,
-        'applicationId'=>$applicationId,
-        'total_amount_words'=>$total_amount_words,
-        'receipt_no'=>$receipt_no,
-        'defaultId'=>$defaultId,
-        'total_amount'=>$total_amount,
-    ]);
+            }else{
+                $addAssessment = true;
+            }
+        }
+        if($addAssessment === true){
+            $assessment2 =  new assessment;
+            $assessment2->applicantId = $applicantId;
+            $assessment2->applicationId = $applicationId;
+            $assessment2->total_amount_words = $total_amount_words;
+            $assessment2->receipt_no = $receipt_no;
+            $assessment2->defaultId = $defaultId;
+            $assessment2->total_amount = $total_amount;
+            $assessment2->type_payment = $type_payment;
+            $assessment2->save();
+            $assessmentId = $assessment2->assessmentId;
+        }
+    }
 
- $assessmentId= assessment::select('assessmentId')->where('applicationId',$applicationId)->first();
+
+
     foreach($ids as $id){
         $sub_assessment= new subAssessment();
-        $sub_assessment->assessmentId=$assessmentId['assessmentId'];
+        $sub_assessment->assessmentId= $assessmentId;
         $sub_assessment->fees_id = $id;
         $sub_assessment->save();
     }
@@ -308,13 +308,12 @@ public function search_assessment(Request $request){
           if($data[0]->assessment[$j]['total_amount_words'] !== '' && $data[0]->assessment[$j]['payment_date'] !== null ){
             $output .=  "<tr>
             <td></td>
-            <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) <badge class='badge badge-success badge-sm'>paid</badge> </td>
+            <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) -".$data[0]->assessment[$j]["type_payment"]." </td>
             </tr>";
           }else{
             $output .=  "<tr>
-            <input type='text' value=".$data[0]['applicationId']." />
-            <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicantId']."></td>
-            <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]['status']."   </td>
+            <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicationId']." value='".$data[0]->assessment[$j]["type_payment"]."'></td>
+            <td>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) - ".$data[0]->assessment[$j]["type_payment"]."   </td>
             </tr>";
           }
         }
@@ -328,17 +327,19 @@ public function search_assessment(Request $request){
 }
 
 public function select_assessment(Request $req){
-  $id = $req->id;
+  $applicationId = $req->id;
+  $type_payment = $req->type_payment;
 
   $output ='';
   $data2=defaultFee::all();
 
-  $data3 =applicant::join('assessment','assessment.applicantId','=','applicant.applicantId')
+   $data3 =applicant::join('assessment','assessment.applicantId','=','applicant.applicantId')
   ->join('address','applicant.applicantId','=','address.applicantId')
   ->join('application','application.applicantId','=','applicant.applicantId')
   ->join('sub_assessment','assessment.assessmentId','=','sub_assessment.assessmentId')
   ->join('fees','fees.fees_id','=','sub_assessment.fees_id')
-  ->where('applicant.applicantId',$id)
+  ->where('application.applicationId',$applicationId)
+  ->where('assessment.type_payment',$type_payment)
   ->whereNull('assessment.payment_date')
   ->get();
 
@@ -365,17 +366,7 @@ public function select_assessment(Request $req){
 }
 public function save_payment(Request $request){
     $assessmentId = $request->assessmentId;
-    $type_payment = '';
-    $data = assessment::join('application','application.applicationId','=','assessment.applicationId')
-    ->where('assessment.assessmentId',$assessmentId)->get();
-
-    foreach($data as $data){
-        if($data['status'] !== 'renewal'){
-            $type_payment = 'application';
-        }else{
-            $type_payment = 'renewal';
-        }
-    }
+    $type_payment = $request->type_payment;
 
     $amount_paid = $request->amount_paid;
     $change = $request->change;

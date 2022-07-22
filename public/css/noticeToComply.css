@@ -1,0 +1,112 @@
+.noticeToComplyCert {
+    width:816px;
+    height:1056px;
+    border: 1px solid white;
+    padding: 0px 70px;
+}
+
+.noticeToComplyCert .head {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+.noticeToComplyCert .letter-head {
+    padding: 50px 0px 20px 0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.noticeToComplyCert .date {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.noticeToComplyCert .date label{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    text-align: center;
+    margin-right: 5.0em;
+}
+
+.noticeToComplyCert  input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    font-size: 16px;
+    text-indent: 3px;
+    padding-right:50px;
+}
+
+.noticeToComplyCert .side-texts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 40px 40px 0px;
+}
+
+.noticeToComplyCert .notice-comply {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 0px 40px 0px;
+}
+
+.noticeToComplyCert .sir-madam {
+    display: flex;
+    padding: 0px 0px 40px 0px;
+}
+
+.noticeToComplyCert .letter-body {
+    display: flex;
+    text-align: justify;
+    padding: 40px 0px 40px 0px;
+    text-indent: 60px;
+    line-height: 1.6em;
+}
+
+.noticeToComplyCert .table-defects {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.noticeToComplyCert .table-defects td {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.noticeToComplyCert .table-defects td input{
+    border: 0;
+    outline: 0;
+    background: transparent;
+
+    font-size: 16px;
+    text-indent: 3px;
+    width: 100%;
+}
+
+.noticeToComplyCert .truly-yours {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.noticeToComplyCert #finall {
+display: flex;
+padding: 5px;
+}
+.noticeToComplyCert .final {
+    border: 1px solid black;
+    padding: 10px;
+}
+.noticeToComplyCert .red {
+    color: red;
+    font-style: italic;
+    line-height: 1em;
+}
