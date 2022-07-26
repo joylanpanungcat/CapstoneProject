@@ -100,6 +100,8 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('/archieve_application',[applicationController::class,'archieve_application'])->name('archieve_application');
     Route::post('restore_application',[applicationController::class,'restore_application'])->name('restore_application');
     Route::post('view_inspection_report',[applicationController::class,'view_inspection_report'])->name('view_inspection_report');
+    Route::post('view_inspection_report_single',[applicationController::class,'view_inspection_report_single'])->name('view_inspection_report_single');
+
     Route::post('verify_inspection_report',[applicationController::class,'verify_inspection_report'])->name('verify_inspection_report');
     Route::post('print_certificate',[applicationController::class,'print_certificate'])->name('print_certificate');
     Route::get('applicationUpdateStatus',[applicationController::class,'applicationUpdateStatus'])->name('applicationUpdateStatus');

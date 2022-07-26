@@ -15,6 +15,11 @@ use App\Models\subAssessment;
 use App\Models\inspection_details;
 use App\Models\defaultFee;
 use App\Models\applicant_account;
+use App\Models\notice;
+use App\Models\noticeToCorrect;
+
+
+
 use DB;
 
 // use Storage;
@@ -1088,7 +1093,263 @@ public function view_inspection_report(Request $request){
     'output'=>$output
   ]);
 
+}
+public function view_inspection_report_single(Request $request){
+  $noticeToComplyOutput = "";
+  $outputNoticeToCorrectItem = "";
+  $applicationId =$request->applicationId;
+   $data = inspection_details::
+  join('application','application.applicationId','=','inspection_details.applicationId')
+  ->join('address','address.applicationId','=','application.applicationId')
+  ->where('application.applicationId',$applicationId)
+  ->get();
 
+  foreach($data as $item){
+    $data[0]->inspector = application::
+    join('inspector','inspector.inspectorId','=','application.inpector_id')
+    ->where('application.applicationId',$applicationId)
+    ->get();
+
+    $data[0]->applicant = application::
+    join('applicant','applicant.applicantId','=','application.applicantId')
+    ->where('application.applicationId',$applicationId)
+    ->get();
+  }
+
+   $noticeToComply = notice::join('inspection_details','inspection_details.inspection_id','=','notice.inspection_id')
+                            ->join('inspector','inspector.inspectorId','inspection_details.inspectorId')
+                                ->where('inspection_details.applicationId',$applicationId)->get();
+
+    foreach($noticeToComply as $noticeToComplyItem){
+         $inspectorName = $noticeToComplyItem['Fname'].' '.$noticeToComplyItem['Lname'];
+
+        $noticeToComply[0]->defects = notice::join('inspection_details','inspection_details.inspection_id','=','notice.inspection_id')
+                                            ->join('defects','defects.notice_id','=','notice.notice_id')
+                                            ->where('inspection_details.applicationId',$applicationId)->get();
+        $noticeToComplyOutput .=" <section class='head'>
+        <div class='letter-head'>
+            <input type='text' placeholder='(FIRE STATION LETTER HEAD)' style='width: 56%;' >
+        </div>
+
+        <div class='date'>
+            <form><input type='text'></form>
+            <label>Date</label>
+        </div>
+
+        <div class='side-texts'>
+            <input>
+            <input>
+            <input>
+            <input>
+        </div>
+    </section>
+
+    <section >
+        <div class='notice-comply'>
+            <h1>Notice to Comply</h1>
+            <br>
+        </div>
+        <div class='sir-madam'>
+            <p>Sir/Madam:</p>
+        </div>
+
+        <div class='letter-body'>
+            <p>This reference to the Fire Safety Inspection conducted by
+                <span><input type='text' value='".$inspectorName."' readonly></span> and <span><input type='text'>
+                </span> on <span><input type='text' value='".$noticeToComplyItem['date']."' readonly></span> within your premises
+                located at the above address wherein inspector's report revealed
+                the existence of the following defects/deficiencies, in violation
+                of the Fire Code of the Philippines of 2008 (R.A. 9514).
+            </p>
+        </div>
+
+    </section>
+
+    <section >
+        <table class='table table-bordered table-defects'>
+            <thead>
+              <th>Defects/Deficiencies</th>
+              <th>Grace Period</th>
+            </thead>
+            <tbody>
+         ";
+    if(count($noticeToComply[0]->defects)> 0){
+        foreach($noticeToComply[0]->defects as $defects){
+            $noticeToComplyOutput .="
+            <tr>
+                <td class='deficiencies'>
+                ";
+            if($defects['status'] === 'complied'){
+                $noticeToComplyOutput .="<span><input type='checkbox' checked disabled/></span>";
+            }else{
+                $noticeToComplyOutput .="<span><input type='checkbox' disabled /></span>";
+            }
+            $noticeToComplyOutput .="".$defects['defects']."</td>
+                <td>".$defects['grace_period']."</td>
+            </tr>
+                  ";
+        }
+    }
+
+       $noticeToComplyOutput .="  </tbody></table>
+
+            <div class='letter-body'>
+                <p>In this regard you are hereby advised to comply/correct the above
+                    mentioned deficiencies within the above cited grace period otherwise
+                    appropriate Notice to Correct Violation with corresponding order to
+                    pay administrative fine shall be issued by this office.
+                </p>
+            </div>
+
+    </section>
+
+
+    <section class='truly-yours'>
+
+        <div>
+            <p>Very truly yours,</p>
+           <form style='padding-top: 80px;'><input type='text'></form>
+           <p style='font-weight: bold;'>City/Municipal Fire Marshal</p>
+        </div>
+
+    </section>
+
+    <section id='finall'>
+    <div class='final'>
+        <div><span class='red'>Original</span>   (Applicant/Owner's copy)</div>
+        <div><span  class='red'>Duplicate</span> (BO or BPLO, as the case maybe)</div>
+        <div><span class='red'>Triplicate</span> (BFP Copy)</div>
+    </div>
+    </section>";
+    }
+
+    $noticeToCorrect = noticeToCorrect::join('inspection_details','inspection_details.inspection_id','=','notice_to_correct.inspection_id')
+                                ->join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+                                ->where('inspection_details.applicationId',$applicationId)->get();
+    foreach($noticeToCorrect as $noticeToCorrectItem){
+        $outputNoticeToCorrectItem .='<section class="head">
+        <div class="letter-head">
+            <input type="text" >
+        </div>
+
+        <div class="notice-comply">
+            <h1>Notice to Correct Violation</h1>
+            <br>
+        </div>
+
+        <div class="date">
+            <form><input type="text"></form>
+            <label>Date</label>
+        </div>
+
+        <div class="side-texts">
+            <input>
+            <input>
+            <input>
+        </div>
+    </section>
+
+    <section >
+
+        <div class="sir-madam">
+            <p>Sir/Madam:</p>
+        </div>
+
+        <div class="letter-body">
+            <p>This reference to the Notice to Comply issued by this office on
+                <span><input type="text" style="width: 30px;"></span> for compliance of establishment/building
+                located at the above-cited address. Despite the length of time that has
+                elapsed and the re-inspection report under Inspection Order No.<span>
+                <input type="text" style="width: 30px;"></span>dated <span>
+                <input type="text" style="width: 30px;"></span>
+                fire safety requirements remain not complied.
+            </p>
+            <br>
+
+            <p>
+                In this regard, you are hereby imposed an Administrative Fine of
+                <span><input type="text" style="width: 80px;"></span> (P<span><input type="text" style="width: 30px;"></span>)
+                pursuant to Section 13.0.0.4 of IRR of RA 9514. Hence, you are given
+                three (3) days to pay the fine at <span><input type="text" style="width: 28em;"></span>.
+            </p>
+            <p style="font-size:13px; font-style: italic; ">(State name of Government Servicing Bank/Local Treasurer)</p>
+            <br>
+
+            <p>
+               Hereto attached is the Order of Payment for your compliance.
+            </p>
+            <br>
+
+            <p>
+                Further, you are again directed to comply with the specific fire safety requirements in accordance
+                with the provisions of RA 9514. The following vilations/deficiencies are
+                hereby reiterated with its corresponding grace period:
+            </p>
+        </div>
+
+    </section>
+
+    <section >
+        <table class="table-defects">
+            <tr>
+              <th>Defects/Deficiencies</th>
+              <th>Grace Period</th>
+            </tr>
+            <tr>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+            </tr>
+            <tr>
+              <td><input type="text"></td>
+              <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+
+          </table>
+
+            <div class="letter-body">
+                <p>
+                    Failure on your part to pay the administrative fine and to Correct
+                    the deficiencies within the prescribed period, this office shall be constrained
+                    to recommend issuance of abatement order for your establishment.
+                </p>
+            </div>
+
+    </section>
+
+
+    <section class="truly-yours">
+
+        <div>
+            <p>Very truly yours,</p>
+           <form style="padding-top: 30px;"><input type="text"></form>
+
+        </div>
+
+    </section>
+
+    <section id="finall">
+    <div class="final">
+        <div><span class="red">Original</span>   (Applicant/Owners copy)</div>
+        <div><span  class="red">Duplicate</span> (BO or BPLO, as the case maybe)</div>
+        <div><span class="red">Triplicate</span> (BFP Copy)</div>
+    </div>
+    </section>';
+    }
+  return response()->json([
+    'data'=>$data,
+    'noticeToComply'=>$noticeToComply,
+    'noticeToComplyOutput'=>$noticeToComplyOutput,
+    'outputNoticeToCorrectItem'=>$outputNoticeToCorrectItem,
+    'noticeToCorrect'=>$noticeToCorrect
+  ]);
 }
 
 public function verify_inspection_report(Request $request){

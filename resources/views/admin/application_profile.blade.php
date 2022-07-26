@@ -669,6 +669,38 @@ height: 40%;
 .panel-heading input {
     /* text-align: justify !important; */
 }
+.noticeToComplyCertNodata{
+    display: block;
+    text-align: center;
+}
+.noticeToComplyCertNodata img{
+    width: 42%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    padding: 0 36px;
+}
+.noticeToComplyCertNodata h1{
+    margin-top: 23px;
+}
+.noticeToCorrectNoData{
+    display: block;
+    text-align: center;
+}
+.noticeToCorrectNoData img{
+    width: 42%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    padding: 0 36px;
+}
+.noticeToCorrectNoData h1{
+    margin-top: 23px;
+}
+.deficiencies{
+    display: flex;
+    gap: 20px;
+}
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -1153,7 +1185,7 @@ height: 40%;
                                                 @if ($inspection_details[0]->inspection_details[$index]['status']!== null)
                                                 <input type="hidden" value="{{ $inspection_details[0]->applicantId }}" id="view_payment_applicationId">
                                                 <button type='' name='view' class='btn btn-success view view_inspection_report'
-                                                  id="{{$inspection_details[0]->applicationId}}"><i class='fa fa-eye'></i></button>
+                                                  id="{{$inspection_details[0]->inspection_details[$index]['applicationId']}}"><i class='fa fa-eye'></i></button>
                                                 @else
                                                 Set schedule to inspection
                                                 @endif
@@ -2172,6 +2204,7 @@ height: 40%;
                 <div class="modal-header ">
                     <h5 class="modal-title">Inspection Report</h5>
                     <div class="btn-group">
+                        <div id="updateInspectionDetailsButton" style="margin-right: 10px"></div>
                         <div id="verify_button" style="margin-right: 10px"></div>
                         <button type="button" class="btn btn-success print-inspection" >Print</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
@@ -2183,9 +2216,9 @@ height: 40%;
                                 <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                                   <li role="presentation" class="active" ><a href="#tab_contentInspectionDetails" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Inspection Details</a>
                                   </li>
-                                   <li role="presentation" class="active"  ><a href="#tab_contentNotice" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Notice To Comply</a>
+                                   <li role="presentation" class=""  ><a href="#tab_contentNotice" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Notice To Comply</a>
                                   </li>
-                                   <li role="presentation" class="active"><a href="#tab_contentToCorrect" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">Notice To Correct Violation</a>
+                                   <li role="presentation" class=""><a href="#tab_contentToCorrect" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">Notice To Correct Violation</a>
                                   </li>
                                 </ul>
                                 <div class="tab-content">
@@ -2219,19 +2252,19 @@ height: 40%;
                                             <ul class="person">
                                             <li>
                                             <form>
-                                            <input type="text" value="" class="textboxinfo">
+                                            <input type="text" value="" class="textboxinfo" id="nameOwner" readonly>
                                             </form>
                                             <label>(Name of Owner)</label> </li>
 
                                             <li>
                                             <form>
-                                            <input type="text" value="" class="textboxinfo">
+                                            <input type="text" value="" class="textboxinfo" id="nameEstablishment" readonly>
                                             </form>
                                             <label>(Name of Establishment)</label> </li>
 
                                             <li>
                                             <form>
-                                            <input type="text" value="" class="textboxinfo">
+                                            <input type="text" value="" class="textboxinfo" id="applicationAddress" readonly>
                                             </form>
                                             <label>(Address)</label> </li>
 
@@ -2241,7 +2274,7 @@ height: 40%;
                                         <div class="datecol">
                                             <form>
                                                 <label class="date" >DATE</label>
-                                                <input type="text" value="">
+                                                <input type="date" value="" class="changeDetials" id="date_issued">
                                             </form>
 
                                         </div>
@@ -2787,13 +2820,13 @@ height: 40%;
                                                     <ul class="listcon">
                                                     <li>
                                                     <form style="padding-right: 300px;">
-                                                    <input type="text" style="width: 215px; " >
+                                                    <input type="text" style="width: 215px; " id="printedName">
                                                     </form>
                                                     <label>Signature over Printed Name of Owner/Representative</label> </li>
 
                                                     <li>
                                                     <form>
-                                                    <input type="text" value="" style="width: 415px;"  >
+                                                    <input type="text" value="" style="width: 415px;" id="inspectorName" >
                                                     </form>
                                                     <labels>Fire Safety Inspector/s</label> </li>
 
@@ -2806,7 +2839,7 @@ height: 40%;
                                                     <ul class="listcon">
                                                     <li>
                                                         <form style="padding-right: 300px;">
-                                                        <input type="text" value="" style="width: 215px;" >
+                                                        <input type="text" value="" style="width: 215px;" id="dateAndTime">
                                                         </form>
                                                         <label>Date & TIme</label> </li>
 
@@ -2855,232 +2888,21 @@ height: 40%;
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab_contentNotice" aria-labelledby="profile-tab">
                                     <div class="noticeToComplyCert">
-                                        <section class="head">
-                                            <div class="letter-head">
-                                                <input type="text" >
-                                            </div>
 
-                                            <div class="date">
-                                                <form><input type="text"></form>
-                                                <label>Date</label>
-                                            </div>
+                                    </div>
+                                    <div class="noticeToComplyCertNodata">
+                                        <img src="{{ asset('images/nodata2.svg') }}" alt="">
+                                        <h1>No Data for notice to comply..</h1>
 
-                                            <div class="side-texts">
-                                                <input>
-                                                <input>
-                                                <input>
-                                                <input>
-                                            </div>
-                                        </section>
-
-                                        <section >
-                                            <div class="notice-comply">
-                                                <h1>Notice to Comply</h1>
-                                                <br>
-                                            </div>
-                                            <div class="sir-madam">
-                                                <p>Sir/Madam:</p>
-                                            </div>
-
-                                            <div class="letter-body">
-                                                <p>This reference to the Fire Safety Inspection conducted by
-                                                    <span><input type="text"></span> and <span><input type="text">
-                                                    </span> on <span><input type="text"></span> within your premises
-                                                    located at the above address wherein inspector's report revealed
-                                                    the existence of the following defects/deficiencies, in violation
-                                                    of the Fire Code of the Philippines of 2008 (R.A. 9514).
-                                                </p>
-                                            </div>
-
-                                        </section>
-
-                                        <section >
-                                            <table class="table-defects">
-                                                <tr>
-                                                  <th>Defects/Deficiencies</th>
-                                                  <th>Grace Period</th>
-                                                </tr>
-                                                <tr>
-                                                  <td><input type="text"></td>
-                                                  <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                  <td><input type="text"></td>
-                                                  <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text"></td>
-                                                    <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text"></td>
-                                                    <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text"></td>
-                                                    <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text"></td>
-                                                    <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text"></td>
-                                                    <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text"></td>
-                                                    <td><input type="text"></td>
-                                                </tr>
-                                              </table>
-
-                                                <div class="letter-body">
-                                                    <p>In this regard you are hereby advised to comply/correct the above
-                                                        mentioned deficiencies within the above cited grace period otherwise
-                                                        appropriate Notice to Correct Violation with corresponding order to
-                                                        pay administrative fine shall be issued by this office.
-                                                    </p>
-                                                </div>
-
-                                        </section>
-
-
-                                        <section class="truly-yours">
-
-                                            <div>
-                                                <p>Very truly yours,</p>
-                                               <form style="padding-top: 80px;"><input type="text"></form>
-                                               <p style="font-weight: bold;">City/Municipal Fire Marshal</p>
-                                            </div>
-
-                                        </section>
-
-                                        <section id="finall">
-                                        <div class="final">
-                                            <div><span class="red">Original</span>   (Applicant/Owner's copy)</div>
-                                            <div><span  class="red">Duplicate</span> (BO or BPLO, as the case maybe)</div>
-                                            <div><span class="red">Triplicate</span> (BFP Copy)</div>
-                                        </div>
-                                        </section>
                                     </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane active" id="tab_contentToCorrect" aria-labelledby="profile-tab">
+                                <div role="tabpanel" class="tab-pane " id="tab_contentToCorrect" aria-labelledby="profile-tab">
                                     <div class="noticeToCorrect">
-                                        <section class="head">
-                                            <div class="letter-head">
-                                                <input type="text" >
-                                            </div>
 
-                                            <div class="notice-comply">
-                                                <h1>Notice to Correct Violation</h1>
-                                                <br>
-                                            </div>
-
-                                            <div class="date">
-                                                <form><input type="text"></form>
-                                                <label>Date</label>
-                                            </div>
-
-                                            <div class="side-texts">
-                                                <input>
-                                                <input>
-                                                <input>
-                                            </div>
-                                        </section>
-
-                                        <section >
-
-                                            <div class="sir-madam">
-                                                <p>Sir/Madam:</p>
-                                            </div>
-
-                                            <div class="letter-body">
-                                                <p>This reference to the Notice to Comply issued by this office on
-                                                    <span><input type="text" style="width: 30px;"></span> for compliance of establishment/building
-                                                    located at the above-cited address. Despite the length of time that has
-                                                    elapsed and the re-inspection report under Inspection Order No.<span>
-                                                    <input type="text" style="width: 30px;"></span>dated <span>
-                                                    <input type="text" style="width: 30px;"></span>
-                                                    fire safety requirements remain not complied.
-                                                </p>
-                                                <br>
-
-                                                <p>
-                                                    In this regard, you are hereby imposed an Administrative Fine of
-                                                    <span><input type="text" style="width: 80px;"></span> (P<span><input type="text" style="width: 30px;"></span>)
-                                                    pursuant to Section 13.0.0.4 of IRR of RA 9514. Hence, you are given
-                                                    three (3) days to pay the fine at <span><input type="text" style="width: 28em;"></span>.
-                                                </p>
-                                                <p style="font-size:13px; font-style: italic; ">(State name of Government Servicing Bank/Local Treasurer)</p>
-                                                <br>
-
-                                                <p>
-                                                   Hereto attached is the Order of Payment for your compliance.
-                                                </p>
-                                                <br>
-
-                                                <p>
-                                                    Further, you are again directed to comply with the specific fire safety requirements in accordance
-                                                    with the provisions of RA 9514. The following vilations/deficiencies are
-                                                    hereby reiterated with its corresponding grace period:
-                                                </p>
-                                            </div>
-
-                                        </section>
-
-                                        <section >
-                                            <table class="table-defects">
-                                                <tr>
-                                                  <th>Defects/Deficiencies</th>
-                                                  <th>Grace Period</th>
-                                                </tr>
-                                                <tr>
-                                                  <td><input type="text"></td>
-                                                  <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                  <td><input type="text"></td>
-                                                  <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text"></td>
-                                                    <td><input type="text"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text"></td>
-                                                    <td><input type="text"></td>
-                                                </tr>
-
-                                              </table>
-
-                                                <div class="letter-body">
-                                                    <p>
-                                                        Failure on your part to pay the administrative fine and to Correct
-                                                        the deficiencies within the prescribed period, this office shall be constrained
-                                                        to recommend issuance of abatement order for your establishment.
-                                                    </p>
-                                                </div>
-
-                                        </section>
-
-
-                                        <section class="truly-yours">
-
-                                            <div>
-                                                <p>Very truly yours,</p>
-                                               <form style="padding-top: 30px;"><input type="text"></form>
-
-                                            </div>
-
-                                        </section>
-
-                                        <section id="finall">
-                                        <div class="final">
-                                            <div><span class="red">Original</span>   (Applicant/Owner's copy)</div>
-                                            <div><span  class="red">Duplicate</span> (BO or BPLO, as the case maybe)</div>
-                                            <div><span class="red">Triplicate</span> (BFP Copy)</div>
-                                        </div>
-                                        </section>
+                                    </div>
+                                    <div class="noticeToCorrectNoData">
+                                        <img src="{{ asset('images/nodata2.svg') }}" alt="">
+                                        <h1>No Data..</h1>
                                     </div>
                                 </div>
                             </div>
@@ -4386,27 +4208,70 @@ $(document).on('click','.view_payment_info',function(e){
     })
 
 });
+$('#date_issued').on('input',function(){
+   $value = $(this).val();
+   if($value === ''){
+    $('#updateInspectionDetailsButton').css('display','none');
+   }else{
+    $('#updateInspectionDetailsButton').css('display','block');
+    $('#updateInspectionDetailsButton').html('<button type="button" class="btn btn-info verify_inspection_button"  ><i class="fa fa-check"> </i> Update</button>');
+   }
+});
+
+$('#date_issued').on('input',function(){
+   $value = $(this).val();
+   if($value === ''){
+    $('#updateInspectionDetailsButton').css('display','none');
+   }else{
+    $('#updateInspectionDetailsButton').css('display','block');
+    $('#updateInspectionDetailsButton').html('<button type="button" class="btn btn-info verify_inspection_button"  ><i class="fa fa-check"> </i> Update</button>');
+   }
+});
 $(document).on('click','.view_inspection_report_single',function(){
-      $('#inspection_modal').modal('show');
-})
+    var applicationId = $(this).attr('id');
+    console.log(applicationId);
+    $.ajax({
+        type: 'post',
+        url: '{{ route('view_inspection_report_single') }}',
+        data: {
+            applicationId: applicationId
+        },
+        dataType: 'json',
+        success:function(data){
+       $.each(data.data[0]['applicant'],function(key,value){
+            $('#nameOwner').val(value['Fname'] + value['Lname']);
+            $('#printedName').val(value['Fname'] + value['Lname']);
+       });
+       $.each(data.data[0]['inspector'],function(key,value){
+            $('#inspectorName').val(value['Fname'] + value['Lname']);
+       });
 
-$('.view_inspection_report').on('click',function(e){
-  e.preventDefault();
-  var applicationId = $(this).attr('id');
 
-  $.ajax({
-    type:'post',
-    url:'{{ route('view_inspection_report') }}',
-    data:{
-      applicationId:applicationId
-    },
-    dataType: 'json',
-    success:function(data){
+       $('#inspection_modal').modal('show');
+    if(data.noticeToComply.length > 0){
+        $.each(data.noticeToComply,function(key,value){
+        console.log(value['defects']);
+         });
+            $('.noticeToComplyCert').css('display','block');
+            $('.noticeToComplyCert').html(data.noticeToComplyOutput);
+            $('.noticeToComplyCertNodata').css('display','none');
+    }else{
+        $('.noticeToComplyCert').css('display','none');
+        $('.noticeToComplyCertNodata').css('display','block');
 
-    //   $('#inspection_modal').modal('show');
-      $('#inspection_modal_details').modal('show');
-     $('#inspection_modal_details_body').html(data.output);
+    }
+    if(data.noticeToCorrect.length > 0){
+        $('.noticeToCorrectNoData').css('display','none');
+        $('.noticeToCorrect').css('display','block');
+        $('.noticeToCorrect').html(data.outputNoticeToCorrectItem);
+    }else{
+        $('.noticeToCorrect').css('display','none');
+        $('.noticeToCorrectNoData').css('display','block');
+    }
       $.each(data.data,function(key, value){
+        $('#applicationAddress').val(value['purok']+',  '+value['barangay']+',  '+value['city']);
+        $('#dateAndTime').val(value['date_inspect']);
+        $('#nameEstablishment').val(value['business_name']);
         $('#date_inspect').val(value['date_inspect']);
         if(value['under_construction'] ==='true'){
             $('#under_construction').attr('checked','checked');
@@ -4658,7 +4523,27 @@ $('.view_inspection_report').on('click',function(e){
             $('#verify_button').html(' <button type="button" class="btn btn-default " ><i class="fa fa-check"> </i> Verified</button>')
 
         }
-      })
+      });
+        }
+    })
+})
+
+$('.view_inspection_report').on('click',function(e){
+  e.preventDefault();
+  var applicationId = $(this).attr('id');
+console.log(applicationId);
+  $.ajax({
+    type:'post',
+    url:'{{ route('view_inspection_report') }}',
+    data:{
+      applicationId:applicationId
+    },
+    dataType: 'json',
+    success:function(data){
+
+    //   $('#inspection_modal').modal('show');
+      $('#inspection_modal_details').modal('show');
+      $('#inspection_modal_details_body').html(data.output);
 
     }
   })

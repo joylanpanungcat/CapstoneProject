@@ -1,5 +1,9 @@
 @media screen{
-
+#tab_contentInspectionDetails input{
+    font-size: 14px;
+    letter-spacing: 0.55px;
+    font-weight: 600;
+}
 .modal-header-inpsection-report .modal-header{
     display: flex;
     position: sticky;
@@ -75,11 +79,12 @@ text-indent: 6px;
 
 .personalinfo {
 
-display: grid;
-grid-template-columns: auto auto;
-column-gap: 240px;
-height: 110px;
-margin-top: -30px;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 240px;
+    height: 110px;
+    margin-top: 0px;
+    margin-bottom: 27px;
 
 }
 
@@ -94,7 +99,7 @@ font-size: 9px;
 .personalinfo .textboxinfo{
 padding-top: none;
 margin-left: 20px;
-width: 200px;
+width: 67%;
 font-size: 9px;
 
 }
@@ -213,13 +218,13 @@ margin-top: -6px;
 .generalinfo11 {
 list-style-type: none;
 margin: 0px;
-padding:0px;
+padding: 16px;
 }
 
 .generalinfo11 label {
 font-size: 9px;
 padding-top: none;
-margin-left: 20px;
+margin-left: 0px;
 }
 
 .generalinfo11 input {
@@ -481,10 +486,8 @@ padding-top: 10px;
 
 .flammable-group {
   display: inline-flex;
-
    text-align: center;
-   margin-left: -30px;
-
+   margin-left: 13px;
 }
 
 .Operating-features {
