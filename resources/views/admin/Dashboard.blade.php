@@ -271,7 +271,7 @@ function fetch_data( from_date = '', to_date = '')
     title: {
     display: true,
     position: 'top',
-    text: "Staticstical Report from: June To: August 2022"
+    text: "Staticstical Report"
     }
     },
     });

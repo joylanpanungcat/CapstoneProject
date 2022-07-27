@@ -85,9 +85,10 @@
 
 .noticeToCorrect   th, .noticeToCorrect td {
     text-align: center;
-    border: 1px solid black;
 }
-
+.noticeToCorrect .deficiencies span {
+    line-height: unset;
+}
 .noticeToCorrect  .table-defects td input{
     border: 0;
     outline: 0;

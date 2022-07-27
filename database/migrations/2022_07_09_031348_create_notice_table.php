@@ -17,6 +17,9 @@ class CreateNoticeTable extends Migration
             $table->id('notice_id');
             $table->unsignedBigInteger('inspection_id');
             $table->unsignedBigInteger('inspector_id');
+            $table->string('date_issued')->nullable();
+            $table->string('city_marshal')->nullable();
+            $table->string('letter_head')->nullable();
             $table->string('date');
             $table->timestamps();
         });

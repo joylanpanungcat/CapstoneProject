@@ -26,6 +26,8 @@ class CreateAssessmentTable extends Migration
             $table->string('change')->nullable();
             $table->string('payment_status')->nullable();
             $table->string('type_payment')->nullable();
+            $table->string('fire_marshal')->nullable();
+            $table->string('fee_accesor')->nullable();
             $table->timestamps();
         });
     }

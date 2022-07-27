@@ -466,9 +466,9 @@ function getData(){
 }
   loadSuggest();
     function loadSuggest(){
+        console.log(availableTags);
     $( "#search_applicant" ).autocomplete({
         source: availableTags,
-
     });
 }
 $( "#search_applicant" ).autocomplete( "option", "appendTo", ".search_applicaintDiv" );

@@ -388,34 +388,108 @@ public function set_schedule(Request $request){
 public function payment_view(Request $request){
   $applicationId =$request->applicationId ;
   $applicantId =$request->applicantId ;
+  $type_payment =$request->type_payment ;
+
   $output = '';
   $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
   ->join('assessment','assessment.applicationId','=','application.applicationId')
   ->join('address','address.applicantId','=','applicant.applicantId')
+  ->where('assessment.type_payment',$type_payment)
   ->where('application.applicationId',$applicationId)
   ->get();
 
-  $data2= assessment::join('sub_assessment','sub_assessment.assessmentId','=','assessment.assessmentId')
-          ->join('fees','fees.fees_id','=','sub_assessment.fees_id')
-          ->where('assessment.applicationId',$applicationId)
-  ->get();
-  $data3=defaultFee::all();
-  // <td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' readonly='' /></td>
-  foreach($data2 as $item){
-    $output .= "<tr><td>".$item['natureof_payment']."</td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  readonly=''/></td></tr>";
-    $total = $item['total_amount'];
-  }
-//   $output.='<tr>
-//   <td>TOTAL</td>
-//   <td></td>
-//   <td>'.$total.'</td>
-// </tr>';
+foreach($data as $item){
+    $applicantName = $item['Fname']." ".$item['Mname']." ".$item['Lname'];
+    $businessAddres = $item['purok']."  ".$item['barangay']." ".$item['city'];
+    $data[0]->assessment= assessment::join('sub_assessment','sub_assessment.assessmentId','=','assessment.assessmentId')
+    ->join('fees','fees.fees_id','=','sub_assessment.fees_id')
+    ->where('assessment.type_payment',$type_payment)
+    ->where('assessment.applicationId',$applicationId)
+    ->get();
+
+  $output .= '
+  <input type="hidden" value='.$applicationId.'  id="applicationIdReciept" />
+  <div class="row">
+   <div class="col-md-12" id="receipt">
+  <div class="panel panel-default">
+      <div class="title_payment">
+      <center><h5><strong>ORDER OF PAYMENT</strong></h5>
+          <p>(NOT VALID AS OFFICIAL RECEIPT UNLESS MACHINE VALIDATED)</p>
+      </center>
+      </div>
+  <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name_payment" name=""  value="'.$applicantName.'"></span></h5></div>
+
+  <div class="panel-heading"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name="" value="'.$businessAddres.'"  ></span></h5></div>
+  <div class="panel-body" id="panel-body">
+
+      <table class="table table-striped table-bordered" id="data"  style="width:100%;">
+          <thead>
+              <tr>
+        <th>NATURE OF PAYMENT </th>
+        <th >TOTAL</th>
+      </tr>
+    </thead>
+    <tbody id="nature_payment_body">
+    ';
+    foreach($data[0]->assessment as $item){
+        $output .= "<tr><td>".$item['natureof_payment']."</td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  readonly=''/></td></tr>";
+        $total = $item['total_amount'];
+      }
+    $output .='</tbody>
+
+        </table>
+        <h7><b>TOTAL AMOUNT (IN WORDS):</b></h7>
+        <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords" value="'.$item['total_amount_words'].'">
+        <br><br><br>
+
+      <div class="form-group group2">
+        <label>Offical Receipt No: </label>
+        <input type="text" name="" class="group1" id="receipt_no" value="'.$item['receipt_no'].'"><br>
+        <input type="hidden" id="assessmentId">
+        <label>Amount Paid:</label>
+        <input type="text" name="" class="group1" id="amount_paid_payment" value="'.$item['amount_paid'].'"><br>
+        <label>Change:</label>
+        <input type="text" name="" class="group1" id="change" value="'.$item['change'].'"><br>
+          <label>Payment Date:</label>
+        <input type="input" name="" class="group1" id="date_paid" value="'.$item['payment_date'].'"><br><br>
+        <div class="copy">
+          <label><b>Original</b>/ (Applicant/Owners Copy)</label><br>
+          <label><b>Duplicate</b>/ (GSB/Collecting Agent copy)</label><br>
+          <label><b>Triplicate</b>/ (BFP copy)</label><br>
+
+        </div>
+
+      </div>
+
+        <div class="form-group group2" style="float:right;margin-top: 30px;">
+          <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of"></span></h5>
+          <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
+
+
+          <input type="text" name="" class="authority_name" id="fee_assessor">
+         <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
+
+
+      </div>
+  </div>
+</div>
+</div>
+</div>
+<br>
+<div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6 ">
+          <div class="button-group total_body2 ">
+            <div id="updateReceipt"></div>
+            <button type="button" class="btn btn-secondary " data-dismiss="modal" id="" style="display: inline-block;"  ><i class="fa fa-arrow-left" ></i>  Close</button>
+              <button type="button" class="btn btn-success print_payment_button"  id="print_payment_button"><i class="fa fa-print" ></i>  Print</button>
+          </div>
+        </div>
+      </div>';
+    }
 
   return response()->json([
-    'data'=>$data,
     'output'=>$output,
-    'data2'=>$data2,
-    'data3'=>$data3
   ]);
 }
 
@@ -469,8 +543,13 @@ public function connect_mobile_account(Request $request){
     ]);
 }
 public function getApplicant(){
-
     $data = applicant::get();
+    return response()->json([
+        'data'=>$data
+    ]);
+}
+public function getDefault(){
+    $data = defaultFee::get();
     return response()->json([
         'data'=>$data
     ]);

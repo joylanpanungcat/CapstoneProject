@@ -192,7 +192,7 @@ public function viewApplication(Request $request){
                  $assessment[0]->assessment = application::join('assessment','assessment.applicationId','=','application.applicationId')
                  -> join('applicant','applicant.applicantId','=','application.applicantId')
                 ->where('application.accountId',$assessmentItem['accountId'])
-                ->orderBy('application.applicationId','desc')->get();
+                ->orderBy('application.applicationId','desc')->limit(1)->get();
             }
         }
     }
@@ -1084,7 +1084,7 @@ public function view_inspection_report(Request $request){
         <td>".$data['date_inspect']."</td>
         <td>".$data['date_inspect']."</td>
         <td>".$data['status']."</td>
-        <td><button type='' name='view' class='btn btn-success view_inspection_report_single '
+        <td><button  name='view' class='btn btn-success viewInspectionReportSingle '
         id=".$data['applicationId']."><i class='fa fa-eye'></i></button></td>
     </tr>";
   }
@@ -1128,11 +1128,11 @@ public function view_inspection_report_single(Request $request){
                                             ->where('inspection_details.applicationId',$applicationId)->get();
         $noticeToComplyOutput .=" <section class='head'>
         <div class='letter-head'>
-            <input type='text' placeholder='(FIRE STATION LETTER HEAD)' style='width: 56%;' >
+            <input type='text' placeholder='(FIRE STATION LETTER HEAD)' style='width: 56%;' id='noticeLetterHead' value=".$noticeToComplyItem['letter_head'].">
         </div>
 
         <div class='date'>
-            <form><input type='text'></form>
+            <form><input type='date' id='dateNotice' value=".$noticeToComplyItem['date_issued']."></form>
             <label>Date</label>
         </div>
 
@@ -1208,7 +1208,7 @@ public function view_inspection_report_single(Request $request){
 
         <div>
             <p>Very truly yours,</p>
-           <form style='padding-top: 80px;'><input type='text'></form>
+           <form style='padding-top: 80px;'><div class='search_applicaintDiv3'><input type='text' id='chiefMarshal' value='".$noticeToComplyItem["city_marshal"]."'></div></form>
            <p style='font-weight: bold;'>City/Municipal Fire Marshal</p>
         </div>
 
@@ -1224,12 +1224,17 @@ public function view_inspection_report_single(Request $request){
     }
 
     $noticeToCorrect = noticeToCorrect::join('inspection_details','inspection_details.inspection_id','=','notice_to_correct.inspection_id')
-                                ->join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
                                 ->where('inspection_details.applicationId',$applicationId)->get();
     foreach($noticeToCorrect as $noticeToCorrectItem){
+
+        $noticeToCorrect[0]->defects = noticeToCorrect::join('inspection_details','inspection_details.inspection_id','=','notice_to_correct.inspection_id')
+        ->join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+        ->where('inspection_details.applicationId',$applicationId)->get();
+
+
         $outputNoticeToCorrectItem .='<section class="head">
         <div class="letter-head">
-            <input type="text" >
+        <input type="text" placeholder="(FIRE STATION LETTER HEAD)" style="width: 56%" id="letter_headNoticeToCorrect" value='.$noticeToCorrectItem['letter_head'].' >
         </div>
 
         <div class="notice-comply">
@@ -1238,7 +1243,7 @@ public function view_inspection_report_single(Request $request){
         </div>
 
         <div class="date">
-            <form><input type="text"></form>
+            <form><input type="date" id="date_issuedToCorrect" value='.$noticeToCorrectItem['date_issued'].'></form>
             <label>Date</label>
         </div>
 
@@ -1257,11 +1262,11 @@ public function view_inspection_report_single(Request $request){
 
         <div class="letter-body">
             <p>This reference to the Notice to Comply issued by this office on
-                <span><input type="text" style="width: 30px;"></span> for compliance of establishment/building
+                <span><input type="text" style="width: 30px;" id="dateNoticeToCorrect" ></span> for compliance of establishment/building
                 located at the above-cited address. Despite the length of time that has
                 elapsed and the re-inspection report under Inspection Order No.<span>
-                <input type="text" style="width: 30px;"></span>dated <span>
-                <input type="text" style="width: 30px;"></span>
+                <input type="text" style="width: 30px;" id="orderNoToCorrect"></span>dated <span>
+                <input type="text" style="width: 30px;" id="orderNoDateIssued"></span>
                 fire safety requirements remain not complied.
             </p>
             <br>
@@ -1270,7 +1275,7 @@ public function view_inspection_report_single(Request $request){
                 In this regard, you are hereby imposed an Administrative Fine of
                 <span><input type="text" style="width: 80px;"></span> (P<span><input type="text" style="width: 30px;"></span>)
                 pursuant to Section 13.0.0.4 of IRR of RA 9514. Hence, you are given
-                three (3) days to pay the fine at <span><input type="text" style="width: 28em;"></span>.
+                three (3) days to pay the fine at <span><input type="text" style="width: 28em;" id="servicing_bank" value='.$noticeToCorrectItem['servicing_bank'].'></span>.
             </p>
             <p style="font-size:13px; font-style: italic; ">(State name of Government Servicing Bank/Local Treasurer)</p>
             <br>
@@ -1290,28 +1295,30 @@ public function view_inspection_report_single(Request $request){
     </section>
 
     <section >
-        <table class="table-defects">
-            <tr>
+        <table class="table table-bordered table-defects">
+            <thead>
               <th>Defects/Deficiencies</th>
               <th>Grace Period</th>
-            </tr>
-            <tr>
-              <td><input type="text"></td>
-              <td><input type="text"></td>
-            </tr>
-            <tr>
-              <td><input type="text"></td>
-              <td><input type="text"></td>
-            </tr>
-            <tr>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-            </tr>
-            <tr>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
-            </tr>
-
+            </thead>
+            <tbody>';
+        if(count($noticeToCorrect[0]->defects)> 0){
+            foreach($noticeToCorrect[0]->defects as $defects){
+                $outputNoticeToCorrectItem .="
+                <tr>
+                    <td class='deficiencies'>
+                    ";
+                if($defects['status'] === 'complied'){
+                    $outputNoticeToCorrectItem .="<span><input type='checkbox' checked disabled/></span>";
+                }else{
+                    $outputNoticeToCorrectItem .="<span><input type='checkbox' disabled /></span>";
+                }
+                $outputNoticeToCorrectItem .="".$defects['defects']."</td>
+                    <td>".$defects['grace_period']."</td>
+                </tr>
+                        ";
+            }
+        }
+          $outputNoticeToCorrectItem .=  '</tbody>
           </table>
 
             <div class="letter-body">
@@ -1329,7 +1336,7 @@ public function view_inspection_report_single(Request $request){
 
         <div>
             <p>Very truly yours,</p>
-           <form style="padding-top: 30px;"><input type="text"></form>
+           <form style="padding-top: 30px;"><input type="text" id="truly_yours" value='.$noticeToCorrectItem['truly_yours'].'></form>
 
         </div>
 
@@ -1351,7 +1358,51 @@ public function view_inspection_report_single(Request $request){
     'noticeToCorrect'=>$noticeToCorrect
   ]);
 }
+public function udpateInspectionDetials(Request $request){
+    $applicationId = $request->applicationId;
+    $date_issued = $request->date_issued;
+    $inspection_of = $request->inspection_of;
+    $order_no = $request->order_no;
+    $team_leader = $request->team_leader;
+    $chief = $request->chief;
 
+    $letter_head = $request->letter_head;
+    $date_issuedNotice = $request->date_issuedNotice;
+    $city_marshal = $request->city_marshal;
+
+    $letter_headNoticeToCorrect =$request->letter_headNoticeToCorrect;
+    $date_issuedToCorrect = $request->date_issuedToCorrect;
+    $servicing_bank =$request->servicing_bank;
+    $truly_yours =$request->truly_yours;
+
+
+
+    $data = inspection_details::where('applicationId',$applicationId);
+    $data->update([
+        'date_issued'=> $date_issued,
+        'inspection_of'=> $inspection_of,
+        'order_no'=> $order_no,
+        'team_leader'=> $team_leader,
+        'chief'=> $chief,
+    ]);
+    $noticeToComply = inspection_details::join('notice','notice.inspection_id','inspection_details.inspection_id');
+    $noticeToComply->update([
+        'notice.date_issued'=> $date_issuedNotice,
+        'notice.letter_head'=> $letter_head,
+        'notice.city_marshal'=>$city_marshal
+    ]);
+
+    $noticeToCorrect = inspection_details::join('notice_to_correct','notice_to_correct.inspection_id','inspection_details.inspection_id');
+    $noticeToCorrect->update([
+        'notice_to_correct.letter_head'=>$letter_headNoticeToCorrect,
+        'notice_to_correct.date_issued'=>$date_issuedToCorrect,
+        'notice_to_correct.servicing_bank'=>$servicing_bank,
+        'notice_to_correct.truly_yours'=>$truly_yours,
+    ]);
+    return response()->json([
+        'msg'=> 'updated '
+    ]);
+}
 public function verify_inspection_report(Request $request){
   $applicationId = $request->applicationId;
   $verify = true;
@@ -1366,10 +1417,55 @@ public function verify_inspection_report(Request $request){
   ]);
 
 }
+public function updateCertDetails(Request $request){
+    $applicationId = $request->applicationId;
+    $fsec_noCert = $request->fsec_noCert;
+    $date_issuedCert = $request->date_issuedCert;
+    $issued_for = $request->issued_for;
+    $chiefCert = $request->chiefCert;
+    $marshalCert = $request->marshalCert;
+
+}
+
+// public function print_certificate(Request $request){
+//   $applicationId = $request->applicationId;
+//   $output = '';
+//   $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
+//   ->join('address','address.applicationId','=','application.applicationId')
+//   ->join('assessment','assessment.applicationId','=','application.applicationId')
+//   ->where('application.applicationId',$applicationId)
+//   ->get();
+
+//   $default = defaultFee::all();
+
+//   foreach($data as $data){
+//     $business_name= $data['business_name'];
+//     $address= $data['prk'].' '.$data['barangay'].' '.$data['city'] ;
+//     $applicant= $data['Fname'].' '.$data['Mname'].' '.$data['Lname'] ;
+//     $amount_paid = $data['amount_paid'];
+//     $OR_num= $data['OR_num'];
+//     $payment_date=$data['payment_date'];
+//   }
+//   foreach($default as $default){
+//     $marshal = $default['authority_of'];
+//     $chief = $default['chief'];
+//   }
+
+//   return response()->json([
+//     'business_name'=>$business_name,
+//     'address'=>$address,
+//     'applicant'=>$applicant,
+//     'amount_paid'=>$amount_paid,
+//     'OR_num'=>$OR_num,
+//     'payment_date'=>$payment_date,
+//     'marshal'=>$marshal,
+//     'chief'=>$chief,
+//   ]);
+// }
 
 public function print_certificate(Request $request){
-  $applicationId = $request->applicationId;
-  $output = '';
+    $applicationId = $request->applicationId;
+    $output= "";
   $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
   ->join('address','address.applicationId','=','application.applicationId')
   ->join('assessment','assessment.applicationId','=','application.applicationId')
@@ -1379,28 +1475,199 @@ public function print_certificate(Request $request){
   $default = defaultFee::all();
 
   foreach($data as $data){
-    $business_name= $data['business_name'];
+    $middleName = $data['Mname'];
+    $middleInitial= substr($middleName, 0, 1);
     $address= $data['prk'].' '.$data['barangay'].' '.$data['city'] ;
-    $applicant= $data['Fname'].' '.$data['Mname'].' '.$data['Lname'] ;
+    $applicant= $data['Fname'].' '.$middleInitial.' '.$data['Lname'] ;
     $amount_paid = $data['amount_paid'];
-    $OR_num= $data['OR_num'];
+    $OR_num= $data['receipt_no'];
     $payment_date=$data['payment_date'];
   }
-  foreach($default as $default){
-    $marshal = $default['authority_of'];
-    $chief = $default['chief'];
-  }
 
-  return response()->json([
-    'business_name'=>$business_name,
-    'address'=>$address,
-    'applicant'=>$applicant,
-    'amount_paid'=>$amount_paid,
-    'OR_num'=>$OR_num,
-    'payment_date'=>$payment_date,
-    'marshal'=>$marshal,
-    'chief'=>$chief,
-  ]);
+    $output .='
+    <div class="main-panel " id="main-panel">
+    <div class="row certificate_content" >
+    <div class=" col-md-12">
+    <div class="col-md-2">
+        <img src='.asset('images/dilg.png').' alt="" style="width: 100%">
+    </div>
+    <div class="col-md-8">
+        <div class=" top">
+            <p>Republic of the Philippines
+            <br><strong>Department of the Interior and local Government</strong></p>
+            <h2 style="color:#2A3F54">BUREAU OF FIRE PROTECTION</h2>
+           <center>
+            <input type="text" class="top-input" name="" id="" style="width:40%">
+            <input type="text" class="top-input" name="" id=""  style="width:60%">
+            <input type="text" class="top-input"name="" id=""  style="width:80%">
+        </center>
+        </div><br><br>
+    </div>
+    <div class="col-md-2">
+        <img src='.asset("images/logo.png").' alt="" style="width: 100%">
+    </div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+    <div class="col-md-6 fsecn_no">
+        <div class="col-md-6"><strong>FSEC NO . R</strong></div>
+        <div class="col-md-4"><input type="text" id="fsec_noCert"></div>
+        <div class="col-md-4"><input type="hidden" id="applicationIdCert"></div>
+    </div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12 fsec_mid">
+    <h3><b>FIRE SAFETY EVALUATION CLEARANCE</b></h3>
+</div>
+</div>
+<div class="row date_style">
+<div class="col-md-8"></div>
+<div class="col-md-4"><input type="date" id="date_issuedCert"><br><span>Date</span></div>
+</div>
+<div class="row to_whom">
+        <h2><strong >TO WHOM IT MAY CONCERN</strong></h2>
+<div class="row">
+    <div class="col-md-12 middle_design">
+    <p>By virtue of the provisions of RA 9514 otherwise known as the Fire Code of the Philippines of 2008 the application for</p>
+            <strong >FIRE SAFETY EVALUATION CLEARANCE OF </strong><span><input type="text" name="" id="business_name_print" value="'.$business_name= $data['business_name'].'" readonly ></span>
+            <div class="col-md-6"></div>
+            <div class="col-md-6"><p>(Name of Building/ Structure Facility)</p></div>
+        </p>
+    </div>
+    <div class="col-md-12 middle_design2">
+        <div class="col-md-12">
+            <input type="text" name="" id="address_print">
+        </div>
+        <div class="col-md-12">
+            <p>to be constructed / renovated / altered / modified / change of occupancy located at</p>
+        </div>
+        <div class="col-md-12">
+            <input type="text" name="" id="" value="'.$address.'" readonly>
+        </div>
+        <div class="col-md-12">
+            <p>(Address)</p>
+        </div>
+    </div>
+    <div class="col-md-12 owned">
+        <div class="col-md-12">
+            <div class="col-md-2">owned by</div>
+            <div class="col-md-4"><input type="text" name="" id="applicant_name" value="'.$applicant.'" readonly></div>
+            <div class="col-md-6"> <p>is hereby <strong>GRANTED</strong> after the building plans and</p></div>
+
+            <div class="col-md-12 representative">
+                <div class="col-md-6"><p>(Name of Owners/Representative)</p></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+            <p>other documents conform to the safety and life safety requirements of the Fire Code of the Philippines of 2008 and its IRR <br>
+                and that the recommendations in the Fire Safety Checklist (FSC) will be adopted.</p>
+            </div>
+            </div>
+    </div>
+   <div class="row being_issued_for ">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <p>This clearance is being issued for <span><input type="text" name="" id="" style="width: 350px" class="issued_for"></span></p>
+            </div>
+            <div class="col-md-12">
+                <input type="text" name="" id="" style="width:100%" class="issued_for">
+            </div>
+            </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12 violation">
+                <p>Violation of Fire Code provisions shall ipso facto cause this certificate null and void, and shall hold the owner of the
+                    building liable to the penalties provided for by the said Fire code.
+                    </p>
+            </div>
+        </div>
+    </div>
+    <div class="row fire_code">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <label for=""><b>Fire Code Fees</b></label>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <label for="">Amount Paid:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text"  style="width: 100%" id="amount_paid" value='.$amount_paid.' readonly>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <label for="">O.R. Number:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="OR_num_print" value='.$OR_num.' readonly>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <label for="">Date:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="payment_date" value='.$payment_date.' readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-5">
+                <div class="col-md-12">
+                    <p>RECOMMEND APPROVAL</p>
+                </div>
+                <div class="col-md-12">
+                    <input type="text" id="chiefCert" style="font-size: 16px;text-align:center;font-weight:bold;width: 270px;"><br>
+                    <p style="text-align: center">CHIEF, FSES</p>
+                </div>
+                <div class="col-md-12">
+                    <p><strong>APPROVED :</strong></p>
+                </div>
+                <div class="col-md-12">
+                    <input type="text" name="" id="marshalCert" style="font-size: 16px;text-align:center;font-weight:bold; width: 270px;"><br>
+                    <p>CITY/MUNICIPAL FIRE MARSHAL</p>
+                </div>
+            </div>
+
+            <div class="row note">
+                <div class="col-md-12">
+                <p><b>NOTE :  “This Clearance is accompanied by Fire safety Checklist and does not take the place of any license required by
+                    law and is not transferable. Any change or alteration in the design and specification during construction shall require a
+                    new clearance”</b></p>
+                </div>
+            </div>
+            <div class="row paalala">
+                <div class="col-md-12">
+                <p>PAALALA: “MAHIGPIT NA IPINAGBABAWAL NG PAMUNUAN NG BUREAU OF FIRE PROTECTION SA MGA KAWANI NITO ANG
+                    MAGBENTA O MAGREKOMENDA NG ANUMANG BRAND NG FIRE EXTINGUISHER”</p>
+                </div>
+            </div>
+            <div class="row moto">
+                <div class="col-md-12 ">
+                <p><strong>"FIRE SAFETY IS OUR MAIN CONCERN"</strong></p>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+</div>';
+
+return response()->json([
+    'output'=>$output
+]);
 }
 public function applicationUpdateStatus(){
     $data = application::get();
@@ -1449,7 +1716,7 @@ public function view_payment_history(Request $request){
             <td>'.$data['type_payment'].'</td>
             <td>'.$data['payment_status'].'</td>
             <td><button type="button"  class="btn btn-success view_payment_info"
-            id='.$data['applicationId'].'>Generate Receipt</button></td>
+            id='.$data['applicationId'].' value="'.$data['type_payment'].'">Generate Receipt</button></td>
         </tr>';
     }
 

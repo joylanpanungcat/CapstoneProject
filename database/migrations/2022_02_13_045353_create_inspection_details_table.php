@@ -123,6 +123,10 @@ class CreateInspectionDetailsTable extends Migration
             $table->string('recommendation')->nullable();
             $table->string('verify')->nullable();
             $table->string('status')->nullable();
+            $table->string('inspection_of')->nullable();
+            $table->string('order_no')->nullable();
+            $table->string('team_leader')->nullable();
+            $table->string('chief')->nullable();
             $table->timestamps();
         });
     }
