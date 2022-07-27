@@ -17,6 +17,7 @@ use App\Models\defaultFee;
 use App\Models\applicant_account;
 use App\Models\notice;
 use App\Models\noticeToCorrect;
+use App\Models\certificate;
 
 
 
@@ -1116,7 +1117,7 @@ public function view_inspection_report_single(Request $request){
     ->get();
   }
 
-   $noticeToComply = notice::join('inspection_details','inspection_details.inspection_id','=','notice.inspection_id')
+   $noticeToComply = inspection_details::join('notice','inspection_details.inspection_id','=','notice.inspection_id')
                             ->join('inspector','inspector.inspectorId','inspection_details.inspectorId')
                                 ->where('inspection_details.applicationId',$applicationId)->get();
 
@@ -1128,7 +1129,7 @@ public function view_inspection_report_single(Request $request){
                                             ->where('inspection_details.applicationId',$applicationId)->get();
         $noticeToComplyOutput .=" <section class='head'>
         <div class='letter-head'>
-            <input type='text' placeholder='(FIRE STATION LETTER HEAD)' style='width: 56%;' id='noticeLetterHead' value=".$noticeToComplyItem['letter_head'].">
+            <input type='text' placeholder='(FIRE STATION LETTER HEAD)' style='width: 56%;' id='noticeLetterHead' value='".$noticeToComplyItem['letter_head']."'>
         </div>
 
         <div class='date'>
@@ -1418,13 +1419,61 @@ public function verify_inspection_report(Request $request){
 
 }
 public function updateCertDetails(Request $request){
-    $applicationId = $request->applicationId;
+     $applicationId = $request->applicationId;
     $fsec_noCert = $request->fsec_noCert;
     $date_issuedCert = $request->date_issuedCert;
     $issued_for = $request->issued_for;
     $chiefCert = $request->chiefCert;
     $marshalCert = $request->marshalCert;
+    $complete_address = '';
+    $toBe_constructed = '';
+$item = certificate::where('applicationId',$applicationId)->count();
 
+if($item > 0){
+    $data = certificate::where('applicationId',$applicationId);
+    $data->update([
+        'applicationId'=>$applicationId,
+        'complete_address'=>$complete_address,
+        'fsec_noCert'=>$fsec_noCert,
+        'toBe_constructed'=>$toBe_constructed,
+        'issued_for'=>$issued_for,
+        'chiefCert'=>$chiefCert,
+        'marshalCert'=>$marshalCert,
+        'date_issuedCert'=>$date_issuedCert,
+    ]);
+}else{
+    $data = certificate::insert([
+        'applicationId'=>$applicationId,
+        'complete_address'=>$complete_address,
+        'fsec_noCert'=>$fsec_noCert,
+        'toBe_constructed'=>$toBe_constructed,
+        'issued_for'=>$issued_for,
+        'chiefCert'=>$chiefCert,
+        'marshalCert'=>$marshalCert,
+        'date_issuedCert'=>$date_issuedCert,
+    ]);
+}
+
+    return response()->json([
+        'msg'=> 'Certificate Updated'
+    ]);
+
+}
+
+public function updateReceiptDetails(Request $request){
+    $applicationId = $request->applicationId;
+    $fire_marshal = $request->authority_of;
+    $fee_assessor = $request->fee_assessor;
+
+    $data = assessment::where('applicationId',$applicationId);
+    $data->update([
+        'fire_marshal'=>$fire_marshal,
+        'fee_assessor'=>$fee_assessor,
+    ]);
+
+    return response()->json([
+        'msg'=>'Assessment Updated'
+    ]);
 }
 
 // public function print_certificate(Request $request){
@@ -1465,6 +1514,12 @@ public function updateCertDetails(Request $request){
 
 public function print_certificate(Request $request){
     $applicationId = $request->applicationId;
+    $fsec_noCert= '';
+    $toBe_constructed='';
+    $issued_for='';
+    $chiefCert='';
+    $marshalCert='';
+    $date_issuedCert='';
     $output= "";
   $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
   ->join('address','address.applicationId','=','application.applicationId')
@@ -1474,15 +1529,31 @@ public function print_certificate(Request $request){
 
   $default = defaultFee::all();
 
-  foreach($data as $data){
-    $middleName = $data['Mname'];
+  foreach($data as $item){
+    $middleName = $item['Mname'];
     $middleInitial= substr($middleName, 0, 1);
-    $address= $data['prk'].' '.$data['barangay'].' '.$data['city'] ;
-    $applicant= $data['Fname'].' '.$middleInitial.' '.$data['Lname'] ;
-    $amount_paid = $data['amount_paid'];
-    $OR_num= $data['receipt_no'];
-    $payment_date=$data['payment_date'];
+    $address= $item['purok'].' '.$item['barangay'].' '.$item['city'] ;
+    $applicant= $item['Fname'].' '.$middleInitial.' '.$item['Lname'] ;
+    $amount_paid = $item['amount_paid'];
+    $OR_num= $item['receipt_no'];
+    $payment_date=$item['payment_date'];
+
+    $data[0]->certificate = application::join('certificate','certificate.applicationId','=','application.applicationId')
+                            ->where('application.applicationId',$applicationId)->get();
+    $business_name = $item['business_name'];
+
   }
+  if(count($data[0]->certificate)> 0){
+    foreach($data[0]->certificate as $item){
+        $fsec_noCert=$item['fsec_noCert'];
+        $toBe_constructed=$item['toBe_constructed'];
+        $issued_for=$item['issued_for'];
+        $chiefCert=$item['chiefCert'];
+        $marshalCert=$item['marshalCert'];
+        $date_issuedCert=$item['date_issuedCert'];
+      }
+  }
+
 
     $output .='
     <div class="main-panel " id="main-panel">
@@ -1512,8 +1583,8 @@ public function print_certificate(Request $request){
 <div class="col-md-12">
     <div class="col-md-6 fsecn_no">
         <div class="col-md-6"><strong>FSEC NO . R</strong></div>
-        <div class="col-md-4"><input type="text" id="fsec_noCert"></div>
-        <div class="col-md-4"><input type="hidden" id="applicationIdCert"></div>
+        <div class="col-md-4"><input type="text" id="fsec_noCert" value="'.$fsec_noCert.'"></div>
+        <div class="col-md-4"><input type="hidden" id="applicationIdCert" value='.$applicationId.'></div>
     </div>
 </div>
 </div>
@@ -1524,14 +1595,14 @@ public function print_certificate(Request $request){
 </div>
 <div class="row date_style">
 <div class="col-md-8"></div>
-<div class="col-md-4"><input type="date" id="date_issuedCert"><br><span>Date</span></div>
+<div class="col-md-4"><input type="date" id="date_issuedCert" value="'.$date_issuedCert.'"><br><span>Date</span></div>
 </div>
 <div class="row to_whom">
         <h2><strong >TO WHOM IT MAY CONCERN</strong></h2>
 <div class="row">
     <div class="col-md-12 middle_design">
     <p>By virtue of the provisions of RA 9514 otherwise known as the Fire Code of the Philippines of 2008 the application for</p>
-            <strong >FIRE SAFETY EVALUATION CLEARANCE OF </strong><span><input type="text" name="" id="business_name_print" value="'.$business_name= $data['business_name'].'" readonly ></span>
+            <strong >FIRE SAFETY EVALUATION CLEARANCE OF </strong><span><input type="text" name="" id="business_name_print" value="'.$business_name.'" readonly ></span>
             <div class="col-md-6"></div>
             <div class="col-md-6"><p>(Name of Building/ Structure Facility)</p></div>
         </p>
@@ -1575,7 +1646,7 @@ public function print_certificate(Request $request){
                 <p>This clearance is being issued for <span><input type="text" name="" id="" style="width: 350px" class="issued_for"></span></p>
             </div>
             <div class="col-md-12">
-                <input type="text" name="" id="" style="width:100%" class="issued_for">
+                <input type="text" name="" id="" style="width:100%" class="issued_for" value="'.$issued_for.'">
             </div>
             </div>
     </div>
@@ -1627,14 +1698,14 @@ public function print_certificate(Request $request){
                     <p>RECOMMEND APPROVAL</p>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" id="chiefCert" style="font-size: 16px;text-align:center;font-weight:bold;width: 270px;"><br>
+                    <input type="text" id="chiefCert" style="font-size: 16px;text-align:center;font-weight:bold;width: 270px;text-transform: uppercase;" value="'.$chiefCert.'"><br>
                     <p style="text-align: center">CHIEF, FSES</p>
                 </div>
                 <div class="col-md-12">
                     <p><strong>APPROVED :</strong></p>
                 </div>
                 <div class="col-md-12">
-                    <input type="text" name="" id="marshalCert" style="font-size: 16px;text-align:center;font-weight:bold; width: 270px;"><br>
+                    <input type="text" name="" id="marshalCert" style="font-size: 16px;text-align:center;font-weight:bold; width: 270px;text-transform: uppercase;" value="'.$marshalCert.'"><br>
                     <p>CITY/MUNICIPAL FIRE MARSHAL</p>
                 </div>
             </div>

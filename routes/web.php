@@ -103,7 +103,7 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('view_inspection_report_single',[applicationController::class,'view_inspection_report_single'])->name('view_inspection_report_single');
     Route::post('udpateInspectionDetials',[applicationController::class,'udpateInspectionDetials'])->name('udpateInspectionDetials');
     Route::post('updateCertDetails',[applicationController::class,'updateCertDetails'])->name('updateCertDetails');
-
+    Route::post('updateReceiptDetails',[applicationController::class,'updateReceiptDetails'])->name('updateReceiptDetails');
     Route::post('verify_inspection_report',[applicationController::class,'verify_inspection_report'])->name('verify_inspection_report');
     Route::post('print_certificate',[applicationController::class,'print_certificate'])->name('print_certificate');
     Route::get('applicationUpdateStatus',[applicationController::class,'applicationUpdateStatus'])->name('applicationUpdateStatus');

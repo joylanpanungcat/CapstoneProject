@@ -462,11 +462,11 @@ foreach($data as $item){
       </div>
 
         <div class="form-group group2" style="float:right;margin-top: 30px;">
-          <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of"></span></h5>
+          <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of" value="'.$item["fire_marshal"].'"></span></h5>
           <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
 
 
-          <input type="text" name="" class="authority_name" id="fee_assessor">
+          <input type="text" name="" class="authority_name" id="fee_assessor" value="'.$item["fee_accesor"].'">
          <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
 
 

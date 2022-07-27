@@ -537,6 +537,12 @@ element.style {
                                                         <input type="text" class="form-control" placeholder="Default Input" id="Lname" readonly >
                                                     </div>
                                                 </div>
+                                                <div class="form-group row ">
+                                                    <label class="control-label col-md-3 col-sm-3 ">Contact Number</label>
+                                                    <div class="col-md-9 col-sm-9 ">
+                                                        <input type="text" class="form-control" placeholder="Default Input" id="contact_num" readonly >
+                                                    </div>
+                                                </div>
 
 
 
@@ -679,6 +685,7 @@ element.style {
                 $('#Fname').val(value['Fname']);
                 $('#Mname').val(value['Mname']);
                 $('#Lname').val(value['Lname']);
+                $('#contact_num').val(value['contact_num']);
                 $('.view_map').attr('id',value['applicationId']);
 
             })

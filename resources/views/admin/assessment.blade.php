@@ -224,6 +224,16 @@ letter-spacing: 1px;
   font-size: 15px;
   padding-left: 0.5em;
 }
+.tbody_searchSelect{
+    padding: 9px;
+}
+.tbody_searchSelect h5{
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.tbody_searchSelect span > input{
+    margin-right: 10px;
+}
   </style>
 
 

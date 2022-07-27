@@ -743,6 +743,10 @@ color: #000
     text-transform: uppercase;
 }
 .ui-autocomplete { z-index:2147483647; }
+.issued_for{
+    font-size: 16px
+}
+
 </style>
 <div class="right_col" role="main" >
     <div class="">
@@ -3219,6 +3223,23 @@ $( "#chiefMarshal " ).autocomplete( "option", "appendTo", ".search_applicaintDiv
 
 $(document).on('click','.updateReceiptDetails',function(e){
     var applicationId = $('#applicationIdReciept').val();
+    var authority_of = $('#authority_of').val();
+    var fee_assessor = $('#fee_assessor').val();
+
+    $.ajax({
+        type: 'post',
+        url:'{{ route('updateReceiptDetails') }}',
+        data:{
+            applicationId:applicationId,
+            authority_of:authority_of,
+            fee_assessor:fee_assessor,
+        },
+        dataType: 'json',
+        success:function(data){
+            toastr.success('Assessemnt Updated');
+        }
+    })
+
 });
         $('.viewDocuments').on('click',function(e){
             e.preventDefault();
@@ -4494,7 +4515,7 @@ $(document).on('click','.updateCertDetails',function(e){
     var issued_for = $('.issued_for').val();
     var chiefCert = $('#chiefCert').val();
     var marshalCert = $('#marshalCert').val();
-
+console.log(applicationId);
     $.ajax({
         type:'post',
         url:'{{ route('updateCertDetails') }}',
@@ -4508,7 +4529,8 @@ $(document).on('click','.updateCertDetails',function(e){
         },
         dataType: 'json',
         success:function(data){
-
+            toastr.success('Certificate Updated');
+            $('#updateCertButton').css('display','none');
         }
     })
 
@@ -4932,7 +4954,7 @@ $(document).on('click','#printCertificate',function(){
         })
 
 })
-$('#print_payment_button').on('click',function(){
+$(document).on('click','#print_payment_button',function(){
     var element = $("#receipt")[0];
     html2canvas(element).then(function (canvas) {
     var myImage = canvas.toDataURL("image/png");
