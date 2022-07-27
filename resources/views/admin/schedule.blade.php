@@ -466,7 +466,7 @@ function getData(){
 }
   loadSuggest();
     function loadSuggest(){
-        console.log(availableTags);
+
     $( "#search_applicant" ).autocomplete({
         source: availableTags,
     });

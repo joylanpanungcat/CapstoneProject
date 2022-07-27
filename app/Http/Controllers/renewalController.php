@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\application;
 use App\Models\assessment;
+use App\Models\inspection_details;
 
 use DataTables;
 
@@ -67,11 +68,49 @@ class renewalController extends Controller
 
 public function view_renewal_application(Request $request){
   $applicationId =$request->applicationId;
+  $output ="";
 
-  $data2 = assessment::where('applicationId',$applicationId)->get();
+  $data2 = application::where('applicationId',$applicationId)->get();
+  $payment=assessment::where('applicationId',$applicationId)
+  ->where('type_payment','=','renewal')->where('payment_status','=','paid')->count();
 
+  $inspectionDetails= inspection_details::where('applicationId',$applicationId)
+                     ->where('type_inspection','=','renewal')->get();
+  foreach($data2 as $item){
+    $output .="<tr>
+        <td>Payments </td>";
+   if($payment > 0 ){
+    $output .="<td><span class='badge badge-success'>paid</span></td>";
+   }else{
+    $output .="<td><span class='badge badge-danger'>unpaid</span></td>";
+   }
+   if(count($inspectionDetails)> 0){
+        foreach($inspectionDetails as $inspectionDetailsData){
+            if($inspectionDetailsData['verify'] !== null){
+                $output  .="</tr>
+                <tr>
+                <td>Inspection Report</td>
+                <td><span class='badge badge-danger'>verified</span></td></td>
+                </tr>";
+            }else{
+                $output  .="</tr>
+                <tr>
+                <td>Inspection Report</td>
+                <td><span class='badge badge-warning'>not verified</span></td></td>
+                </tr>";
+            }
+        }
+   }else{
+    $output  .="</tr>
+    <tr>
+    <td>Inspection Report</td>
+    <td><span class='badge badge-danger'>no inspection details</span></td></td>
+    </tr>";
+   }
+
+  }
   return response()->json([
-    'data2'=>$data2,
+    'output'=>$output,
   ]);
 }
 public function renew_application_action(Request $request){

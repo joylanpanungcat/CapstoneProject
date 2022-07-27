@@ -286,17 +286,27 @@ overflow: auto;
                 </div>
             </div>
 
-            <div id="schedule_modal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div id="renewal_modal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-md">
                   <div class="modal-content " >
                     <div class="modal-header">
-                      <h5 class="modal-title">Check Requirements</h5>
+                      <h5 class="modal-title">Renew Application</h5>
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
-                  <form id="addFolderForm">
+                  <div class="modal-body">
+                     <table class="table table=-bordered">
+                        <thead>
+                            <th>Requirements</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody id="renewal_modalBody">
+
+                        </tbody>
+                     </table>
+                  </div>
+                  {{-- <form id="addFolderForm">
                     <input type="hidden" name="" id="applicationId">
                     <input type="hidden" name="" id="status">
-
                   <div class="modal-body">
                    <div class="container">
                     <div class="form-group row">
@@ -325,7 +335,7 @@ overflow: auto;
                   <div class="modal-footer">
                     <button type="button" class="btn btn-success" id="renew_submit"><i class="fa fa-refresh"></i> Renew</button>
                   </div>
-                  </form>
+                  </form> --}}
 
 
                   </div>
@@ -431,14 +441,10 @@ overflow: auto;
     },
     dataType: 'json',
     success:function(data){
-      $('#applicationId').val(applicationId);
-      $.each(data.data2,function(key, value){
-      $('#status').val(value['status']);
-
-      })
-    $('#schedule_modal').modal('show');
-
-   }
+            $('#applicationId').val(applicationId);
+            $('#renewal_modal').modal('show');
+            $('#renewal_modalBody').html(data.output);
+      }
     })
   });
   $('#renew_submit').on('click',function(e){
