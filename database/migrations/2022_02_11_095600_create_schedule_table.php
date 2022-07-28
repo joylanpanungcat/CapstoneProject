@@ -20,6 +20,7 @@ class CreateScheduleTable extends Migration
             $table->unsignedBigInteger('inspectorId')->nullable();
             $table->string('date_inspection')->nullable();
             $table->string('inspected')->nullable();
+            $table->string('type_schedule')->nullable();
             $table->timestamps();
         });
     }

@@ -466,7 +466,7 @@ foreach($data as $item){
           <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
 
 
-          <input type="text" name="" class="authority_name" id="fee_assessor" value="'.$item["fee_accesor"].'">
+          <input type="text" name="" class="authority_name" id="fee_assessor" value="'.$item["fee_assessor"].'">
          <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
 
 

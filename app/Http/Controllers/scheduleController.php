@@ -118,23 +118,51 @@ public function search_scheduel(Request $req){
         $Lname = $item['Lname'];
         if( $nameRequest  === $nameData){
             $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
-            ->whereNotIn('application.applicationId',schedule::get(['applicationId'])->toArray())
             ->where('Fname',$Fname)->where('Lname',$Lname)
             // ->ORwhere('applicant.Lname','LIKE','%'.$name.'%')
             ->get();
+          }else{
+            $data = [];
           }
     }
 
 
-    if($data->count()> 0)
+    if(count($data)> 0)
     foreach($data as $data){
-        $output .= "
-        <tr>
-        <td><input type='radio' class='form-control' id='select_search' value=".$data['applicationId']." style='position: relative;
-        top: -9px;' ></td>
-        <td>".$data['Fname']." ".$data['Lname']."</td>
-        <td>".$data['type_application']."</td>
-      </tr>";
+        $schedule = application::join('schedule','schedule.applicationId','application.applicationId')
+        ->where('application.applicationId',$data['applicationId'])->get();
+            if($data['status']!== 'renewal'){
+                if(count($schedule) > 0){
+                    $output .= "
+                    <tr>
+                    <td colspan='3'>0 data</td>
+                  </tr>";
+                }else{
+                    $output .= "
+                    <tr>
+                    <td><input type='radio' class='form-control' id='select_search' value=".$data['applicationId']." style='position: relative;
+                    top: -9px;' ></td>
+                    <td>".$data['Fname']." ".$data['Lname']."</td>
+                    <td>".$data['type_application']."</td>
+                  </tr>";
+                }
+            }else{
+                if(count($schedule) > 0 && $data['type_schedule']=== 'renewal'){
+                    $output .= "
+                    <tr>
+                    <td colspan='3'>0 data</td>
+                  </tr>";
+                }else{
+                    $output .= "
+                    <tr>
+                    <td><input type='radio' class='form-control' id='select_search' value=".$data['applicationId']." style='position: relative;
+                    top: -9px;' ></td>
+                    <td>".$data['Fname']." ".$data['Lname']."</td>
+                    <td>".$data['type_application']."</td>
+                  </tr>";
+                }
+            }
+
     }else{
         $output .= "
         <tr>
@@ -180,13 +208,18 @@ public function add_schedule_action(Request $request){
     $inspectorId = $request->inspectorId;
     $date_inspection = $request->date_inspection;
     $applicantId = $request->applicantId;
+    $data = application::where('applicationId',$applicantId)->get();
 
-   $schedule = new schedule;
-   $schedule->applicationId = $applicationId;
-   $schedule->inspectorId = $inspectorId;
-   $schedule->date_inspection = $date_inspection;
-   $schedule->applicantId = $applicantId;
-   $schedule->save();
+    foreach($data as $item){
+        $schedule = new schedule;
+        $schedule->applicationId = $applicationId;
+        $schedule->inspectorId = $inspectorId;
+        $schedule->date_inspection = $date_inspection;
+        $schedule->applicantId = $applicantId;
+        $schedule->type_schedule = $item['status'];
+        $schedule->save();
+    }
+
 
    return response()->json([
        'msg'=>"Schedule Addedd Successfully"

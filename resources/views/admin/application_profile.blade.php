@@ -968,6 +968,10 @@ color: #000
                                             <div class="badge badge-primary">{{ $application->status }}</div>
                                             @elseif ($application->status === 'rejected')
                                             <div class="badge badge-danger">{{ $application->status }}</div>
+                                            @elseif ($application->status === 'renewal')
+                                            <div class="badge badge-warning">{{ $application->status }}</div>
+                                            @elseif ($application->status === 'renewed')
+                                            <div class="badge badge-success">{{ $application->status }}</div>
                                         @endif
                                         </td>
 
@@ -1029,6 +1033,10 @@ color: #000
                                                     <div class="badge badge-primary">{{ $certificate->status }}</div>
                                                     @elseif ($certificate->status === 'rejected')
                                                     <div class="badge badge-danger">{{ $certificate->status }}</div>
+                                                    @elseif ($certificate->status === 'renewal')
+                                                    <div class="badge badge-warning">{{ $certificate->status }}</div>
+                                                    @elseif ($certificate->status === 'renewed')
+                                                    <div class="badge badge-success">{{ $certificate->status }}</div>
                                                 @endif
                                                 </td>
                                                     @if ($certificate->status == 'approved' || $certificate->status == 'renewal')
@@ -1145,6 +1153,10 @@ color: #000
                                             <div class="badge badge-primary">{{ $uploaded->status }}</div>
                                             @elseif ($uploaded->status === 'rejected')
                                             <div class="badge badge-danger">{{ $uploaded->status }}</div>
+                                            @elseif ($uploaded->status === 'renewal')
+                                            <div class="badge badge-warning">{{ $uploaded->status }}</div>
+                                            @elseif ($uploaded->status === 'renewed')
+                                            <div class="badge badge-success">{{ $uploaded->status }}</div>
                                         @endif
                                         </td>
                                          <td>    <button  class="btn viewDocuments view" data-toggle="modal"><i class="fa fa-eye"></i></button>
@@ -1221,6 +1233,11 @@ color: #000
                                                             <div class="badge badge-primary"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
                                                             @elseif ($inspection_details[0]->inspection_details[$index]['status'] === 'rejected')
                                                             <div class="badge badge-danger"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
+                                                            @elseif ($inspection_details[0]->inspection_details[$index]['status'] === 'renewal')
+                                                            <div class="badge badge-warning"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
+                                                            @elseif ($inspection_details[0]->inspection_details[$index]['status'] === 'renewed')
+                                                            <div class="badge badge-success"> {{ $inspection_details[0]->inspection_details[$index]['status'] }}</div>
+
                                                         @endif
 
                                                     @else
@@ -3225,7 +3242,7 @@ $(document).on('click','.updateReceiptDetails',function(e){
     var applicationId = $('#applicationIdReciept').val();
     var authority_of = $('#authority_of').val();
     var fee_assessor = $('#fee_assessor').val();
-
+console.log(fee_assessor);
     $.ajax({
         type: 'post',
         url:'{{ route('updateReceiptDetails') }}',
