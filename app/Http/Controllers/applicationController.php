@@ -219,13 +219,13 @@ public function viewApplication(Request $request){
                      $inspection_details[0]->inspection_details = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
                     ->join('inspector','inspector.inspectorId','=','application.inpector_id')
                     ->where('application.accountId',$inspection_detailsItem['accountId'])
-                    ->orderBy('application.applicationId','desc')->get();
+                    ->orderBy('application.applicationId','desc')->limit(1)->get();
 
 
             }else{
                 $inspection_details[0]->inspection_details = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
                 ->join('inspector','inspector.inspectorId','=','application.inpector_id')
-                ->orderBy('application.applicationId','desc')->where('application.inpector_id',$inspection_detailsItem['inpector_id'])->get();
+                ->orderBy('application.applicationId','desc')->where('application.inpector_id',$inspection_detailsItem['inpector_id'])->limit(1)->get();
 
                  $inspection_details[0]->notice = inspection_details::join('application','inspection_details.applicationId','=','application.applicationId')
                 ->join('notice','notice.inspection_id','=','inspection_details.inspection_id')
@@ -1075,6 +1075,7 @@ public function view_inspection_report(Request $request){
   $inspection_details = inspection_details::
   join('application','application.applicationId','=','inspection_details.applicationId')
   ->join('inspector','inspector.inspectorId','=','application.inpector_id')
+  ->select('application.business_name','application.applicationId','inspector.*','inspection_details.type_inspection','inspection_details.date_inspect','inspection_details.status')
   ->where('application.applicationId',$applicationId)
   ->get();
 
@@ -1083,7 +1084,7 @@ public function view_inspection_report(Request $request){
         <td>".$data['business_name']."</td>
         <td>".$data['Fname'].' '.$data['Lname']."</td>
         <td>".$data['date_inspect']."</td>
-        <td>".$data['date_inspect']."</td>
+        <td>".$data['type_inspection']."</td>
         <td>".$data['status']."</td>
         <td><button  name='view' class='btn btn-success viewInspectionReportSingle '
         id=".$data['applicationId']."><i class='fa fa-eye'></i></button></td>

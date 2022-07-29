@@ -475,6 +475,7 @@ public function inspectionReport(Request $request ){
     $data = application::
     join('inspection_details','inspection_details.applicationId','application.applicationId')
     ->where('application.applicationId',$applicationId)
+    ->select('application.status')
     ->get();
     $inspected='true';
 
@@ -708,7 +709,7 @@ public function inspectionReport(Request $request ){
         }
     }
 
-        $inspection_id =  inspection_details::select('inspection_id')->where('applicationId',$applicationId)->first();
+   $inspection_id =  inspection_details::select('inspection_id')->where('applicationId',$applicationId)->first();
 
 
     $application = application::where('applicationId',$applicationId);
@@ -731,10 +732,10 @@ public function inspectionReport(Request $request ){
         $addNotice->save();
         $notice_id =$addNotice->notice_id;
 
-        $applicationData = application::where('applicationId',$applicationId);
-        $applicationData->update([
-            'status'=>'reinspection'
-        ]);
+        // $applicationData = application::where('applicationId',$applicationId);
+        // $applicationData->update([
+        //     'status'=>'reinspection'
+        // ]);
 
         for($i = 0 ; $i< count($notice_array); $i++){
 

@@ -996,6 +996,7 @@ color: #000
                              </div>
                                   <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
                                     <div class='container'>
+                                        <iframe src="{{ asset('files/samplesample/2/download.docx') }}"></iframe>
                                       <table class='table table-bordered table'>
                                           <thead>
                                               <tr>
@@ -1039,7 +1040,7 @@ color: #000
                                                     <div class="badge badge-success">{{ $certificate->status }}</div>
                                                 @endif
                                                 </td>
-                                                    @if ($certificate->status == 'approved' || $certificate->status == 'renewal')
+                                                    @if ($certificate->status == 'approved' || $certificate->status == 'renewal' || $certificate->status == 'renewed')
                                                     <td> <button type="button" class="btn btn-success  print_certificate"  id="{{ $certificate->applicationId }}" ><i class="fa fa-print"   ></i> Print</button></td>
                                                     @else
 
@@ -4559,6 +4560,7 @@ $('#new_folder').on('click',function(e){
 
 $(document).on('click','.viewInspectionReportSingle',function(){
     var applicationId = $(this).attr('id');
+    console.log(applicationId);
     $.ajax({
         type: 'post',
         url: '{{ route('view_inspection_report_single') }}',

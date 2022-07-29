@@ -69,6 +69,7 @@ class renewalController extends Controller
 public function view_renewal_application(Request $request){
   $applicationId =$request->applicationId;
   $output ="";
+  $outputButton = '';
 
   $data2 = application::where('applicationId',$applicationId)->get();
   $payment=assessment::where('applicationId',$applicationId)
@@ -90,7 +91,7 @@ public function view_renewal_application(Request $request){
                 $output  .="</tr>
                 <tr>
                 <td>Inspection Report</td>
-                <td><span class='badge badge-danger'>verified</span></td></td>
+                <td><span class='badge badge-success'>verified</span></td></td>
                 </tr>";
             }else{
                 $output  .="</tr>
@@ -99,6 +100,7 @@ public function view_renewal_application(Request $request){
                 <td><span class='badge badge-warning'>not verified</span></td></td>
                 </tr>";
             }
+
         }
    }else{
     $output  .="</tr>
@@ -109,8 +111,13 @@ public function view_renewal_application(Request $request){
    }
 
   }
+  if($payment > 0 && $inspectionDetails[0]['verify'] !== null){
+        $outputButton .="<button class='renew_submit' id=".$applicationId.">Click to Renew </button>";
+
+        }
   return response()->json([
     'output'=>$output,
+    'outputButton'=>$outputButton
   ]);
 }
 public function renew_application_action(Request $request){

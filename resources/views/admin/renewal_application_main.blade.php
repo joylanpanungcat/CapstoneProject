@@ -209,7 +209,19 @@ overflow: auto;
   color: #0687d6;
   width: 10px !important;
 }
-
+.outputButton_modal{
+    display: block;
+    width: 100%;
+}
+.renew_submit{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #1abb9c;
+    color: #ffff;
+    font-size: 16px;
+}
   </style>
  <div class="right_col" role="main" >
     <div class="">
@@ -302,8 +314,13 @@ overflow: auto;
                         <tbody id="renewal_modalBody">
 
                         </tbody>
+
                      </table>
                   </div>
+                  <div class="modal-footer ">
+                    <div class="outputButton_modal">
+                    </div>
+                </div>
                   {{-- <form id="addFolderForm">
                     <input type="hidden" name="" id="applicationId">
                     <input type="hidden" name="" id="status">
@@ -444,15 +461,12 @@ overflow: auto;
             $('#applicationId').val(applicationId);
             $('#renewal_modal').modal('show');
             $('#renewal_modalBody').html(data.output);
+            $('.outputButton_modal').html(data.outputButton)
       }
     })
   });
-  $('#renew_submit').on('click',function(e){
-    var applicationId =  $('#applicationId').val();
-    var status=  $('#status').val();
-    var checkbox= $('.checkbox:checked');
-      if(checkbox.length<3){
-      }else{
+  $(document).on('click','.renew_submit',function(e){
+    var applicationId =  $(this).attr('id');
         Swal.fire({
           title:"Renew Application?",
             // titleFontColor:'red',
@@ -475,49 +489,16 @@ overflow: auto;
               confirmButtonAriaLabel: 'Thumbs up, great!',
               preConfirm: function(){
                 $('#schedule_modal').modal('hide');
-                Swal.fire({
-                input: 'password',
-
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-                        $.ajax({
+                $.ajax({
                           type:'post',
                           url: '{{ route('renew_application_action')  }}',
                           data:{
                             applicationId:applicationId,
-                            status:status
                           },
                           dataType:'json',
                           success:function(data){
                             swal.close();
-                        $('#schedule_modal').modal('hide');
+                        $('#renewal_modal').modal('hide');
                           swal.close();
                             toastr.success(data.msg);
                             $('#applicationData2').DataTable().destroy();
@@ -525,15 +506,11 @@ overflow: auto;
                           }
 
                     })
-                       }
-                     },
-             });
 
                 }
 
 
                 });
-      }
 
     });
   })
