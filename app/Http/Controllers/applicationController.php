@@ -580,7 +580,6 @@ $files=[];
 
      $path=$path.$rootFolder;
 
-
          $fileFetch= folderUpload::find($folderId)->fileUpload;
          $parentFolder=folderUpload::where('folderId','=',$folderId)->get();
          $folderFetch=folderUpload::where('parentId','=',$folderId)->get();
@@ -598,6 +597,8 @@ $files=[];
               <th> Remarks
             </th>
             <th>  Last Modified
+            </th>
+            <th>  Action
             </th>
         </tr>
              ";
@@ -635,26 +636,34 @@ $files=[];
                 foreach($parentFolder as $folder){
                  $folderParentId =$folder['folderId'];
 
-                $folderName =$folder['folderName'];
+                $folderName =$folder["folderName"];
                  }
              }
                  if($fileFetch->count()>0){
                  foreach($fileFetch as $file){
+
                     $i=$path.$file['filename'];
                  $fileSize = filesize($i);
+                  $relativePath = 'files'.$rootFolder.pathinfo($file["filename"], PATHINFO_BASENAME);
                  $output.='<tr class="file-item">
-                        <td >'.pathinfo($file["filename"], PATHINFO_FILENAME).'
+                        <td ><a class="viewFile" href="'.asset($relativePath).'" download>'.pathinfo($file["filename"], PATHINFO_FILENAME).'</a>
                         </td>
 
                         <td>'.self::FileSizeConvert($fileSize).'
                         </td>
                         <td>'.pathinfo($file["filename"], PATHINFO_EXTENSION).'
                         </td>
-                        <td>verified
+                        <td>'.$file['status'].'
                         </td>
                         <td>'.$file['lastModified'].'
-                        </td>
-                </tr>';
+                        </td>';
+                        if($file['status'] ==='verified'){
+                            $output .='<td>---</td>';
+                        }else{
+                            $output .='<td><button class="btn btn-info verifiedFile" id='.$file['fileId'].'>verified</button></td>';
+                        }
+
+               $output .=' </tr>';
 
 
               }
@@ -673,6 +682,27 @@ $files=[];
 
             return response()->json(['status'=>200,'data'=>$output,'fileFetch'=>$fileFetch,'folderParentId'=>$folderParentId,'folderName'=>$folderName,'folderId'=>$folderId]);
 
+    }
+    public function verifiedFile(Request $request){
+        $fileId = $request->fileId;
+        $data = fileUpload::where('fileId',$fileId);
+        $data->update([
+            'status'=>'verified'
+        ]);
+        return response()->json();
+    }
+    public function downloadFile(Request $request){
+        // $file = $request->path;
+        $file =  public_path().'/files/'.'samplesample/Fire Safety Evaluation Clearance/4.jpg';
+      //Define header information
+header('Cache-Control: public');
+header('Content-Description: File Transfer');
+header('Content-Disposition: attachment; filename="'.basename($file).'"');
+header('Content-type: application/zip');
+header('Content-transfer-Emcoding: binary');
+readfile($file);
+
+return respone()->json();
     }
     public function addDescription(Request $request){
         $admin=$request->admin;

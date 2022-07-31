@@ -199,19 +199,19 @@ element.style {
 .lowRisk{
     height: 20px !important;
     width: 20px !important;
-    background: #FFDFDF !important;
+    background: #FDA761!important;
     border: none;
 }
 .mediumRisk{
     height: 20px !important;
     width: 20px !important;
-    background: #FF8C8C !important;
+    background: #FE7745!important;
     border: none;
 }
 .highRisk{
     height: 20px !important;
     width: 20px !important;
-    background: #FF1313 !important;
+    background: #FF1D11!important;
     border: none;
 }
 .leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
@@ -299,8 +299,8 @@ element.style {
                     </div> --}}
                     <iframe src="https://editor.giscloud.com/rest/1/maps/1986122/render.iframe?bound=125.16036987304688,7.1575927734375,126.09832763671875,7.5180816650390625&toolbar=true&popups=true&layerlist=true&search=true"  width="100%" height="500"></iframe>
                     {{-- <iframe src="https://editor.giscloud.com/rest/1/maps/1903414/render.iframe?bound=125.16036987304688,7.1575927734375,126.09832763671875,7.5180816650390625&toolbar=true&popups=true&layerlist=true&search=true" width="100%" height="500" frameborder="0"></iframe> --}}
-                    <label for="">Legend</label>
-                    <div class="legend">
+                    {{-- <label for="">Legend</label> --}}
+                    {{-- <div class="legend">
 
                         <div class="lowRisk"></div>
                         <h5>LOW RISK</h5>
@@ -308,7 +308,7 @@ element.style {
                         <h5>MEDIUM RISK</h5>
                         <div class="highRisk"></div>
                         <h5>HIGH RISK</h5>
-                    </div>
+                    </div> --}}
                     </div>
                   </div>
                 </div>

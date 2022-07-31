@@ -203,6 +203,8 @@ Route::post('delete_fees',[maintenanceController::class,'delete_fees'])->name('d
 Route::post('fetch_file',[applicationController::class,"fetch_file"])->name('fetch_file');
 Route::post('viewFolder',[applicationController::class,"viewFolder"])->name('viewFolder');
 Route::post('addFolder',[applicationController::class,"addFolder"])->name('addFolder');
+Route::post('verifiedFile',[applicationController::class,"verifiedFile"])->name('verifiedFile');
+Route::post('downloadFile',[applicationController::class,"downloadFile"])->name('downloadFile');
 
 Route::post('addFile',[applicationController::class,"addFile"])->name('addFile');
 Route::post('folderRename',[applicationController::class,"folderRename"])->name('folderRename');

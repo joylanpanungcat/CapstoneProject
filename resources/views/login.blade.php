@@ -22,6 +22,9 @@
 
   </head>
   <style type="text/css">
+  body{
+    background: #E1E9F2;
+  }
    img{
     height: 250px;
    }
@@ -31,14 +34,16 @@
     color: red;
    }
 .login_button{
-  background-color: #1ABB9C;
+    background: #405369;
 }
-
+.login{
+    background: #E1E9F2;
+}
   </style>
 
   <body class="login">
     <div>
-       
+
 
       <div class="login_wrapper">
         <div class="animate form login_form">
@@ -50,19 +55,19 @@
               <h6><i class='icon fa fa-warning'></i> Error! <small>
                 {{Session::get('error')}}
               </small></h6>
-             
+
                </div>
               @endif
             <form action="verify" method="post">
-              @csrf 
-           
+              @csrf
+
               <h1>Login </h1>
               <div>
                 <input type="text" class="form-control" placeholder="Username"  name="username" value="{{old('username')}}" />
                 @error('username')
                    <p class="error2">{{$message}}</p>
                 @enderror
-         
+
               </div>
               <div>
                 <input type="password" class="form-control" placeholder="Password"  name="password" />
@@ -72,21 +77,21 @@
               </div>
               <div>
                 <button type="submit" class="btn btn-secondary form-control login_button" name="login" >Login</button>
-            
+
               </div>
-           
+
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">Don't have an account? 
-                  <a href="{{ route('register') }}" class="to_register" style="font-weight:500;color:#1ABB9C;font-size:18px"> Register </a>
+                <p class="change_link">Don't have an account?
+                  <a href="{{ route('register') }}" class="to_register" style="font-weight:500;color:#405369;font-size:18px"> Register </a>
                 </p>
               </div>
             </form>
           </section>
         </div>
 
-    
+
       </div>
     </div>
   </body>
@@ -94,4 +99,3 @@
     <script type="text/javascript" src="{{url('js/bootstrap/bootstrap.bundle.min.js')}}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     </html>
- 

@@ -111,10 +111,13 @@ public function view_renewal_application(Request $request){
    }
 
   }
-  if($payment > 0 && $inspectionDetails[0]['verify'] !== null){
-        $outputButton .="<button class='renew_submit' id=".$applicationId.">Click to Renew </button>";
+  foreach($inspectionDetails as $data){
+    if($payment > 0 && $data['verify'] !== null){
+            $outputButton .="<button class='renew_submit' id=".$applicationId.">Click to Renew </button>";
 
-        }
+            }
+  }
+
   return response()->json([
     'output'=>$output,
     'outputButton'=>$outputButton

@@ -996,7 +996,7 @@ color: #000
                              </div>
                                   <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
                                     <div class='container'>
-                                        <iframe src="{{ asset('files/samplesample/2/download.docx') }}"></iframe>
+                                        {{-- <iframe src="{{ asset('files/samplesample/2/download.docx') }}" traget='_blank' ></iframe> --}}
                                       <table class='table table-bordered table'>
                                           <thead>
                                               <tr>
@@ -1326,7 +1326,7 @@ color: #000
                     <div  id="viewFolderModal">
                 <div class="row">
                     <button class="btn btn-primary btn-sm" id="new_folder" ><i class="fa fa-plus" ></i> New Folder</button>
-                    <button class="btn btn-primary btn-sm ml-4" id="addFileButton" data-toggle="modal" data-target="#addFile" style="display:none"><i class="fa fa-upload"></i> Upload File</button>
+                    <button class="btn btn-primary btn-sm ml-4" id="addFileButton" style="display:none"><i class="fa fa-upload"></i> Upload File</button>
                 </div>
                 <br>
                 <div class="folder2 scrollDiv">
@@ -1426,7 +1426,58 @@ color: #000
             </div>
         </div>
     </div>
+    <div id="addFileModal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add File</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="addFileForm" enctype="multipart/form-data" >
+                        <input type="hidden" name="" id="parentFolderId2">
+                        <input type="hidden" value="<?php   echo $applicationId->applicationId ?>" id='applicationId' >
+                         <button type="button" class="btn btn-default addFiles"  data-toggle="dropzone">
+                                 <label for="file">
+                                  <i class="fa fa-file"></i>
+                                 </label>
 
+                               </button>
+                       <div class="form-group ">
+
+
+                        <div class="dropzone dropzoneDragArea my-custom-scrollbar " id="dropzoneDragArea" >
+
+                           <div  class="dz-message">
+                               <div class="icon">
+                                   <i class="fa fa-upload"></i>
+
+                               </div>
+                                <h2>You can drag and drop files to add</h2>
+                           </div>
+
+
+
+                       </div>
+
+                           <p>Only JPG, PNG, PDF, DOC (Word) and  XLS (Excel) files types are supported. Maximum file size is 25MB, maximun attachments:3.</p>
+                       </div>
+                       <button type="submit" class="btn btn-primary">Submit</button>
+                   </form>
+                     <div class="user-image mb-3 text-center">
+                       <div id="showImageHere">
+                         <div class="card-group">
+                           <div class="row">
+                             <!-- Image preview -->
+                           </div>
+                         </div>
+                       </div>
+                       </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div id="viewDocuments2" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl view-modal-dialog">
             <div class="modal-content view-modal-content ">
@@ -2502,58 +2553,7 @@ color: #000
   </div>
   <div id="divhidden"></div>
     {{-- Add file --}}
-       <div id="addFile" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add File</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form id="addFileForm" enctype="multipart/form-data" >
-                         <input type="hidden" name="" id="parentFolderId2">
-                         <input type="hidden" value="<?php   echo $applicationId->applicationId ?>" id='applicationId' >
-                          <button type="button" class="btn btn-default addFiles"  data-toggle="dropzone">
-                                  <label for="file">
-                                   <i class="fa fa-file"></i>
-                                  </label>
 
-                                </button>
-                        <div class="form-group ">
-
-
-                         <div class="dropzone dropzoneDragArea my-custom-scrollbar " id="dropzoneDragArea" >
-
-                            <div  class="dz-message">
-                                <div class="icon">
-                                    <i class="fa fa-upload"></i>
-
-                                </div>
-                                 <h2>You can drag and drop files to add</h2>
-                            </div>
-
-
-
-                        </div>
-
-                            <p>Only JPG, PNG, PDF, DOC (Word) and  XLS (Excel) files types are supported. Maximum file size is 25MB, maximun attachments:3.</p>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                      <div class="user-image mb-3 text-center">
-                        <div id="showImageHere">
-                          <div class="card-group">
-                            <div class="row">
-                              <!-- Image preview -->
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 <div id="menu-folder-clone" style="display: none;">
     <a href="javascript:void(0)" class="custom-menu-list file-option openFolder"><span><i class="fa fa-folder-open"></i></span> Open</a>
@@ -3365,7 +3365,56 @@ $('#path div#'+folderId).nextAll('div').remove();
 
 
 })
+$(document).on('click','.verifiedFile',function(e){
+    var fileId = $(this).attr('id');
+    $.ajax({
+        type: 'post',
+        url: '{{ route('verifiedFile') }}',
+        data:{
+            fileId:fileId
+        },
+        dataType: 'json',
+        success:function(data){
+            toastr.success('file verified');
+        }
+    })
 
+});
+
+$(document).on('click','.viewFile',function(e){
+    var path = $(this).attr('id');
+
+
+
+
+    // let link =document.createElement('a');
+    // link.setAttribute('donwload','file-1');
+    // link.href=path;
+
+    // document.body.appendChild(link);
+    // link.click();
+    // link.remove();
+        // html2canvas(document.getElementById("print_content")).then(function (canvas) {
+    //                var anchorTag = document.createElement("a");
+    //                 document.body.appendChild(anchorTag);
+    //                 // document.getElementById("previewImg").appendChild(canvas);
+    //                 anchorTag.download = "filename.jpg";
+    //                 anchorTag.href = canvas.toDataURL();
+    //                 anchorTag.target = '_blank';
+    //                 anchorTag.click();
+    //             });
+    // $.ajax({
+    //     type: 'post',
+    //     url:'{{ route('downloadFile') }}',
+    //     data:{
+    //         path:path
+    //     },
+    //     dataType: 'json',
+    //     success:function(data){
+
+    //     }
+    // })
+});
 
     $(document).on('submit','#addFolderForm',function(e){
         e.preventDefault();
@@ -4554,6 +4603,9 @@ console.log(applicationId);
 
 
 })
+$('#addFileButton').on('click',function(e){
+    $('#addFileModal').modal('show');
+});
 $('#new_folder').on('click',function(e){
     $('#addFolder').modal('show');
 });

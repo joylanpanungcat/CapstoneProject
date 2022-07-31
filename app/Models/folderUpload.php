@@ -33,7 +33,7 @@ class folderUpload extends Model
         return $this->hasMany(folderUpload::class,'parentId')->with('children');
     }
 
-  
+
   public static function tree($folderId,$applicationId){
     $allFolder=folderUpload::all();
     $rootFolder=$allFolder
@@ -43,7 +43,7 @@ class folderUpload extends Model
   self::formatTree($rootFolder,$allFolder);
 $rootFolder->toArray();
 
-   
+
 $path= self::parseTree($rootFolder);
   $path=  collect($path)->flatten()->toArray();
 
@@ -60,15 +60,15 @@ $path= self::parseTree($rootFolder);
       foreach ($tree as $key=> $item){
       // A child is found
 
-            if ($item['parent']!=null){
+            if ($item["parent"]!=null){
                 // append child into array of children & recurse for children of children
-                $return['folderName']=$item['folderName'];
-              $return[]= self::parseTree($item['parent']);
+                $return["folderName"]=$item["folderName"];
+              $return[]= self::parseTree($item["parent"]);
                     // delete child so won't include again
                 unset ($tree[$key]);
             }
             // elseif ($root == null) {
-            //     // top level parent - add to array 
+            //     // top level parent - add to array
             //     $return[$item['folderName']] = self::parseTree($tree, $item['folderName']);
             //     // delete child so won't include again
             //     unset ($tree[$key]);
@@ -81,16 +81,16 @@ $path= self::parseTree($rootFolder);
 
 
     foreach($folders as $folder){
-        
 
-        $folder['parent'] = $allFolder->where('folderId',$folder['parentId'])->values();
-       
-  
-        if(!empty($folder['parent'])){
-        self::formatTree($folder['parent'], $allFolder);
-     
+
+        $folder["parent"] = $allFolder->where('folderId',$folder['parentId'])->values();
+
+
+        if(!empty($folder["parent"])){
+        self::formatTree($folder["parent"], $allFolder);
+
         }
-        
+
     }
 
   }
@@ -104,11 +104,11 @@ $path= self::parseTree($rootFolder);
    self::formatTreeChildren($rootFolder,$allFolder);
 $rootFolder->toArray();
 
-   
+
     return $rootFolder;
 
  }
- 
+
 
     private static function formatTreeChildren($folders, $allFolder ){
 
@@ -116,12 +116,12 @@ $rootFolder->toArray();
     foreach($folders as $folder){
 
         $folder->children= $allFolder->where('parentId',$folder['folderId'])->values();
-       
+
         if($folder->children->isNotEmpty()){
         self::formatTreeChildren($folder['children'], $allFolder);
-     
+
         }
-        
+
     }
 
   }

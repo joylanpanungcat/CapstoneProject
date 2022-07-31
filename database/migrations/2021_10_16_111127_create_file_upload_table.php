@@ -20,6 +20,7 @@ class CreateFileUploadTable extends Migration
              ->onDelete('cascade');;
             $table->unsignedBigInteger('folderId')->nullable();
             $table->string('filename')->nullable();
+            $table->string('status')->nullable()->default('not verify');
             $table->string('lastModified')->nullable();
             $table->timestamps();
         });
