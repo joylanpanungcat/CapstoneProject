@@ -215,6 +215,17 @@ overflow: auto;
   color: #0687d6;
   width: 10px !important;
 }
+#fetch_schedule_search{
+    height: 374px;
+    position: absolute;
+    overflow-y: auto;
+}
+#modalSearch table thead{
+    position: relative;
+}
+#modalSearch .modal-body{
+    height: 500px;
+}
 
   </style>
  <div class="right_col" role="main" >
@@ -371,7 +382,7 @@ overflow: auto;
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" id="select_name"><i class="fa fa-check"> select</i></button>
+                    <button type="button" class="btn btn-success" id="select_name" style="display: none"><i class="fa fa-check"> select</i></button>
                   </div>
                 </div>
               </div>
@@ -596,11 +607,38 @@ $(document).on('click','.cancel_schedule',function(e){
                 });
  });
  $('.addSchedule').on('click',function(e){
+
+    var search_applicant = null;
    e.preventDefault();
+   $.ajax({
+    type: 'post',
+    data:{
+        search_applicant:search_applicant
+    },
+    url:'{{ route('search_scheduel') }}',
+    dataType: 'json',
+    success:function(data){
+        $('#modalSearch').modal('show');
+        $('#fetch_schedule_search').html(data.output);
+         $('#select_name').css('display','none');
+    }
+   });
 
-    $('#modalSearch').modal('show');
- })
-
+ });
+$('#search_applicant').on('input',function(e){
+    var search_applicant = $(this).val();
+        $.ajax({
+            type:'post',
+            url: '{{ route('search_scheduel') }}',
+            data:{
+            search_applicant:search_applicant
+            },
+            dataType:'json',
+            success:function(data){
+            $('#fetch_schedule_search').html(data.output);
+            }
+        })
+});
 
 $('#search').on('click',function(e){
   e.preventDefault();
@@ -617,9 +655,17 @@ $('#search').on('click',function(e){
     }
   })
 });
+$(document).on('change','.select_search',function(e){
+    if($('.select_search:checked')){
+        $('#select_name').css('display','block');
+    }else{
+        $('#select_name').css('display','none');
+    }
+})
 $('#select_name').on('click',function(e){
   e.preventDefault();
-var applicationId = $('#select_search').val();
+var applicationId = $('.select_search:checked').attr('id');
+console.log(applicationId);
   $.ajax({
     type: 'post',
     url: '{{ route('select_schedule') }}',

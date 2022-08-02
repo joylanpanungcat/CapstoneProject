@@ -104,6 +104,25 @@ public function search_scheduel(Request $req){
     $output = '';
 
     $name = $req->search_applicant;
+if($name === null){
+    $schedule = application::join('applicant','applicant.applicantId','=','application.applicantId')
+    ->whereNotIn('application.applicationId',function($query){
+        $query->select('applicationId')
+                ->from('schedule')->get();
+    })->get();
+     foreach($schedule as $data){
+        $output .= "
+        <tr>
+        <td><input type='radio' class='form-control select_search' name='select_search' id=".$data['applicationId']." style='position: relative;
+        top: -9px;' ></td>
+        <td>".$data['Fname']." ".$data['Lname']."</td>
+        <td>".$data['type_application']."</td>
+      </tr>";
+     }
+      return response()->json([
+        'output'=>$output
+    ]);
+}else{
     $finalname= preg_replace('/\s+/', '', $name);
     $nameRequest =strtolower($finalname);
 
@@ -140,7 +159,7 @@ public function search_scheduel(Request $req){
                 }else{
                     $output .= "
                     <tr>
-                    <td><input type='radio' class='form-control' id='select_search' value=".$data['applicationId']." style='position: relative;
+                    <td><input type='radio' class='form-control select_search' name='select_search' id=".$data['applicationId']." style='position: relative;
                     top: -9px;' ></td>
                     <td>".$data['Fname']." ".$data['Lname']."</td>
                     <td>".$data['type_application']."</td>
@@ -173,6 +192,8 @@ public function search_scheduel(Request $req){
     return response()->json([
         'output'=>$output
     ]);
+}
+
 }
 
 public function select_schedule(Request $request){
@@ -225,5 +246,6 @@ public function add_schedule_action(Request $request){
        'msg'=>"Schedule Addedd Successfully"
    ]);
 }
+
 
 }

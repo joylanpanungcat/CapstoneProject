@@ -585,76 +585,37 @@ console.log(type_payment);
                '<i class="fa fa-arrow-left"></i>Close',
              cancelButtonAriaLabel: 'Thumbs down',
              preConfirm: function(){
-              Swal.fire({
-                input: 'password',
-
-                 inputPlaceholder: 'Enter your password',
-                titleFontColor:'red',
-                 iconHtml: '<i class="fa fa-lock"></i>',
-                 iconColor: '#FFF',
-                     showCancelButton: true,
-                     focusConfirm: false,
-                     background: 'rgb(0,0,0,.9)',
-                     customClass : {
-                     title: 'swal2-title'
-                   },
-                   allowOutsideClick: false,
-
-                     confirmButtonColor: '#3085d6',
-                     confirmButtonText:
-                       '<i class="fa fa-check"></i> Confirm',
-
-                     cancelButtonText:
-                       '<i class="fa fa-arrow-left"></i>Cancel',
-                       customClass: {
-                           validationMessage: 'my-validation-message'
-                         },
-                   preConfirm: (value) => {
-
-                       if (value !== adminPass) {
-                         Swal.showValidationMessage(
-                           'incorrect password'
-                         )
-                       }
-                       if (value === adminPass) {
-                           return new Promise(function (resolve){
-
-                               $.ajax({
-                                      type:'post',
-                                      url: '{{ route('save_payment') }}',
-                                      data:{
-                                        assessmentId:assessmentId,
-                                        change:change,
-                                        amount_paid:amount_paid,
-                                        type_payment:type_payment
-                                      },
-                                      dataType: 'json',
-                                      success:function(data){
-                                         toastr.success(data.msg);
-                                       swal.close();
-                                        $('.payment_checkbox').prop( "checked", false );
-                                      $('.optradio').prop( "checked", false );
-                                      $('#total_amount_inwords').val('');
-                                      $('#assessmentType').val('');
-                                      $('#receipt_no').val('');
-                                    $('#defaultId').val('');
-                                    $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
-                                    $('#applicant_name').val('');
-                                    $('#applicant_address').val('');
-                                    $('#authority_of').val('');
-                                    $('#fee_assessor').val('');
-                                    $('#search_applicant').val('');
-                                    $('#total_amount').val('');
-                                    $('#amount').val('');
-                                    $('#date_paid').val('');
-                                    $('#change').val('');
-                                      }
-                                    })
-                           })
-                       }
-                     },
-
-             });
+                $.ajax({
+                    type:'post',
+                    url: '{{ route('save_payment') }}',
+                    data:{
+                    assessmentId:assessmentId,
+                    change:change,
+                    amount_paid:amount_paid,
+                    type_payment:type_payment
+                    },
+                    dataType: 'json',
+                    success:function(data){
+                        toastr.success(data.msg);
+                    swal.close();
+                    $('.payment_checkbox').prop( "checked", false );
+                    $('.optradio').prop( "checked", false );
+                    $('#total_amount_inwords').val('');
+                    $('#assessmentType').val('');
+                    $('#receipt_no').val('');
+                $('#defaultId').val('');
+                $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
+                $('#applicant_name').val('');
+                $('#applicant_address').val('');
+                $('#authority_of').val('');
+                $('#fee_assessor').val('');
+                $('#search_applicant').val('');
+                $('#total_amount').val('');
+                $('#amount').val('');
+                $('#date_paid').val('');
+                $('#change').val('');
+                    }
+                })
 
              },
 

@@ -122,9 +122,7 @@ color: red;
 .group2{
   display: inline-block;
 }
-.add_fees_button{
-  margin-left: 50vw;
-}
+
 .checkbox{
   width: 10px;
   margin-top: 10px;
@@ -234,6 +232,19 @@ letter-spacing: 1px;
 .tbody_searchSelect span > input{
     margin-right: 10px;
 }
+.typeAssessment .col-sm-6{
+    display: flex;
+    gap: 10px;
+    margin-top: 2px;
+}
+.top-header .right{
+    float: right;
+}
+#errorSearch{
+    color: red;
+    letter-spacing: 1.5px;
+    opacity: 0.8;
+}
   </style>
 
 
@@ -257,13 +268,19 @@ letter-spacing: 1px;
 
                                 <div class="x_content">
                                     <br />
-                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                 <div class="top-header" role="toolbar" aria-label="Toolbar with ">
                     <div class="btn-group mr-2  " role="group" aria-label="First group">
                         <input type="text" name="" placeholder="Search.." id="search_applicant"
                         value="<?php if($Fname !=="blank") echo $Fname ?>">
                       <button type="button" class="btn btn-secondary " id="search"><i class="fa fa-search"></i></button>
                     </div>
-                  <button class="btn btn-default add_fees_button"><i class="fa fa-plus fa-lg"  ></i> Add Fees</button>
+                    <div class="right">
+                        <button class="btn btn-default add_fees_button"><i class="fa fa-plus fa-lg"  ></i> Add Fees</button>
+                     </div>
+
+                <div class="second-layer">
+                    <span id="errorSearch"></span>
+                </div>
               </div>
 
 
@@ -308,6 +325,26 @@ letter-spacing: 1px;
                                   </thead>
 
                                   </table>
+                                  <div class="typeAssessment">
+                                    <div><h5>Type of Assessment:</h5></div>
+                                    <div class='row'>
+                                        <div class='col col-md-12'>
+                                            <div class='col-sm-6'>
+                                                <input type='radio' name='assessmentType' class='assessmentType' value='print certificate'>
+                                                print certificate
+                                            </div>
+                                            <div class='col-sm-6'>
+                                                <input type='radio' name='assessmentType' class='assessmentType' value='fines and pinalties '>
+                                                fines and pinalties </div>
+                                            <div class='col-sm-6'>
+                                                <input type='radio' name='assessmentType' class='assessmentType' value='application'>
+                                                application </div>
+                                            <div class='col-sm-6'>
+                                                <input type='radio' name='assessmentType' class='assessmentType' value='renewal'>
+                                                renewal </div>
+                                        </div>
+                                    </div>
+                                  </div>
                                   <h7 style="display: none"><b>TOTAL AMOUNT (IN WORDS):</b></h7>
                                   <input type="text" name="" class="total_amount_inwords" id="total_amount_inwords"   style="display: none" >
                                   <br><br><br>
@@ -356,7 +393,7 @@ letter-spacing: 1px;
 
 
                                       <div class="button-group total_body2 ">
-                                          <button type="button" class="btn  save_payment_button" id="save_payment_button" disabled><i class="fa fa-save" ></i>  Save</button>
+                                          <button type="button" class="btn  save_payment_button" id="save_payment_button" style="display: none"><i class="fa fa-save" ></i>  Save</button>
                                           {{-- <button type="button" class="btn print_payment_button"  id="print_payment_button" style="display: inline-block;"  onclick="printDiv()"><i class="fa fa-print" ></i>  Print</button> --}}
                                       </div>
                                       </form>
@@ -678,9 +715,22 @@ $(document).on('click','.collapsible3',function(e){
          },
          dataType:'json',
          success:function(data){
-           $('.tbody_search').html(data.output);
-           $('.tbody_searchSelect').html(data.output2);
-          $('#search_modal').modal('show');
+           if(data.code == 400){
+            $('#errorSearch').html(data.msg);
+           }else{
+            hideSaveButton();
+            $('#errorSearch').html('');
+            $.each(data.data,function($key,$value){
+            $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
+            $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
+            $('#applicationId').val($value['applicationId']);
+            });
+            $.each(data.data2,function($key, $value){
+            $('#authority_of').val($value['authority_of']);
+            $('#fee_assessor').val($value['fee_assessor']);
+            $('#defaultId').val($value['id']);
+            });
+           }
          }
        })
       }
@@ -707,7 +757,7 @@ $(document).on('click','.collapsible3',function(e){
           $('#add_fees').modal('hide');
           $('#total_amount').val(data.total);
           assessment_total(data.total);
-          $('#save_payment_button').removeAttr('disabled');
+          hideSaveButton();
         }
       })
     }else{
@@ -717,68 +767,34 @@ $(document).on('click','.collapsible3',function(e){
     }
 
   })
-
-
-
-   $(document).on('click','#select_applicant',function(e){
-     e.preventDefault();
-    var id= $('.optradio:checked').attr('id');
-    var applicationId = $('#applicationIdSelect').val();
-    var assessmentType = $('.assessmentType:checked').val();
-
+function hideSaveButton(){
+    var checkbox= $('.payment_checkbox:checked');
+    var checkbox2= $('.assessmentType:checked');
+    var applicant_name = $('#applicant_name').val();
+    if(checkbox.length>0 && checkbox2.length>0 && applicant_name != '' ){
+        $('#save_payment_button').css('display','block');
+    }else{
+        $('#save_payment_button').css('display','none');
+    }
+}
+$('.assessmentType').change(function(){
+    hideSaveButton();
+});
+function assessment_total(sum_value){
     $.ajax({
-      type: 'post',
-      url:'{{ route('select_applicant_fetch') }}',
-      data:{
-        id:id
-      },
-      dataType: 'json',
-      success:function(data){
-        $('#search_modal').modal('hide');
-        $('#applicationId').val(applicationId);
-        $('#assessmentType').val(assessmentType);
-        $.each(data.data,function($key,$value){
-          $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
-          $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
+    type: "POST",
+    url: "{{ route('numberTowords') }}",
+    data:{
+    num:sum_value
+    },
+    dataType: 'json',
+    success:function(data){
+        $('#total_amount_inwords').val(data.data +' ' +  'Pesos');
 
-        });
-        $.each(data.data2,function($key, $value){
-          $('#authority_of').val($value['authority_of']);
-          $('#fee_assessor').val($value['fee_assessor']);
-          $('#defaultId').val($value['id']);
-        });
-      }
+    }
     })
 
-   });
-
-//    $(document).on('keyup','.assessment_total',function(e){
-    function assessment_total(sum_value){
-    //  e.preventDefault();
-    //  var num = $('.assessment_total').val();
-    //  var sum_value = 0;
-
-    //  $('.assessment_total').each(function(){
-    //   sum_value += $('.assessment_total').val();
-    //   console.log(sum_value);
-    //   });
-    //   $('#total_amount').val(sum_value);
-
-
-     $.ajax({
-       type: "POST",
-       url: "{{ route('numberTowords') }}",
-       data:{
-        num:sum_value
-       },
-       dataType: 'json',
-       success:function(data){
-    $('#total_amount_inwords').val(data.data +' ' +  'Pesos');
-
-       }
-     })
-
-   };
+};
   $("#save_payment_button").on('click',function(e){
     e.preventDefault();
     var checkbox= $('.payment_checkbox:checked');
@@ -786,7 +802,8 @@ $(document).on('click','.collapsible3',function(e){
     var applicationId=$('#applicationId').val();
     var total_amount =$('#total_amount').val();
     var name = $('#applicant_name').val();
-    var assessmentType = $('#assessmentType').val();
+    var assessmentType = $('.assessmentType:checked').val();
+    console.log(assessmentType);
    var total_amount_words = $('#total_amount_inwords').val();
     var receipt_no=$('#receipt_no').val();
     var defaultId= $('#defaultId').val();

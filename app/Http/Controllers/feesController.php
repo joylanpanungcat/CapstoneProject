@@ -97,7 +97,7 @@ class feesController extends Controller
     $name = $req->search;
     $finalname= preg_replace('/\s+/', '', $name);
     $nameRequest =strtolower($finalname);
-
+    $data = [];
     $getdata = applicant::get();
 
     foreach($getdata as $item){
@@ -107,40 +107,24 @@ class feesController extends Controller
 
         $Fname = $item['Fname'];
         $Lname = $item['Lname'];
+        $data2=defaultFee::all();
         if( $nameRequest  === $nameData){
             $data = applicant::join('application','application.applicantId','=','applicant.applicantId')
             ->where('Fname',$Fname)->where('Lname',$Lname)
             ->get();
           }
     }
-   if($data->count()<1){
-     $output .= "<tr><td rowspan='2'><center><p>Nothing's found</p></center> </td></tr>";
-   }else{
-    foreach($data as $data){
-        $output .=  "<tr>
-        <input type='hidden' value=".$data['applicationId']." id='applicationIdSelect' />
-        <td><input type='radio' name='optradio' class='optradio'  id=".$data['applicantId']."></td>
-        <td>".$data['Fname']."  ".$data['Mname']."  ".$data['Lname']." ( ".$data['type_application']." )  </td>
-        </tr>";
-        $output2 .= "<div><h5>Type of Assessment:</h5></div>
-        <div class='row'>
-            <div class='col col-md-12'>
-                <div class='col-sm-6'><span><input type='radio' name='assessmentType' class='assessmentType' value='print certificate'></span> print certificate</div>
-                <div class='col-sm-6'><span><input type='radio' name='assessmentType' class='assessmentType' value='fines and pinalties '></span>fines and pinalties </div>
-                <div class='col-sm-6'><span><input type='radio' name='assessmentType' class='assessmentType' value='application'></span>application </div>
-                <div class='col-sm-6'><span><input type='radio' name='assessmentType' class='assessmentType' value='renewal'></span>renewal </div>
-            </div>
-        </div>";
-    }
-
-   }
-
-
+   if(count($data)){
     return response()->json([
-      'output'=>$output,
-      'output2'=>$output2,
-      'applicationId'=>$applicationId
-    ]);
+        'data'=>$data,
+        'data2'=>$data2
+      ]);
+   }else{
+    return response()->json([
+        'msg'=>'no data found',
+        'code'=>400
+     ]);
+   }
 
   }
   public function select_applicant_fetch(Request $req){
@@ -306,10 +290,7 @@ public function search_assessment(Request $request){
       if($data[0]->assessment->count()>0){
         for($j =0; $j <$data[0]->assessment->count();$j++){
           if($data[0]->assessment[$j]['total_amount_words'] !== '' && $data[0]->assessment[$j]['payment_date'] !== null ){
-            $output .=  "<tr>
-            <td></td>
-            <td style='color:grey'>".$data[0]['Fname']."  ".$data[0]['Mname']."  ".$data[0]['Lname']." ( ".$data[0]['type_application']." ) -".$data[0]->assessment[$j]["type_payment"]." </td>
-            </tr>";
+            $output .=  "";
           }else{
             $output .=  "<tr>
             <td><input type='radio' name='optradio' class='optradio'  id=".$data[0]['applicationId']." value='".$data[0]->assessment[$j]["type_payment"]."'></td>
@@ -327,8 +308,8 @@ public function search_assessment(Request $request){
 }
 
 public function select_assessment(Request $req){
-  $applicationId = $req->id;
-  $type_payment = $req->type_payment;
+     $applicationId = $req->id;
+   $type_payment = $req->type_payment;
 
   $output ='';
   $data2=defaultFee::all();
