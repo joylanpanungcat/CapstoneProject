@@ -298,6 +298,8 @@ letter-spacing: 1px;
                               </center><br><br>
                             </div>
                     <div class="panel-heading"><h5>NAME: <span  ><input type="text" class="underline"  id="applicant_name" name="" readonly></span></h5></div>
+                    <input type="hidden" id="applicationId">
+                    <input type="hidden" id="applicantId">
                      <div class="panel-heading" style="display: none"><h5>ADDRESS: <span  ><input type="text" class="underline"  id="applicant_address" name=""></span></h5></div>
                     <div class="panel-body" id="panel-body">
 
@@ -352,7 +354,6 @@ letter-spacing: 1px;
                                 <div class="form-group group2" style="display: none" >
                                   <label>Official Receipt No: </label>
                                   <input type="text" name="" class="group1" id="receipt_no"><br>
-                                  <input type="text" name="" class="group1" id="applicationId"><br>
 
 
                                 <br>
@@ -720,10 +721,12 @@ $(document).on('click','.collapsible3',function(e){
            }else{
             hideSaveButton();
             $('#errorSearch').html('');
-            $.each(data.data,function($key,$value){
-            $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
-            $('#applicant_address').val($value['address']['purok']+ ', ' +$value['address']['barangay']+ ', '  + $value['address']['city']);
-            $('#applicationId').val($value['applicationId']);
+            $.each(data.data,function(key,value){
+            $('#applicationId').val(value['applicationId']);
+            $('#applicantId').val(value['applicantId']);
+            $('#applicant_name').val(value['Fname']+ ' ' +value['Mname']+ ' '  + value['Lname']);
+            $('#applicant_address').val(value['address']['purok']+ ', ' +value['address']['barangay']+ ', '  + value['address']['city']);
+
             });
             $.each(data.data2,function($key, $value){
             $('#authority_of').val($value['authority_of']);
@@ -771,6 +774,7 @@ function hideSaveButton(){
     var checkbox= $('.payment_checkbox:checked');
     var checkbox2= $('.assessmentType:checked');
     var applicant_name = $('#applicant_name').val();
+
     if(checkbox.length>0 && checkbox2.length>0 && applicant_name != '' ){
         $('#save_payment_button').css('display','block');
     }else{
@@ -798,12 +802,11 @@ function assessment_total(sum_value){
   $("#save_payment_button").on('click',function(e){
     e.preventDefault();
     var checkbox= $('.payment_checkbox:checked');
-    var id=$('.optradio:checked').attr('id');
+    var id=$('#applicantId').val();
     var applicationId=$('#applicationId').val();
     var total_amount =$('#total_amount').val();
     var name = $('#applicant_name').val();
     var assessmentType = $('.assessmentType:checked').val();
-    console.log(assessmentType);
    var total_amount_words = $('#total_amount_inwords').val();
     var receipt_no=$('#receipt_no').val();
     var defaultId= $('#defaultId').val();
@@ -854,7 +857,30 @@ function assessment_total(sum_value){
                               success:function(data){
                                 if(data.code !== 400){
                                             swal.close();
-                                    toastr.success(data.msg);
+                                      Swal.fire({
+                                        icon: 'success',
+                                        title: 'Assessment Added',
+                                        text: 'Do you want to redirect payment page ? ',
+                                        showCancelButton: true,
+                                        showConfirmButton:true,
+                                        focusConfirm: false,
+                                        background: 'rgb(0,0,0,.9)',
+                                        customClass : {
+                                        title: 'swal2-title'
+                                        },
+                                        confirmButtonColor: '#3085d6',
+                                        confirmButtonText:
+                                        '<i class="fa fa-check"></i> Yes',
+                                        cancelButtonText:
+                                         '<i class="fa fa-arrow-left"></i>Close',
+                                         preConfirm: function(){
+                                            var assessmentId = data.assessmentId;
+                                            var url = "{{ route('payment', ":assessmentId") }}";
+                                            url = url.replace(':assessmentId', assessmentId);
+                                            window.location.href = url;
+
+                                         }
+                                        })
                                     $('.payment_checkbox').prop( "checked", false );
                                     $('.optradio').prop( "checked", false );
                                     $('#total_amount_inwords').val('');

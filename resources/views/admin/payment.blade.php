@@ -213,6 +213,54 @@ letter-spacing: 1px;
          <div class="page-title">
              <div class="title_left">
                  <h3>Payment</h3>
+                 <?php
+                 if($data !==' '){
+                   $assessmentId = $data;
+                    ?>
+                <script>
+                    $(document).ready(function(){
+                       var data = '<?php echo $data ?>';
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            type: 'post',
+                            url:'{{ route('select_assessment') }}',
+                            data:{
+                                assessmentId:data,
+                                // type_payment:type_payment
+                            },
+                            dataType: 'json',
+                            success:function(data){
+                                if(data.code !== 400){
+                                    $('#search_modal').modal('hide');
+                                $('#nature_payment_body').html(data.data);
+                                $('#total_amount').val(data.total_amount);
+                                $.each(data.data3,function($key,$value){
+                                $('#type_payment').val($value['type_payment']);
+                                $('#search_applicant').val($value['Fname']+ ' '  + $value['Lname']);
+                                $('#applicant_name').val($value['Fname']+ ' ' +$value['Mname']+ ' '  + $value['Lname']);
+                                $('#applicant_address').val($value['purok']+ ', ' +$value['barangay']+ ', '  + $value['city']);
+                                ;
+                                $('#total_amount_inwords').val($value['total_amount_words']);
+                                $('#receipt_no').val($value['receipt_no']);
+                                $('#assessmentId').val($value['assessmentId']);
+                                });
+                                $.each(data.data2,function($key, $value){
+                                $('#defaultId').val($value['id']);
+                                $('#authority_of').val($value['authority_of']);
+                                $('#fee_assessor').val($value['fee_assessor']);
+                                });
+                             }
+                            }
+                            })
+                    });
+                </script>
+                    <?php
+                }
+                ?>
              </div>
 
 
@@ -596,24 +644,43 @@ console.log(type_payment);
                     },
                     dataType: 'json',
                     success:function(data){
-                        toastr.success(data.msg);
                     swal.close();
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Payment Added',
+                    text: 'Do you want to print receipt? ',
+                    showCancelButton: true,
+                    showConfirmButton:true,
+                    focusConfirm: false,
+                    background: 'rgb(0,0,0,.9)',
+                    customClass : {
+                    title: 'swal2-title'
+                    },
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText:
+                    '<i class="fa fa-check"></i> Yes',
+                    cancelButtonText:
+                        '<i class="fa fa-arrow-left"></i>Close',
+                        preConfirm: function(){
+
+                        }
+                    });
                     $('.payment_checkbox').prop( "checked", false );
                     $('.optradio').prop( "checked", false );
                     $('#total_amount_inwords').val('');
                     $('#assessmentType').val('');
                     $('#receipt_no').val('');
-                $('#defaultId').val('');
-                $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
-                $('#applicant_name').val('');
-                $('#applicant_address').val('');
-                $('#authority_of').val('');
-                $('#fee_assessor').val('');
-                $('#search_applicant').val('');
-                $('#total_amount').val('');
-                $('#amount').val('');
-                $('#date_paid').val('');
-                $('#change').val('');
+                    $('#defaultId').val('');
+                    $('#nature_payment_body').html("<tr><td></td> <td></td> <td></td></tr>");
+                    $('#applicant_name').val('');
+                    $('#applicant_address').val('');
+                    $('#authority_of').val('');
+                    $('#fee_assessor').val('');
+                    $('#search_applicant').val('');
+                    $('#total_amount').val('');
+                    $('#amount').val('');
+                    $('#date_paid').val('');
+                    $('#change').val('');
                     }
                 })
 

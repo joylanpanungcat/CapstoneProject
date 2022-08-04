@@ -216,7 +216,7 @@
                   <li><a href="{{ route('renewal_application_main') }}" class="noti_renewal"><i class="fa fa-refresh"></i> Renewal  <span class="badge bg-danger badgeNotif" id="count_renewal"></span></a>
 
                   </li>
-                   <li><a href="{{ route('payment') }}"><i class="fa fa-money"></i> Payment </a>
+                   <li><a href="{{ route('payment',' ') }}"><i class="fa fa-money"></i> Payment </a>
 
                   </li>
                   <li><a href="{{ route('assessmentSearch', ['name' => 'blank']) }}"><i class="fa fa-credit-card"></i> Assessment </a>

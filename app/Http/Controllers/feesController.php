@@ -114,7 +114,7 @@ class feesController extends Controller
             ->get();
           }
     }
-   if(count($data)){
+   if(count($data)>0){
     return response()->json([
         'data'=>$data,
         'data2'=>$data2
@@ -163,13 +163,13 @@ class feesController extends Controller
   public function save_assessment(Request $request){
     $ids = $request->checkbox_value;
     $applicantId =$request->id;
-    $applicationId =$request->applicationId;
+     $applicationId =$request->applicationId;
     $total_amount_words =$request->total_amount_words;
     $receipt_no = Carbon::now()->format('Y-mdH').rand(1,100);
     $defaultId =$request->defaultId;
     $total_amount =$request->total_amount;
     $type_payment = $request->assessmentType;
-    $assessment =  assessment::where('applicationId',$applicationId)->get();
+     $assessment =  assessment::where('applicationId',$applicationId)->get();
     $addAssessment = false;
     if(count($assessment)>0){
         foreach($assessment as $assessmentItem){
@@ -223,12 +223,17 @@ class feesController extends Controller
 
     if($assessment){
       return response()->json([
-        'msg'=>'Assessment Saved'
+        'msg'=>'Assessment Saved',
+        'assessmentId'=>$assessmentId
       ]);
     }
 
 
   }
+public function redirectPayment(Request $request, $data){
+
+     return view('admin/payment',compact('data'));
+}
 
 public function udpate_account_code(Request $request){
   $id =$request->id;
@@ -310,10 +315,12 @@ public function search_assessment(Request $request){
 public function select_assessment(Request $req){
      $applicationId = $req->id;
    $type_payment = $req->type_payment;
+   $assessmentId =$req->assessmentId;
 
   $output ='';
   $data2=defaultFee::all();
 
+  if($assessmentId == null){
    $data3 =applicant::join('assessment','assessment.applicantId','=','applicant.applicantId')
   ->join('address','applicant.applicantId','=','address.applicantId')
   ->join('application','application.applicantId','=','applicant.applicantId')
@@ -323,18 +330,27 @@ public function select_assessment(Request $req){
   ->where('assessment.type_payment',$type_payment)
   ->whereNull('assessment.payment_date')
   ->get();
-
-  // foreach ($data3 as $item){
-  //   $fees_id=$item['fees_id'];
-  //   $list_fees= subAssessment::join('fees','fees.fees_id','=','sub_assessment.fees_id')
-  //   ->where('sub_assessment.fees_id',$fees_id)->get();
-  // }
-  // <td><input type='text' class='assessment_input' value='".$item['account_code']."' id='".$item['fees_id']."' readonly='' /></td>
+}else{
+    $data3 =applicant::join('assessment','assessment.applicantId','=','applicant.applicantId')
+    ->join('address','applicant.applicantId','=','address.applicantId')
+    ->join('application','application.applicantId','=','applicant.applicantId')
+    ->join('sub_assessment','assessment.assessmentId','=','sub_assessment.assessmentId')
+    ->join('fees','fees.fees_id','=','sub_assessment.fees_id')
+    ->where('assessment.assessmentId',$assessmentId)
+    ->whereNull('assessment.payment_date')
+    ->get();
+}
+if($data3->count()>0){
   foreach($data3 as $item){
     $output .= "<tr><td>".$item['natureof_payment']."</td><td> <input type='number' class='assessment_total' id='".$item['fees_id']."'  value=".$item['assessment_total']."  readonly=''/></td></tr>
     ";
     $total_amount= $item['total_amount'];
   }
+}else{
+    return response()->json([
+        'code'=>400
+    ]);
+}
   $output.="<tr> <td></td><td></td> </tr>";
 
   return response()->json([

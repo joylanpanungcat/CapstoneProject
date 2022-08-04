@@ -117,7 +117,8 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::view('schedule','admin/schedule')->name('schedule');
 
     //payment
-    Route::view('payment','admin/payment')->name('payment');
+    // Route::view('payment','admin/payment')->name('payment');
+    Route::get('payment/{data}',[feesController::class, 'redirectPayment'])->name('payment');
 
     //schedule
     Route::get('scheduleList',[scheduleController::class,'scheduleList'])->name('scheduleList');
