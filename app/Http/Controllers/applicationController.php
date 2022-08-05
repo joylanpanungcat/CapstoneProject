@@ -478,6 +478,8 @@ $files=[];
             </th>
             <th> Uploader
             </th>
+            <th> Note
+            </th>
             <th>  Last Modified
             </th>
         </tr>
@@ -506,6 +508,8 @@ $files=[];
                  <td>--
                 </td>
                  <td>'.$admin.'
+                </td>
+                <td>--
                 </td>
                 <td>'.$name['lastModified'] .'
                 </td>
@@ -596,6 +600,8 @@ $files=[];
             </th>
               <th> Remarks
             </th>
+            <th> Note
+            </th>
             <th>  Last Modified
             </th>
             <th>  Action
@@ -652,15 +658,27 @@ $files=[];
                         <td>'.self::FileSizeConvert($fileSize).'
                         </td>
                         <td>'.pathinfo($file["filename"], PATHINFO_EXTENSION).'
-                        </td>
-                        <td>'.$file['status'].'
+                        </td>';
+                if($file['status'] ==='verified' ){
+                    $output .=' <td><span class="badge badge-success">'.$file['status'].'</span>
+                    </td>';
+                }elseif($file['status'] ==='not verify'){
+                    $output .=' <td><span class="badge badge-warning">'.$file['status'].'</span>
+                    </td>';
+                }
+                else{
+                    $output .=' <td><span class="badge badge-danger">'.$file['status'].'</span>
+                    </td>';
+                }
+                $output.='<td>'.$file['note'].'
                         </td>
                         <td>'.$file['lastModified'].'
                         </td>';
-                        if($file['status'] ==='verified'){
+                        if($file['status'] ==='verified' ||$file['status'] ==='declined' ){
                             $output .='<td>---</td>';
                         }else{
-                            $output .='<td><button class="btn btn-info verifiedFile" id='.$file['fileId'].'>verified</button></td>';
+                            $output .='<td><button class="btn btn-info verifiedFile" id='.$file['fileId'].'>verify</button>
+                            <button class="btn btn-danger declineFIle" id='.$file['fileId'].'>decline</button></td>';
                         }
 
                $output .=' </tr>';
@@ -688,6 +706,17 @@ $files=[];
         $data = fileUpload::where('fileId',$fileId);
         $data->update([
             'status'=>'verified'
+        ]);
+        return response()->json();
+    }
+    public function declineFile(Request $request){
+        $fileId = $request->fileId;
+        $noteDetials = $request->noteDetials;
+
+        $data = fileUpload::where('fileId',$fileId);
+        $data->update([
+            'status'=>'declined',
+            'note'=>$noteDetials,
         ]);
         return response()->json();
     }

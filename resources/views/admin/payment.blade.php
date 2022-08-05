@@ -199,6 +199,11 @@ letter-spacing: 1px;
   font-size: 20px;
   padding-left: 0.5em;
 }
+.total_body2{
+margin-left: 120px;
+float: right;
+display: flex;
+}
 </style>
 
 <body class="nav-md" id="main" >
@@ -377,7 +382,7 @@ letter-spacing: 1px;
 
                                  </div>
 
-                                   <div class="form-group group2" style="float:right;margin-top: 30px;display: none">
+                                   {{-- <div class="form-group group2" style="float:right;margin-top: 30px;display: none">
                                      <h5><b>BY AUTHORITY OF </b><span><input type="text" name="" class="authority_name" id="authority_of"></span></h5>
                                      <label style="float: right;">(Name of City/Municipal Fire Marshal)</label><br><br><br><br>
 
@@ -386,7 +391,7 @@ letter-spacing: 1px;
                                     <h5 style="margin-left:10%">Fire Code Fee Assesor</h5>
 
 
-                                 </div>
+                                 </div> --}}
 
 
 
@@ -419,6 +424,27 @@ letter-spacing: 1px;
                          </div>
                      </div>
   </div>
+
+  <div id="payment_view_modal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ">
+                        <div class="x_panel">
+                                  <div id="show2"></div>
+
+                            <div class="x_content">
+                                <div id="receiptData"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
              <!--  payment_save_modal-->
    <div class="modal fade" id="payment_save_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered" role="document">
@@ -605,6 +631,49 @@ console.log(type_payment);
     })
 
    });
+
+   $(document).on('input','#authority_of , #fee_assessor',function(){
+    console.log($('#authority_of').val());
+   if(($('#authority_of').change() || $('#fee_assessor').change() )
+    && ($('#authority_of').val() !== '' || $('#fee_assessor').val() !== '') ){
+    $('#updateReceipt').css('display','block');
+    $('#updateReceipt').html('<button type="button" class="btn btn-info updateReceiptDetails"  ><i class="fa fa-check"> </i> Update</button>');
+   }else{
+    $('#updateReceipt').css('display','none');
+   }
+});
+$(document).on('click','#print_payment_button',function(){
+    var element = $("#receipt")[0];
+    html2canvas(element).then(function (canvas) {
+    var myImage = canvas.toDataURL("image/png");
+    var tmp = window.open("");
+    $(tmp.document.body)
+    .html("<img src=" + myImage + " alt=''>")
+    .ready(function () {
+    tmp.focus();
+    tmp.print();
+    })
+    })
+});
+$(document).on('click','.updateReceiptDetails',function(e){
+    var assessmentId = $('#applicationIdReciept').val();
+    var authority_of = $('#authority_of').val();
+    var fee_assessor = $('#fee_assessor').val();
+    $.ajax({
+        type: 'post',
+        url:'{{ route('updateReceiptDetailsPayment') }}',
+        data:{
+            assessmentId:assessmentId,
+            authority_of:authority_of,
+            fee_assessor:fee_assessor,
+        },
+        dataType: 'json',
+        success:function(data){
+            toastr.success('Payment Updated');
+        }
+    })
+
+});
    var adminPass='{{Session::get('adminID')['password']}}';
 
    $('#save_payment_button').on('click',function(e){
@@ -662,7 +731,19 @@ console.log(type_payment);
                     cancelButtonText:
                         '<i class="fa fa-arrow-left"></i>Close',
                         preConfirm: function(){
-
+                            $.ajax({
+                            type: 'post',
+                            url:'{{ route('printPayment') }}',
+                            data:{
+                                assessmentId :assessmentId,
+                            },
+                            dataType: 'json',
+                            success:function(data){
+                            // $('#payment_view_modal').modal('show');
+                            $('#payment_view_modal').modal('show');
+                            $('#receiptData').html(data.output);
+                            }
+                        })
                         }
                     });
                     $('.payment_checkbox').prop( "checked", false );

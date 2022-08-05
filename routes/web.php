@@ -143,7 +143,9 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('search_assessment',[feesController::class,'search_assessment'])->name('search_assessment');
     Route::post('select_assessment',[feesController::class,'select_assessment'])->name('select_assessment');
     Route::post('save_payment',[feesController::class,'save_payment'])->name('save_payment');
+    Route::post('printPayment',[feesController::class,'printPayment'])->name('printPayment');
     Route::post('deleteAssessment',[feesController::class,'deleteAssessment'])->name('deleteAssessment');
+    Route::post('updateReceiptDetailsPayment',[feesController::class,'updateReceiptDetailsPayment'])->name('updateReceiptDetailsPayment');
 
 
 
@@ -205,6 +207,7 @@ Route::post('fetch_file',[applicationController::class,"fetch_file"])->name('fet
 Route::post('viewFolder',[applicationController::class,"viewFolder"])->name('viewFolder');
 Route::post('addFolder',[applicationController::class,"addFolder"])->name('addFolder');
 Route::post('verifiedFile',[applicationController::class,"verifiedFile"])->name('verifiedFile');
+Route::post('declineFile',[applicationController::class,"declineFile"])->name('declineFile');
 Route::post('downloadFile',[applicationController::class,"downloadFile"])->name('downloadFile');
 
 Route::post('addFile',[applicationController::class,"addFile"])->name('addFile');

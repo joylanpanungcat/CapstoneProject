@@ -85,6 +85,12 @@ public function addApplication(Request $request){
     $businessPurok =$request->businessPurok;
     $businessBarangay =$request->businessBarangay;
     $businessCity =$request->businessCity;
+
+    $contractor =$request->contractor;
+    $representative =$request->representative;
+    $floorArea =$request->floorArea;
+    $noStorey =$request->noStorey;
+
     $date_apply  = date('Y-m-d H:i:s');
     $count= 1;
     $status  = 'pending';
@@ -118,6 +124,12 @@ public function addApplication(Request $request){
     $application->accountId= $accountId;
     $application->type_application=$type_application;
     $application->type_occupancy=$type_occupancy;
+
+    $application->contractor=$contractor;
+    $application->representative=$representative;
+    $application->floorArea=$floorArea;
+    $application->noStorey=$noStorey;
+
     $application->nature_business=$nature_business;
     $application->business_name=$business_name;
     $application->date_apply =$date_apply;
@@ -242,7 +254,7 @@ public function viewApplication(Request $request){
 
     for($i =0 ; $i<$data->count(); $i++){
         $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
-
+        $data[0]->fileUpload = fileUpload::where('applicationId',$applicationId)->get();
     }
     return $data;
 }

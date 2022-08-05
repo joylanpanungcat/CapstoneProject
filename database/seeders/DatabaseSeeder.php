@@ -37,7 +37,12 @@ class DatabaseSeeder extends Seeder
         });
 
 
-
+        $this->call([
+            admin::class,
+            defaultFee::class,
+            fees::class,
+            inspector::class
+        ]);
 
 
 

@@ -1478,6 +1478,32 @@ color: #000
             </div>
         </div>
     </div>
+    <div id="addNoteModal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Note</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" name="" id="fileIdDecline">
+                        <label>Details</label>
+                       <div class="form-group">
+                        <textarea name="" cols="10" rows="5" id="noteDetials" class="form-control"></textarea>
+                       </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div id="saveNoteDiv">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div id="viewDocuments2" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl view-modal-dialog">
             <div class="modal-content view-modal-content ">
@@ -3296,7 +3322,7 @@ console.log(fee_assessor);
                 dataType:'json',
                 success:function(data){
                     $('#folder_table').html(data.data);
-
+                    $('#path').html('');
                      $('#parentFolderId').val(data.parentId);
                      $('#parentFolderId2').val(data.parentId);
 
@@ -3376,10 +3402,45 @@ $(document).on('click','.verifiedFile',function(e){
         dataType: 'json',
         success:function(data){
             toastr.success('file verified');
+            load_folder_list();
+            // window.setTimeout(loadWindow, 2000);
         }
     })
 
 });
+$(document).on('click','.declineFIle',function(e){
+    var fileId = $(this).attr('id');
+    $('#fileIdDecline').val(fileId);
+    $('#addNoteModal').modal('show');
+
+});
+$(document).on('input',"#noteDetials",function(){
+    if($('#noteDetials').change() && $('#noteDetials').val() !== ''){
+        $('#saveNoteDiv').css(['display','inline-grid','width','100%']);
+
+        $('#saveNoteDiv').html('<button class="btn btn-success" id="saveNoteButton">Save note</button>');
+    }else{
+        $('#saveNoteDiv').css('display','none');
+    }
+});
+$(document).on('click','#saveNoteButton',function(){
+    var noteDetials = $('#noteDetials').val();
+    var fileId = $('#fileIdDecline').val();
+    $.ajax({
+        type: 'post',
+        url: '{{ route('declineFile') }}',
+        data: {
+            fileId:fileId,
+            noteDetials:noteDetials,
+        },
+        dataType: 'json',
+        success:function(data){
+            toastr.success('file updated');
+            window.setTimeout(loadWindow, 2000);
+        }
+    })
+
+})
 
 $(document).on('click','.viewFile',function(e){
     var path = $(this).attr('id');
@@ -4480,10 +4541,8 @@ $(document).on('click','.view_payment_info',function(e){
         // $('#payment_view_modal').modal('show');
         $('#payment_view_modal').modal('show');
         $('#receiptData').html(data.output);
-
         }
     })
-
 });
 
 

@@ -21,6 +21,7 @@ class CreateFileUploadTable extends Migration
             $table->unsignedBigInteger('folderId')->nullable();
             $table->string('filename')->nullable();
             $table->string('status')->nullable()->default('not verify');
+            $table->string('note')->nullable();
             $table->string('lastModified')->nullable();
             $table->timestamps();
         });

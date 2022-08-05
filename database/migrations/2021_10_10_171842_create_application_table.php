@@ -29,6 +29,10 @@ class CreateApplicationTable extends Migration
     //   ->onDelete('cascade');
 
 
+            $table->string('contractor') ->nullable();
+            $table->string('representative') ->nullable();
+            $table->string('floorArea') ->nullable();
+            $table->string('noStorey') ->nullable();
             $table->string('type_application') ->nullable();
             $table->string('control_number') ->nullable();
             $table->string('type_occupancy') ->nullable();
