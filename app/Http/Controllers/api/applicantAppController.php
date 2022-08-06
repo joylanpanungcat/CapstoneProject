@@ -255,7 +255,30 @@ public function viewApplication(Request $request){
     for($i =0 ; $i<$data->count(); $i++){
         $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
         $data[0]->fileUpload = fileUpload::where('applicationId',$applicationId)->get();
+        $data[0]->inspection_details = inspection_details::where('applicationId',$applicationId)->whereNotNull('date_inspect')->whereNotNull('verify')->get();
+        $data[0]->noticeToComply = inspection_details::
+                                join('notice','notice.inspection_id','=','inspection_details.inspection_id')
+                                ->join('defects','defects.notice_id','=','notice.notice_id')
+                                ->where('inspection_details.applicationId',$applicationId)->get();
+        $data[0]->noticeToCorrect = inspection_details::
+        join('notice_to_correct','notice_to_correct.inspection_id','=','inspection_details.inspection_id')
+        ->join('to_correct_defects','to_correct_defects.notice_id','=','notice_to_correct.notice_id')
+        ->where('inspection_details.applicationId',$applicationId)->get();
+        $data[0]->payment = assessment::join('sub_assessment','sub_assessment.assessmentId','=','assessment.assessmentId')
+                            ->join('fees','fees.fees_id','=','sub_assessment.fees_id')
+                            ->where('assessment.applicationId',$applicationId)
+                            ->where('assessment.payment_status','=','paid')->get();
+
     }
+    return $data;
+}
+public function viewInspectionDetails(Request $request){
+    $accountId = $request->accountId;
+    $applicationId = $request->applicationId;
+
+    $data = application::join('inspection_details','inspection_details.applicationId','=','application.applicationId')
+            ->where('application.accountId' ,$accountId)->where('application.applicationId',$applicationId)->get();
+
     return $data;
 }
 public function searchApplication(Request $request){
@@ -386,6 +409,17 @@ public function getApplicationInspector(Request $request){
     ->get();
     return $data;
 }
+public function getApplicationIndividual(Request $request){
+    $inspectorId = $request->inspectorId;
+    $applicationId = $request->applicationId;
+    $data = application:: join('schedule','schedule.applicationId','=','application.applicationId')
+    ->join('applicant','applicant.applicantId','=','application.applicantId')
+    ->join('address','address.applicationId','=','application.applicationId')
+    ->where('schedule.inspectorId',$inspectorId)
+    ->where('application.applicationId',$applicationId)
+    ->get();
+    return $data;
+}
 public function viewApplicationInspector(Request $request){
     $applicationId = $request->applicationId;
     $data = application::
@@ -397,6 +431,7 @@ public function viewApplicationInspector(Request $request){
     for($i =0 ; $i<$data->count(); $i++){
         $data[0]->businessAddress = address::where('applicationId',$applicationId)->get();
         $data[0]->noticeToComply =  notice::join('inspection_details','inspection_details.inspection_id','=','notice.inspection_id')
+
         ->where('inspection_details.applicationId','=',$applicationId)->get();
         $data[0]->noticeToCorrect = noticeToCorrect::join('inspection_details','inspection_details.inspection_id','=','notice_to_correct.inspection_id')
         ->where('inspection_details.applicationId','=',$applicationId)->get();

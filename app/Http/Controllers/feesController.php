@@ -314,9 +314,9 @@ public function search_assessment(Request $request){
 }
 
 public function select_assessment(Request $req){
-     $applicationId = $req->id;
-   $type_payment = $req->type_payment;
-   $assessmentId =$req->assessmentId;
+      $applicationId = $req->id;
+       $type_payment = $req->type_payment;
+         $assessmentId =$req->assessmentId;
 
   $output ='';
   $data2=defaultFee::all();

@@ -1,0 +1,56 @@
+
+
+.fsicOccupancy input {
+border: 0;
+outline: 0;
+background: transparent;
+border-bottom: 1px solid black;
+font-size: 16px;
+text-indent: 6px;
+}
+
+.fsicOccupancy .header {
+display: grid;
+grid-template-columns: auto auto auto;
+text-align: center;
+}
+
+.fsicOccupancy {
+
+width:816px;
+height:1056px;
+border: 1px solid white;
+padding: 0px 40px;
+
+
+}
+
+.fsicOccupancy .border {
+border: 1px double black;
+margin: 15px 0px 0px 0px;
+padding: 10px 0px 0px 0px;
+}
+
+
+
+.fsicOccupancy img {
+height: 120px;
+width: 120px;
+}
+
+.fsicOccupancy li {
+text-decoration: none;
+list-style-type: none;
+}
+
+.fsicOccupancy .title {
+margin: 15px 85px 0px 85px;
+
+}
+.fsicOccupancy .title .text1{
+font-family: Impact, 'Haettenschweiler', "Arial Narrow Bold", sans-serif;
+text-align: center;
+font-size: 29pt;
+color: #17365D;
+margin-bottom: 0;
+}

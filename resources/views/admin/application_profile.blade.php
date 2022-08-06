@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="{{ asset('css/inspectionReport.css') }}">
 <link rel="stylesheet" href="{{ asset('css/noticeToComply.css') }}">
 <link rel="stylesheet" href="{{ asset('css/noticeToCorrect.css') }}">
+<link rel="stylesheet" href="{{ asset('css/fsicOccupancy.css') }}">
+<link rel="stylesheet" href="{{ asset('css/fsicBusiness.css') }}">
   <style type="text/css">
 table tbody tr td input{
 border: none;
@@ -1041,7 +1043,9 @@ color: #000
                                                 @endif
                                                 </td>
                                                     @if ($certificate->status == 'approved' || $certificate->status == 'renewal' || $certificate->status == 'renewed')
-                                                    <td> <button type="button" class="btn btn-success  print_certificate"  id="{{ $certificate->applicationId }}" ><i class="fa fa-print"   ></i> Print</button></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-success  viewCertificate"  id="{{ $certificate->applicationId }}" ><i class="fa fa-eye"   ></i> </button>
+                                                       </td>
                                                     @else
 
                                                         <td>Check payment and inspection details</td>
@@ -1531,6 +1535,32 @@ color: #000
             </div>
         </div>
     </div>
+    <div id="viewCertificateModal" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl view-modal-dialog">
+            <div class="modal-content view-modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">List of Certificate</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body view-modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Business name</th>
+                                <th>applicant name</th>
+                                <th>Date approved </th>
+                                <th>Type </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="certificateModalBody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="paymentViewHistory" class="modal" data-backdrop="static" data-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl view-modal-dialog">
             <div class="modal-content view-modal-content ">
@@ -1714,7 +1744,6 @@ color: #000
                                 </div>
                                     <div class="col-md-12">
                                         <select id="status"  class="form-control " name="status">
-                                            <option id="status"></option>
                                             <option value="forinspection">for inspection</option>
                                             <option value="pending">peding</option>
                                             <option value="approved">approved</option>
@@ -4317,8 +4346,8 @@ $('.business_info_button').on('click',function(e){
             $('#alcontact_business').val(value['alcontact']);
             $('#applicant_businessInfo').val(value['applicantId']);
 
-
-    $('.view_button').html('<button type="button" class="btn btn-primary" id="setSchedule"><i class="fa fa-calendar"> Set schedule</i></button><button type="submit" class="btn btn-warning"><i class="fa fa-pencil"> Update</i></button>');
+            // <button type="button" class="btn btn-primary" id="setSchedule"><i class="fa fa-calendar"> Set schedule</i></button>
+    $('.view_button').html('<button type="submit" class="btn btn-warning"><i class="fa fa-pencil"> Update</i></button>');
         });
         $.each(data.address_application,function(key, value){
             $('#purok_business').val(value['purok']);
@@ -4993,7 +5022,6 @@ $('.viewReport').on('click',function(e){
         $('#viewDocuments2').modal('show');
       $('#inspectionModalBody').html(data.output);
 
-
     }
   })
 
@@ -5034,21 +5062,38 @@ Swal.fire({
                             success:function(data){
                                 swal.close();
                                 toastr.success(data.msg);
+                                window.setTimeout(loadWindow, 2000);
                             }
                          })
                         }
             });
         });
+$('.viewCertificate').on('click',function(e){
+    var applicationId = $(this).attr('id');
+    $.ajax({
+    type:'post',
+    url:'{{ route('view_certificate') }}',
+    data:{
+      applicationId:applicationId
+    },
+    dataType: 'json',
+    success:function(data){
+        $('#viewCertificateModal').modal('show');
+      $('#certificateModalBody').html(data.output);
 
-$('.print_certificate').on('click',function(e){
+    }
+  })
+})
+$(document).on('click','.print_certificate',function(e){
   e.preventDefault();
   var applicationId = $(this).attr('id');
-
+  var type_application = $('.typeOfCert').val();
   $.ajax({
     type:'post',
     url:'{{ route('print_certificate') }}',
     data:{
-      applicationId:applicationId
+      applicationId:applicationId,
+      type_application:type_application
     },
     dataType:'json',
     success:function(data){

@@ -41,6 +41,9 @@ Route::prefix('/user')->group(function(){
           Route::post('searchApplication', [applicantAppController::class,'searchApplication']);
           Route::post('connectAccount', [applicantAppController::class,'connectAccount']);
 
+          Route::post('viewInspectionDetails', [applicantAppController::class,'viewInspectionDetails']);
+
+
           Route::get('logout', [loginController::class,'logout']);
 
       });
@@ -54,6 +57,7 @@ Route::prefix('/inspector')->group(function(){
         Route::post('getProfile', [applicantAppController::class,'getProfileInspector']);
         Route::post('updateInspectorProfile', [applicantAppController::class,'updateInspectorProfile']);
         Route::post('getApplication', [applicantAppController::class,'getApplicationInspector']);
+        Route::post('getApplicationIndividual', [applicantAppController::class,'getApplicationIndividual']);
         Route::post('getInspectionHistory', [applicantAppController::class,'getInspectionHistory']);
         Route::post('getRejectedInspection', [applicantAppController::class,'getRejectedInspection']);
         Route::post('getReinspection', [applicantAppController::class,'getReinspection']);

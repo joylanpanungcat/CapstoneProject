@@ -108,6 +108,7 @@ Route::group(['middleware'=>['accessPage']],function(){
     Route::post('print_certificate',[applicationController::class,'print_certificate'])->name('print_certificate');
     Route::get('applicationUpdateStatus',[applicationController::class,'applicationUpdateStatus'])->name('applicationUpdateStatus');
     Route::post('view_payment_history',[applicationController::class,'view_payment_history'])->name('view_payment_history');
+    Route::post('view_certificate',[applicationController::class,'view_certificate'])->name('view_certificate');
 
 
     //Map

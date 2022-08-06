@@ -1155,6 +1155,32 @@ public function view_inspection_report(Request $request){
   ]);
 
 }
+public function view_certificate(Request $request){
+    $applicationId =$request->applicationId;
+    $output = '';
+    $inspection_details = inspection_details::
+    join('application','application.applicationId','=','inspection_details.applicationId')
+    ->join('applicant','applicant.applicantId','=','application.applicantId')
+    ->select('application.business_name','application.applicationId','applicant.*','inspection_details.type_inspection','inspection_details.date_inspect','inspection_details.status','application.type_application')
+    ->where('application.applicationId',$applicationId)
+    ->get();
+
+    foreach($inspection_details as $data ){
+      $output .="<tr>
+
+          <td>".$data['business_name']."  <input type='hidden' class='typeOfCert' value='".$data['type_application']."' /></td>
+          <td>".$data['Fname'].' '.$data['Lname']."</td>
+          <td>".$data['date_inspect']."</td>
+          <td>".$data['type_inspection']."</td>
+          <td> <button type='button' class='btn btn-success  print_certificate'  id=".$data['applicationId']." ><i class='fa fa-print'></i> Print</button></td>
+      </tr>";
+    }
+
+    return response()->json([
+      'output'=>$output
+    ]);
+
+  }
 public function view_inspection_report_single(Request $request){
   $noticeToComplyOutput = "";
   $outputNoticeToCorrectItem = "";
@@ -1574,6 +1600,8 @@ public function updateReceiptDetails(Request $request){
 
 public function print_certificate(Request $request){
     $applicationId = $request->applicationId;
+    $type_application = $request->type_application;
+
     $fsec_noCert= '';
     $toBe_constructed='';
     $issued_for='';
@@ -1581,6 +1609,13 @@ public function print_certificate(Request $request){
     $marshalCert='';
     $date_issuedCert='';
     $output= "";
+    // option  = [
+    //     {name:  'Fire Safery Evaluation Clearance'},
+    //     {name:  'FSIC for Occupancy'},
+    //     {name:  'FSIC for Business',},
+    //   ];
+if($type_application === "Fire Safery Evaluation Clearance"){
+
   $data = application::join('applicant','applicant.applicantId','=','application.applicantId')
   ->join('address','address.applicationId','=','application.applicationId')
   ->join('assessment','assessment.applicationId','=','application.applicationId')
@@ -1795,10 +1830,227 @@ public function print_certificate(Request $request){
 </div>
 
 </div>';
-
 return response()->json([
     'output'=>$output
 ]);
+
+}
+if($type_application == 'FSIC for Business'){
+    $output .='<div class="fsicBusiness">
+    <div class="border">
+    <section class="header">
+        <div class="logo">
+        <img src='.asset('images/dilg.png').' alt="" style="width: 100%">
+        </div>
+        <div class="midcol">
+            <ul class="headerinfo">
+            <li>Republic of the Philippines</li>
+            <li class="boldletter" style="font-size:16px; font-weight: bold;">Department of the Interior and Local Government</li>
+            <li class="boldletter" style="font-size:16px; font-weight: bold;">Bureau of Fire Protection</li>
+            <li><input type="text" style="width: 60%;"></li>
+            <li><input type="text" style="width: 70%;"></li>
+            <li><input type="text" style="width: 80%;"></li>
+            <li><input type="text" style="width: 90%;"></li>
+
+        </ul></div>
+        <div class="logo">
+        <img src='.asset("images/logo.png").' alt="" style="width: 100%">
+        </div>
+    </section>
+
+    <div class="title">
+        <p style="font-family:Arial, Helvetica, sans-serif; font-size:16pt; color:red; margin: 20px 0px;">FSIC No. R <input type="text" style="border-color:red; font-size:16pt;"></p>
+        <p style="" class="text1">FIRE SAFETY INSPECTION CERTIFICATE</p>
+        <p style="font-family: Arial, Helvetica, sans-serif;  text-align: center; font-size: 12pt; font-weight: bold; color:#17365D">(FOR BUSINESS PERMIT)</p>
+
+        <div style="display: flex; flex-direction:column; align-items: flex-end; justify-content: flex-end;">
+          <input type="text">
+          <p style=" position: relative; right:80px;">Date</p>
+        </div>
+
+        <div>
+            <p style="font-family: Arial, Helvetica, sans-serif; font-size: 11pt; font-weight: bold; margin: 15px 0px;">TO WHOM IT MAY CONCERN:</p>
+            <p style="text-indent: 75px; font-size: 10pt;">By virtue of the provisions of RA 9514 otherwise known as the Fire Code of
+                the Philippines of 2008, the application for <b>FIRE SAFETY INSPECTION CERTIFICATE</b>
+                of <span><input type="text"></span>
+                <p style="font-style: italic; font-size: 10pt; display:flex; align-items:flex-end; justify-content: flex-end; padding-right: 40px;">(Name of Establishment)</p>
+                <span><input type="text" style="width:100%"></span>
+                <p style="font-size: 10pt;">owned and managed by <span><input type="text" style="width: 55%;"></span> with postal address at</p>
+                <p style="font-style: italic; font-size: 10pt; display:flex; align-items:center; justify-content: center; padding-right: 40px;">(Name of Owner/Representative)</p>
+                <span><input type="text" style="width:100%"></span>
+                <p style="font-style: italic; font-size: 10pt; display:flex; align-items:center; justify-content: center; padding-right: 40px;">(Address)</p>
+                <p style="font-size:10pt; font-family: Arial, Helvetica, sans-serif; text-align: justify; line-height: 16px;">is hereby <b>GRANTED</b> after said building structure or facility has been duly inspected with the findings that it has fully complied
+                with the fire safety requirements of the Fire Code of the Philippines of 2008 and its
+            Implementing Rules and Regulations.</p>
+                    <br>
+                <p style="text-indent: 65px; font-size:10pt">This certificate is being issued for <span><input type="text" style="width:58%;"></span></p>
+                <span><input type="text" style="width:100%; margin-bottom: 10px;"></span>
+                <br>
+                <p style="text-indent: 65px; font-size:10pt">This certificate is valid until <span><input type="text" style="width:38%;"></span></p>
+                <br><br>
+                <p style="text-indent: 65px; font-size:10pt; text-align: justify;">Violation of Fire Code Provisions shall ipso facto cause this certificate null and void, and shall hold the owner of the
+                    building liable to the penalties provided for by the said Fire code.
+                </p>
+
+                <div style="font-size: 10pt; margin-top:15px">
+                    <p style="font-weight: bold;">Fire Code Fees:</p>
+                    <p>Amount Paid: <input style="width:100px;" type="text"></p>
+                    <p>Q.R. Number: <input style="width:100px;" type="text"></p>
+                    <p>Date: <input style="width:150px;" type="text"></p>
+                </div>
+
+                <div style="font-size: 10pt; display:flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; margin-top: -40px; margin-bottom: 20px;">
+                     <p style="font-weight: bold; margin-right: 30px;">
+                        RECOMMEND APPROVAL:
+                    </p>
+
+                    <input type="text">
+                    <p style="margin-right: 60px; margin-bottom: 20px;">CHIEF, FSES</p>
+
+                    <p style="font-weight: bold; margin-right: 120px;">APPROVED: </p>
+                    <input type="text" style="width:205px">
+                   <p>CITY/MUNICIPAL FIRE MARSHAL </p>
+
+
+                </div>
+
+            </p>
+
+            <div>
+                <p style="font-style: italic; font-weight:bold; font-size:10pt; text-align:center;">NOTE: “This Certificate does not take the place of any license required by law and
+                    is not transferable. Any change in the use of occupancy of the premises shall
+                    require a new certificate.”</p>
+                <P style="font-size:14pt; text-align:center; font-weight:bold; margin: 10px 0px 0px 0px ">THIS CERTIFICATE SHALL BE POSTED CONSPICUOUSLY</P>
+
+                <p style="font-size:8pt; text-align:center; font-weight:bold; color:red;">PAALALA: “MAHIGPIT NA IPINAGBABAWAL NG PAMUNUAN NG BUREAU OF FIRE PROTECTION SA MGA KAWANI NITO ANG MAGBENTA O MAGREKOMENDA NG ANUMANG BRAND NG FIRE EXTINGUISHER”</p>
+
+                <p  style="font-size:16pt; text-align:center; font-weight:bold; font-family:Georgia, "Times New Roman", Times, serif">"FIRE SAFETY IS OUR MAIN CONCERN"</p>
+
+            </div>
+
+            <div style="text-transform:capitalize; font-size:7pt; font-weight: bold; margin-bottom: 5px;">
+                <p>Distribution</p>
+                <p>Light Blue-Green (Applicant/Owners Copy)</p>
+                <p>Pink (BPLOs copy)</p>
+                <p>Blue BFPs Copy</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>';
+return response()->json([
+    'output'=>$output
+]);
+}
+if($type_application == 'FSIC for Occupancy'){
+    $output .='<div class="fsicOccupancy">
+    <div class="border">
+    <section class="header">
+        <div class="logo">
+        <img src='.asset('images/dilg.png').' alt="" style="width: 100%">
+        </div>
+        <div class="midcol">
+            <ul class="headerinfo">
+            <li>Republic of the Philippines</li>
+            <li class="boldletter" style="font-size:16px; font-weight: bold;">Department of the Interior and Local Government</li>
+            <li class="boldletter" style="font-size:16px; font-weight: bold;">Bureau of Fire Protection</li>
+            <li><input type="text" style="width: 60%;"></li>
+            <li><input type="text" style="width: 70%;"></li>
+            <li><input type="text" style="width: 80%;"></li>
+            <li><input type="text" style="width: 90%;"></li>
+
+        </ul></div>
+        <div class="logo">
+        <img src='.asset("images/logo.png").' alt="" style="width: 100%">
+        </div>
+    </section>
+
+    <div class="title">
+        <p style="font-family:Arial, Helvetica, sans-serif; font-size:16pt; color:red; margin: 20px 0px;">FSIC No. R <input type="text" style="border-color:red; font-size:16pt;"></p>
+        <p class="text1">FIRE SAFETY INSPECTION CERTIFICATE</p>
+        <p style="font-family: Arial, Helvetica, sans-serif;  text-align: center; font-size: 12pt; font-weight: bold; color:#17365D">(FOR OCCUPANCY PERMIT)</p>
+
+        <div style="display: flex; flex-direction:column; align-items: flex-end; justify-content: flex-end;">
+          <input type="text">
+          <p style=" position: relative; right:80px;">Date</p>
+        </div>
+
+        <div>
+            <p style="font-family: Arial, Helvetica, sans-serif; font-size: 11pt; font-weight: bold; margin: 15px 0px;">TO WHOM IT MAY CONCERN:</p>
+            <p style="text-indent: 75px; font-size: 10pt;">By virtue of the provisions of RA 9514 otherwise known as the Fire Code of
+                the Philippines of 2008, the application for <b>FIRE SAFETY INSPECTION CERTIFICATE</b>
+                of <span><input type="text"></span>
+                <p style="font-style: italic; font-size: 10pt; display:flex; align-items:flex-end; justify-content: flex-end; padding-right: 40px;">(Name of Establishment)</p>
+                <span><input type="text" style="width:100%"></span>
+                <p style="font-size: 10pt;">owned and managed by <span><input type="text" style="width: 55%;"></span> with postal address at</p>
+                <p style="font-style: italic; font-size: 10pt; display:flex; align-items:center; justify-content: center; padding-right: 40px;">(Name of Owner/Representative)</p>
+                <span><input type="text" style="width:100%"></span>
+                <p style="font-style: italic; font-size: 10pt; display:flex; align-items:center; justify-content: center; padding-right: 40px;">(Address)</p>
+                <p style="font-size:10pt; font-family: Arial, Helvetica, sans-serif; text-align: justify; line-height: 16px;">is hereby <b>GRANTED</b> after said building structure or facility has been duly inspected with the findings that it has fully complied
+                with the fire safety requirements of the Fire Code of the Philippines of 2008 and its
+            Implementing Rules and Regulations.</p>
+                    <br>
+                <p style="text-indent: 65px; font-size:10pt">This certificate is being issued for <span><input type="text" style="width:58%;"></span></p>
+                <span><input type="text" style="width:100%; margin-bottom: 10px;"></span>
+                <br>
+                <p style="text-indent: 65px; font-size:10pt">This certificate is valid until <span><input type="text" style="width:38%;"></span></p>
+                <br><br>
+                <p style="text-indent: 65px; font-size:10pt; text-align: justify;">Violation of Fire Code Provisions shall ipso facto cause this certificate null and void, and shall hold the owner of the
+                    building liable to the penalties provided for by the said Fire code.
+                </p>
+
+                <div style="font-size: 10pt; margin-top:15px">
+                    <p style="font-weight: bold;">Fire Code Fees:</p>
+                    <p>Amount Paid: <input style="width:100px;" type="text"></p>
+                    <p>Q.R. Number: <input style="width:100px;" type="text"></p>
+                    <p>Date: <input style="width:150px;" type="text"></p>
+                </div>
+
+                <div style="font-size: 10pt; display:flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; margin-top: -40px; margin-bottom: 20px;">
+                     <p style="font-weight: bold; margin-right: 30px;">
+                        RECOMMEND APPROVAL:
+                    </p>
+
+                    <input type="text">
+                    <p style="margin-right: 60px; margin-bottom: 20px;">CHIEF, FSES</p>
+
+                    <p style="font-weight: bold; margin-right: 120px;">APPROVED: </p>
+                    <input type="text" style="width:205px">
+                   <p>CITY/MUNICIPAL FIRE MARSHAL </p>
+
+
+                </div>
+
+            </p>
+
+            <div>
+                <p style="font-style: italic; font-weight:bold; font-size:10pt; text-align:center;">NOTE: “This Certificate does not take the place of any license required by law and
+                    is not transferable. Any change in the use of occupancy of the premises shall
+                    require a new certificate.”</p>
+                <P style="font-size:14pt; text-align:center; font-weight:bold; margin: 10px 0px 0px 0px ">THIS CERTIFICATE SHALL BE POSTED CONSPICUOUSLY</P>
+
+                <p style="font-size:8pt; text-align:center; font-weight:bold; color:red;">PAALALA: “MAHIGPIT NA IPINAGBABAWAL NG PAMUNUAN NG BUREAU OF FIRE PROTECTION SA MGA KAWANI NITO ANG MAGBENTA O MAGREKOMENDA NG ANUMANG BRAND NG FIRE EXTINGUISHER”</p>
+
+                <p  style="font-size:16pt; text-align:center; font-weight:bold; font-family:Georgia, "Times New Roman", Times, serif">"FIRE SAFETY IS OUR MAIN CONCERN"</p>
+
+            </div>
+
+            <div style="text-transform:capitalize; font-size:7pt; font-weight: bold; margin-bottom: 5px;">
+                <p>Distribution</p>
+                <p>Light Blue-Green (Applicant/Owners Copy)</p>
+                <p>Pink (BPLOs copy)</p>
+                <p>Blue BFPs Copy</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>';
+    return response()->json([
+        'output'=>$output
+    ]);
+}
 }
 public function applicationUpdateStatus(){
     $data = application::get();
